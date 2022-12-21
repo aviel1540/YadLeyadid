@@ -1,15 +1,8 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
-const ProductRefSchema = require('/product_ref.js')
 
 const Schema = mongoose.Schema;
 
 const clientSchema = new Schema({
-    client_id : {
-        type: String,
-        trim: true,
-        required: true
-    },
     first_name: {
         type: String,
         trim: true,
@@ -37,7 +30,8 @@ const clientSchema = new Schema({
         required: true
     },
     product_list: [{
-        type: ProductRefSchema,
+        type: Schema.Types.ObjectId,
+        ref: 'Product'
     }]
 
 })
