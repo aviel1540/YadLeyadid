@@ -29,6 +29,10 @@ const clientSchema = new Schema({
         type: String,
         required: true
     },
+    is_admin: {
+        type: Boolean,
+        default: false
+    },
     product_list: [{
         type: Schema.Types.ObjectId,
         ref: 'Product'
