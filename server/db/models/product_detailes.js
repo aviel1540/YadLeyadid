@@ -8,10 +8,6 @@ const productDetailesSchema = new Schema({
         trim: true,
         required: true
     },
-    image: {
-        data: Buffer,
-        type: String
-    },
     name: {
         type: String,
         required: true

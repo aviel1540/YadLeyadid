@@ -1,16 +1,16 @@
 const express = require('express');
-// require('dotenv').config()
 const path = require('path');
 const cors = require('cors');
-const app = express();
+const ProductRouter = require('./routers/product_detailes_router');
 
+const app = express();
 const port = process.env.PORT || 9000;
 require(path.join(__dirname,'db/mongoose/connect.js'));
 
 app.use(express.json());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
-
+app.use("/products", ProductRouter);
 
 
 app.listen(port ,() => {
