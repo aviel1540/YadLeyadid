@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const clientSchema = new Schema({
+    id:{
+        type: String,
+        required: true
+    },
     first_name: {
         type: String,
         trim: true,
@@ -15,6 +19,10 @@ const clientSchema = new Schema({
     },
     pass: {
         type: String,
+        required: true
+    },
+    email: {
+        type: email,
         required: true
     },
     phone: {
