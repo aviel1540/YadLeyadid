@@ -4,17 +4,17 @@ const validator = require('validator');
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
-    product_detail: {
+    productDetail: {
         type: Schema.Types.ObjectId,
         ref: 'ProductDetailes'
     },
-    loan_detailes : {
+    loanDetailes : {
         type: Object,
-        loan_by: {
+        loanBy: {
             type: Schema.Types.ObjectId,
-            ref: 'Client' 
+            ref: 'User' 
         },
-        loan_date: {
+        loanDate: {
             type: Date,
             default: new Date(),
             validate(value){
@@ -22,7 +22,7 @@ const productSchema = new Schema({
                     throw new Error("Invalid date for 'Loan Date' , it is in the future !")
             }
         },
-        return_date: {
+        returnDate: {
             type: Date,
             validate(value){
                 if(validator.isBefore(value.toString(),(this.begin_date).toString()))
@@ -32,5 +32,5 @@ const productSchema = new Schema({
     }
 })
 
-const Product = mongoose.model('client-product', productSchema);
+const Product = mongoose.model('user-product', productSchema);
 module.exports = Product;

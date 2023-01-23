@@ -2,51 +2,57 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const clientSchema = new Schema({
-    id:{
+const userSchema = new Schema({
+    idTeuda:{
         type: String,
-        required: true
+        trim: true,
+        required: true,
+        uniqe: true
     },
-    first_name: {
+    name: {
         type: String,
         trim: true,
         required: true
     },
-    last_name: {
+    password: {
         type: String,
         trim: true,
         required: true
-    },
-    pass: {
-        type: String,
-        required: true
+        
     },
     email: {
         type: email,
-        required: true
+        trim: true,
+        required: true,
+        uniqe: true
+
     },
     phone: {
         type: String,
+        trim: true,
         required: true
     },
     address: {
         type: String,
+        trim: true,
         required: true
     },
-    payment_type: {
+    paymentType: {
         type: String,
+        trim: true,
         required: true
     },
-    is_admin: {
+    isAdmin: {
         type: Boolean,
+        trim: true,
         default: false
     },
-    product_list: [{
+    productList: [{
         type: Schema.Types.ObjectId,
         ref: 'Product'
     }]
 
 })
 
-const Client = mongoose.model('clients', clientSchema);
-module.exports = Client
+const User = mongoose.model('users', userSchema);
+module.exports = User
