@@ -1,17 +1,16 @@
-const router = require('express').Router();
-const UserController = require('../controllers/UserController');
+const router = require("express").Router();
+const userController = require("../controllers/userController");
 
 //add new user
-router.post('/add', UserController.addNewUser);
+router.post("/register", userController.register);
 //delete user by id
-router.delete('/delete/:id', UserController.deleteUser);
+router.delete("/delete/:id", userController.deleteUser);
 //show all users
-router.get('/',UserController.showAllUsers);
+router.get("/", userController.showAllUsers);
 //search user by id
-router.get('/:id', UserController.searchUser);
+router.get("/:id", userController.searchUser);
 //update user
-router.patch('/:id', UserController.updateUser);
+router.patch("/:id", userController.updateUser);
 //add products to user
-
 
 module.exports = router;
