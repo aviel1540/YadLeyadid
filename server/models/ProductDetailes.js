@@ -18,7 +18,11 @@ const productDetailesSchema = new Schema({
         trim: true,
         required: true
     }
-})
+},
+{
+    timestamps: true
+}
+)
 
 const ProductDetailes = mongoose.model('products', productDetailesSchema);
 module.exports = ProductDetailes;

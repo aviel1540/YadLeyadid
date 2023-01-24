@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 mongoose.set('strictQuery', true);
+
 const ProductRouter = require('./routers/productDetailesRouter');
+const UserRouter = require('./routers/userRouter');
 
 
 const URI = process.env.URI;
@@ -18,6 +20,8 @@ mongoose
 	.catch((err) => console.log(err.message));
     
 app.use("/products", ProductRouter);
+app.use("/users", UserRouter);
+
 
 
 const PORT = process.env.PORT || 5000;

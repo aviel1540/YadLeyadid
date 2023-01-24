@@ -17,11 +17,11 @@ const productDetailesCtrl = {
     deleteProduct  : async(req,res) => {
         const id = req.params.id;
         try{
-            const result = await Product.findByIdAndDelete(id);
-            if(result == null) {
+            const productResult = await Product.findByIdAndDelete(id);
+            if(productResult == null) {
                 return res.status(404).send("No Product Were Found !");
             } 
-            res.status(200).send(result.name + " deleted successfully !");
+            res.status(200).send(productResult.name + " deleted successfully !");
         } catch(err) {
             res.status(404).send(err);
         }
@@ -35,7 +35,7 @@ const productDetailesCtrl = {
             res.status(400).send(err);
         }
     },
-    //show specific Product
+    //search specific Product
     searchProduct : async(req,res) => {
         let productSerach = await Product.findById(req.params.id);
         try {
@@ -45,6 +45,10 @@ const productDetailesCtrl = {
         } catch(err) {
             res.status(400).send(err);
         }
+    },
+    //update product detailes
+    updateProduct : async(req,res) => {
+
     }
 }
 

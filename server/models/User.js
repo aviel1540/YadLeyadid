@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
 
 const Schema = mongoose.Schema;
 
@@ -21,11 +23,10 @@ const userSchema = new Schema({
         
     },
     email: {
-        type: email,
+        type: String,
         trim: true,
         required: true,
         uniqe: true
-
     },
     phone: {
         type: String,
@@ -47,12 +48,15 @@ const userSchema = new Schema({
         trim: true,
         default: false
     },
+    
     productList: [{
         type: Schema.Types.ObjectId,
         ref: 'Product'
     }]
-
-})
-
+},
+{
+    timestamps: true
+}
+)
 const User = mongoose.model('users', userSchema);
 module.exports = User
