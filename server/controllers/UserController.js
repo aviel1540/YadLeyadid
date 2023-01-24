@@ -59,7 +59,6 @@ const userCtrl = {
 			const checkPaymentType = addSlashes(paymentType);
 
 			const userIdTeuda = await User.findOne({ idTeuda: checkIdTeuda });
-			console.log("🚀 ~userIdTeuda", userIdTeuda);
 
 			if (userIdTeuda) {
 				return res
