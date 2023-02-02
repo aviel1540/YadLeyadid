@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const User = require("../models/User");
 const auth = require("../utils/auth/auth");
 const escape = require("escape-html");
@@ -7,6 +8,8 @@ const {
 	isLengthUsername,
 	isLengthPassword,
 } = require("../utils/validation/validation");
+
+const maxAge = 24*60*60; //1 day in seconds
 
 const userCtrl = {
 	//add new user controller
@@ -138,6 +141,32 @@ const userCtrl = {
 	},
 	//update user detailes
 	updateUser: async (req, res) => {},
+	//add product to user
+
+	//remove product from user
+
+	//user login
+	loginUser: async(req, res) => {
+		const { idTeuda, password } = req.body;
+		try {
+			const user = await auth.login(idTeuda, password);
+			const token = jwt.sign({
+				id: user._id,
+				idTeuda: user.idTeuda,
+				name: user.name,
+				password: user.password,
+				email: user.email,
+				phoneNumber: user.phoneNumber,
+				address: user.address,
+				paymentType: user.paymentType
+			}, process.env.SECRET, {expiresIn: maxAge});
+			res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge*1000});
+			res.status(200).json({user});
+		} catch(err) {
+			console.log(err);
+			res.status(400).send(err);
+		}
+	}
 };
 
 module.exports = userCtrl;

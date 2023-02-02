@@ -8,7 +8,6 @@ const URI = process.env.URI;
 const URL = process.env.URL;
 
 mongoose.set("strictQuery", true);
-//Or Zarhi!
 const app = express();
 
 app.use(express.json());

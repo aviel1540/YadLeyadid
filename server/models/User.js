@@ -47,7 +47,6 @@ const userSchema = new Schema(
 			trim: true,
 			default: false,
 		},
-
 		productList: [
 			{
 				type: Schema.Types.ObjectId,

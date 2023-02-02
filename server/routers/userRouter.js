@@ -13,4 +13,6 @@ router.get("/:id", userController.searchUser);
 router.patch("/:id", userController.updateUser);
 //add products to user
 
+//login user
+router.post('/login', userController.loginUser);
 module.exports = router;
