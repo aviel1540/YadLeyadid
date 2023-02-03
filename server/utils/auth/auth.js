@@ -1,20 +1,24 @@
 const bcrypt = require("bcrypt");
-const User = require('../../models/User');
+const User = require("../../models/User");
 
 exports.hashPassword = async (value) => {
-	const salt = await bcrypt.genSalt();
-	value = await bcrypt.hash(value, salt);
-	return value;
+  const salt = await bcrypt.genSalt();
+  value = await bcrypt.hash(value, salt);
+
+  return value;
 };
 
-exports.login = async(idTeuda,password) => {
-	const user = await User.findOne( {idTeuda});
-	if(user) {
-		auth = await bcrypt.compare(password, user.password)
-		if(auth) {
-			return user;
-		}
-		throw Error('incorrect password !')
-	}
-	throw Error('No Id found !')
-}
+exports.login = async (idTeuda, password) => {
+  try {
+    const user = await User.findOne({ idTeuda });
+    if (user) {
+      isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch)
+        return res.status(400).json({ message: "שם משתמש או סיסמא שגויים" });
+
+      return user;
+    }
+  } catch (err) {
+    return res.status(400).json({ message: err });
+  }
+};
