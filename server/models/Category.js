@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const productDetailsSchema = new Schema(
+const categorySchema = new Schema(
   {
     serialNumber: {
       type: String,
@@ -19,11 +19,17 @@ const productDetailsSchema = new Schema(
       trim: true,
       required: true,
     },
+    productList: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
 
-const ProductDetails = mongoose.model("products", productDetailsSchema);
-module.exports = ProductDetails;
+const Category = mongoose.model("category", categorySchema);
+module.exports = Category;

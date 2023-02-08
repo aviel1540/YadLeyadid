@@ -12,7 +12,7 @@ router.get("/", userController.getAllUsers);
 //search user by id
 router.get("/:id", userController.getUserById);
 //update user
-router.patch("update-password/:id", userController.updatePassword);
+router.patch("/update-password/:id", userController.updatePassword);
 //add products to user
-
+router.patch('/update-product-user/:user_id/productId/:product_id', userController.addProductUser);
 module.exports = router;

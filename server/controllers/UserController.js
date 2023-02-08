@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Category = require('../models/Category');
 const auth = require("../utils/auth/auth");
 const escape = require("escape-html");
 const {
@@ -192,7 +193,28 @@ const userCtrl = {
     }
   },
   //add product to user
+  addProductUser: async(req,res) => {
+    const userId = escape(req.params.user_id);
+    const productId = escape(req.params.product_id);
+    try {
+      const user = await User.findById(userId);
+      // const product = await Product.findById(productId);
+      if(!user)
+      return res
+            .status(400)
+            .json({message : "לקוח לא קיים "});
+      
+      if(!product)
+      return res
+            .status(400)
+            .json({message : "מוצר לא קיים "});
 
+      
+      
+    } catch(err) {
+
+    }
+  }
   //remove product from user
 };
 
