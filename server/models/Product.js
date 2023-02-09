@@ -4,9 +4,14 @@ const Schema = mongoose.Schema;
 
 const productSchema = new Schema(
     {
-        middleName: {
+        product_id: {
             type: String,
             trim: true,
+            required: true
+        },
+        place: {
+            type: String,
+            enum: ['מושאל','במחסן','בתיקון'],
             required: true
         },
         loan_by: {
