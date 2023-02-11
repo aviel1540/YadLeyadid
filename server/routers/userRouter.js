@@ -14,8 +14,8 @@ router.get("/:id", userController.getUserById);
 //update user
 router.patch("/update-password/:id", userController.updatePassword);
 //add products to user
-router.patch(
-	"/update-product/:user_id/productId/:product_id",
+router.post(
+	"/add-product/:user_id/productId/:product_id",
 	userController.addProductUser
 );
 router.delete(

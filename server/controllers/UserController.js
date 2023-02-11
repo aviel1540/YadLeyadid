@@ -126,7 +126,7 @@ const userCtrl = {
 					address: user.address,
 					paymentType: user.paymentType,
 				},
-				process.env.SECRET
+				process.env.ACTIVATION_TOKEN_SECRET
 			);
 
 			return res.status(200).json(token);
