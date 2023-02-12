@@ -16,7 +16,7 @@ exports.auth = async (req, res, next) => {
 		const user = await User.findOne({ _id: decoded.id, token });
 
 		if (!user) {
-			throw new Error("לא קיים המשתמש");
+			throw new Error("משתמש לא קיים");
 		}
 		req.user = user;
 

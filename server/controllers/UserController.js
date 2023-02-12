@@ -264,6 +264,19 @@ const userCtrl = {
 		}
 	},
 	// TODO: Update, getListForUser
+	getUserProducts: async (req,res) => {
+		const userId = escape(req.params.id);
+		let user;
+		try{
+			const checkUserId = addSlashes(userId);
+			user = await User.findById({checkUserId});
+		} catch(err){
+			return res.status(404).json({message: err});
+		}
+		if(!user)
+			return res.status(404).json({message: "לא קיים משתמש"});
+		return res.status(200).json(user.productList);
+	}
 };
 
 module.exports = userCtrl;

@@ -22,4 +22,5 @@ router.delete(
 	"/delete-product/:user_id/productId/:product_id",
 	userController.deleteProductUser
 );
+router.get("/user-list/:id" ,userController.getUserProducts);
 module.exports = router;
