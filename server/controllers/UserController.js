@@ -15,6 +15,8 @@ const userCtrl = {
 	//add new user controller
 	register: async (req, res) => {
 		const idTeuda = escape(req.body.idTeuda);
+		const username = escape(req.body.username);
+
 		const name = escape(req.body.name);
 		const password = escape(req.body.password);
 		const email = escape(req.body.email);
@@ -27,6 +29,7 @@ const userCtrl = {
 			if (
 				!idTeuda ||
 				!name ||
+				!username ||
 				!password ||
 				!email ||
 				!phoneNumber ||
@@ -52,12 +55,23 @@ const userCtrl = {
 			}
 
 			const checkIdTeuda = addSlashes(idTeuda);
+			const checkUsername = addSlashes(username);
 			const checkName = addSlashes(name);
 			const checkPassword = addSlashes(password);
 			const checkEmail = addSlashes(email);
 			const checkPhoneNumber = addSlashes(phoneNumber);
 			const checkAddress = addSlashes(address);
 			const checkPaymentType = addSlashes(paymentType);
+
+
+			const userUsername = await User.findOne({ username: checkUsername });
+
+			if (userUsername) {
+				return res
+					.status(400)
+					.json({ message: "שם משתמש כבר קיים" });
+			}
+
 
 			const userIdTeuda = await User.findOne({ idTeuda: checkIdTeuda });
 
@@ -85,6 +99,7 @@ const userCtrl = {
 
 			user = new User({
 				idTeuda: checkIdTeuda,
+				username: checkUsername,
 				name: checkName,
 				email: checkEmail,
 				password: passwordHash,
@@ -114,17 +129,14 @@ const userCtrl = {
 			const checkIdTeuda = addSlashes(idTeuda);
 			const checkPassword = addSlashes(password);
 
-			const user = auth.login(checkIdTeuda, checkPassword);
+			const user = await auth.login(checkIdTeuda, checkPassword);
+			if (!user) {
+				res.status(400).json({ message: "שם משתמש או סיסמא שגויים" });
+			}
 			const token = jwt.sign(
 				{
-					id: user._id,
-					idTeuda: user.idTeuda,
-					name: user.name,
-					password: user.password,
-					email: user.email,
-					phoneNumber: user.phoneNumber,
-					address: user.address,
-					paymentType: user.paymentType,
+					username: user.username,
+					name: user.name
 				},
 				process.env.ACTIVATION_TOKEN_SECRET
 			);
@@ -159,6 +171,22 @@ const userCtrl = {
 			return res.status(404).json({ message: err });
 		}
 	},
+	getUserByUsername: async (req, res) => {
+		console.log("username");
+		const username = escape(req.params.username);
+		let user;
+		try {
+			const checkUsername = addSlashes(username);
+			user = await User.findOne({ username: checkUsername });
+			if (!user) {
+				return res.status(404).json({ message: "לא קיים משתמש" });
+			}
+		} catch (err) {
+			return res.status(400).json({ message: err });
+		}
+	
+		return res.status(200).json(user);
+	},
 	//get user by id By Or
 	getUserById: async (req, res) => {
 		const userId = escape(req.params.id);
@@ -166,7 +194,7 @@ const userCtrl = {
 		try {
 			const checkUserId = addSlashes(userId);
 
-			user = await User.findById({ checkUserId });
+			user = await User.findById(checkUserId);
 		} catch (err) {
 			return res.status(404).json({ message: err });
 		}
@@ -180,15 +208,15 @@ const userCtrl = {
 		const userId = escape(req.params.id);
 		const newPassword = escape(req.body.password);
 
-		if (isLengthPassword(newPassword)) {
-			return res
-				.status(400)
-				.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים" });
-		}
 		try {
-			const password = auth.hashPassword(newPassword);
+			if (!isLengthPassword(newPassword)) {
+				return res
+					.status(400)
+					.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים" });
+			}
 
 			const checkUserId = addSlashes(userId);
+			const password = await auth.hashPassword(newPassword);
 
 			await User.findByIdAndUpdate(checkUserId, { password });
 
@@ -207,12 +235,12 @@ const userCtrl = {
 
 			const user = await User.findById(checkUserId);
 			if (!user)
-				return res.status(400).json({ message: "לקוח לא קיים " });
+				return res.status(404).json({ message: "לקוח לא קיים " });
 
 			const product = await Product.findById(checkproductId);
 
 			if (!product)
-				return res.status(400).json({ message: "מוצר לא קיים " });
+				return res.status(404).json({ message: "מוצר לא קיים " });
 
 			if (product.place !== "קיים במלאי")
 				return res.status(400).json({ message: "מוצר לא זמין " });
@@ -229,7 +257,7 @@ const userCtrl = {
 			});
 
 			await user.save();
-			return res.status(200).json({ message: "הושאל בהצלחה", user });
+			return res.status(201).json({ message: "הושאל בהצלחה", user });
 		} catch (err) {
 			return res.status(401).json({ message: err.message });
 		}
@@ -264,19 +292,37 @@ const userCtrl = {
 		}
 	},
 	// TODO: Update, getListForUser
-	getUserProducts: async (req,res) => {
+	getUserProducts: async (req, res) => {
+		const allProducts = [];
+		const userProducts = [];
 		const userId = escape(req.params.id);
 		let user;
-		try{
+		try {
 			const checkUserId = addSlashes(userId);
-			user = await User.findById({checkUserId});
-		} catch(err){
-			return res.status(404).json({message: err});
+			user = await User.findById(checkUserId);
+			if (!user) {
+				return res.status(404).json({ message: "לא קיים משתמש" });
+			}
+
+			const products = await Product.find()
+
+			user.productList.forEach(e => {
+				allProducts.push(e.toString());
+			});
+
+			products.forEach((p) => {
+				allProducts.forEach((u) => {
+					if (p._id.toString() === u) {
+						userProducts.push(p);
+					}
+				})
+			})
+
+			return res.status(200).json(userProducts);
+		} catch (err) {
+			return res.status(404).json({ message: err });
 		}
-		if(!user)
-			return res.status(404).json({message: "לא קיים משתמש"});
-		return res.status(200).json(user.productList);
+
 	}
 };
-
 module.exports = userCtrl;

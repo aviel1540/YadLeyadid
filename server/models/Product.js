@@ -16,6 +16,11 @@ const productSchema = new Schema({
 		enum: ["מושאל", "קיים במלאי", "בתיקון"],
 		default: "קיים במלאי",
 	},
+	inCategory: {
+		type: Boolean,
+		//false - not in any category
+		default: false
+	},
 	loan_by: {
 		type: Schema.Types.ObjectId,
 		ref: "User",

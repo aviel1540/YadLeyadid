@@ -19,19 +19,21 @@ const productCtrl = {
 	},
 	addProduct: async (req, res) => {
 		const productName = escape(req.body.productName);
+		// const productId = escape(req.body.productId);
 		let product;
 		try {
 			if (!productName) {
-				return res.status(400).json({ message: "יש למלא את השדה" });
+				return res.status(400).json({ message: "יש למלא את השדות" });
 			}
-			const checkProductName = addSlashes(productName);
 
-			const productIdFound = await Product.findOne({
-				productId: id,
-			});
-			if (productIdFound) {
-				return res.status(400).json({ message: "מזהה קיים במערכת" });
-			}
+			const checkProductName = addSlashes(productName);
+			// const checkProductId = addSlashes(productId);
+
+			// const productIdFound = await Product.findOne({ productId: checkProductId });
+
+			// if (productIdFound) {
+			// 	return res.status(400).json({ message: "מזהה קיים במערכת" });
+			// }
 			product = new Product({
 				productId: id++,
 				productName: checkProductName,

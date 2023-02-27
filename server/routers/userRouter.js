@@ -11,6 +11,7 @@ router.delete("/delete/:id", userController.deleteUser);
 router.get("/", userController.getAllUsers);
 //search user by id
 router.get("/:id", userController.getUserById);
+router.get("/find-by-username/:username", userController.getUserByUsername);
 //update user
 router.patch("/update-password/:id", userController.updatePassword);
 //add products to user
@@ -22,5 +23,6 @@ router.delete(
 	"/delete-product/:user_id/productId/:product_id",
 	userController.deleteProductUser
 );
+//get user by username
 router.get("/user-list/:id" ,userController.getUserProducts);
 module.exports = router;

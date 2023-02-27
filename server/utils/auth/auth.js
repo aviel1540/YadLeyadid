@@ -13,11 +13,11 @@ exports.login = async (idTeuda, password) => {
     const user = await User.findOne({ idTeuda });
     if (user) {
       isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch)
-        return res.status(400).json({ message: "שם משתמש או סיסמא שגויים" });
+      if (!isMatch) return false;
 
       return user;
     }
+    return false;
   } catch (err) {
     return res.status(400).json({ message: err });
   }

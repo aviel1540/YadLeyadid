@@ -16,8 +16,7 @@ const categorySchema = new Schema(
     },
     quantity: {
       type: Number,
-      trim: true,
-      required: true,
+      trim: true
     },
     productList: [
       {
