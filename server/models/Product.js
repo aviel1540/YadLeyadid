@@ -21,7 +21,15 @@ const productSchema = new Schema({
 		//false - not in any category
 		default: false
 	},
-	loan_by: {
+	loanDate: {
+		type: Date,
+		default: '1970-01-01'
+	},
+	loanReturn: {
+		type: Date,
+		default: '1970-01-01' 
+	},
+	loanBy: {
 		type: Schema.Types.ObjectId,
 		ref: "User",
 	},

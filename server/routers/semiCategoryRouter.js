@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const categoryController = require("../controllers/CategoryController");
+const categoryController = require("../controllers/SemiCategoryController");
 
 //add new category
 router.post("/add", categoryController.addNewCategory);

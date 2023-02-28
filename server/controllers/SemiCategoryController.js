@@ -1,14 +1,9 @@
-const Category = require("../models/Category");
+const Category = require("../models/semiCategory");
 const escape = require("escape-html");
-const {
-  addSlashes,
-  validateEmail,
-  isLengthUsername,
-  isLengthPassword,
-} = require("../utils/validation/validation");
+const addSlashes = require("../utils/validation/validation");
 const Product = require("../models/Product");
 
-const categoryCtrl = {
+const semiCategoryCtrl = {
   //add new product controller
   addNewCategory: async (req, res) => {
     const serialNumber = escape(req.body.serialNumber);
@@ -138,4 +133,4 @@ const categoryCtrl = {
   }
 };
 
-module.exports = categoryCtrl;
+module.exports = semiCategoryCtrl;

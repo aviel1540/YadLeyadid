@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const categorySchema = new Schema(
+const semiCategorySchema = new Schema(
   {
     serialNumber: {
       type: String,
@@ -30,5 +30,5 @@ const categorySchema = new Schema(
   }
 );
 
-const Category = mongoose.model("category", categorySchema);
-module.exports = Category;
+const SemiCategorySchema = mongoose.model("semi-category", semiCategorySchema);
+module.exports = SemiCategorySchema;

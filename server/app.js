@@ -2,7 +2,8 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
-const categoryRouter = require("./routers/categoryRouter");
+const semiCategoryRouter = require("./routers/semiCategoryRouter");
+const mainCategoryRouter = require("./routers/mainCategoryRouter");
 const userRouter = require("./routers/userRouter");
 const productRouter = require("./routers/productRouter");
 const URI = process.env.URI;
@@ -19,7 +20,8 @@ mongoose
 	.then(() => console.log("Connected to DataBase"))
 	.catch((err) => console.log(err.message));
 
-app.use("/category", categoryRouter);
+app.use("/semi-category", semiCategoryRouter);
+app.use("/main-category", mainCategoryRouter);
 app.use("/users", userRouter);
 app.use("/products", productRouter);
 

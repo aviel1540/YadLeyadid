@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const Category = require("../models/Category");
 const auth = require("../utils/auth/auth");
 const escape = require("escape-html");
 const {
@@ -154,13 +153,12 @@ const userCtrl = {
 			const checkUserId = addSlashes(userId);
 
 			user = await User.findByIdAndRemove(checkUserId);
+			if (!user) 
+				return res.status(404).json({ message: "לא קיים משתמש" });
+			return res.status(200).json({ message: "המשתמש נמחק בהצלחה" });
 		} catch (err) {
 			return res.status(404).json({ message: err });
 		}
-		if (!user) {
-			return res.status(404).json({ message: "לא קיים משתמש" });
-		}
-		return res.status(200).json({ message: "המשתמש נמחק בהצלחה" });
 	},
 	//show all users By Or
 	getAllUsers: async (req, res) => {
@@ -195,13 +193,13 @@ const userCtrl = {
 			const checkUserId = addSlashes(userId);
 
 			user = await User.findById(checkUserId);
+			if (!user) {
+				return res.status(404).json({ message: "לא קיים משתמש" });
+			}
+			return res.status(200).json(user);
 		} catch (err) {
 			return res.status(404).json({ message: err });
 		}
-		if (!user) {
-			return res.status(404).json({ message: "לא קיים משתמש" });
-		}
-		return res.status(200).json(user);
 	},
 	//updatePassword user By Or
 	updatePassword: async (req, res) => {
