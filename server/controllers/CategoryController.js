@@ -69,7 +69,7 @@ const categoryCtrl = {
       res.status(400).json({ message: err });
     }
   },
-  //update product Details
+  //update Category Details
   updateCategory: async (req, res) => {
     const id = escape(req.params.id);
     const serialNumber = escape(req.body.serialNumber);
@@ -121,13 +121,15 @@ const categoryCtrl = {
       
       if (productExist)
 				return res.status(400).json({ message: "מוצר זה קיים בקטגוריה" });
-      let cntQuantity = product.quantity + 1;
+        
       category.productList.push(product);
+      
+      let cntQuantity = category.quantity + 1;
       await Product.findByIdAndUpdate(checkProductId, {
-        quantity: cntQuantity,
         inCategory: true,
       });
 
+      category.quantity = cntQuantity;
       await category.save();
 			return res.status(201).json({ message: "שוייך בהצלחה"});
     }catch(err) {
