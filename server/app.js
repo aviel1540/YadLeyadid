@@ -1,7 +1,17 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
+const fs = require("fs");
+
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const customCss = fs.readFileSync(
+	process.cwd() + "/documentation/swagger.css",
+	"utf8"
+);
+
+const swaggerDocument = require("./documentation/openapi.json");
+
 const semiCategoryRouter = require("./routers/semiCategoryRouter");
 const mainCategoryRouter = require("./routers/mainCategoryRouter");
 const userRouter = require("./routers/userRouter");
@@ -20,10 +30,19 @@ mongoose
 	.then(() => console.log("Connected to DataBase"))
 	.catch((err) => console.log(err.message));
 
-app.use("/semi-category", semiCategoryRouter);
-app.use("/main-category", mainCategoryRouter);
-app.use("/users", userRouter);
-app.use("/products", productRouter);
+app.use(
+	"/api-docs",
+	swaggerUi.serve,
+	swaggerUi.setup(swaggerDocument, {
+		customCss,
+		customSiteTitle: "YadLeyadid",
+	})
+);
+
+app.use("/api/semi-category/", semiCategoryRouter);
+// app.use("/main-category", mainCategoryRouter);
+app.use("/api/users/", userRouter);
+app.use("/api/products/", productRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

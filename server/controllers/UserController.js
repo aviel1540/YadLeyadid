@@ -62,15 +62,13 @@ const userCtrl = {
 			const checkAddress = addSlashes(address);
 			const checkPaymentType = addSlashes(paymentType);
 
-
-			const userUsername = await User.findOne({ username: checkUsername });
+			const userUsername = await User.findOne({
+				username: checkUsername,
+			});
 
 			if (userUsername) {
-				return res
-					.status(400)
-					.json({ message: "שם משתמש כבר קיים" });
+				return res.status(400).json({ message: "שם משתמש כבר קיים" });
 			}
-
 
 			const userIdTeuda = await User.findOne({ idTeuda: checkIdTeuda });
 
@@ -135,7 +133,7 @@ const userCtrl = {
 			const token = jwt.sign(
 				{
 					username: user.username,
-					name: user.name
+					name: user.name,
 				},
 				process.env.ACTIVATION_TOKEN_SECRET
 			);
@@ -153,7 +151,7 @@ const userCtrl = {
 			const checkUserId = addSlashes(userId);
 
 			user = await User.findByIdAndRemove(checkUserId);
-			if (!user) 
+			if (!user)
 				return res.status(404).json({ message: "לא קיים משתמש" });
 			return res.status(200).json({ message: "המשתמש נמחק בהצלחה" });
 		} catch (err) {
@@ -170,7 +168,6 @@ const userCtrl = {
 		}
 	},
 	getUserByUsername: async (req, res) => {
-		console.log("username");
 		const username = escape(req.params.username);
 		let user;
 		try {
@@ -182,7 +179,7 @@ const userCtrl = {
 		} catch (err) {
 			return res.status(400).json({ message: err });
 		}
-	
+
 		return res.status(200).json(user);
 	},
 	//get user by id By Or
@@ -302,9 +299,9 @@ const userCtrl = {
 				return res.status(404).json({ message: "לא קיים משתמש" });
 			}
 
-			const products = await Product.find()
+			const products = await Product.find();
 
-			user.productList.forEach(e => {
+			user.productList.forEach((e) => {
 				allProducts.push(e.toString());
 			});
 
@@ -313,14 +310,13 @@ const userCtrl = {
 					if (p._id.toString() === u) {
 						userProducts.push(p);
 					}
-				})
-			})
+				});
+			});
 
 			return res.status(200).json(userProducts);
 		} catch (err) {
 			return res.status(404).json({ message: err });
 		}
-
-	}
+	},
 };
 module.exports = userCtrl;

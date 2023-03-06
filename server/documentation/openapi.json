@@ -1,0 +1,185 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"description": "Final Project",
+		"version": "1.0.0",
+		"title": "YadLeyadid",
+		"contact": {
+			"name": "YadLeyadid",
+			"email": "or.zarhi11@gmail.com"
+		},
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+		}
+	},
+	"servers": [
+		{
+			"url": "http://localhost:5000/api",
+			"description": "Sandbox"
+		}
+	],
+	"paths": {
+		"/users": {
+			"get": {
+				"tags": ["Users"],
+				"summary": "Get all users",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/users/:id": {
+			"get": {
+				"tags": ["Users"],
+				"summary": "Get user by id",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "integer" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/users/find-by-username/:username": {
+			"get": {
+				"tags": ["Users"],
+				"summary": "Get user by username",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "username",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "integer" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/users/delete/:id": {
+			"delete": {
+				"tags": ["Users"],
+				"summary": "Delete user by id",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "integer" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/users/register": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "Register to the app",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"idTeuda": { "type": "string" },
+									"username": { "type": "string" },
+									"name": { "type": "string" },
+									"password": { "type": "string" },
+									"email": { "type": "string" },
+									"phoneNumber": { "type": "string" },
+									"address": { "type": "string" },
+									"paymentType": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/users/login": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "Login to the app",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"idTeuda": { "type": "string" },
+									"password": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		}
+	}
+}
