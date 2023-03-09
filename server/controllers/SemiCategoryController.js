@@ -1,11 +1,10 @@
 const Category = require("../models/semiCategory");
 const escape = require("escape-html");
-const addSlashes = require("../utils/validation/validation");
+const addSlashes = require("../utils/validation");
 const Product = require("../models/Product");
 
-const semiCategoryCtrl = {
   //add new product controller
-  addNewCategory: async (req, res) => {
+  exports.addNewCategory = async (req, res) => {
     const serialNumber = escape(req.body.serialNumber);
     const name = escape(req.body.name);
     try {
@@ -30,7 +29,7 @@ const semiCategoryCtrl = {
     }
   },
   //delete category controller
-  deleteCategory: async (req, res) => {
+  exports.deleteCategory = async (req, res) => {
     const id = escape(req.params.id);
     try {
       const checkId = addSlashes(id);
@@ -44,7 +43,7 @@ const semiCategoryCtrl = {
     }
   },
   //show all categories controller
-  showAllCategories: async (req, res) => {
+  exports.showAllCategories = async (req, res) => {
     try {
       const categories = await Category.find();
       res.status(201).json({ categories });
@@ -53,7 +52,7 @@ const semiCategoryCtrl = {
     }
   },
   //search specific Category
-  searchCategory: async (req, res) => {
+  exports.searchCategory = async (req, res) => {
     const idSearch = escape(req.params.id);
     try {
       const checkIdSearch = addSlashes(idSearch);
@@ -65,7 +64,7 @@ const semiCategoryCtrl = {
     }
   },
   //update Category Details
-  updateCategory: async (req, res) => {
+  exports.updateCategory = async (req, res) => {
     const id = escape(req.params.id);
     const serialNumber = escape(req.body.serialNumber);
     const name = escape(req.body.name);
@@ -94,7 +93,7 @@ const semiCategoryCtrl = {
 
   },
   //post product to category
-  asignProductToCategory: async (req,res) => {
+  exports.asignProductToCategory = async (req,res) => {
     const categoryId = escape(req.params.id);
     const productId = escape(req.params.productId);
     try {
@@ -131,6 +130,4 @@ const semiCategoryCtrl = {
 			return res.status(401).json({ message: err.message });
     }
   }
-};
 
-module.exports = semiCategoryCtrl;

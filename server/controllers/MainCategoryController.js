@@ -1,9 +1,8 @@
 const MainCategory = require("../models/MainCategory");
 const escape = require("escape-html");
-const addSlashes = require("../utils/validation/validation");
+const addSlashes = require("../utils/validation");
 
-const mainCategoryCtrl = {
-    addNewMainCategory: async (req, res) => {
+    exports.addNewMainCategory = async (req, res) => {
         const categoryName = escape(req.body.name);
         try {
             const checkName = addSlashes(categoryName);
@@ -21,21 +20,18 @@ const mainCategoryCtrl = {
             return res.status(400).json({ message: err });
         }
     },
-    deleteMainCategory: async (req, res) => {
+    exports.deleteMainCategory = async (req, res) => {
         
     },
-    getMainCategoryById: async (req, res) => {
+    exports.getMainCategoryById = async (req, res) => {
 
     },
-    updateMainCategory: async (req, res) => {
+    exports.updateMainCategory = async (req, res) => {
 
     },
-    asignSemiCategoryToMainCategory: async (req, res) => {
+    exports.asignSemiCategoryToMainCategory = async (req, res) => {
 
     },
-    getSemiCategoryInMainCategory: async (req, res) => {
+    exports.getSemiCategoryInMainCategory = async (req, res) => {
 
     }
-}
-
-module.exports = mainCategoryCtrl;

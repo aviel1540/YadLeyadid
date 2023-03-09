@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const userController = require("../controllers/userController");
-
 //show all users
 router.get("/", userController.getAllUsers);
 

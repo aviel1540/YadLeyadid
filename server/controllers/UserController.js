@@ -1,21 +1,15 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const auth = require("../utils/auth/auth");
+const auth = require("../utils/auth");
 const escape = require("escape-html");
-const {
-	addSlashes,
-	validateEmail,
-	isLengthUsername,
-	isLengthPassword,
-} = require("../utils/validation/validation");
+const validation = require("../utils/validation");
 const Product = require("../models/Product");
 
-const userCtrl = {
+
 	//add new user controller
-	register: async (req, res) => {
+	exports.register = async (req, res) => {
 		const idTeuda = escape(req.body.idTeuda);
 		const username = escape(req.body.username);
-
 		const name = escape(req.body.name);
 		const password = escape(req.body.password);
 		const email = escape(req.body.email);
@@ -37,30 +31,30 @@ const userCtrl = {
 			) {
 				return res.status(400).json({ message: "נא למלא את כל השדות" });
 			}
-			if (!validateEmail(email)) {
+			if (!validation.checkEmail(email)) {
 				return res.status(400).json({ message: "מייל לא תקין" });
 			}
 
-			if (!isLengthUsername(name)) {
+			if (!validation.checkUsername(name)) {
 				return res.status(400).json({
 					message: "שם צריך להכיל מינימום 2 תווים",
 				});
 			}
 
-			if (!isLengthPassword(password)) {
+			if (!validation.checkPassword(password)) {
 				return res
 					.status(400)
 					.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים" });
 			}
 
-			const checkIdTeuda = addSlashes(idTeuda);
-			const checkUsername = addSlashes(username);
-			const checkName = addSlashes(name);
-			const checkPassword = addSlashes(password);
-			const checkEmail = addSlashes(email);
-			const checkPhoneNumber = addSlashes(phoneNumber);
-			const checkAddress = addSlashes(address);
-			const checkPaymentType = addSlashes(paymentType);
+			const checkIdTeuda = validation.addSlashes(idTeuda);
+			const checkUsername = validation.addSlashes(username);
+			const checkName = validation.addSlashes(name);
+			const checkPassword = validation.addSlashes(password);
+			const checkEmail = validation.addSlashes(email);
+			const checkPhoneNumber = validation.addSlashes(phoneNumber);
+			const checkAddress = validation.addSlashes(address);
+			const checkPaymentType = validation.addSlashes(paymentType);
 
 			const userUsername = await User.findOne({
 				username: checkUsername,
@@ -113,9 +107,9 @@ const userCtrl = {
 			return res.status(500).json({ message: "לא נוסף המשתמש" });
 		}
 		return res.status(201).json(user);
-	},
+	}
 	//user login By Or
-	loginUser: async (req, res) => {
+	exports.loginUser = async (req, res) => {
 		const idTeuda = escape(req.body.idTeuda);
 		const password = escape(req.body.password);
 
@@ -142,9 +136,9 @@ const userCtrl = {
 		} catch (err) {
 			return res.status(404).json({ message: err });
 		}
-	},
+	}
 	//delete user controller By Or
-	deleteUser: async (req, res) => {
+	exports.deleteUser = async (req, res) => {
 		const userId = escape(req.params.id);
 		let user;
 		try {
@@ -157,17 +151,17 @@ const userCtrl = {
 		} catch (err) {
 			return res.status(404).json({ message: err });
 		}
-	},
+	}
 	//show all users By Or
-	getAllUsers: async (req, res) => {
+	exports.getAllUsers = async (req, res) => {
 		try {
 			const users = await User.find();
 			return res.status(200).send(users);
 		} catch (err) {
 			return res.status(404).json({ message: err });
 		}
-	},
-	getUserByUsername: async (req, res) => {
+	}
+	exports.getUserByUsername = async (req, res) => {
 		const username = escape(req.params.username);
 		let user;
 		try {
@@ -181,9 +175,9 @@ const userCtrl = {
 		}
 
 		return res.status(200).json(user);
-	},
+	}
 	//get user by id By Or
-	getUserById: async (req, res) => {
+	exports.getUserById = async (req, res) => {
 		const userId = escape(req.params.id);
 		let user;
 		try {
@@ -197,9 +191,9 @@ const userCtrl = {
 		} catch (err) {
 			return res.status(404).json({ message: err });
 		}
-	},
+	}
 	//updatePassword user By Or
-	updatePassword: async (req, res) => {
+	exports.updatePassword = async (req, res) => {
 		const userId = escape(req.params.id);
 		const newPassword = escape(req.body.password);
 
@@ -219,9 +213,9 @@ const userCtrl = {
 		} catch (err) {
 			return res.status(401).json({ message: err.message });
 		}
-	},
+	}
 	//add product to user
-	addProductUser: async (req, res) => {
+	exports.addProductUser = async (req, res) => {
 		const userId = escape(req.params.user_id);
 		const productId = escape(req.params.product_id);
 		try {
@@ -256,9 +250,9 @@ const userCtrl = {
 		} catch (err) {
 			return res.status(401).json({ message: err.message });
 		}
-	},
+	}
 	//remove product from user
-	deleteProductUser: async (req, res) => {
+	exports.deleteProductUser = async (req, res) => {
 		const userId = escape(req.params.user_id);
 		const productId = escape(req.params.product_id);
 		try {
@@ -285,9 +279,9 @@ const userCtrl = {
 		} catch (err) {
 			return res.status(401).json({ message: err.message });
 		}
-	},
+	}
 	// TODO: Update, getListForUser
-	getUserProducts: async (req, res) => {
+	exports.getUserProducts = async (req, res) => {
 		const allProducts = [];
 		const userProducts = [];
 		const userId = escape(req.params.id);
@@ -317,6 +311,4 @@ const userCtrl = {
 		} catch (err) {
 			return res.status(404).json({ message: err });
 		}
-	},
-};
-module.exports = userCtrl;
+	}

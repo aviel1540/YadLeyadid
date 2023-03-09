@@ -1,4 +1,4 @@
-exports.validateEmail = (email) => {
+exports.checkEmail = (email) => {
   const re =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -14,12 +14,12 @@ exports.isEmpty = (value) => {
   return true;
 };
 
-exports.isLengthPassword = (password) => {
+exports.checkPassword = (password) => {
   if (password.length <= 8) return false;
   return true;
 };
 
-exports.isLengthUsername = (username) => {
+exports.checkUsername = (username) => {
   if (username.length <= 1) return false;
   return true;
 };

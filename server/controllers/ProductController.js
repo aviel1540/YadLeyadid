@@ -1,10 +1,9 @@
 const Product = require("../models/Product");
 const escape = require("escape-html");
-const addSlashes = require("../utils/validation/validation");
+const addSlashes = require("../utils/validation");
 
 let id = 1;
-const productCtrl = {
-	getProducts: async (req, res) => {
+	exports.getProducts = async (req, res) => {
 		try {
 			const product = await Product.find();
 			return res.status(200).send(product);
@@ -12,7 +11,7 @@ const productCtrl = {
 			return res.status(401).json({ message: err.message });
 		}
 	},
-	addProduct: async (req, res) => {
+	exports.addProduct = async (req, res) => {
 		const productName = escape(req.body.productName);
 		let product;
 		try {
@@ -32,7 +31,7 @@ const productCtrl = {
 			return res.status(401).json({ message: err.message });
 		}
 	},
-	getSpecificProduct: async (req, res) => {
+	exports.getSpecificProduct = async (req, res) => {
 		const productId = escape(req.params.id);
 		let product;
 		try {
@@ -45,7 +44,7 @@ const productCtrl = {
 			return res.status(404).json({ message: err });
 		}
 	},
-	deleteProduct: async (req, res) => {
+	exports.deleteProduct = async (req, res) => {
 		const productId = escape(req.params.id);
 		let product;
 		try {
@@ -58,7 +57,7 @@ const productCtrl = {
 			return res.status(404).json({ message: err });
 		}
 	},
-	updateProduct: async (req, res) => {
+	exports.updateProduct = async (req, res) => {
 		const productId = escape(req.params.id);
 		const productName = escape(req.body.productName);
 
@@ -79,6 +78,4 @@ const productCtrl = {
 			return res.status(400).json({message: err});
 		}
 	}
-};
 
-module.exports = productCtrl;
