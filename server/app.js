@@ -40,7 +40,7 @@ app.use(
 );
 
 app.use("/api/semi-category/", semiCategoryRouter);
-// app.use("/main-category", mainCategoryRouter);
+app.use("/api/main-category", mainCategoryRouter);
 app.use("/api/users/", userRouter);
 app.use("/api/products/", productRouter);
 

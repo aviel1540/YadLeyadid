@@ -1,6 +1,6 @@
 const Category = require("../models/semiCategory");
 const escape = require("escape-html");
-const addSlashes = require("../utils/validation");
+const validation = require("../utils/validation");
 const Product = require("../models/Product");
 
 //add new product controller
@@ -8,8 +8,8 @@ exports.addNewCategory = async (req, res) => {
 	const serialNumber = escape(req.body.serialNumber);
 	const name = escape(req.body.name);
 	try {
-		const checkSerialNumber = addSlashes(serialNumber);
-		const checkName = addSlashes(name);
+		const checkSerialNumber = validation.addSlashes(serialNumber);
+		const checkName = validation.addSlashes(name);
 
 		const categoryFound = await Category.findOne({
 			serialNumber: checkSerialNumber,
@@ -35,7 +35,7 @@ exports.addNewCategory = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
 	const id = escape(req.params.id);
 	try {
-		const checkId = addSlashes(id);
+		const checkId = validation.addSlashes(id);
 		const categoryResult = await Category.findByIdAndDelete(checkId);
 		if (!categoryResult) {
 			return res.status(404).json({ message: "לא נמצאה קטגוריה" });
@@ -60,7 +60,7 @@ exports.showAllCategories = async (req, res) => {
 exports.searchCategory = async (req, res) => {
 	const idSearch = escape(req.params.id);
 	try {
-		const checkIdSearch = addSlashes(idSearch);
+		const checkIdSearch = validation.addSlashes(idSearch);
 		const category = await Category.findById(checkIdSearch);
 		if (!category) return res.status(400).send("No Category Found !");
 		res.status(200).json({ category });
@@ -77,9 +77,9 @@ exports.updateCategory = async (req, res) => {
 
 	let updatedCategory;
 	try {
-		const checkId = addSlashes(id);
-		const checkSerialNumber = addSlashes(serialNumber);
-		const checkName = addSlashes(name);
+		const checkId = validation.addSlashes(id);
+		const checkSerialNumber = validation.addSlashes(serialNumber);
+		const checkName = validation.addSlashes(name);
 
 		updatedCategory = await Category.findByIdAndUpdate(checkId, {
 			serialNumber: checkSerialNumber,
@@ -103,8 +103,8 @@ exports.asignProductToCategory = async (req, res) => {
 	const categoryId = escape(req.params.id);
 	const productId = escape(req.params.productId);
 	try {
-		const checkCategoryId = addSlashes(categoryId);
-		const checkProductId = addSlashes(productId);
+		const checkCategoryId = validation.addSlashes(categoryId);
+		const checkProductId = validation.addSlashes(productId);
 
 		const category = await Category.findById(checkCategoryId);
 		if (!category)

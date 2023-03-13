@@ -45,14 +45,14 @@ exports.register = async (req, res) => {
 				.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים" });
 		}
 
-		const checkIdTeuda = validation.validation.addSlashes(idTeuda);
-		const checkUsername = validation.validation.addSlashes(username);
-		const checkName = validation.validation.addSlashes(name);
-		const checkPassword = validation.validation.addSlashes(password);
-		const checkEmail = validation.validation.addSlashes(email);
-		const checkPhoneNumber = validation.validation.addSlashes(phoneNumber);
-		const checkAddress = validation.validation.addSlashes(address);
-		const checkPaymentType = validation.validation.addSlashes(paymentType);
+		const checkIdTeuda = validation.addSlashes(idTeuda);
+		const checkUsername = validation.addSlashes(username);
+		const checkName = validation.addSlashes(name);
+		const checkPassword = validation.addSlashes(password);
+		const checkEmail = validation.addSlashes(email);
+		const checkPhoneNumber = validation.addSlashes(phoneNumber);
+		const checkAddress = validation.addSlashes(address);
+		const checkPaymentType = validation.addSlashes(paymentType);
 
 		const userUsername = await User.findOne({
 			username: checkUsername,

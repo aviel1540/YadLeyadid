@@ -38,7 +38,7 @@
 				}
 			}
 		},
-		"/users/:id": {
+		"/users/{id}": {
 			"get": {
 				"tags": ["Users"],
 				"summary": "Get user by id",
@@ -52,7 +52,7 @@
 						"name": "id",
 						"in": "path",
 						"required": true,
-						"schema": { "type": "integer" }
+						"schema": { "type": "string" }
 					}
 				],
 
@@ -63,7 +63,7 @@
 				}
 			}
 		},
-		"/users/find-by-username/:username": {
+		"/users/find-by-username/{username}": {
 			"get": {
 				"tags": ["Users"],
 				"summary": "Get user by username",
@@ -77,7 +77,7 @@
 						"name": "username",
 						"in": "path",
 						"required": true,
-						"schema": { "type": "integer" }
+						"schema": { "type": "string" }
 					}
 				],
 
@@ -88,7 +88,7 @@
 				}
 			}
 		},
-		"/users/delete/:id": {
+		"/users/delete/{id}": {
 			"delete": {
 				"tags": ["Users"],
 				"summary": "Delete user by id",
@@ -102,7 +102,7 @@
 						"name": "id",
 						"in": "path",
 						"required": true,
-						"schema": { "type": "integer" }
+						"schema": { "type": "string" }
 					}
 				],
 
@@ -177,6 +177,144 @@
 				"responses": {
 					"200": {
 						"description": "Success"
+					}
+				}
+			}
+		},
+		"/users/update-password/{id}": {
+			"patch": {
+				"tags": ["Users"],
+				"summary": "Update password",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"newPassword": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/users/add-product/{user_id}/productId/{product_id}": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "Add product to user",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "user_id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "product_id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/users/delete-product/{user_id}/productId/{product_id}": {
+			"delete": {
+				"tags": ["Users"],
+				"summary": "Delete product to user",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "user_id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "product_id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/users/user-list/{id}": {
+			"get": {
+				"tags": ["Users"],
+				"summary": "Get all product for user",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/products": {
+			"get": {
+				"tags": ["Product"],
+				"summary": "Get all products",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A list of users."
 					}
 				}
 			}
