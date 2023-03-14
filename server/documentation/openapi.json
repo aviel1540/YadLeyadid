@@ -301,6 +301,246 @@
 				}
 			}
 		},
+		"/main-category": {
+			"get": {
+				"tags": ["Main Category"],
+				"summary": "Get all main-category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/main-category/{id}": {
+			"get": {
+				"tags": ["Main Category"],
+				"summary": "Get main-category by id",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/main-category/add": {
+			"post": {
+				"tags": ["Main Category"],
+				"summary": "Add main-category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"categoryName": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/semi-category": {
+			"get": {
+				"tags": ["Semi Category"],
+				"summary": "Get all semi-category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/semi-category/{id}": {
+			"get": {
+				"tags": ["Semi Category"],
+				"summary": "Get semi-category by id",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/semi-category/add": {
+			"post": {
+				"tags": ["Semi Category"],
+				"summary": "Add semi-category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"serialNumber": { "type": "string" },
+									"name": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/semi-category/update/{id}": {
+			"patch": {
+				"tags": ["Semi Category"],
+				"summary": "Update semi-category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"serialNumber": { "type": "string" },
+									"name": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/semi-category/delete/{id}": {
+			"delete": {
+				"tags": ["Semi Category"],
+				"summary": "Delete semi-category by id",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/semi-category/{id}/asign-category/{productId}": {
+			"post": {
+				"tags": ["Semi Category"],
+				"summary": "asign semi-category to main-category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "productId",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
 		"/products": {
 			"get": {
 				"tags": ["Product"],

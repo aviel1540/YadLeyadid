@@ -3,6 +3,29 @@ const escape = require("escape-html");
 const validation = require("../utils/validation");
 const Product = require("../models/Product");
 
+//show all categories controller
+exports.getAllCategories = async (req, res) => {
+	try {
+		const categories = await Category.find();
+		res.status(201).json({ categories });
+	} catch (err) {
+		res.status(400).json({ message: err });
+	}
+};
+
+//search specific Category
+exports.gethCategoryById = async (req, res) => {
+	const idSearch = escape(req.params.id);
+	try {
+		const checkIdSearch = validation.addSlashes(idSearch);
+		const category = await Category.findById(checkIdSearch);
+		if (!category) return res.status(400).send("No Category Found !");
+		res.status(200).json({ category });
+	} catch (err) {
+		res.status(400).json({ message: err });
+	}
+};
+
 //add new product controller
 exports.addNewCategory = async (req, res) => {
 	const serialNumber = escape(req.body.serialNumber);
@@ -27,44 +50,6 @@ exports.addNewCategory = async (req, res) => {
 		res.status(201).json({ message: "קטגוריה נוספה בהצלחה" });
 	} catch (err) {
 		console.log(err);
-		res.status(400).json({ message: err });
-	}
-};
-
-//delete category controller
-exports.deleteCategory = async (req, res) => {
-	const id = escape(req.params.id);
-	try {
-		const checkId = validation.addSlashes(id);
-		const categoryResult = await Category.findByIdAndDelete(checkId);
-		if (!categoryResult) {
-			return res.status(404).json({ message: "לא נמצאה קטגוריה" });
-		}
-		res.status(200).json({ message: "נמחק בהצלחה" });
-	} catch (err) {
-		res.status(400).json({ message: err });
-	}
-};
-
-//show all categories controller
-exports.showAllCategories = async (req, res) => {
-	try {
-		const categories = await Category.find();
-		res.status(201).json({ categories });
-	} catch (err) {
-		res.status(400).json({ message: err });
-	}
-};
-
-//search specific Category
-exports.searchCategory = async (req, res) => {
-	const idSearch = escape(req.params.id);
-	try {
-		const checkIdSearch = validation.addSlashes(idSearch);
-		const category = await Category.findById(checkIdSearch);
-		if (!category) return res.status(400).send("No Category Found !");
-		res.status(200).json({ category });
-	} catch (err) {
 		res.status(400).json({ message: err });
 	}
 };
@@ -94,6 +79,21 @@ exports.updateCategory = async (req, res) => {
 		res.status(201).json({ message: "קטגוריה עודכנה בהצלחה" });
 	} catch (err) {
 		console.log(err);
+		res.status(400).json({ message: err });
+	}
+};
+
+//delete category controller
+exports.deleteCategory = async (req, res) => {
+	const id = escape(req.params.id);
+	try {
+		const checkId = validation.addSlashes(id);
+		const categoryResult = await Category.findByIdAndDelete(checkId);
+		if (!categoryResult) {
+			return res.status(404).json({ message: "לא נמצאה קטגוריה" });
+		}
+		res.status(200).json({ message: "נמחק בהצלחה" });
+	} catch (err) {
 		res.status(400).json({ message: err });
 	}
 };
