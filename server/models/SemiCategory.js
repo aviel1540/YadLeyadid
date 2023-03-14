@@ -16,7 +16,12 @@ const semiCategorySchema = new Schema(
     },
     quantity: {
       type: Number,
-      trim: true
+      trim: true,
+      default: 0
+    },
+    inMainCategory: {
+      type: Boolean,
+      default: false
     },
     productList: [
       {

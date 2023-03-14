@@ -1,4 +1,4 @@
-const Category = require("../models/semiCategory");
+const Category = require("../models/SemiCategory");
 const escape = require("escape-html");
 const validation = require("../utils/validation");
 const Product = require("../models/Product");
@@ -88,10 +88,14 @@ exports.deleteCategory = async (req, res) => {
 	const id = escape(req.params.id);
 	try {
 		const checkId = validation.addSlashes(id);
-		const categoryResult = await Category.findByIdAndDelete(checkId);
+		const categoryResult = await Category.findById(checkId);
 		if (!categoryResult) {
 			return res.status(404).json({ message: "לא נמצאה קטגוריה" });
 		}
+		if(categoryResult.quantity > 0){
+			return res.status(401).json({message: "יש למחוק את המוצרים המשוייכים"});
+		}
+		await Category.findByIdAndDelete(checkId);
 		res.status(200).json({ message: "נמחק בהצלחה" });
 	} catch (err) {
 		res.status(400).json({ message: err });
@@ -124,11 +128,12 @@ exports.asignProductToCategory = async (req, res) => {
 
 		if (productExist)
 			return res.status(400).json({ message: "מוצר זה קיים בקטגוריה" });
-
+		
 		category.productList.push(product);
 
 		let cntQuantity = category.quantity + 1;
 		await Product.findByIdAndUpdate(checkProductId, {
+			productId: cntQuantity,
 			inCategory: true,
 		});
 
@@ -139,3 +144,8 @@ exports.asignProductToCategory = async (req, res) => {
 		return res.status(401).json({ message: err.message });
 	}
 };
+
+exports.getAllCategoryProducts = async(req,res) => {
+
+};
+

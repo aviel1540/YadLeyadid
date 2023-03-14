@@ -39,7 +39,7 @@ app.use(
 	})
 );
 
-app.use("/api/main-category", mainCategoryRouter);
+app.use("/api/main-category/", mainCategoryRouter);
 app.use("/api/semi-category/", semiCategoryRouter);
 app.use("/api/users/", userRouter);
 app.use("/api/products/", productRouter);

@@ -12,7 +12,7 @@ router.patch("/update/:id", mainCategoryController.updateMainCategory);
 router.delete("/delete/:id", mainCategoryController.deleteMainCategory);
 
 router.post(
-	"/:id/aisn-semi-category/:semiId",
+	"/:id/asign-semi-category/:semiId",
 	mainCategoryController.asignSemiCategoryToMainCategory
 );
 
