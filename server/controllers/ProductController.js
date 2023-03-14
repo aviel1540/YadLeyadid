@@ -33,7 +33,7 @@ exports.addProduct = async (req, res) => {
 	}
 };
 
-exports.getSpecificProduct = async (req, res) => {
+exports.getProductById = async (req, res) => {
 	const productId = escape(req.params.id);
 	let product;
 	try {

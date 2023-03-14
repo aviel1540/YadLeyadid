@@ -8,7 +8,7 @@ router.get("/", userController.getAllUsers);
 router.post("/register", userController.register);
 
 //login user
-router.post("/login", userController.loginUser);
+router.post("/login", userController.login);
 
 //delete user by id
 router.delete("/delete/:id", userController.deleteUser);

@@ -20,6 +20,74 @@
 		}
 	],
 	"paths": {
+		"/users/register": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "Register to the app",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"idTeuda": { "type": "string" },
+									"username": { "type": "string" },
+									"name": { "type": "string" },
+									"password": { "type": "string" },
+									"email": { "type": "string" },
+									"phoneNumber": { "type": "string" },
+									"address": { "type": "string" },
+									"paymentType": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/users/login": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "Login to the app",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"idTeuda": { "type": "string" },
+									"password": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
 		"/users": {
 			"get": {
 				"tags": ["Users"],
@@ -109,74 +177,6 @@
 				"responses": {
 					"200": {
 						"description": "A list of users."
-					}
-				}
-			}
-		},
-		"/users/register": {
-			"post": {
-				"tags": ["Users"],
-				"summary": "Register to the app",
-				"parameters": [
-					{
-						"name": "token",
-						"in": "header",
-						"schema": { "type": "string" }
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"idTeuda": { "type": "string" },
-									"username": { "type": "string" },
-									"name": { "type": "string" },
-									"password": { "type": "string" },
-									"email": { "type": "string" },
-									"phoneNumber": { "type": "string" },
-									"address": { "type": "string" },
-									"paymentType": { "type": "string" }
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
-			}
-		},
-		"/users/login": {
-			"post": {
-				"tags": ["Users"],
-				"summary": "Login to the app",
-				"parameters": [
-					{
-						"name": "token",
-						"in": "header",
-						"schema": { "type": "string" }
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"idTeuda": { "type": "string" },
-									"password": { "type": "string" }
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Success"
 					}
 				}
 			}
@@ -312,6 +312,122 @@
 						"schema": { "type": "string" }
 					}
 				],
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/products/{id}": {
+			"get": {
+				"tags": ["Product"],
+				"summary": "Get product by id",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/products/add-product": {
+			"post": {
+				"tags": ["Product"],
+				"summary": "Add product",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"productName": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/products/update/{id}": {
+			"patch": {
+				"tags": ["Product"],
+				"summary": "Update product",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"productName": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/products/delete/{id}": {
+			"delete": {
+				"tags": ["Product"],
+				"summary": "Delete product by id",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
 				"responses": {
 					"200": {
 						"description": "A list of users."

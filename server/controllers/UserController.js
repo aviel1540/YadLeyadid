@@ -103,7 +103,7 @@ exports.register = async (req, res) => {
 	return res.status(201).json(user);
 };
 
-exports.loginUser = async (req, res) => {
+exports.login = async (req, res) => {
 	const idTeuda = escape(req.body.idTeuda);
 	const password = escape(req.body.password);
 
