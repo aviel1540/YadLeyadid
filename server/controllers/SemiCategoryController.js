@@ -145,7 +145,35 @@ exports.asignProductToCategory = async (req, res) => {
 	}
 };
 
-exports.getAllCategoryProducts = async(req,res) => {
+exports.deleteProductSemiCategory = async(req,res) => {
+	const semiId = escape(req.params.semi_id);
+	const productId = escape(req.params.product_id);
+	try {
+		const checkSemiId = validation.addSlashes(semiId);
+		const checkProductId = validation.addSlashes(productId);
 
+		const semiCategory = await Category.findById(checkSemiId);
+		if(!semiCategory) return res.status(400).json({message: "קטגוריה לא קיימת"});
+		
+		const productExist = semiCategory.productList.find(
+			(id) => id.toString() === checkProductId
+		);
+		if(!productExist) return res.status(400).json({message: "המוצר לא קיים בקטגוריה"});
+		else semiCategory.productList.pull(checkProductId);
+
+		const isFound = user.productList.find(
+			(product) => product.id.toString() === checkProductId 
+		);
+		if(isFound) return res.status(400).json({message: "המחיקה נכשלה"});
+
+		await Product.findByIdAndUpdate(checkProductId, {
+            productId: 0,
+            inCategory: false,
+        });
+		await semiCategory.save();
+		return res.status(200).json({message: "נמחק בהצלחה", semiCategory});
+	} catch(err){
+		return res.status(400).json({message: err});
+	}
 };
 
