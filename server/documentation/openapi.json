@@ -374,6 +374,98 @@
 				}
 			}
 		},
+		"/main-category/update/{id}": {
+			"patch": {
+				"tags": ["Main Category"],
+				"summary": "Update main-category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/main-category/delete/{id}": {
+			"delete": {
+				"tags": ["Main Category"],
+				"summary": "Delete main-category by id",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/main-category/{id}/asign-semi-category/{semiId}": {
+			"post": {
+				"tags": ["Main Category"],
+				"summary": "asign main-category to semi-category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "semiId",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
 		"/semi-category": {
 			"get": {
 				"tags": ["Semi Category"],
