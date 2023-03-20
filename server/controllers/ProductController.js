@@ -1,6 +1,7 @@
 const Product = require("../models/Product");
 const escape = require("escape-html");
 const validation = require("../utils/validation");
+const { sendMail } = require("./sendMail");
 
 exports.getProducts = async (req, res) => {
 	try {
@@ -51,11 +52,15 @@ exports.deleteProduct = async (req, res) => {
 		const checkProductId = validation.addSlashes(productId);
 		product = await Product.findById(checkProductId);
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים" });
-		if(product.inCategory == true) {
-			return res.status(401).json({ message: "לא ניתן למחוק - משוייך לקטגוריה" });
+		if (product.inCategory == true) {
+			return res
+				.status(401)
+				.json({ message: "לא ניתן למחוק - משוייך לקטגוריה" });
 		}
-		if(product.place == "מושאל" || product.place == "בתיקון"){
-			return res.status(401).json({ message: "לא ניתן למחוק - המוצר לא במלאי"})
+		if (product.place == "מושאל" || product.place == "בתיקון") {
+			return res
+				.status(401)
+				.json({ message: "לא ניתן למחוק - המוצר לא במלאי" });
 		}
 		await Product.findByIdAndDelete(checkProductId);
 		return res.status(200).json({ message: "המוצר נמחק בהצלחה" });

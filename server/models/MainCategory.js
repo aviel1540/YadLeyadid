@@ -1,20 +1,19 @@
 const mongoose = require("mongoose");
-const validator = require("validator");
 
 const Schema = mongoose.Schema;
 
 const mainCategorySchema = new Schema({
-  name : {
-    type: String,
-    trim: true,
-    required: true
-  },
-  semiCategoryList: [
-    {
-        type: Schema.Types.ObjectId,
-        ref: "SemiCategory"
-    }
-  ]
+	name: {
+		type: String,
+		trim: true,
+		required: true,
+	},
+	semiCategoryList: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "SemiCategory",
+		},
+	],
 });
 
 const MainCategorySchema = mongoose.model("main-category", mainCategorySchema);

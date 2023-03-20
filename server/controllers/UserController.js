@@ -4,6 +4,7 @@ const auth = require("../utils/auth");
 const escape = require("escape-html");
 const validation = require("../utils/validation");
 const Product = require("../models/Product");
+const { sendMail } = require("./sendMail");
 
 exports.register = async (req, res) => {
 	const idTeuda = escape(req.body.idTeuda);
@@ -264,6 +265,14 @@ exports.addProductForUser = async (req, res) => {
 		} else {
 			return res.status(501).json({ message: "ההשאלה נכשלה." });
 		}
+
+		//TODO: Change real email for user
+		sendMail(
+			"yakovaviel@outlook.co.il",
+			`הושאל בהצלחה - ${product.productName}`,
+			"https://YadLeyadid.com",
+			"לצפייה בפרטי המוצר"
+		);
 
 		await user.save();
 
