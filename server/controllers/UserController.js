@@ -30,6 +30,10 @@ exports.register = async (req, res) => {
 		) {
 			return res.status(400).json({ message: "נא למלא את כל השדות" });
 		}
+		if (!validation.iDValidator(idTeuda)) {
+			return res.status(400).json({ message: "תעודת זהות לא תקינה" });
+		}
+
 		if (!validation.checkEmail(email)) {
 			return res.status(400).json({ message: "מייל לא תקין" });
 		}
