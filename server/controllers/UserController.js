@@ -126,19 +126,22 @@ exports.login = async (req, res) => {
 
 		const user = await auth.login(checkIdTeuda, checkPassword);
 		if (!user) {
-			res.status(400).json({ message: "שם משתמש או סיסמא שגויים." });
+			return res
+				.status(400)
+				.json({ message: "שם משתמש או סיסמא שגויים." });
 		}
 		const token = jwt.sign(
 			{
 				username: user.username,
 				name: user.name,
+				isAdmin: user.isAdmin,
 			},
 			process.env.ACTIVATION_TOKEN_SECRET
 		);
 
 		return res.status(200).json(token);
 	} catch (err) {
-		return res.status(404).json({ message: err });
+		return res.status(401).json({ message: err });
 	}
 };
 

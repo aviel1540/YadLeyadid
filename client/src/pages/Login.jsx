@@ -1,0 +1,6 @@
+import React from "react";
+import { AuthForm } from "~/components/authForm/AuthForm";
+
+export const Login = () => {
+	return <AuthForm />;
+};

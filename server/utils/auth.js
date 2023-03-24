@@ -11,6 +11,7 @@ exports.login = async (idTeuda, password) => {
 		const user = await User.findOne({ idTeuda });
 		if (user) {
 			const isMatch = await bcrypt.compare(password, user.password);
+
 			if (!isMatch) return false;
 
 			return user;
