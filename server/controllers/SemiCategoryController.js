@@ -3,7 +3,6 @@ const escape = require("escape-html");
 const validation = require("../utils/validation");
 const Product = require("../models/Product");
 
-//show all categories controller
 exports.getAllCategories = async (req, res) => {
 	try {
 		const categories = await Category.find();
@@ -13,20 +12,18 @@ exports.getAllCategories = async (req, res) => {
 	}
 };
 
-//search specific Category
 exports.gethCategoryById = async (req, res) => {
 	const idSearch = escape(req.params.id);
 	try {
 		const checkIdSearch = validation.addSlashes(idSearch);
 		const category = await Category.findById(checkIdSearch);
-		if (!category) return res.status(400).send("No Category Found !");
+		if (!category) return res.status(400).send("קטגוריה לא נמצאה.");
 		res.status(200).json({ category });
 	} catch (err) {
 		res.status(400).json({ message: err });
 	}
 };
 
-//add new product controller
 exports.addNewCategory = async (req, res) => {
 	const serialNumber = escape(req.body.serialNumber);
 	const name = escape(req.body.name);
@@ -38,7 +35,7 @@ exports.addNewCategory = async (req, res) => {
 			serialNumber: checkSerialNumber,
 		});
 		if (categoryFound) {
-			res.status(400).json({ message: "הקטגוריה קיימת במערכת" });
+			res.status(400).json({ message: "הקטגוריה קיימת במערכת." });
 		}
 		const category = new Category({
 			serialNumber: checkSerialNumber,
@@ -47,14 +44,13 @@ exports.addNewCategory = async (req, res) => {
 		});
 
 		await category.save();
-		res.status(201).json({ message: "קטגוריה נוספה בהצלחה" });
+		res.status(201).json({ message: "קטגוריה נוספה בהצלחה." });
 	} catch (err) {
 		console.log(err);
 		res.status(400).json({ message: err });
 	}
 };
 
-//update Category Details
 exports.updateCategory = async (req, res) => {
 	const id = escape(req.params.id);
 	const serialNumber = escape(req.body.serialNumber);
@@ -72,28 +68,29 @@ exports.updateCategory = async (req, res) => {
 		});
 
 		if (!updatedCategory) {
-			return res.status(401).json({ message: "לא נמצאה קטגוריה" });
+			return res.status(401).json({ message: "לא נמצאה קטגוריה." });
 		}
 		updatedCategory = await updatedCategory.save();
 
-		res.status(201).json({ message: "קטגוריה עודכנה בהצלחה" });
+		res.status(201).json({ message: "קטגוריה עודכנה בהצלחה." });
 	} catch (err) {
 		console.log(err);
 		res.status(400).json({ message: err });
 	}
 };
 
-//delete category controller
 exports.deleteCategory = async (req, res) => {
 	const id = escape(req.params.id);
 	try {
 		const checkId = validation.addSlashes(id);
 		const categoryResult = await Category.findById(checkId);
 		if (!categoryResult) {
-			return res.status(404).json({ message: "לא נמצאה קטגוריה" });
+			return res.status(404).json({ message: "לא נמצאה קטגוריה." });
 		}
-		if(categoryResult.quantity > 0){
-			return res.status(401).json({message: "יש למחוק את המוצרים המשוייכים"});
+		if (categoryResult.quantity > 0) {
+			return res
+				.status(401)
+				.json({ message: "יש למחוק את המוצרים המשוייכים." });
 		}
 		await Category.findByIdAndDelete(checkId);
 		res.status(200).json({ message: "נמחק בהצלחה" });
@@ -102,7 +99,6 @@ exports.deleteCategory = async (req, res) => {
 	}
 };
 
-//post product to category
 exports.asignProductToCategory = async (req, res) => {
 	const categoryId = escape(req.params.id);
 	const productId = escape(req.params.productId);
@@ -112,10 +108,10 @@ exports.asignProductToCategory = async (req, res) => {
 
 		const category = await Category.findById(checkCategoryId);
 		if (!category)
-			return res.status(404).json({ message: " לא נמצאה קטגוריה" });
+			return res.status(404).json({ message: " לא נמצאה קטגוריה." });
 
 		const product = await Product.findById(checkProductId);
-		if (!product) return res.status(404).json({ message: "לא נמצא מוצר" });
+		if (!product) return res.status(404).json({ message: "לא נמצא מוצר." });
 
 		if (product.inCategory)
 			return res
@@ -127,8 +123,8 @@ exports.asignProductToCategory = async (req, res) => {
 		);
 
 		if (productExist)
-			return res.status(400).json({ message: "מוצר זה קיים בקטגוריה" });
-		
+			return res.status(400).json({ message: "מוצר זה קיים בקטגוריה." });
+
 		category.productList.push(product);
 
 		let cntQuantity = category.quantity + 1;
@@ -139,13 +135,13 @@ exports.asignProductToCategory = async (req, res) => {
 
 		category.quantity = cntQuantity;
 		await category.save();
-		return res.status(201).json({ message: "שוייך בהצלחה" });
+		return res.status(201).json({ message: "שוייך בהצלחה." });
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
 	}
 };
 
-exports.deleteProductSemiCategory = async(req,res) => {
+exports.deleteProductSemiCategory = async (req, res) => {
 	const semiId = escape(req.params.semi_id);
 	const productId = escape(req.params.product_id);
 	try {
@@ -153,27 +149,28 @@ exports.deleteProductSemiCategory = async(req,res) => {
 		const checkProductId = validation.addSlashes(productId);
 
 		const semiCategory = await Category.findById(checkSemiId);
-		if(!semiCategory) return res.status(400).json({message: "קטגוריה לא קיימת"});
-		
+		if (!semiCategory)
+			return res.status(400).json({ message: "קטגוריה לא קיימת." });
+
 		const productExist = semiCategory.productList.find(
 			(id) => id.toString() === checkProductId
 		);
-		if(!productExist) return res.status(400).json({message: "המוצר לא קיים בקטגוריה"});
+		if (!productExist)
+			return res.status(400).json({ message: "המוצר לא קיים בקטגוריה." });
 		else semiCategory.productList.pull(checkProductId);
 
 		const isFound = user.productList.find(
-			(product) => product.id.toString() === checkProductId 
+			(product) => product.id.toString() === checkProductId
 		);
-		if(isFound) return res.status(400).json({message: "המחיקה נכשלה"});
+		if (isFound) return res.status(400).json({ message: "המחיקה נכשלה." });
 
 		await Product.findByIdAndUpdate(checkProductId, {
-            productId: 0,
-            inCategory: false,
-        });
+			productId: 0,
+			inCategory: false,
+		});
 		await semiCategory.save();
-		return res.status(200).json({message: "נמחק בהצלחה", semiCategory});
-	} catch(err){
-		return res.status(400).json({message: err});
+		return res.status(200).json({ message: "נמחק בהצלחה.", semiCategory });
+	} catch (err) {
+		return res.status(400).json({ message: err });
 	}
 };
-

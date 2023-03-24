@@ -1,7 +1,7 @@
 const MainCategory = require("../models/MainCategory");
 const escape = require("escape-html");
 const validation = require("../utils/validation");
-const SemiCategoryModel = require("../models/SemiCategory")
+const SemiCategoryModel = require("../models/SemiCategory");
 
 exports.getAllMainCategory = async (req, res) => {
 	try {
@@ -17,7 +17,7 @@ exports.getMainCategoryById = async (req, res) => {
 	try {
 		const checkIdSearch = validation.addSlashes(idSearch);
 		const category = await MainCategory.findById(checkIdSearch);
-		if (!category) return res.status(400).send("No Category Found !");
+		if (!category) return res.status(400).send("לא נמצאה קטגוריה.");
 		res.status(200).json({ category });
 	} catch (err) {
 		res.status(400).json({ message: err });
@@ -34,14 +34,14 @@ exports.addNewMainCategory = async (req, res) => {
 		});
 
 		if (mainCategoryFound)
-			return res.status(400).json({ message: "הקטגוריה קיימת במערכת" });
+			return res.status(400).json({ message: "הקטגוריה קיימת במערכת." });
 
 		const mainCategory = new MainCategory({
 			name: checkName,
 		});
 
 		await mainCategory.save();
-		return res.status(201).json({ message: "הקטגוריה נוספה בהצלחה" });
+		return res.status(201).json({ message: "הקטגוריה נוספה בהצלחה." });
 	} catch (err) {
 		console.log(err);
 		return res.status(400).json({ message: err });
@@ -54,13 +54,15 @@ exports.deleteMainCategory = async (req, res) => {
 		const checkId = validation.addSlashes(id);
 		const mainCategoryResult = await MainCategory.findById(checkId);
 		if (!mainCategoryResult) {
-			return res.status(404).json({ message: "לא נמצאה קטגוריה ראשית" });
+			return res.status(404).json({ message: "לא נמצאה קטגוריה ראשית." });
 		}
 		if (mainCategoryResult.semiCategoryList.length > 0) {
-			return res.status(401).json({ message: "קיימות קטגוריות משוייכות" })
+			return res
+				.status(401)
+				.json({ message: "קיימות קטגוריות משוייכות." });
 		}
 		await MainCategory.findByIdAndDelete(checkId);
-		res.status(200).json({ message: "הקטגוריה נמחקה בהצלחה" });
+		res.status(200).json({ message: "הקטגוריה נמחקה בהצלחה." });
 	} catch (err) {
 		res.status(400).json({ message: err });
 	}
@@ -77,13 +79,13 @@ exports.updateMainCategory = async (req, res) => {
 		const checkName = validation.addSlashes(name);
 
 		updateMainCategory = await MainCategory.findByIdAndUpdate(checkId, {
-			name: checkName
+			name: checkName,
 		});
 		if (!updateMainCategory) {
-			return res.status(401).json({ message: "לא נמצאה קטגוריה" });
+			return res.status(401).json({ message: "לא נמצאה קטגוריה." });
 		}
 		await updateMainCategory.save();
-		res.status(201).json({ message: "קטגוריה עודכנה בהצלחה" });
+		res.status(201).json({ message: "קטגוריה עודכנה בהצלחה." });
 	} catch (err) {
 		res.status(400).json({ message: err });
 	}
@@ -100,29 +102,32 @@ exports.asignSemiCategoryToMainCategory = async (req, res) => {
 		const semiCategory = await SemiCategoryModel.findById(checkSemiId);
 
 		if (!mainCategory) {
-			return res.status(404).json({ message: "לא נמצאה קטגוריה ראשית" })
+			return res.status(404).json({ message: "לא נמצאה קטגוריה ראשית." });
 		}
 		if (!semiCategory) {
-			return res.status(404).json({ message: "לא נמצאה קטגוריה משנית" });
+			return res.status(404).json({ message: "לא נמצאה קטגוריה משנית." });
 		}
 		if (semiCategory.inMainCategory) {
-			return res.status(400).json({ message: "לא ניתן לשייך - הקטגוריה המשנית משוייכת לקטגוריה ראשית אחרת" });
+			return res.status(400).json({
+				message:
+					"לא ניתן לשייך - הקטגוריה המשנית משוייכת לקטגוריה ראשית אחרת.",
+			});
 		}
 		const semiExist = mainCategory.semiCategoryList.find(
 			(id) => id.toString() === checkSemiId
 		);
 		if (semiExist) {
-			return res.status(400).json({ message: "הקטגוריה משוייכת לקטגוריה ראשית זו" });
+			return res
+				.status(400)
+				.json({ message: "הקטגוריה משוייכת לקטגוריה ראשית זו." });
 		}
 		mainCategory.semiCategoryList.push(semiCategory);
 		await SemiCategoryModel.findByIdAndUpdate(checkSemiId, {
-			inMainCategory: true
+			inMainCategory: true,
 		});
 		await mainCategory.save();
-		res.status(201).json({ message: "השיוך בוצע בהצלחה" });
+		res.status(201).json({ message: "השיוך בוצע בהצלחה." });
 	} catch (err) {
 		res.status(401).json({ message: err });
 	}
 };
-
-

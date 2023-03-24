@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const { PaymentTypes } = require("../constants/paymentTypes");
 
 const Schema = mongoose.Schema;
 
@@ -47,7 +47,7 @@ const userSchema = new Schema(
 			type: String,
 			trim: true,
 			required: true,
-			enum: ["cheque", "creditCard"],
+			enum: [PaymentTypes.CHEQUE, PaymentTypes.CREDITCARD],
 		},
 		isAdmin: {
 			type: Boolean,

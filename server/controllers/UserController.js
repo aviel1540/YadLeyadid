@@ -5,6 +5,7 @@ const escape = require("escape-html");
 const validation = require("../utils/validation");
 const Product = require("../models/Product");
 const { sendMail } = require("./sendMail");
+const { ProductPlace } = require("../constants/productPlace");
 
 exports.register = async (req, res) => {
 	const idTeuda = escape(req.body.idTeuda);
@@ -28,26 +29,26 @@ exports.register = async (req, res) => {
 			!address ||
 			!paymentType
 		) {
-			return res.status(400).json({ message: "נא למלא את כל השדות" });
+			return res.status(400).json({ message: "נא למלא את כל השדות." });
 		}
 		if (!validation.iDValidator(idTeuda)) {
-			return res.status(400).json({ message: "תעודת זהות לא תקינה" });
+			return res.status(400).json({ message: "תעודת זהות לא תקינה." });
 		}
 
 		if (!validation.checkEmail(email)) {
-			return res.status(400).json({ message: "מייל לא תקין" });
+			return res.status(400).json({ message: "מייל לא תקין." });
 		}
 
 		if (!validation.checkUsername(name)) {
 			return res.status(400).json({
-				message: "שם צריך להכיל מינימום 2 תווים",
+				message: "שם צריך להכיל מינימום 2 תווים.",
 			});
 		}
 
 		if (!validation.checkPassword(password)) {
 			return res
 				.status(400)
-				.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים" });
+				.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים." });
 		}
 
 		const checkIdTeuda = validation.addSlashes(idTeuda);
@@ -64,25 +65,29 @@ exports.register = async (req, res) => {
 		});
 
 		if (userUsername) {
-			return res.status(400).json({ message: "שם משתמש כבר קיים" });
+			return res.status(400).json({ message: "שם משתמש קיים במערכת." });
 		}
 
 		const userIdTeuda = await User.findOne({ idTeuda: checkIdTeuda });
 
 		if (userIdTeuda) {
-			return res.status(400).json({ message: "תעודת זהות כבר קיימת" });
+			return res
+				.status(400)
+				.json({ message: "תעודת זהות קיימת במערכת." });
 		}
 
 		const userEmail = await User.findOne({ email: checkEmail });
 		if (userEmail) {
-			return res.status(400).json({ message: "מייל כבר קיים" });
+			return res.status(400).json({ message: "מייל קיים במערכת." });
 		}
 
 		const userPhoneNumber = await User.findOne({
 			phoneNumber: checkPhoneNumber,
 		});
 		if (userPhoneNumber) {
-			return res.status(400).json({ message: "מספר פלאפון כבר קיים" });
+			return res
+				.status(400)
+				.json({ message: "מספר פלאפון קיים במערכת." });
 		}
 
 		const passwordHash = await auth.hashPassword(checkPassword);
@@ -103,7 +108,7 @@ exports.register = async (req, res) => {
 		return res.status(401).json({ message: err.message });
 	}
 	if (!user) {
-		return res.status(500).json({ message: "לא נוסף המשתמש" });
+		return res.status(500).json({ message: "לא נוסף המשתמש." });
 	}
 	return res.status(201).json(user);
 };
@@ -114,14 +119,14 @@ exports.login = async (req, res) => {
 
 	try {
 		if (!idTeuda || !password) {
-			return res.status(400).json({ message: "נא למלא את כל השדות" });
+			return res.status(400).json({ message: "נא למלא את כל השדות." });
 		}
 		const checkIdTeuda = validation.addSlashes(idTeuda);
 		const checkPassword = validation.addSlashes(password);
 
 		const user = await auth.login(checkIdTeuda, checkPassword);
 		if (!user) {
-			res.status(400).json({ message: "שם משתמש או סיסמא שגויים" });
+			res.status(400).json({ message: "שם משתמש או סיסמא שגויים." });
 		}
 		const token = jwt.sign(
 			{
@@ -145,17 +150,17 @@ exports.deleteUser = async (req, res) => {
 
 		user = await User.findById(checkUserId);
 
-		if (!user) return res.status(404).json({ message: "לא קיים משתמש" });
+		if (!user) return res.status(404).json({ message: "לא קיים משתמש." });
 
-		if (user.productList || user.productList.length > 0) {
+		if (user.productList.length > 0) {
 			return res
 				.status(401)
-				.json({ message: "לא ניתן למחוק, קיימים מוצרים ללקוח" });
+				.json({ message: "לא ניתן למחוק, קיימים מוצרים ללקוח." });
 		}
 
 		user = await User.findByIdAndRemove(checkUserId);
 
-		return res.status(200).json({ message: "המשתמש נמחק בהצלחה" });
+		return res.status(200).json({ message: "המשתמש נמחק בהצלחה." });
 	} catch (err) {
 		return res.status(404).json({ message: err });
 	}
@@ -177,7 +182,7 @@ exports.getUserByUsername = async (req, res) => {
 		const checkUsername = validation.addSlashes(username);
 		user = await User.findOne({ username: checkUsername });
 		if (!user) {
-			return res.status(404).json({ message: "לא קיים משתמש" });
+			return res.status(404).json({ message: "לא קיים משתמש." });
 		}
 	} catch (err) {
 		return res.status(400).json({ message: err });
@@ -196,7 +201,7 @@ exports.getUserById = async (req, res) => {
 		user = await User.findById(checkUserId);
 
 		if (!user) {
-			return res.status(404).json({ message: "לא קיים משתמש" });
+			return res.status(404).json({ message: "לא קיים משתמש." });
 		}
 		return res.status(200).json(user);
 	} catch (err) {
@@ -212,7 +217,7 @@ exports.updatePassword = async (req, res) => {
 		if (!validation.checkPassword(newPassword)) {
 			return res
 				.status(400)
-				.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים" });
+				.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים." });
 		}
 
 		const checkUserId = validation.addSlashes(userId);
@@ -220,7 +225,7 @@ exports.updatePassword = async (req, res) => {
 
 		await User.findByIdAndUpdate(checkUserId, { password });
 
-		return res.status(200).json({ message: "עודכן בהצלחה" });
+		return res.status(200).json({ message: "עודכן בהצלחה." });
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
 	}
@@ -238,20 +243,20 @@ exports.addProductForUser = async (req, res) => {
 		const checkProductId = validation.addSlashes(productId);
 
 		const user = await User.findById(checkUserId);
-		if (!user) return res.status(404).json({ message: "לקוח לא קיים " });
+		if (!user) return res.status(404).json({ message: "לקוח לא קיים." });
 
 		const product = await Product.findById(checkProductId);
-		if (!product) return res.status(404).json({ message: "מוצר לא קיים " });
+		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
-		if (product.place !== "קיים במלאי")
-			return res.status(400).json({ message: "מוצר לא זמין" });
+		if (product.place !== ProductPlace.IN_STOCK)
+			return res.status(400).json({ message: "מוצר לא זמין." });
 
 		const productExist = user.productList.find(
 			(id) => id.toString() === checkProductId
 		);
 
 		if (productExist)
-			return res.status(400).json({ message: "מוצר קיים אצל הלקוח" });
+			return res.status(400).json({ message: "מוצר קיים אצל הלקוח." });
 
 		user.productList.push(checkProductId);
 
@@ -261,7 +266,7 @@ exports.addProductForUser = async (req, res) => {
 
 		if (isFound) {
 			await Product.findByIdAndUpdate(checkProductId, {
-				place: "מושאל",
+				place: ProductPlace.LOANED,
 				loanDate: Date.now(),
 				loanReturn: afterThreeMonth,
 				loanBy: checkUserId,
@@ -280,7 +285,7 @@ exports.addProductForUser = async (req, res) => {
 
 		await user.save();
 
-		return res.status(201).json({ message: "הושאל בהצלחה", user });
+		return res.status(201).json({ message: "הושאל בהצלחה.", user });
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
 	}
@@ -294,13 +299,13 @@ exports.deleteProductUser = async (req, res) => {
 		const checkProductId = validation.addSlashes(productId);
 
 		const user = await User.findById(checkUserId);
-		if (!user) return res.status(400).json({ message: "לקוח לא קיים " });
+		if (!user) return res.status(400).json({ message: "לקוח לא קיים." });
 
 		const productExist = user.productList.find(
 			(id) => id.toString() === checkProductId
 		);
 		if (!productExist) {
-			return res.status(400).json({ message: "מוצר לא קיים אצל הלקוח" });
+			return res.status(400).json({ message: "מוצר לא קיים אצל הלקוח." });
 		} else user.productList.pull(checkProductId);
 
 		console.log(user.productList);
@@ -314,13 +319,13 @@ exports.deleteProductUser = async (req, res) => {
 		}
 
 		await Product.findByIdAndUpdate(checkProductId, {
-			place: "קיים במלאי",
+			place: ProductPlace.IN_STOCK,
 			loanDate: null,
 			loanReturn: null,
 			loanBy: null,
 		});
 		await user.save();
-		return res.status(200).json({ message: "נמחק בהצלחה", user });
+		return res.status(200).json({ message: "נמחק בהצלחה.", user });
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
 	}
@@ -335,7 +340,7 @@ exports.getUserProducts = async (req, res) => {
 		const checkUserId = validation.addSlashes(userId);
 		user = await User.findById(checkUserId);
 		if (!user) {
-			return res.status(404).json({ message: "לא קיים משתמש" });
+			return res.status(404).json({ message: "לא קיים משתמש." });
 		}
 
 		const products = await Product.find();
