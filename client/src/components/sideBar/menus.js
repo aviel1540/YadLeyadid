@@ -6,7 +6,7 @@ export const menus = [
 	{
 		name: "משתמשים",
 		title: "משתמשים",
-		link: "/",
+		link: "/users",
 		icon: AiOutlineUser,
 	},
 ];
@@ -31,6 +31,6 @@ export const settings = [
 		title: "יציאה",
 		link: "/",
 		icon: ImExit,
-		onClick: logout,
+		onClick: "logout",
 	},
 ];

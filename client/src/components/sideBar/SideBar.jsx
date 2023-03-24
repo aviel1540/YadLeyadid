@@ -8,8 +8,11 @@ import { createElement, Fragment, useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { menus, settings } from "./menus";
+import { useAuthStore } from "~/store/auth";
 
 export const SideBar = () => {
+	const { logoutStore } = useAuthStore();
+
 	const [openMenu, setOpenMenu] = useState(true);
 	const [state, setState] = useState({
 		right: false,
@@ -90,7 +93,7 @@ export const SideBar = () => {
 							menu?.margin && "mt-14 xl:mt-5"
 						} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-400 rounded-md`}
 						onClick={() => {
-							menu?.onClick?.();
+							menu?.onClick === "logout" && logoutStore();
 						}}
 					>
 						<div

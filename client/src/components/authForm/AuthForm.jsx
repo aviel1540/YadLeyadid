@@ -54,13 +54,6 @@ export const AuthForm = () => {
 					variant="outlined"
 					inputRef={idInputRef}
 					required
-					InputLabelProps={{
-						style: {
-							left: "inherit",
-							right: "1.75rem",
-							transformOrigin: "right",
-						},
-					}}
 				/>
 				<TextField
 					name="password"
@@ -69,9 +62,6 @@ export const AuthForm = () => {
 					inputRef={passwordInputRef}
 					required
 					variant="outlined"
-					InputLabelProps={{
-						style: { left: "inherit", right: "1.75rem" },
-					}}
 					InputProps={{
 						endAdornment: (
 							<InputAdornment position="end">
