@@ -4,18 +4,26 @@ import { Spinner } from "../ui/Spinner";
 import { GrMail } from "react-icons/gr";
 import { MdLocationOn, MdPayment } from "react-icons/md";
 import { BsTelephoneFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 export const Users = () => {
 	const { data: users, isLoading } = useUsers();
 
+	const navigate = useNavigate();
+
 	if (isLoading) return <Spinner />;
+
+	const userDetails = (username) => {
+		navigate(`details/${username}`);
+	};
 
 	return (
 		<div className="grid grid-cols-4 gap-2 p-8 justify-between mt-10 lg:flex lg:flex-col">
 			{users.map((user) => (
 				<div
-					className="max-w-sm p-6 m-3 w-4/5 text-center  shadow-lg shadow-slate-900/30 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 lg:w-11/12"
+					className="max-w-sm p-6 m-3 w-4/5 text-center cursor-pointer shadow-lg shadow-slate-900/30 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 lg:w-11/12"
 					key={user._id}
+					onClick={() => userDetails(user.username)}
 				>
 					<span className="text-2xl font-semibold text-gray-800">
 						{user.name}

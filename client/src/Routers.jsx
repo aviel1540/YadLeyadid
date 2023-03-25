@@ -6,8 +6,13 @@ export const Routers = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<Pages.HomePage />} exact />
-			<Route path="/login" element={<Pages.Login />} exact />
+			<Route path="/login" element={<Pages.LoginPage />} exact />
 			<Route path="/users" element={<Pages.UsersPage />} exact />
+			<Route
+				path="users/details/:username"
+				element={<Pages.UserDetailsPage />}
+				exact
+			/>
 		</Routes>
 	);
 };
