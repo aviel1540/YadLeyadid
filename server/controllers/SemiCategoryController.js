@@ -129,7 +129,7 @@ exports.asignProductToCategory = async (req, res) => {
 
 		let cntQuantity = category.quantity + 1;
 		await Product.findByIdAndUpdate(checkProductId, {
-			productId: cntQuantity,
+			recognizer: cntQuantity,
 			inCategory: true,
 		});
 
@@ -165,7 +165,7 @@ exports.deleteProductSemiCategory = async (req, res) => {
 		if (isFound) return res.status(400).json({ message: "המחיקה נכשלה." });
 
 		await Product.findByIdAndUpdate(checkProductId, {
-			productId: 0,
+			recognizer: 0,
 			inCategory: false,
 		});
 		await semiCategory.save();

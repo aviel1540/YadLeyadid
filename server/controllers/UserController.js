@@ -257,10 +257,14 @@ exports.addProductForUser = async (req, res) => {
 		const productExist = user.productList.find(
 			(id) => id.toString() === checkProductId
 		);
+		
+		if(product.recognizer === 0) 
+			return res.status(400).json({ message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח"})
 
 		if (productExist)
 			return res.status(400).json({ message: "מוצר קיים אצל הלקוח." });
-
+		
+		
 		user.productList.push(checkProductId);
 
 		const isFound = user.productList.map(

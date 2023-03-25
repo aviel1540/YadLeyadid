@@ -4,7 +4,7 @@ const { ProductPlace } = require("../constants/productPlace");
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
-	productId: {
+	recognizer: {
 		type: Number,
 		default: 0,
 	},

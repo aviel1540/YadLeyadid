@@ -11,3 +11,9 @@ export const getUserByUsername = async (username) => {
 
 	return data;
 };
+
+export const getProductsForUser = async (id) => {
+	const { data } = await axios.get(`/users/user-list/${id}`);
+
+	return data;
+};
