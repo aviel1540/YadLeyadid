@@ -361,7 +361,7 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"categoryName": { "type": "string" }
+									"name": { "type": "string" }
 								}
 							}
 						}
@@ -466,6 +466,7 @@
 				}
 			}
 		},
+		
 		"/semi-category": {
 			"get": {
 				"tags": ["Semi Category"],
@@ -505,6 +506,31 @@
 				"responses": {
 					"200": {
 						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/semi-category/semi-list/{id}": {
+			"get": {
+				"tags": ["Semi Category"],
+				"summary": "Get all product for semi-category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "A list of semi-category."
 					}
 				}
 			}
@@ -633,6 +659,40 @@
 				}
 			}
 		},
+		"/semi-category/{id}/unasign-category/{productId}": {
+			"delete": {
+				"tags": ["Semi Category"],
+				"summary": "unasign product in semi-category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "productId",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+
+
+
 		"/products": {
 			"get": {
 				"tags": ["Product"],

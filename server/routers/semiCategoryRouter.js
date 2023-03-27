@@ -7,6 +7,8 @@ router.get("/", categoryController.getAllCategories);
 //search category
 router.get("/:id", categoryController.gethCategoryById);
 
+router.get("/semi-list/:id", categoryController.getSemiCategoryProducts);
+
 //add new category
 router.post("/add", categoryController.addNewCategory);
 
@@ -21,5 +23,7 @@ router.post(
 	"/:id/asign-category/:productId",
 	categoryController.asignProductToCategory
 );
+
+router.delete("/:id/unasign-category/:productId", categoryController.unasignProductInSemiCategory);
 
 module.exports = router;

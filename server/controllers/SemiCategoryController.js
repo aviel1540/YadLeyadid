@@ -129,7 +129,7 @@ exports.asignProductToCategory = async (req, res) => {
 
 		let cntQuantity = category.quantity + 1;
 		await Product.findByIdAndUpdate(checkProductId, {
-			recognizer: cntQuantity,
+			productName: `${category.name} ${cntQuantity}`,
 			inCategory: true,
 		});
 
@@ -141,36 +141,89 @@ exports.asignProductToCategory = async (req, res) => {
 	}
 };
 
-exports.deleteProductSemiCategory = async (req, res) => {
-	const semiId = escape(req.params.semi_id);
-	const productId = escape(req.params.product_id);
+exports.unasignProductInSemiCategory = async (req, res) => {
+	const semiId = escape(req.params.id);
+	const productId = escape(req.params.productId);
+
 	try {
 		const checkSemiId = validation.addSlashes(semiId);
 		const checkProductId = validation.addSlashes(productId);
 
 		const semiCategory = await Category.findById(checkSemiId);
+
 		if (!semiCategory)
 			return res.status(400).json({ message: "קטגוריה לא קיימת." });
 
 		const productExist = semiCategory.productList.find(
 			(id) => id.toString() === checkProductId
 		);
+
 		if (!productExist)
 			return res.status(400).json({ message: "המוצר לא קיים בקטגוריה." });
-		else semiCategory.productList.pull(checkProductId);
 
-		const isFound = user.productList.find(
+		const indexProduct = semiCategory.productList.indexOf(checkProductId);
+
+		semiCategory.productList.pull(checkProductId);
+
+
+		const isFound = semiCategory.productList.find(
 			(product) => product.id.toString() === checkProductId
 		);
-		if (isFound) return res.status(400).json({ message: "המחיקה נכשלה." });
+
+		if (isFound)
+			return res.status(400).json({ message: "המחיקה נכשלה." });
 
 		await Product.findByIdAndUpdate(checkProductId, {
-			recognizer: 0,
+			productName: semiCategory.name,
 			inCategory: false,
 		});
+
+		semiCategory.quantity = semiCategory.productList.length;
+
+		for (let i = indexProduct; i < semiCategory.productList.length; i++) {
+			await Product.findByIdAndUpdate(semiCategory.productList[i]._id, {
+				productName: `${semiCategory.name} ${i + 1}`,
+			})
+		}
 		await semiCategory.save();
+
 		return res.status(200).json({ message: "נמחק בהצלחה.", semiCategory });
 	} catch (err) {
 		return res.status(400).json({ message: err });
+	}
+};
+
+exports.getSemiCategoryProducts = async (req, res) => {
+	const allProducts = [];
+	const semiProducts = [];
+	const semiCategoryId = escape(req.params.id);
+	let semiCategory;
+
+	try {
+		const checkUserId = validation.addSlashes(semiCategoryId);
+
+		semiCategory = await Category.findById(checkUserId);
+
+		if (!semiCategory) {
+			return res.status(404).json({ message: "קטגוריה לא קיימת." });
+		}
+
+		const products = await Product.find();
+
+		semiCategory.productList.forEach((e) => {
+			allProducts.push(e.toString());
+		});
+
+		products.forEach((p) => {
+			allProducts.forEach((u) => {
+				if (p._id.toString() === u) {
+					semiProducts.push(p);
+				}
+			});
+		});
+
+		return res.status(200).json(semiProducts);
+	} catch (err) {
+		return res.status(404).json({ message: err });
 	}
 };

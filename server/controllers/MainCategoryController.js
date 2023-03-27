@@ -28,6 +28,7 @@ exports.addNewMainCategory = async (req, res) => {
 	const categoryName = escape(req.body.name);
 	try {
 		const checkName = validation.addSlashes(categoryName);
+	
 		const mainCategoryFound = await MainCategory.findOne({
 			name: checkName,
 		});
