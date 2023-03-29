@@ -200,9 +200,9 @@ exports.getSemiCategoryProducts = async (req, res) => {
 	let semiCategory;
 
 	try {
-		const checkUserId = validation.addSlashes(semiCategoryId);
+		const checkSemiId = validation.addSlashes(semiCategoryId);
 
-		semiCategory = await Category.findById(checkUserId);
+		semiCategory = await Category.findById(checkSemiId);
 
 		if (!semiCategory) {
 			return res.status(404).json({ message: "קטגוריה לא קיימת." });

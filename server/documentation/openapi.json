@@ -344,6 +344,31 @@
 				}
 			}
 		},
+		"/main-category/main-list/{id}": {
+			"get": {
+				"tags": ["Main Category"],
+				"summary": "Get all semi-category for main category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "A list of semi-category in main category."
+					}
+				}
+			}
+		},
 		"/main-category/add": {
 			"post": {
 				"tags": ["Main Category"],
@@ -530,7 +555,7 @@
 
 				"responses": {
 					"200": {
-						"description": "A list of semi-category."
+						"description": "A list of semi-category products."
 					}
 				}
 			}
@@ -631,7 +656,7 @@
 		"/semi-category/{id}/asign-category/{productId}": {
 			"post": {
 				"tags": ["Semi Category"],
-				"summary": "asign semi-category to main-category",
+				"summary": "asign product to semi-category",
 				"parameters": [
 					{
 						"name": "token",

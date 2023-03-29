@@ -131,3 +131,38 @@ exports.asignSemiCategoryToMainCategory = async (req, res) => {
 		res.status(401).json({ message: err });
 	}
 };
+
+exports.getMainCategorySemiCategory = async (req, res) => {
+	const allSemi = [];
+	const mainSemiCategory = [];
+	const mainCategoryId = escape(req.params.id);
+	let mainCategory;
+
+	try {
+		const checkMainId = validation.addSlashes(mainCategoryId);
+
+		mainCategory = await MainCategory.findById(checkMainId);
+
+		if (!mainCategory) {
+			return res.status(404).json({ message: "קטגוריה לא קיימת." });
+		}
+
+		const semiCategory = await SemiCategoryModel.find();
+
+		mainCategory.semiCategoryList.forEach((e) => {
+			allSemi.push(e.toString());
+		});
+
+		semiCategory.forEach((p) => {
+			allSemi.forEach((u) => {
+				if (p._id.toString() === u) {
+					mainSemiCategory.push(p);
+				}
+			});
+		});
+
+		return res.status(200).json(mainSemiCategory);
+	} catch (err) {
+		return res.status(404).json({ message: err });
+	}
+};
