@@ -43,7 +43,7 @@ export const AuthForm = () => {
 	};
 
 	return (
-		<>
+		<form onSubmit={handleSubmit}>
 			<Stack
 				spacing={2}
 				className="w-1/5 block mt-52 ml-auto mr-auto xl:w-2/5 sm:w-11/12"
@@ -54,6 +54,7 @@ export const AuthForm = () => {
 					variant="outlined"
 					inputRef={idInputRef}
 					required
+					color="secondary"
 				/>
 				<TextField
 					name="password"
@@ -62,6 +63,7 @@ export const AuthForm = () => {
 					inputRef={passwordInputRef}
 					required
 					variant="outlined"
+					color="secondary"
 					InputProps={{
 						endAdornment: (
 							<InputAdornment position="end">
@@ -86,6 +88,7 @@ export const AuthForm = () => {
 						name="iAgree"
 						checked={iAgree}
 						onClick={() => setIAgree(!iAgree)}
+						color="secondary"
 					/>
 					אני מאשר/ת תנאי שימוש.
 				</Stack>
@@ -96,12 +99,11 @@ export const AuthForm = () => {
 					size="large"
 					type="submit"
 					variant="contained"
-					onClick={handleSubmit}
-					className="!w-1/5 xl:!w-2/5 sm:!w-11/12 "
+					className="!bg-orange !w-1/5 xl:!w-2/5 sm:!w-11/12"
 				>
 					התחבר
 				</LoadingButton>
 			</Stack>
-		</>
+		</form>
 	);
 };

@@ -1,15 +1,20 @@
 import { useQuery } from "react-query";
-import { getProductsForUser, getUserByUsername, getUsers } from "~/api/users/users";
+import * as users from "~/api/users/users";
 import { queryKeys } from "~/react-query/queryKeys";
 
-export const useUsers = () => useQuery([queryKeys.users], getUsers);
+export const useUsers = () => useQuery([queryKeys.users], users.getUsers);
 
 export const useUserByUsername = (username) =>
-	useQuery([queryKeys.userByUsername], () => getUserByUsername(username), {
-		enabled: !!username,
-	});
+	useQuery(
+		[queryKeys.userByUsername],
+		() => users.getUserByUsername(username),
+		{
+			enabled: !!username,
+			refetchOnWindowFocus: false,
+		}
+	);
 
 export const useProductsForUser = (id) =>
-	useQuery([queryKeys.productsForUser], () => getProductsForUser(id), {
+	useQuery([queryKeys.productsForUser], () => users.getProductsForUser(id), {
 		enabled: !!id,
-});
+	});
