@@ -4,6 +4,11 @@ import { queryKeys } from "~/react-query/queryKeys";
 
 export const useUsers = () => useQuery([queryKeys.users], users.getUsers);
 
+export const useUserById = (id) =>
+	useQuery([queryKeys.userById], () => users.getUserById(id), {
+		enabled: !!id,
+	});
+
 export const useUserByUsername = (username) =>
 	useQuery(
 		[queryKeys.userByUsername],

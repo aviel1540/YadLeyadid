@@ -1,1 +1,6 @@
-export { getProductsForUser, getUserByUsername, getUsers } from "./users";
+export {
+	getProductsForUser,
+	getUserByUsername,
+	getUsers,
+	getUserById,
+} from "./users";

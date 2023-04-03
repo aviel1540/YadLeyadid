@@ -54,7 +54,7 @@ export const AuthForm = () => {
 					variant="outlined"
 					inputRef={idInputRef}
 					required
-					color="secondary"
+					color="warning"
 				/>
 				<TextField
 					name="password"
@@ -63,7 +63,7 @@ export const AuthForm = () => {
 					inputRef={passwordInputRef}
 					required
 					variant="outlined"
-					color="secondary"
+					color="warning"
 					InputProps={{
 						endAdornment: (
 							<InputAdornment position="end">

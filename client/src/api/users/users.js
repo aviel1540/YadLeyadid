@@ -6,6 +6,12 @@ export const getUsers = async () => {
 	return data;
 };
 
+export const getUserById = async (id) => {
+	const { data } = await axios.get(`/users/${id}`);
+
+	return data;
+};
+
 export const getUserByUsername = async (username) => {
 	const { data } = await axios.get(`/users/find-by-username/${username}`);
 

@@ -1,44 +1,33 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useProductsForUser, useUserByUsername } from "~/hooks/useUsers";
+import { useUserByUsername } from "~/hooks/useUsers";
+import { useAuthStore } from "~/store/auth";
 import { Spinner } from "../ui/Spinner";
-import { InputText } from "~/components/logic/InputText";
-import { Button } from "@mui/material";
+import { InputText } from "../logic/InputText";
 import { formatDate } from "~/utils/formatDate";
+import { Button } from "@mui/material";
 
-export const UserDetails = () => {
-	const username = useParams().username;
+export const Information = () => {
+	const { username } = useAuthStore();
 
 	const {
 		data: details,
 		isLoading: detailsLoading,
 		isFetching,
 	} = useUserByUsername(username);
-	// console.log("🚀  details:", details);
 
-	const { data: products, isLoading: productsLoading } = useProductsForUser(
-		details?._id
-	);
+	console.log("details:", details);
 
-	if (productsLoading || detailsLoading) return <Spinner />;
+	if (detailsLoading) return <Spinner />;
 
 	return (
 		<>
 			{!isFetching && (
 				<>
-					<div className="flex justify-center mb-10">
+					<div className="flex justify-center">
 						<span className="text-2xl underline decoration-wavy">
-							פרטי משתמש - {details?.name}
+							עדכון פרטים
 						</span>
 					</div>
-					<div className="flex justify-end relative top-16">
-						<span className="text-xl w-1/5">מוצרים מושאלים</span>
-					</div>
-
-					<div className="w-3/6 p-10">
-						<div className="flex justify-center">
-							<span className="text-xl ">פרטים אישיים</span>
-						</div>
+					<div className="w-3/6 mt-5 p-10">
 						<InputText
 							info={details?.name}
 							originalText={"שם"}

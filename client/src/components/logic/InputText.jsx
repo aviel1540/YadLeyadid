@@ -11,9 +11,10 @@ export const InputText = forwardRef((props, ref) => {
 			inputProps={{ min: 0, style: { textAlign: "center" } }}
 			helperText={props?.originalText}
 			inputRef={ref}
-			color="secondary"
+			color="warning"
 			required
-			variant="standard"
+			label={props.readOnly && "לא ניתן לעריכה"}
+			variant="outlined"
 			InputProps={{
 				readOnly: props.readOnly,
 			}}
