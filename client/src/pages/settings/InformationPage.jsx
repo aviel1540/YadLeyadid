@@ -1,6 +1,6 @@
 import React from "react";
-import { Information } from "~/components/settings/Information";
+import { UpdateDetails } from "~/components/settings/UpdateDetails";
 
 export const InformationPage = () => {
-	return <Information />;
+	return <UpdateDetails />;
 };

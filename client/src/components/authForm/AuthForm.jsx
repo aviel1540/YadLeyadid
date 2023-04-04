@@ -10,6 +10,7 @@ import React, { useRef, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useLogin } from "~/hooks/useLogin";
 import * as toastMessage from "~/utils/notification/index";
+import { InputText } from "../logic/InputText";
 
 export const AuthForm = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -48,41 +49,21 @@ export const AuthForm = () => {
 				spacing={2}
 				className="w-1/5 block mt-52 ml-auto mr-auto xl:w-2/5 sm:w-11/12"
 			>
-				<TextField
-					name="id"
-					placeholder="תעודת זהות"
-					variant="outlined"
-					inputRef={idInputRef}
-					required
-					color="warning"
+				<InputText
+					originalText={"תעודת זהות"}
+					placeholder={"תעודת זהות"}
+					className={"!ml-5 !mt-5 w-35"}
+					ref={idInputRef}
 				/>
-				<TextField
-					name="password"
-					placeholder="סיסמא"
-					type={showPassword ? "text" : "password"}
-					inputRef={passwordInputRef}
-					required
-					variant="outlined"
-					color="warning"
-					InputProps={{
-						endAdornment: (
-							<InputAdornment position="end">
-								<IconButton
-									onClick={() =>
-										setShowPassword(!showPassword)
-									}
-									edge="end"
-								>
-									{showPassword ? (
-										<AiFillEye />
-									) : (
-										<AiFillEyeInvisible />
-									)}
-								</IconButton>
-							</InputAdornment>
-						),
-					}}
+
+				<InputText
+					originalText={"סיסמא"}
+					placeholder={"סיסמא"}
+					className={"!ml-5 !mt-5 w-35"}
+					password={true}
+					ref={passwordInputRef}
 				/>
+
 				<Stack direction="row" alignItems="center" sx={{ my: 2 }}>
 					<Checkbox
 						name="iAgree"

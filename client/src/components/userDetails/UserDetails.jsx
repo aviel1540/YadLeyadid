@@ -35,7 +35,7 @@ export const UserDetails = () => {
 						<span className="text-xl w-1/5">מוצרים מושאלים</span>
 					</div>
 
-					<div className="w-3/6 p-10">
+					<div className="w-1/2 p-10">
 						<div className="flex justify-center">
 							<span className="text-xl ">פרטים אישיים</span>
 						</div>
@@ -98,7 +98,7 @@ export const UserDetails = () => {
 								size="large"
 								type="submit"
 								variant="contained"
-								className="!bg-green !w-2/5 xl:!w-4/5 sm:!w-11/12"
+								className="!bg-green !w-2/6 !text-base sm:!w-4/6"
 								// onClick={submitHandler}
 							>
 								שמירת שינויים

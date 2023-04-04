@@ -1,4 +1,3 @@
-import React from "react";
 import { IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -7,14 +6,13 @@ import List from "@mui/material/List";
 import { createElement, Fragment, useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { accountSettings, exit, menus, settings } from "./menus";
 import { useAuthStore } from "~/store/auth";
+import { menus, settings } from "./menus";
 
 export const SideBar = () => {
 	const { logoutStore } = useAuthStore();
 
 	const [openMenu, setOpenMenu] = useState(true);
-	const [showAccountSettings, setShowAccountSettings] = useState(true);
 	const [state, setState] = useState({
 		right: false,
 	});
@@ -36,7 +34,7 @@ export const SideBar = () => {
 				width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
 			}}
 			role="presentation"
-			// onClick={toggleDrawer(anchor, false)}
+			onClick={toggleDrawer(anchor, false)}
 			onKeyDown={toggleDrawer(anchor, false)}
 		>
 			{/* {state.right && (
@@ -54,9 +52,6 @@ export const SideBar = () => {
 						className={` ${
 							menu?.margin && "mt-8 xl:mt-5"
 						} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-light rounded-md`}
-						onClick={() => {
-							setState({ ...state, [anchor]: false });
-						}}
 					>
 						<div
 							title={menu?.title}
@@ -94,96 +89,10 @@ export const SideBar = () => {
 						to={menu?.link}
 						key={i}
 						className={` ${
-							menu?.margin && "mt-14 xl:mt-5"
-						} group flex items-center text-sm -mb-4 gap-3.5 font-medium p-2 hover:bg-gray-light rounded-md`}
+							menu?.margin && "mt-5 xl:mt-5"
+						} group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-light rounded-md`}
 						onClick={() => {
-							setShowAccountSettings(!showAccountSettings);
-						}}
-					>
-						<div
-							title={menu?.title}
-							className="sm:flex justify-end items-start"
-						>
-							{createElement(menu?.icon, {
-								size: "20",
-							})}
-						</div>
-						<h2
-							style={{
-								transitionDelay: `${i + 3}00ms`,
-							}}
-							className={`whitespace-pre duration-700 ${
-								!openMenu &&
-								"opacity-0 translate-x-300 overflow-hidden"
-							}`}
-						>
-							{menu?.name}
-						</h2>
-						<h2
-							className={`${
-								openMenu && "hidden"
-							} absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
-						>
-							{menu?.name}
-						</h2>
-					</Link>
-				))}
-			</List>
-			{showAccountSettings && (
-				<List>
-					{accountSettings.map((menu, i) => (
-						<Link
-							to={menu?.link}
-							key={i}
-							className={` ${
-								menu?.margin && "mt-14 xl:mt-5"
-							} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-light rounded-md`}
-							onClick={() => {
-								setState({ ...state, [anchor]: false });
-							}}
-						>
-							<div
-								title={menu?.title}
-								className="sm:flex justify-end items-start"
-							>
-								{createElement(menu?.icon, {
-									size: "20",
-								})}
-							</div>
-							<h2
-								style={{
-									transitionDelay: `${i + 3}00ms`,
-								}}
-								className={`whitespace-pre duration-700 ${
-									!openMenu &&
-									"opacity-0 translate-x-300 overflow-hidden"
-								}`}
-							>
-								{menu?.name}
-							</h2>
-							<h2
-								className={`${
-									openMenu && "hidden"
-								} absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
-							>
-								{menu?.name}
-							</h2>
-						</Link>
-					))}
-				</List>
-			)}
-			{/* <Divider /> */}
-
-			<List>
-				{exit.map((menu, i) => (
-					<Link
-						to={menu?.link}
-						key={i}
-						className={` ${
-							menu?.margin && "mt-14 xl:mt-5"
-						} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-light rounded-md`}
-						onClick={() => {
-							logoutStore();
+							menu?.onClick === "logout" && logoutStore();
 						}}
 					>
 						<div
