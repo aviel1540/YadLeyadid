@@ -32,6 +32,7 @@ export const mainStore = (set) => {
 		token,
 		isLoggedIn: !!token,
 		isAdmin: decodedToken?.isAdmin,
+		name: decodedToken?.name,
 		username: decodedToken?.username,
 		loginStore,
 		logoutStore,

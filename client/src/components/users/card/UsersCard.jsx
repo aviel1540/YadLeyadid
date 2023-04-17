@@ -38,7 +38,7 @@ export const Users = () => {
 			{changeShow ? (
 				<>
 					<div className="flex justify-center mb-5">
-						<span className="text-2xl underline decoration-wavy">
+						<span className="text-2xl mb-8">
 							משתמשים
 						</span>
 					</div>

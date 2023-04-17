@@ -11,6 +11,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useLogin } from "~/hooks/useLogin";
 import * as toastMessage from "~/utils/notification/index";
 import { InputText } from "../logic/InputText";
+import logo from "~/assets/images/logo.jpeg";
 
 export const AuthForm = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -47,8 +48,9 @@ export const AuthForm = () => {
 		<form onSubmit={handleSubmit}>
 			<Stack
 				spacing={2}
-				className="w-1/5 block mt-52 ml-auto mr-auto xl:w-2/5 sm:w-11/12"
+				className="w-1/5 block mt-44 ml-auto mr-auto xl:w-2/5 sm:w-11/12"
 			>
+				<img src={logo} alt="logo" />
 				<InputText
 					originalText={"תעודת זהות"}
 					placeholder={"תעודת זהות"}

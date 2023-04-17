@@ -15,7 +15,7 @@ import { useUsers } from "~/hooks/useUsers";
 export const UsersTable = ({ setChangeShow, changeShow }) => {
 	const [inputSearch, setInputSearch] = useState("");
 
-	const { data: users, isLoading } = useUsers();
+	const { data: users, isLoading} = useUsers();
 
 	const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ export const UsersTable = ({ setChangeShow, changeShow }) => {
 	return (
 		<>
 			<div className="flex justify-center mb-5">
-				<span className="text-2xl underline decoration-wavy">
+				<span className="text-2xl mb-8">
 					משתמשים
 				</span>
 			</div>

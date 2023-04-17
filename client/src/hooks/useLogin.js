@@ -9,7 +9,7 @@ export const useLogin = () => {
 	const { loginStore } = useAuthStore();
 
 	return useMutation(login, {
-		onSuccess: async (data) => {
+		onSuccess: (data) => {
 			loginStore(data);
 			navigate("/");
 		},
