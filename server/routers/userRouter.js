@@ -28,6 +28,11 @@ router.post(
 	userController.addProductForUser
 );
 
+router.post(
+	"/add-product/:user_id",
+	userController.addProductForUser2
+);
+
 router.delete(
 	"/delete-product/:user_id/productId/:product_id",
 	userController.deleteProductUser

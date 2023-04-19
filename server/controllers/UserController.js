@@ -257,14 +257,14 @@ exports.addProductForUser = async (req, res) => {
 		const productExist = user.productList.find(
 			(id) => id.toString() === checkProductId
 		);
-		
-		if(product.recognizer === 0) 
-			return res.status(400).json({ message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח"})
+
+		if (product.recognizer === 0)
+			return res.status(400).json({ message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח" })
 
 		if (productExist)
 			return res.status(400).json({ message: "מוצר קיים אצל הלקוח." });
-		
-		
+
+
 		user.productList.push(checkProductId);
 
 		const isFound = user.productList.map(
@@ -293,6 +293,136 @@ exports.addProductForUser = async (req, res) => {
 		await user.save();
 
 		return res.status(201).json({ message: "הושאל בהצלחה.", user });
+	} catch (err) {
+		return res.status(401).json({ message: err.message });
+	}
+};
+
+
+exports.addProductForUser2 = async (req, res) => {
+	const userId = escape(req.params.user_id);
+	const productsArr = req.body;
+	let singleProduct = "";
+	let manyProductsIds = [];
+	let user;
+
+	try {
+		const checkUserId = validation.addSlashes(userId);
+
+		const afterThreeMonth = new Date();
+		afterThreeMonth.setMonth(afterThreeMonth.getMonth() + 3);
+
+		user = await User.findById(checkUserId);
+
+		if (!user) return res.status(404).json({ message: "לקוח לא קיים." });
+		
+		if (productsArr.ids.length === 1) {
+			singleProduct = escape(productsArr.ids[0]);
+
+			const product = await Product.findById(singleProduct);
+
+			if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
+
+			if (product.place !== ProductPlace.IN_STOCK) {
+				return res.status(400).json({ message: "מוצר לא זמין." });
+			}
+
+			const productExist = user.productList.find(
+				(id) => id.toString() === singleProduct
+			);
+			if (productExist) {
+				return res.status(400).json({ message: "מוצר קיים אצל הלקוח." });
+			}
+
+			if (!product.inCategory) {
+				return res.status(400).json({ message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח" })
+			}
+			user.productList.push(singleProduct);
+
+			const isFound = user.productList.map(
+				(product) => product.id.toString() === singleProduct
+			);
+
+			if (isFound) {
+				await Product.findByIdAndUpdate(singleProduct, {
+					place: ProductPlace.LOANED,
+					loanDate: Date.now(),
+					loanReturn: afterThreeMonth,
+					loanBy: checkUserId,
+				});
+			} else {
+				return res.status(501).json({ message: "ההשאלה נכשלה." });
+			}
+
+			//TODO: Change real email for user
+			// sendMail(
+			// 	"yakovaviel@outlook.co.il",
+			// 	`הושאל בהצלחה - ${product.productName}`,
+			// 	"https://YadLeyadid.com",
+			// 	"לצפייה בפרטי המוצר"
+			// );
+
+			await user.save();
+
+			return res.status(201).json({ message: "הושאל בהצלחה.", user });
+		}
+		else {
+			for (const i in productsArr.ids) {
+				manyProductsIds.push(escape(productsArr.ids[i]));
+			}
+			// ["1","2","3"]
+			manyProductsIds.forEach(async productId => {
+				const product = await Product.findById(productId); // "1"
+				if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
+
+				if (product.place !== ProductPlace.IN_STOCK) {
+					return res.status(400).json({ message: "מוצר לא זמין." });
+				}
+
+				const productExist = user.productList.find(
+					(id) => id.toString() === productId
+				);
+
+				if (!product.inCategory) {
+					return res.status(400).json({ message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח" })
+				}
+
+				if (productExist) {
+					return res.status(400).json({ message: "מוצר קיים אצל הלקוח." });
+				}
+
+				user.productList.push(productId);
+
+				const isFound = user.productList.map(
+					(product) => product.id.toString() === productId
+				);
+
+				if (isFound) {
+					await Product.findByIdAndUpdate(productId, {
+						place: ProductPlace.LOANED,
+						loanDate: Date.now(),
+						loanReturn: afterThreeMonth,
+						loanBy: checkUserId,
+					});
+				} else {
+					return res.status(501).json({ message: "ההשאלה נכשלה." });
+				}
+
+				//TODO: Change real email for user
+				// sendMail(
+				// 	"yakovaviel@outlook.co.il",
+				// 	`הושאל בהצלחה - ${product.productName}`,
+				// 	"https://YadLeyadid.com",
+				// 	"לצפייה בפרטי המוצר"
+				// );
+
+				await user.save();
+
+			});
+			return res.status(201).json({ message: "הושאל בהצלחה.", user });
+
+		}
+
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
 	}
