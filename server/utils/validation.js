@@ -36,3 +36,4 @@ exports.checkUsername = (username) => {
 	if (username.length <= 1) return false;
 	return true;
 };
+
