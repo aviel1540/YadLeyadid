@@ -67,7 +67,7 @@ exports.register = async (req, res) => {
 			return res.status(400).json({ message: "שם משתמש קיים במערכת." });
 		}
 
-		const userIdTeuda = await User.findOne({ idTeuda: checkIdTeuda });
+		const userIdTeuda = await userService.checkIdTeuda(checkIdTeuda);
 
 		if (userIdTeuda) {
 			return res
@@ -75,14 +75,12 @@ exports.register = async (req, res) => {
 				.json({ message: "תעודת זהות קיימת במערכת." });
 		}
 
-		const userEmail = await User.findOne({ email: checkEmail });
+		const userEmail = await userService.checkEmail(checkEmail);;
 		if (userEmail) {
 			return res.status(400).json({ message: "מייל קיים במערכת." });
 		}
 
-		const userPhoneNumber = await User.findOne({
-			phoneNumber: checkPhoneNumber,
-		});
+		const userPhoneNumber = await userService.checkPhoneNumber(checkPhoneNumber);
 		if (userPhoneNumber) {
 			return res
 				.status(400)
@@ -91,16 +89,7 @@ exports.register = async (req, res) => {
 
 		const passwordHash = await auth.hashPassword(checkPassword);
 
-		user = new User({
-			idTeuda: checkIdTeuda,
-			username: checkUsername,
-			name: checkName,
-			email: checkEmail,
-			password: passwordHash,
-			phoneNumber: checkPhoneNumber,
-			address: checkAddress,
-			paymentType: checkPaymentType,
-		});
+		user = await userService.addUser({ checkIdTeuda, checkUsername, checkName, checkEmail, passwordHash, checkPhoneNumber, checkAddress, checkPaymentType });
 
 		await user.save();
 	} catch (err) {

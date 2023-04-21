@@ -123,7 +123,7 @@ exports.asignSemiCategoryToMainCategory = async (req, res) => {
 		}
 		mainCategory.semiCategoryList.push(semiCategory);
 		await SemiCategoryModel.findByIdAndUpdate(checkSemiId, {
-			inMainCategory: true,
+			inMainCategory: mainCategory.name,
 		});
 		await mainCategory.save();
 		res.status(201).json({ message: "השיוך בוצע בהצלחה." });

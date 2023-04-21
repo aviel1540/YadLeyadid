@@ -130,7 +130,7 @@ exports.asignProductToCategory = async (req, res) => {
 		let cntQuantity = category.quantity + 1;
 		await Product.findByIdAndUpdate(checkProductId, {
 			productName: `${category.name} ${cntQuantity}`,
-			inCategory: category.name,
+			inCategory: category.inMainCategory,
 		});
 
 		category.quantity = cntQuantity;

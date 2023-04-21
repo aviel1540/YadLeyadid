@@ -20,8 +20,7 @@ const semiCategorySchema = new Schema(
 			default: 0,
 		},
 		inMainCategory: {
-			type: Boolean,
-			default: false,
+			type: String,
 		},
 		productList: [
 			{
