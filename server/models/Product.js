@@ -15,9 +15,8 @@ const productSchema = new Schema({
 		default: ProductPlace.IN_STOCK,
 	},
 	inCategory: {
-		type: Boolean,
-		//false - not in any category
-		default: false,
+		type: String,
+		trim: true,
 	},
 	loanDate: {
 		type: Date,

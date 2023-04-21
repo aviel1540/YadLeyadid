@@ -130,7 +130,7 @@ exports.asignProductToCategory = async (req, res) => {
 		let cntQuantity = category.quantity + 1;
 		await Product.findByIdAndUpdate(checkProductId, {
 			productName: `${category.name} ${cntQuantity}`,
-			inCategory: true,
+			inCategory: category.name,
 		});
 
 		category.quantity = cntQuantity;
@@ -165,17 +165,15 @@ exports.unasignProductInSemiCategory = async (req, res) => {
 
 		semiCategory.productList.pull(checkProductId);
 
-
 		const isFound = semiCategory.productList.find(
 			(product) => product.id.toString() === checkProductId
 		);
 
-		if (isFound)
-			return res.status(400).json({ message: "המחיקה נכשלה." });
+		if (isFound) return res.status(400).json({ message: "המחיקה נכשלה." });
 
 		await Product.findByIdAndUpdate(checkProductId, {
 			productName: semiCategory.name,
-			inCategory: false,
+			inCategory: null,
 		});
 
 		semiCategory.quantity = semiCategory.productList.length;
@@ -183,7 +181,7 @@ exports.unasignProductInSemiCategory = async (req, res) => {
 		for (let i = indexProduct; i < semiCategory.productList.length; i++) {
 			await Product.findByIdAndUpdate(semiCategory.productList[i]._id, {
 				productName: `${semiCategory.name} ${i + 1}`,
-			})
+			});
 		}
 		await semiCategory.save();
 

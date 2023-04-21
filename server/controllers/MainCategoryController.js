@@ -28,7 +28,7 @@ exports.addNewMainCategory = async (req, res) => {
 	const categoryName = escape(req.body.name);
 	try {
 		const checkName = validation.addSlashes(categoryName);
-	
+
 		const mainCategoryFound = await MainCategory.findOne({
 			name: checkName,
 		});
@@ -133,9 +133,9 @@ exports.asignSemiCategoryToMainCategory = async (req, res) => {
 };
 
 exports.getMainCategorySemiCategory = async (req, res) => {
+	const mainCategoryId = escape(req.params.id);
 	const allSemi = [];
 	const mainSemiCategory = [];
-	const mainCategoryId = escape(req.params.id);
 	let mainCategory;
 
 	try {
@@ -161,7 +161,7 @@ exports.getMainCategorySemiCategory = async (req, res) => {
 			});
 		});
 
-		return res.status(200).json(mainSemiCategory);
+		return res.status(200).json(semiCategory);
 	} catch (err) {
 		return res.status(404).json({ message: err });
 	}

@@ -491,7 +491,7 @@
 				}
 			}
 		},
-		
+
 		"/semi-category": {
 			"get": {
 				"tags": ["Semi Category"],
@@ -715,8 +715,6 @@
 				}
 			}
 		},
-
-
 
 		"/products": {
 			"get": {

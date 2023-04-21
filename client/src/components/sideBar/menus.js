@@ -13,7 +13,7 @@ export const menus = [
 	{
 		name: "מוצרים",
 		title: "מוצרים",
-		link: "/",
+		link: "/products",
 		icon: RiProductHuntLine,
 	},
 ];

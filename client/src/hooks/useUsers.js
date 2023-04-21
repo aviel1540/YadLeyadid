@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import * as users from "~/api/users/users";
+import * as users from "~/api/users";
 import { queryKeys } from "~/react-query/queryKeys";
 
 export const useUsers = () => useQuery([queryKeys.users], users.getUsers);

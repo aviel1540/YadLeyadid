@@ -6,6 +6,7 @@ const validation = require("../utils/validation");
 const Product = require("../models/Product");
 const { sendMail } = require("./sendMail");
 const { ProductPlace } = require("../constants/productPlace");
+const userService = require("../services/userService");
 
 exports.register = async (req, res) => {
 	const idTeuda = escape(req.body.idTeuda);
@@ -60,9 +61,7 @@ exports.register = async (req, res) => {
 		const checkAddress = validation.addSlashes(address);
 		const checkPaymentType = validation.addSlashes(paymentType);
 
-		const userUsername = await User.findOne({
-			username: checkUsername,
-		});
+		const userUsername = await userService.checkUsername(checkUsername);
 
 		if (userUsername) {
 			return res.status(400).json({ message: "שם משתמש קיים במערכת." });
@@ -259,11 +258,14 @@ exports.addProductForUser = async (req, res) => {
 		);
 
 		if (product.recognizer === 0)
-			return res.status(400).json({ message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח" })
+			return res
+				.status(400)
+				.json({
+					message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח",
+				});
 
 		if (productExist)
 			return res.status(400).json({ message: "מוצר קיים אצל הלקוח." });
-
 
 		user.productList.push(checkProductId);
 
@@ -298,7 +300,6 @@ exports.addProductForUser = async (req, res) => {
 	}
 };
 
-
 exports.addProductForUser2 = async (req, res) => {
 	const userId = escape(req.params.user_id);
 	const productsArr = req.body;
@@ -315,13 +316,14 @@ exports.addProductForUser2 = async (req, res) => {
 		user = await User.findById(checkUserId);
 
 		if (!user) return res.status(404).json({ message: "לקוח לא קיים." });
-		
+
 		if (productsArr.ids.length === 1) {
 			singleProduct = escape(productsArr.ids[0]);
 
 			const product = await Product.findById(singleProduct);
 
-			if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
+			if (!product)
+				return res.status(404).json({ message: "מוצר לא קיים." });
 
 			if (product.place !== ProductPlace.IN_STOCK) {
 				return res.status(400).json({ message: "מוצר לא זמין." });
@@ -331,11 +333,17 @@ exports.addProductForUser2 = async (req, res) => {
 				(id) => id.toString() === singleProduct
 			);
 			if (productExist) {
-				return res.status(400).json({ message: "מוצר קיים אצל הלקוח." });
+				return res
+					.status(400)
+					.json({ message: "מוצר קיים אצל הלקוח." });
 			}
 
 			if (!product.inCategory) {
-				return res.status(400).json({ message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח" })
+				return res
+					.status(400)
+					.json({
+						message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח",
+					});
 			}
 			user.productList.push(singleProduct);
 
@@ -365,15 +373,15 @@ exports.addProductForUser2 = async (req, res) => {
 			await user.save();
 
 			return res.status(201).json({ message: "הושאל בהצלחה.", user });
-		}
-		else {
+		} else {
 			for (const i in productsArr.ids) {
 				manyProductsIds.push(escape(productsArr.ids[i]));
 			}
 			// ["1","2","3"]
-			manyProductsIds.forEach(async productId => {
+			manyProductsIds.forEach(async (productId) => {
 				const product = await Product.findById(productId); // "1"
-				if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
+				if (!product)
+					return res.status(404).json({ message: "מוצר לא קיים." });
 
 				if (product.place !== ProductPlace.IN_STOCK) {
 					return res.status(400).json({ message: "מוצר לא זמין." });
@@ -384,11 +392,18 @@ exports.addProductForUser2 = async (req, res) => {
 				);
 
 				if (!product.inCategory) {
-					return res.status(400).json({ message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח" })
+					return res
+						.status(400)
+						.json({
+							message:
+								"יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח",
+						});
 				}
 
 				if (productExist) {
-					return res.status(400).json({ message: "מוצר קיים אצל הלקוח." });
+					return res
+						.status(400)
+						.json({ message: "מוצר קיים אצל הלקוח." });
 				}
 
 				user.productList.push(productId);
@@ -417,12 +432,9 @@ exports.addProductForUser2 = async (req, res) => {
 				// );
 
 				await user.save();
-
 			});
 			return res.status(201).json({ message: "הושאל בהצלחה.", user });
-
 		}
-
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
 	}
