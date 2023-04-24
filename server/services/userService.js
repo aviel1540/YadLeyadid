@@ -1,25 +1,43 @@
 const User = require("../models/User");
 
-exports.checkUsername = async (username) => await User.findOne({ username });
+exports.findByUsername = async (username) => await User.findOne({ username });
 
-exports.checkIdTeuda = async (idTeuda) => await User.findOne({ idTeuda });
+exports.findByIdTeuda = async (idTeuda) => await User.findOne({ idTeuda });
 
-exports.checkEmail = async (email) => await User.findOne({ email });
+exports.findByEmail = async (email) => await User.findOne({ email });
 
-exports.checkPhoneNumber = async (phoneNumber) => await User.findOne({ phoneNumber });
-
+exports.findByPhoneNumber = async (phoneNumber) =>
+  await User.findOne({ phoneNumber });
 
 exports.addUser = async (request) => {
-	const { checkIdTeuda, checkUsername, checkName, checkEmail, passwordHash, checkPhoneNumber, checkAddress, checkPaymentType } = request;
+  const {
+    checkIdTeuda,
+    checkUsername,
+    checkName,
+    checkEmail,
+    passwordHash,
+    checkPhoneNumber,
+    checkAddress,
+    checkPaymentType,
+  } = request;
 
-	return new User({
-		idTeuda: checkIdTeuda,
-		username: checkUsername,
-		name: checkName,
-		password: passwordHash,
-		email: checkEmail,
-		phoneNumber: checkPhoneNumber,
-		address: checkAddress,
-		paymentType: checkPaymentType
-	});
+  return new User({
+    idTeuda: checkIdTeuda,
+    username: checkUsername,
+    name: checkName,
+    password: passwordHash,
+    email: checkEmail,
+    phoneNumber: checkPhoneNumber,
+    address: checkAddress,
+    paymentType: checkPaymentType,
+  });
 };
+
+exports.findUserById = async (checkUserId) => await User.findById({ checkUserId });
+
+exports.deleteUser = async (checkUserId) => await User.findByIdAndRemove({ checkUserId });
+
+exports.allUsers = async () => await User.find();
+
+exports.updateUserPassword = async (checkUserId, password) =>
+  await User.findByIdAndUpdate(checkUserId, { password });

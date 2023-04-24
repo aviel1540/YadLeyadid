@@ -1,12 +1,11 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
 const auth = require("../utils/auth");
 const escape = require("escape-html");
 const validation = require("../utils/validation");
-const Product = require("../models/Product");
 const { sendMail } = require("./sendMail");
 const { ProductPlace } = require("../constants/productPlace");
 const userService = require("../services/userService");
+const productService = require("../services/productService");
 
 exports.register = async (req, res) => {
 	const idTeuda = escape(req.body.idTeuda);
@@ -61,13 +60,13 @@ exports.register = async (req, res) => {
 		const checkAddress = validation.addSlashes(address);
 		const checkPaymentType = validation.addSlashes(paymentType);
 
-		const userUsername = await userService.checkUsername(checkUsername);
+		const userUsername = await userService.findByUsername(checkUsername);
 
 		if (userUsername) {
 			return res.status(400).json({ message: "שם משתמש קיים במערכת." });
 		}
 
-		const userIdTeuda = await userService.checkIdTeuda(checkIdTeuda);
+		const userIdTeuda = await userService.findByIdTeuda(checkIdTeuda);
 
 		if (userIdTeuda) {
 			return res
@@ -75,12 +74,12 @@ exports.register = async (req, res) => {
 				.json({ message: "תעודת זהות קיימת במערכת." });
 		}
 
-		const userEmail = await userService.checkEmail(checkEmail);;
+		const userEmail = await userService.findByEmail(checkEmail);;
 		if (userEmail) {
 			return res.status(400).json({ message: "מייל קיים במערכת." });
 		}
 
-		const userPhoneNumber = await userService.checkPhoneNumber(checkPhoneNumber);
+		const userPhoneNumber = await userService.findByPhoneNumber(checkPhoneNumber);
 		if (userPhoneNumber) {
 			return res
 				.status(400)
@@ -139,7 +138,7 @@ exports.deleteUser = async (req, res) => {
 	try {
 		const checkUserId = validation.addSlashes(userId);
 
-		user = await User.findById(checkUserId);
+		user = await userService.findUserById(checkUserId);
 
 		if (!user) return res.status(404).json({ message: "לא קיים משתמש." });
 
@@ -149,7 +148,7 @@ exports.deleteUser = async (req, res) => {
 				.json({ message: "לא ניתן למחוק, קיימים מוצרים ללקוח." });
 		}
 
-		user = await User.findByIdAndRemove(checkUserId);
+		user = await userService.deleteUser(checkUserId);
 
 		return res.status(200).json({ message: "המשתמש נמחק בהצלחה." });
 	} catch (err) {
@@ -159,7 +158,7 @@ exports.deleteUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
 	try {
-		const users = await User.find();
+		const users = await userService.allUsers();
 		return res.status(200).send(users);
 	} catch (err) {
 		return res.status(404).json({ message: err });
@@ -171,7 +170,7 @@ exports.getUserByUsername = async (req, res) => {
 	let user;
 	try {
 		const checkUsername = validation.addSlashes(username);
-		user = await User.findOne({ username: checkUsername });
+		user = await userService.findByUsername({ username: checkUsername });
 		if (!user) {
 			return res.status(404).json({ message: "לא קיים משתמש." });
 		}
@@ -189,7 +188,7 @@ exports.getUserById = async (req, res) => {
 	try {
 		const checkUserId = validation.addSlashes(userId);
 
-		user = await User.findById(checkUserId);
+		user = await userService.findUserById(checkUserId);
 
 		if (!user) {
 			return res.status(404).json({ message: "לא קיים משתמש." });
@@ -214,7 +213,7 @@ exports.updatePassword = async (req, res) => {
 		const checkUserId = validation.addSlashes(userId);
 		const password = await auth.hashPassword(newPassword);
 
-		await User.findByIdAndUpdate(checkUserId, { password });
+		await userService.updateUserPassword(checkUserId, { password });
 
 		return res.status(200).json({ message: "עודכן בהצלחה." });
 	} catch (err) {
@@ -233,10 +232,10 @@ exports.addProductForUser = async (req, res) => {
 		const checkUserId = validation.addSlashes(userId);
 		const checkProductId = validation.addSlashes(productId);
 
-		const user = await User.findById(checkUserId);
+		const user = await userService.findUserById(checkUserId);
 		if (!user) return res.status(404).json({ message: "לקוח לא קיים." });
 
-		const product = await Product.findById(checkProductId);
+		const product = await productService.findProductById(checkProductId);
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
 		if (product.place !== ProductPlace.IN_STOCK)

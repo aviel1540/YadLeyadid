@@ -1,5 +1,7 @@
 const Product = require("../models/Product");
 const User = require("../models/User");
+const { ProductPlace } = require("../constants/productPlace");
+
 
 exports.allProducts = async () => await Product.find();
 
@@ -11,7 +13,7 @@ exports.addProduct = async (request) => {
 	});
 };
 
-exports.checkProduct = async (productId) => {
+exports.findProductById = async (productId) => {
 	const product = await Product.findById(productId);
 
 	if (!product) return false;
@@ -29,24 +31,12 @@ exports.updateProduct = async (request) => {
 exports.deleteProduct = async (productId) =>
 	await Product.findByIdAndDelete(productId);
 
-// exports.checkProductInCategory = async (productId) => {
-// 	const product = await Product.findById(productId);
-// 	if (!product.inCategory) return false;
-// 	return true;
-// };
-
-// exports.checkProductPlace = async (productId) => {
-// 	const product = await Product.findById(productId);
-// 	if (product.place !== ProductPlace.IN_STOCK) return false;
-// 	return true;
-// };
-
-// exports.checkProductExistInUser = async (productId, userId) => {
-// 	const user = await User.findById(userId);
-
-// 	const productExist = user.productList.find(
-// 		(id) => id.toString() === productId
-// 	);
-// 	if (productExist) return false;
-// 	return true;
-// };
+exports.updateProductAsingToUser = async(request) => {
+	const {checkProductId, afterThreeMonth, checkUserId} = request;
+	return await Product.findByIdAndUpdate(checkProductId, {
+		place: ProductPlace.LOANED,
+		loanDate: Date.now(),
+		loanReturn: afterThreeMonth,
+		loanBy: checkUserId
+	});
+}
