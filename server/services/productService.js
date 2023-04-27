@@ -31,12 +31,21 @@ exports.updateProduct = async (request) => {
 exports.deleteProduct = async (productId) =>
 	await Product.findByIdAndDelete(productId);
 
-exports.updateProductAsingToUser = async(request) => {
-	const {checkProductId, afterThreeMonth, checkUserId} = request;
-	return await Product.findByIdAndUpdate(checkProductId, {
+exports.updateProductAssignToUser = async(productId,request) => {
+	const {afterThreeMonth, checkUserId} = request;
+	return await Product.findByIdAndUpdate(productId, {
 		place: ProductPlace.LOANED,
 		loanDate: Date.now(),
 		loanReturn: afterThreeMonth,
 		loanBy: checkUserId
+	});
+}
+
+exports.updateProductUnassignToUser = async(productId) => {
+	return await Product.findByIdAndUpdate(productId, {
+		place: ProductPlace.IN_STOCK,
+		loanDate: null,
+		loanReturn: null,
+		loanBy: null
 	});
 }

@@ -1,6 +1,5 @@
 const router = require("express").Router();
-const userController = require("../controllers/userController");
-
+const userController = require("../controllers/UserController");
 //show all users
 router.get("/", userController.getAllUsers);
 
@@ -29,7 +28,7 @@ router.post(
 );
 
 router.post(
-	"/add-product/:user_id",
+	"/add-product/:user_id/asign-products",
 	userController.addProductForUser2
 );
 

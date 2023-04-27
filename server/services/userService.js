@@ -33,7 +33,7 @@ exports.addUser = async (request) => {
   });
 };
 
-exports.findUserById = async (checkUserId) => await User.findById({ checkUserId });
+exports.findUserById = async (checkUserId) => await User.findById( checkUserId );
 
 exports.deleteUser = async (checkUserId) => await User.findByIdAndRemove({ checkUserId });
 

@@ -20,11 +20,11 @@ const productSchema = new Schema({
 	},
 	loanDate: {
 		type: Date,
-		default: "1970-01-01",
+		default: null,
 	},
 	loanReturn: {
 		type: Date,
-		default: "1970-01-01",
+		default: null,
 	},
 	loanBy: {
 		type: Schema.Types.ObjectId,
