@@ -1,5 +1,4 @@
 const Product = require("../models/Product");
-const User = require("../models/User");
 const { ProductPlace } = require("../constants/productPlace");
 
 
@@ -48,4 +47,26 @@ exports.updateProductUnassignToUser = async(productId) => {
 		loanReturn: null,
 		loanBy: null
 	});
+}
+
+exports.updateProductAssignToSemiCategory = async(request) => {
+	const {checkProductId, productNewName, productInCategory} = request;
+	return await Product.findByIdAndUpdate(checkProductId, {
+		productName: productNewName,
+		inCategory: productInCategory
+	})
+}
+exports.updateProductUnassignToSemiCategory = async(request) => {
+	const {checkProductId, productName} = request;
+	return await Product.findByIdAndUpdate(checkProductId, {
+		productName: productName,
+		inCategory: null
+	})
+}
+
+exports.updateProductsNameInSemiCategoryList = async (request) => {
+	const { productIdUpdate, productNewName} = request;
+	return await Product.findByIdAndUpdate(productIdUpdate, {
+		productName: productNewName
+	})
 }

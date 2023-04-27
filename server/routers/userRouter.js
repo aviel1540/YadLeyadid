@@ -23,18 +23,14 @@ router.patch("/update-password/:id", userController.updatePassword);
 
 //add products to user
 router.post(
-	"/add-product/:user_id/productId/:product_id",
+	"/add-product/:user_id/asign-products",
 	userController.addProductForUser
 );
 
-router.post(
-	"/add-product/:user_id/asign-products",
-	userController.addProductForUser2
-);
 
 router.delete(
 	"/delete-product/:user_id/productId/:product_id",
-	userController.deleteProductUser
+	userController.unassignProductUser
 );
 
 router.get("/user-list/:id", userController.getUserProducts);

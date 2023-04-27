@@ -1,11 +1,10 @@
-const MainCategory = require("../models/MainCategory");
 const escape = require("escape-html");
 const validation = require("../utils/validation");
-const SemiCategoryModel = require("../models/SemiCategory");
+const mainCategoryService = require("../services/mainCategoryService");
 
 exports.getAllMainCategory = async (req, res) => {
 	try {
-		const categories = await MainCategory.find();
+		const categories = await mainCategoryService.findAllMainCategory();
 		res.status(201).json({ categories });
 	} catch (err) {
 		res.status(400).json({ message: err });
@@ -16,7 +15,7 @@ exports.getMainCategoryById = async (req, res) => {
 	const idSearch = escape(req.params.id);
 	try {
 		const checkIdSearch = validation.addSlashes(idSearch);
-		const category = await MainCategory.findById(checkIdSearch);
+		const category = await mainCategoryService.findMainCategoryById(checkIdSearch);
 		if (!category) return res.status(400).send("לא נמצאה קטגוריה.");
 		res.status(200).json({ category });
 	} catch (err) {
@@ -24,21 +23,18 @@ exports.getMainCategoryById = async (req, res) => {
 	}
 };
 
-exports.addNewMainCategory = async (req, res) => {
-	const categoryName = escape(req.body.name);
+exports.addMainCategory = async (req, res) => {
+	const categoryName = escape(req.body.mainCategoryName);
+	let mainCategory;
 	try {
 		const checkName = validation.addSlashes(categoryName);
 
-		const mainCategoryFound = await MainCategory.findOne({
-			name: checkName,
-		});
-
+		const mainCategoryFound = await mainCategoryService.findMainCategoryByName({checkName});
+		console.log(categoryName)
 		if (mainCategoryFound)
 			return res.status(400).json({ message: "הקטגוריה קיימת במערכת." });
 
-		const mainCategory = new MainCategory({
-			name: checkName,
-		});
+		mainCategory = await mainCategoryService.addNewMainCategory({checkName});
 
 		await mainCategory.save();
 		return res.status(201).json({ message: "הקטגוריה נוספה בהצלחה." });
@@ -161,7 +157,7 @@ exports.getMainCategorySemiCategory = async (req, res) => {
 			});
 		});
 
-		return res.status(200).json(semiCategory);
+		return res.status(200).json(mainSemiCategory);
 	} catch (err) {
 		return res.status(404).json({ message: err });
 	}
