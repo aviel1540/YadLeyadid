@@ -3,7 +3,7 @@ import { forwardRef, useState } from "react";
 import clsx from "clsx";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
-export const InputText = forwardRef((props, ref) => {
+export const TextInput = forwardRef((props, ref) => {
 	const [showPassword, setShowPassword] = useState(false);
 
 	return (

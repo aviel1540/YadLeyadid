@@ -5,3 +5,9 @@ export const getProducts = async () => {
 
 	return data;
 };
+
+export const addProduct = async (productName) => {
+	const { data } = await axios.post("/products/add-product", productName);
+
+	return data;
+};

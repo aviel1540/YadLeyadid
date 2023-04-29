@@ -7,15 +7,22 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Rows } from "./Rows";
 import { Spinner } from "~/components/ui/Spinner";
-import { FormControlLabel, Switch, TextField } from "@mui/material";
+import { Button, FormControlLabel, Switch, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useUsers } from "~/hooks/useUsers";
+import { Actions } from "../Actions";
 
 export const UsersTable = ({ setChangeShow, changeShow }) => {
 	const [inputSearch, setInputSearch] = useState("");
+	const [open, setOpen] = useState({
+		action: false,
+		popUp: false,
+		modalDialog: false,
+		title: "",
+	});
 
-	const { data: users, isLoading} = useUsers();
+	const { data: users, isLoading, refetch } = useUsers();
 
 	const navigate = useNavigate();
 
@@ -36,7 +43,7 @@ export const UsersTable = ({ setChangeShow, changeShow }) => {
 		<>
 			<div className="flex justify-center mb-5">
 				<span className="text-2xl mb-8">
-					משתמשים
+					לקוחות
 				</span>
 			</div>
 			<div className="flex justify-center">
@@ -51,7 +58,7 @@ export const UsersTable = ({ setChangeShow, changeShow }) => {
 					color="warning"
 				/>
 			</div>
-			<div className="flex justify-start">
+			{/* <div className="flex justify-start">
 				<FormControlLabel
 					control={
 						<Switch
@@ -64,13 +71,32 @@ export const UsersTable = ({ setChangeShow, changeShow }) => {
 					}
 					label="הצג בכרטיסיות"
 				/>
-			</div>
+			</div> */}
 			{dataResults?.length > 0 ? (
 				<div className="relative top-2 w-10/12 block m-auto p-5 xl:w-full xl:relative xl:bottom-4">
+					<div className="grid justify-items-end mb-5">
+						<Button
+							className={
+								"!bg-green !text-white hover:!bg-green/80 !w-44 !text-sm"
+							}
+							onClick={() =>
+								setOpen({
+									...open,
+									popUp: true,
+									action: true,
+									title: "add",
+								})
+							}
+						>
+							הוספת לקוח
+						</Button>
+					</div>
 					<TableContainer component={Paper} sx={{ height: 550 }}>
 						<Table aria-label="collapsible table">
 							<TableHead>
 								<TableRow>
+									<TableCell />
+
 									<TableCell
 										className="!font-bold"
 										align="right"
@@ -116,11 +142,12 @@ export const UsersTable = ({ setChangeShow, changeShow }) => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{dataResults.map((row) => (
+								{dataResults.map((row, index) => (
 									<Rows
 										key={row._id}
 										userDetails={userDetails}
 										row={row}
+										index={index + 1}
 									/>
 								))}
 							</TableBody>
@@ -131,6 +158,13 @@ export const UsersTable = ({ setChangeShow, changeShow }) => {
 				<div className="flex justify-center mt-8">
 					<span className="text-red text-xl">לא נמצאו תוצאות.</span>
 				</div>
+			)}
+			{open.action && (
+				<Actions
+					open={open}
+					setOpen={setOpen}
+					refetch={refetch}
+				/>
 			)}
 		</>
 	);

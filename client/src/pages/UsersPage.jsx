@@ -1,6 +1,6 @@
 import React from "react";
-import { Users } from "~/components/users/card/UsersCard";
+import { UsersTable } from "~/components";
 
 export const UsersPage = () => {
-	return <Users />;
+	return <UsersTable />;
 };

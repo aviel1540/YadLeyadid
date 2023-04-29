@@ -23,3 +23,9 @@ export const getProductsForUser = async (id) => {
 
 	return data;
 };
+
+export const addUser = async (user) => {
+	const { data } = await axios.post("/users/register", user);
+
+	return data;
+};

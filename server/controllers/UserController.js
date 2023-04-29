@@ -74,12 +74,14 @@ exports.register = async (req, res) => {
 				.json({ message: "תעודת זהות קיימת במערכת." });
 		}
 
-		const userEmail = await userService.findByEmail(checkEmail);;
+		const userEmail = await userService.findByEmail(checkEmail);
 		if (userEmail) {
 			return res.status(400).json({ message: "מייל קיים במערכת." });
 		}
 
-		const userPhoneNumber = await userService.findByPhoneNumber(checkPhoneNumber);
+		const userPhoneNumber = await userService.findByPhoneNumber(
+			checkPhoneNumber
+		);
 		if (userPhoneNumber) {
 			return res
 				.status(400)
@@ -88,7 +90,16 @@ exports.register = async (req, res) => {
 
 		const passwordHash = await auth.hashPassword(checkPassword);
 
-		user = await userService.addUser({ checkIdTeuda, checkUsername, checkName, checkEmail, passwordHash, checkPhoneNumber, checkAddress, checkPaymentType });
+		user = await userService.addUser({
+			checkIdTeuda,
+			checkUsername,
+			checkName,
+			checkEmail,
+			passwordHash,
+			checkPhoneNumber,
+			checkAddress,
+			checkPaymentType,
+		});
 
 		await user.save();
 	} catch (err) {
@@ -170,7 +181,8 @@ exports.getUserByUsername = async (req, res) => {
 	let user;
 	try {
 		const checkUsername = validation.addSlashes(username);
-		user = await userService.findByUsername({ username: checkUsername });
+		user = await userService.findByUsername(checkUsername);
+
 		if (!user) {
 			return res.status(404).json({ message: "לא קיים משתמש." });
 		}
@@ -222,79 +234,73 @@ exports.updatePassword = async (req, res) => {
 };
 
 exports.addProductForUser = async (req, res) => {
-    const userId = escape(req.params.user_id);
-    const productsArr = req.body;
-    let manyProductsIds = [];
-    let user;
+	const userId = escape(req.params.user_id);
+	const productsArr = req.body;
+	let manyProductsIds = [];
+	let user;
 
-    try {
-        const checkUserId = validation.addSlashes(userId);
+	try {
+		const checkUserId = validation.addSlashes(userId);
 
-        const afterThreeMonth = new Date();
-        afterThreeMonth.setMonth(afterThreeMonth.getMonth() + 3);
+		const afterThreeMonth = new Date();
+		afterThreeMonth.setMonth(afterThreeMonth.getMonth() + 3);
 
-        user = await userService.findUserById(checkUserId);
+		user = await userService.findUserById(checkUserId);
 
-        if (!user) return res.status(404).json({ message: "לקוח לא קיים." });
+		if (!user) return res.status(404).json({ message: "לקוח לא קיים." });
 
-        for (const i in productsArr.ids) {
-            manyProductsIds.push(escape(productsArr.ids[i]));
-        }
-        const products = manyProductsIds.map(async (productId) => {
-            const product = await productService.findProductById(productId); // "1"
-            if (!product)
-                return res.status(404).json({ message: "מוצר לא קיים." });
+		for (const i in productsArr.ids) {
+			manyProductsIds.push(escape(productsArr.ids[i]));
+		}
+		const products = manyProductsIds.map(async (productId) => {
+			const product = await productService.findProductById(productId); // "1"
+			if (!product)
+				return res.status(404).json({ message: "מוצר לא קיים." });
 
-            if (product.place !== ProductPlace.IN_STOCK) {
-                return res.status(400).json({ message: "מוצר לא זמין." });
-            }
+			if (product.place !== ProductPlace.IN_STOCK) {
+				return res.status(400).json({ message: "מוצר לא זמין." });
+			}
 
-            const productExist = user.productList.find(
-                (id) => id.toString() === productId
-            );
+			const productExist = user.productList.find(
+				(id) => id.toString() === productId
+			);
 
-            if (productExist) {
-                return res
-                    .status(400)
-                    .json({ message: "מוצר קיים אצל הלקוח." });
-            }
-            if (!product.inCategory) {
-                return res
-                    .status(400)
-                    .json({
-                        message:
-                            "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח",
-                    });
-            }
+			if (productExist) {
+				return res
+					.status(400)
+					.json({ message: "מוצר קיים אצל הלקוח." });
+			}
+			if (!product.inCategory) {
+				return res.status(400).json({
+					message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח",
+				});
+			}
 
-            user.productList.push(productId);
+			user.productList.push(productId);
 
-            const isFound = user.productList.map(
-                (product) => product.id.toString() === productId
-            );
+			const isFound = user.productList.map(
+				(product) => product.id.toString() === productId
+			);
 
-            if (isFound) {
-                await productService.updateProductAssignToUser(productId, {
-                    afterThreeMonth,
-                    checkUserId,
-                });
+			if (isFound) {
+				await productService.updateProductAssignToUser(productId, {
+					afterThreeMonth,
+					checkUserId,
+				});
+			} else {
+				return res.status(501).json({ message: "ההשאלה נכשלה." });
+			}
+		});
 
-            } else {
-                return res.status(501).json({ message: "ההשאלה נכשלה." });
-            }
-        });
+		await Promise.all(products);
 
-        await Promise.all(products);
+		await user.save();
 
-        await user.save();
-
-        return res.status(201).json({ message: "הושאל בהצלחה.", user });
-
-    } catch (err) {
-        return res.status(401).json({ message: err.message });
-    }
+		return res.status(201).json({ message: "הושאל בהצלחה.", user });
+	} catch (err) {
+		return res.status(401).json({ message: err.message });
+	}
 };
-
 
 exports.unassignProductUser = async (req, res) => {
 	const userId = escape(req.params.user_id);
@@ -340,13 +346,13 @@ exports.getUserProducts = async (req, res) => {
 		if (!user) {
 			return res.status(404).json({ message: "לא קיים משתמש." });
 		}
-		
+
 		const products = await productService.allProducts();
-		
+
 		user.productList.forEach((e) => {
 			allProductsArr.push(e.toString());
 		});
-		
+
 		products.forEach((p) => {
 			allProductsArr.forEach((u) => {
 				if (p._id.toString() === u) {
@@ -354,7 +360,6 @@ exports.getUserProducts = async (req, res) => {
 				}
 			});
 		});
-
 
 		return res.status(200).json(userProducts);
 	} catch (err) {

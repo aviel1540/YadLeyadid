@@ -1,20 +1,15 @@
 import { LoadingButton } from "@mui/lab";
 import {
 	Checkbox,
-	IconButton,
-	InputAdornment,
-	Stack,
-	TextField,
+	Stack
 } from "@mui/material";
-import React, { useRef, useState } from "react";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { useRef, useState } from "react";
+import logo from "~/assets/images/logo.jpeg";
 import { useLogin } from "~/hooks/useLogin";
 import * as toastMessage from "~/utils/notification/index";
-import { InputText } from "../logic/InputText";
-import logo from "~/assets/images/logo.jpeg";
+import { TextInput } from "../logic/TextInput";
 
 export const AuthForm = () => {
-	const [showPassword, setShowPassword] = useState(false);
 	const [iAgree, setIAgree] = useState(true);
 
 	const idInputRef = useRef();
@@ -40,7 +35,7 @@ export const AuthForm = () => {
 				}
 			}
 		} catch {
-			toastMessage.error("שגיאה: בעיית התחברות לשרת.");
+			toastMessage.error("משהו השתבש, נא לנסות שוב.");
 		}
 	};
 
@@ -51,17 +46,17 @@ export const AuthForm = () => {
 				className="w-1/5 block mt-44 ml-auto mr-auto xl:w-2/5 sm:w-11/12"
 			>
 				<img src={logo} alt="logo" />
-				<InputText
+				<TextInput
 					originalText={"תעודת זהות"}
 					placeholder={"תעודת זהות"}
-					className={"!ml-5 !mt-5 w-35"}
+					className={"!mt-5 w-35"}
 					ref={idInputRef}
 				/>
 
-				<InputText
+				<TextInput
 					originalText={"סיסמא"}
 					placeholder={"סיסמא"}
-					className={"!ml-5 !mt-5 w-35"}
+					className={"!mt-5 w-35 "}
 					password={true}
 					ref={passwordInputRef}
 				/>

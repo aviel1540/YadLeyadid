@@ -7,13 +7,19 @@ import { useUsers } from "~/hooks/useUsers";
 import { Spinner } from "../../ui/Spinner";
 import { useState } from "react";
 import { UsersTable } from "../table/UsersTable";
+import { Actions } from "../Actions";
 
 export const Users = () => {
 	const [inputSearch, setInputSearch] = useState("");
 	const [changeShow, setChangeShow] = useState(false);
+	const [open, setOpen] = useState({
+		action: false,
+		popUp: false,
+		modalDialog: false,
+		title: "",
+	});
 
-	const { data: users, isLoading } = useUsers();
-	console.log("🚀 users:", users);
+	const { data: users, isLoading, refetch } = useUsers();
 
 	const navigate = useNavigate();
 
@@ -39,7 +45,7 @@ export const Users = () => {
 				<>
 					<div className="flex justify-center mb-5">
 						<span className="text-2xl mb-8">
-							משתמשים
+							לקוחות
 						</span>
 					</div>
 					<div className="flex justify-center">
@@ -70,8 +76,26 @@ export const Users = () => {
 							label="הצג בטבלה"
 						/>
 					</div>
+
+					<div className="grid justify-items-end ml-16">
+						<Button
+							className={
+								"!bg-green !text-white hover:!bg-green/80 !w-44 !text-sm"
+							}
+							onClick={() =>
+								setOpen({
+									...open,
+									popUp: true,
+									action: true,
+									title: "add",
+								})
+							}
+						>
+							הוספת לקוח
+						</Button>
+					</div>
 					{dataResults?.length > 0 ? (
-						<div className="grid grid-cols-4 gap-2 p-8 justify-between mt-10 lg:flex lg:flex-col">
+						<div className="grid grid-cols-4 gap-2 p-8 justify-between mt-10 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1">
 							{dataResults.map((user) => (
 								<div
 									className="max-w-sm p-6 m-3 w-4/5 text-center shadow-lg shadow-gray bg-white border border-gray rounded-lg hover:shadow-gray-dark lg:w-11/12"
@@ -149,6 +173,13 @@ export const Users = () => {
 				<UsersTable
 					setChangeShow={setChangeShow}
 					changeShow={changeShow}
+				/>
+			)}
+			{open.action && (
+				<Actions
+					open={open}
+					setOpen={setOpen}
+					refetch={refetch}
 				/>
 			)}
 		</>

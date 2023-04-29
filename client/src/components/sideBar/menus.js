@@ -1,11 +1,12 @@
+import { GiShoppingCart } from "react-icons/gi";
 import { HiOutlineUsers } from "react-icons/hi";
 import { ImExit } from "react-icons/im";
-import { RiProductHuntLine, RiSettings4Line } from "react-icons/ri";
+import { RiSettings4Line } from "react-icons/ri";
 
 export const menus = [
 	{
-		name: "משתמשים",
-		title: "משתמשים",
+		name: "לקוחות",
+		title: "לקוחות",
 		link: "/users",
 		icon: HiOutlineUsers,
 		margin: true,
@@ -14,7 +15,7 @@ export const menus = [
 		name: "מוצרים",
 		title: "מוצרים",
 		link: "/products",
-		icon: RiProductHuntLine,
+		icon: GiShoppingCart,
 	},
 ];
 

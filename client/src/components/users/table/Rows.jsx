@@ -4,10 +4,11 @@ import TableRow from "@mui/material/TableRow";
 import { Fragment } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 
-export const Rows = ({ row, userDetails }) => {
+export const Rows = ({ row, userDetails, index }) => {
 	return (
 		<Fragment>
 			<TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+				<TableCell align="right">{index}.</TableCell>
 				<TableCell align="right">{row.name}</TableCell>
 
 				<TableCell align="right">{row.idTeuda}</TableCell>

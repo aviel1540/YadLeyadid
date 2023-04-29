@@ -1,6 +1,8 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import * as users from "~/api/users";
 import { queryKeys } from "~/react-query/queryKeys";
+import { error } from "~/utils/onError";
+import { success } from "~/utils/onSuccess";
 
 export const useUsers = () => useQuery([queryKeys.users], users.getUsers);
 
@@ -22,4 +24,14 @@ export const useUserByUsername = (username) =>
 export const useProductsForUser = (id) =>
 	useQuery([queryKeys.productsForUser], () => users.getProductsForUser(id), {
 		enabled: !!id,
+	});
+
+export const useAddUser = (setOpen, open, refetch) =>
+	useMutation(users.addUser, {
+		onSuccess: (data) => {
+			success(data, setOpen, open, refetch);
+		},
+		onError: (data) => {
+			error(data);
+		},
 	});

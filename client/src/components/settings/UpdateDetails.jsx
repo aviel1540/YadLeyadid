@@ -1,7 +1,7 @@
 import { useUserByUsername } from "~/hooks/useUsers";
 import { useAuthStore } from "~/store/auth";
 import { Spinner } from "../ui/Spinner";
-import { InputText } from "../logic/InputText";
+import { TextInput } from "../logic/TextInput";
 import { formatDate } from "~/utils/formatDate";
 import { Button } from "@mui/material";
 import { UpdatePassword } from "./UpdatePassword";
@@ -26,7 +26,7 @@ export const UpdateDetails = () => {
 			{!isFetching && (
 				<>
 					<div className="flex justify-center">
-						<span className="text-2xl underline decoration-wavy">
+						<span className="text-2xl">
 							עדכון פרטים
 						</span>
 					</div>
@@ -44,59 +44,59 @@ export const UpdateDetails = () => {
 									עדכון פרטים אישיים
 								</span>
 							</div>
-							<InputText
+							<TextInput
 								info={details?.name}
 								originalText={"שם"}
 								className={"!ml-5 !mt-5 w-35"}
-								// ref={codeInputRef}
+							// ref={codeInputRef}
 							/>
-							<InputText
+							<TextInput
 								info={details?.username}
 								originalText={"שם משתמש"}
 								className={"!ml-5 !mt-5 w-35"}
-								// ref={codeInputRef}
+							// ref={codeInputRef}
 							/>
 
-							<InputText
+							<TextInput
 								info={details?.idTeuda}
 								originalText={"תעודת זהות"}
 								className={"!ml-5 !mt-5 w-35"}
-								// ref={codeInputRef}
+							// ref={codeInputRef}
 							/>
 
-							<InputText
+							<TextInput
 								info={details?.phoneNumber}
 								originalText={"מספר פלאפון"}
 								className={"!ml-5 !mt-5 w-35"}
-								// ref={codeInputRef}
+							// ref={codeInputRef}
 							/>
 
-							<InputText
+							<TextInput
 								info={details?.email}
 								originalText={"מייל"}
 								className={"!ml-5 !mt-5 w-35"}
-								// ref={codeInputRef}
+							// ref={codeInputRef}
 							/>
 
-							<InputText
+							<TextInput
 								info={details?.address}
 								originalText={"כתובת"}
 								className={"!ml-5 !mt-5 w-35"}
-								// ref={codeInputRef}
+							// ref={codeInputRef}
 							/>
 
-							<InputText
+							<TextInput
 								info={details?.paymentType}
 								originalText={"אופן תשלום"}
 								className={"!ml-5 !mt-5 w-35"}
-								// ref={codeInputRef}
+							// ref={codeInputRef}
 							/>
-							<InputText
+							<TextInput
 								info={formatDate(details?.createdAt)}
 								originalText={"תאריך הצטרפות"}
 								className={"!ml-5 !mt-5 w-35"}
 								readOnly={true}
-								// ref={codeInputRef}
+							// ref={codeInputRef}
 							/>
 
 							<div className="flex justify-center mt-10">
@@ -105,7 +105,7 @@ export const UpdateDetails = () => {
 									type="submit"
 									variant="contained"
 									className="!bg-green !w-2/6 !text-base sm:!w-4/6"
-									// onClick={submitHandler}
+								// onClick={submitHandler}
 								>
 									שמירת שינויים
 								</Button>

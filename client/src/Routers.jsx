@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import * as Pages from "./pages/index";
+import * as Pages from "./pages";
 
 export const Routers = () => {
 	return (

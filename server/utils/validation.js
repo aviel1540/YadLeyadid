@@ -10,16 +10,17 @@ exports.addSlashes = (text) => {
 };
 
 exports.iDValidator = (id) => {
-	if (id.length !== 9 || isNaN(id)) {
-		return false;
-	}
-	let sum = 0,
-		incNum;
-	for (let i = 0; i < id.length; i++) {
-		incNum = Number(id[i]) * ((i % 2) + 1);
-		sum += incNum > 9 ? incNum - 9 : incNum;
-	}
-	return sum % 10 === 0;
+	return true;
+	// if (id.length !== 9 || isNaN(id)) {
+	// 	return false;
+	// }
+	// let sum = 0,
+	// 	incNum;
+	// for (let i = 0; i < id.length; i++) {
+	// 	incNum = Number(id[i]) * ((i % 2) + 1);
+	// 	sum += incNum > 9 ? incNum - 9 : incNum;
+	// }
+	// return sum % 10 === 0;
 };
 
 exports.isEmpty = (value) => {
@@ -36,4 +37,3 @@ exports.checkUsername = (username) => {
 	if (username.length <= 1) return false;
 	return true;
 };
-

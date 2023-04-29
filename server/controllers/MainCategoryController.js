@@ -1,6 +1,7 @@
 const escape = require("escape-html");
 const validation = require("../utils/validation");
 const mainCategoryService = require("../services/mainCategoryService");
+const semiCategoryService = require("../services/semiCategoryService");
 
 exports.getAllMainCategory = async (req, res) => {
 	try {
@@ -15,7 +16,9 @@ exports.getMainCategoryById = async (req, res) => {
 	const idSearch = escape(req.params.id);
 	try {
 		const checkIdSearch = validation.addSlashes(idSearch);
-		const category = await mainCategoryService.findMainCategoryById(checkIdSearch);
+		const category = await mainCategoryService.findMainCategoryById(
+			checkIdSearch
+		);
 		if (!category) return res.status(400).send("לא נמצאה קטגוריה.");
 		res.status(200).json({ category });
 	} catch (err) {
@@ -29,12 +32,12 @@ exports.addMainCategory = async (req, res) => {
 	try {
 		const checkName = validation.addSlashes(categoryName);
 
-		const mainCategoryFound = await mainCategoryService.findMainCategoryByName({checkName});
-		console.log(categoryName)
+		const mainCategoryFound =
+			await mainCategoryService.findMainCategoryByName(checkName);
 		if (mainCategoryFound)
 			return res.status(400).json({ message: "הקטגוריה קיימת במערכת." });
 
-		mainCategory = await mainCategoryService.addNewMainCategory({checkName});
+		mainCategory = await mainCategoryService.addNewMainCategory(checkName);
 
 		await mainCategory.save();
 		return res.status(201).json({ message: "הקטגוריה נוספה בהצלחה." });
@@ -94,8 +97,12 @@ exports.asignSemiCategoryToMainCategory = async (req, res) => {
 		const checkMainId = validation.addSlashes(mainCategoryId);
 		const checkSemiId = validation.addSlashes(semiCategoryId);
 
-		const mainCategory = await MainCategory.findById(checkMainId);
-		const semiCategory = await SemiCategoryModel.findById(checkSemiId);
+		const mainCategory = await mainCategoryService.findMainCategoryById(
+			checkMainId
+		);
+		const semiCategory = await semiCategoryService.findSemiCategoryById(
+			checkSemiId
+		);
 
 		if (!mainCategory) {
 			return res.status(404).json({ message: "לא נמצאה קטגוריה ראשית." });
@@ -118,8 +125,10 @@ exports.asignSemiCategoryToMainCategory = async (req, res) => {
 				.json({ message: "הקטגוריה משוייכת לקטגוריה ראשית זו." });
 		}
 		mainCategory.semiCategoryList.push(semiCategory);
-		await SemiCategoryModel.findByIdAndUpdate(checkSemiId, {
-			inMainCategory: mainCategory.name,
+		let updatedInCategory = mainCategory.mainCategoryName;
+		await semiCategoryService.updateAssignToMainCategory({
+			checkSemiId,
+			updatedInCategory,
 		});
 		await mainCategory.save();
 		res.status(201).json({ message: "השיוך בוצע בהצלחה." });

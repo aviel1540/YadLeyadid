@@ -1,5 +1,5 @@
 import React from "react";
-import { InputText } from "../logic/InputText";
+import { TextInput } from "../logic/TextInput";
 import { Button } from "@mui/material";
 
 export const DeleteAccount = () => {
@@ -9,17 +9,17 @@ export const DeleteAccount = () => {
 				<span className="text-lg">מחיקת חשבון</span>
 			</div>
 			<div className="flex justify-center mt-10">
-				<InputText
+				<TextInput
 					originalText={"מחיקת חשבון"}
 					className={"!ml-5 !mt-5 w-35"}
-					// ref={codeInputRef}
+				// ref={codeInputRef}
 				/>
 				<Button
 					size="large"
 					type="submit"
 					variant="contained"
 					className="!bg-red !w-1/6 !text-base xl:!w-4/5 sm:!w-11/12"
-					// onClick={submitHandler}
+				// onClick={submitHandler}
 				>
 					מחק חשבון
 				</Button>
