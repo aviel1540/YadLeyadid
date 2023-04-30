@@ -33,11 +33,46 @@ exports.addUser = async (request) => {
   });
 };
 
-exports.findUserById = async (checkUserId) => await User.findById( checkUserId );
+exports.findUserById = async (checkUserId) => await User.findById(checkUserId);
 
-exports.deleteUser = async (checkUserId) => await User.findByIdAndRemove({ checkUserId });
+exports.deleteUser = async (checkUserId) =>
+  await User.findByIdAndRemove({ checkUserId });
 
 exports.allUsers = async () => await User.find();
 
 exports.updateUserPassword = async (checkUserId, password) =>
   await User.findByIdAndUpdate(checkUserId, { password });
+
+exports.updateUserDetails = async (request) => {
+  console.log("eeeeee");
+
+  const {
+    checkUserId,
+    checkIdTeuda,
+    checkUsername,
+    checkName,
+    checkEmail,
+    checkPhoneNumber,
+    checkAddress,
+    checkPaymentType,
+  } = request;
+  console.log(await User.findByIdAndUpdate(checkUserId, {
+    idTeuda: checkIdTeuda,
+    username: checkUsername,
+    name: checkName,
+    email: checkEmail,
+    phoneNumber: checkPhoneNumber,
+    address: checkAddress,
+    paymentType: checkPaymentType,
+  }));
+
+  return await User.findByIdAndUpdate(checkUserId, {
+    idTeuda: checkIdTeuda,
+    username: checkUsername,
+    name: checkName,
+    email: checkEmail,
+    phoneNumber: checkPhoneNumber,
+    address: checkAddress,
+    paymentType: checkPaymentType,
+  });
+};

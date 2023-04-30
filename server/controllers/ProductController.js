@@ -65,7 +65,7 @@ exports.updateProduct = async (req, res) => {
 		if (!updateProduct)
 			return res.status(401).json({ message: "מוצר לא קיים." });
 
-		updateProduct = await updateProduct.save();
+		await updateProduct.save();
 		return res.status(201).json({ message: "המוצר התעדכן בהצלחה." });
 	} catch (err) {
 		return res.status(400).json({ message: err });

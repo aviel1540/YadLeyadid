@@ -42,3 +42,9 @@ exports.updateAssignToMainCategory = async (request) => {
 		inMainCategory: updatedInCategory,
 	});
 };
+
+exports.updateSemiCategoryUnassignMainCategory = async(semiId) => {
+	return await SemiCategory.findByIdAndUpdate(semiId, {
+		inMainCategory: null
+	});
+};

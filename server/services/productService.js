@@ -40,8 +40,10 @@ exports.updateProductAssignToUser = async(productId,request) => {
 	});
 }
 
-exports.updateProductUnassignToUser = async(productId) => {
+exports.updateProductUnassignToUser = async({request}) => {
+	const {productId, productName} = request;
 	return await Product.findByIdAndUpdate(productId, {
+		productName: productName,
 		place: ProductPlace.IN_STOCK,
 		loanDate: null,
 		loanReturn: null,
@@ -68,5 +70,18 @@ exports.updateProductsNameInSemiCategoryList = async (request) => {
 	const { productIdUpdate, productNewName} = request;
 	return await Product.findByIdAndUpdate(productIdUpdate, {
 		productName: productNewName
+	})
+}
+
+exports.updateProductInCategoryUnassignSemiFromMain = async(productId) => {
+	return await Product.findByIdAndUpdate(productId, {
+		inCategory: null
+	});
+};
+
+exports.updateProductInCategoryAssignSemiToMain = async(request) => {
+	const {productIdUpdate,updatedInCategory} = request;
+	return await Product.findByIdAndUpdate(productIdUpdate, {
+		inCategory: updatedInCategory
 	})
 }
