@@ -28,7 +28,7 @@ exports.updateProduct = async (request) => {
 };
 
 exports.deleteProduct = async (productId) =>
-	await Product.findByIdAndDelete(productId);
+	await Product.findByIdAndRemove(productId);
 
 exports.updateProductAssignToUser = async(productId,request) => {
 	const {afterThreeMonth, checkUserId} = request;

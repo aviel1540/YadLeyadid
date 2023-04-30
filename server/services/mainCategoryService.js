@@ -13,3 +13,12 @@ exports.addNewMainCategory = async (checkName) => {
 		mainCategoryName: checkName,
 	});
 };
+
+exports.deleteMainCategory = async (checkId) => await MainCategory.findByIdAndRemove(checkId);
+
+exports.updateMainCategoryDetails = async(request) => {
+	const {checkId, checkName} = request;
+	return await MainCategory.findByIdAndUpdate(checkId, {
+		mainCategoryName: checkName
+	})
+};

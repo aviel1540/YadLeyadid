@@ -51,7 +51,7 @@ exports.deleteMainCategory = async (req, res) => {
 	const id = escape(req.params.id);
 	try {
 		const checkId = validation.addSlashes(id);
-		const mainCategoryResult = await MainCategory.findById(checkId);
+		const mainCategoryResult = await mainCategoryService.findMainCategoryById(checkId);
 		if (!mainCategoryResult) {
 			return res.status(404).json({ message: "לא נמצאה קטגוריה ראשית." });
 		}
@@ -60,7 +60,7 @@ exports.deleteMainCategory = async (req, res) => {
 				.status(401)
 				.json({ message: "קיימות קטגוריות משוייכות." });
 		}
-		await MainCategory.findByIdAndDelete(checkId);
+		await mainCategoryService.deleteMainCategory(checkId);
 		res.status(200).json({ message: "הקטגוריה נמחקה בהצלחה." });
 	} catch (err) {
 		res.status(400).json({ message: err });
@@ -77,9 +77,7 @@ exports.updateMainCategory = async (req, res) => {
 		const checkId = validation.addSlashes(id);
 		const checkName = validation.addSlashes(name);
 
-		updateMainCategory = await MainCategory.findByIdAndUpdate(checkId, {
-			name: checkName,
-		});
+		updateMainCategory = await mainCategoryService.updateMainCategoryDetails({checkId,checkName});
 		if (!updateMainCategory) {
 			return res.status(401).json({ message: "לא נמצאה קטגוריה." });
 		}
