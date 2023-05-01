@@ -20,7 +20,8 @@ export const Products = () => {
 		inStock: false,
 		repair: false
 	});
-	console.log("🚀acitveFilters:", acitveFilters)
+
+
 	const [open, setOpen] = useState({
 		action: false,
 		popUp: false,
@@ -31,7 +32,9 @@ export const Products = () => {
 	const { data, isLoading, refetch } = useProducts();
 
 
-	// const dataResults = data?.filter((d) => d.place === "מושאל");
+	const dataResults = data?.filter((d) => d.place === acitveFilters.inStock);
+	console.log("🚀  dataResults:", data)
+
 
 	if (isLoading) return <Spinner />;
 
