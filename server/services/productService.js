@@ -40,10 +40,8 @@ exports.updateProductAssignToUser = async(productId,request) => {
 	});
 }
 
-exports.updateProductUnassignToUser = async({request}) => {
-	const {productId, productName} = request;
+exports.updateProductUnassignToUser = async(productId) => {
 	return await Product.findByIdAndUpdate(productId, {
-		productName: productName,
 		place: ProductPlace.IN_STOCK,
 		loanDate: null,
 		loanReturn: null,

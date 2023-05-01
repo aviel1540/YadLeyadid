@@ -18,7 +18,7 @@ router.patch("/update/:id", mainCategoryController.updateMainCategory);
 
 router.delete("/delete/:id", mainCategoryController.deleteMainCategory);
 
-router.delete("/:mainId/unasign-category/:semiId", mainCategoryController.unassignSemiCategoryToMainCategory);
+router.delete("/:id/unasign-category/:semi_Id", mainCategoryController.unassignSemiCategoryToMainCategory);
 
 
 

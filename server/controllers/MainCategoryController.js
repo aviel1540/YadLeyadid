@@ -72,7 +72,7 @@ exports.deleteMainCategory = async (req, res) => {
 
 exports.updateMainCategory = async (req, res) => {
   const id = escape(req.params.id);
-  const name = escape(req.body.name);
+  const name = escape(req.body.mainCategoryName);
 
   let updateMainCategory;
 
@@ -97,6 +97,7 @@ exports.updateMainCategory = async (req, res) => {
 exports.asignSemiCategoryToMainCategory = async (req, res) => {
   const mainCategoryId = escape(req.params.id);
   const semiCategoryId = escape(req.params.semiId);
+  console.log(mainCategoryId);
   try {
     const checkMainId = validation.addSlashes(mainCategoryId);
     const checkSemiId = validation.addSlashes(semiCategoryId);
@@ -148,11 +149,12 @@ exports.asignSemiCategoryToMainCategory = async (req, res) => {
 };
 
 exports.unassignSemiCategoryToMainCategory = async (req, res) => {
-  const mainCategoryId = escape(req.params.mainId);
-  const semiCatgoryId = escape(req.params.semiId);
+  const mainCategoryId = escape(req.params.id);
+  const semiCategoryId = escape(req.params.semi_Id);
+  console.log(req.params);
   try {
     const checkMainCategoryId = validation.addSlashes(mainCategoryId);
-    const checkSemiCategoryId = validation.addSlashes(semiCatgoryId);
+    const checkSemiCategoryId = validation.addSlashes(semiCategoryId);
 
     const mainCategory = await mainCategoryService.findMainCategoryById(
       checkMainCategoryId
@@ -186,7 +188,9 @@ exports.unassignSemiCategoryToMainCategory = async (req, res) => {
 		}
 	}
 	await mainCategory.save();
-  } catch (err) {}
+  } catch (err) {
+		return res.status(400).json({ message: err });
+  }
 };
 
 exports.getMainCategorySemiCategory = async (req, res) => {

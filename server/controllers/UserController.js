@@ -219,7 +219,7 @@ exports.updatePassword = async (req, res) => {
     const checkUserId = validation.addSlashes(userId);
     const password = await auth.hashPassword(newPassword);
 
-    await userService.updateUserPassword(checkUserId, { password });
+    await userService.updateUserPassword(checkUserId, password);
 
     return res.status(200).json({ message: "עודכן בהצלחה." });
   } catch (err) {
@@ -299,13 +299,14 @@ exports.unassignProductUser = async (req, res) => {
   try {
     const checkUserId = validation.addSlashes(userId);
     const checkProductId = validation.addSlashes(productId);
-
+    
     const user = await userService.findUserById(checkUserId);
     if (!user) return res.status(400).json({ message: "לקוח לא קיים." });
 
     const productExist = user.productList.find(
       (id) => id.toString() === checkProductId
     );
+
     if (!productExist) {
       return res.status(400).json({ message: "מוצר לא קיים אצל הלקוח." });
     } else user.productList.pull(checkProductId);
@@ -367,35 +368,32 @@ exports.updateDetails = async (req, res) => {
   const phoneNumber = escape(req.body.phoneNumber);
   const address = escape(req.body.address);
   const paymentType = escape(req.body.paymentType);
-  console.log("aaaa");
   let updateUser;
   try {
     if (
       !idTeuda ||
       !name ||
       !username ||
-      !password ||
       !email ||
       !phoneNumber ||
       !address ||
       !paymentType
-    ) {
-      return res.status(400).json({ message: "נא למלא את כל השדות." });
-    }
-    if (!validation.iDValidator(idTeuda)) {
-      return res.status(400).json({ message: "תעודת זהות לא תקינה." });
-    }
-
-    if (!validation.checkEmail(email)) {
-      return res.status(400).json({ message: "מייל לא תקין." });
-    }
-
-    if (!validation.checkUsername(name)) {
-      return res.status(400).json({
-        message: "שם צריך להכיל מינימום 2 תווים.",
-      });
-    }
-  console.log("vvvvv");
+      ) {
+        return res.status(400).json({ message: "נא למלא את כל השדות." });
+      }
+      if (!validation.iDValidator(idTeuda)) {
+        return res.status(400).json({ message: "תעודת זהות לא תקינה." });
+      }
+      
+      if (!validation.checkEmail(email)) {
+        return res.status(400).json({ message: "מייל לא תקין." });
+      }
+      
+      if (!validation.checkUsername(name)) {
+        return res.status(400).json({
+          message: "שם צריך להכיל מינימום 2 תווים.",
+        });
+      }
 
     const checkUserId = validation.addSlashes(userId);
     const checkIdTeuda = validation.addSlashes(idTeuda);
@@ -405,7 +403,6 @@ exports.updateDetails = async (req, res) => {
     const checkPhoneNumber = validation.addSlashes(phoneNumber);
     const checkAddress = validation.addSlashes(address);
     const checkPaymentType = validation.addSlashes(paymentType);
-    console.log("adddd");
 
     updateUser = await userService.updateUserDetails({
       checkUserId,

@@ -527,6 +527,37 @@
 				}
 			}
 		},
+		"/main-category/{id}/unasign-category/{semi_Id}": {
+			"delete": {
+				"tags": ["Main Category"],
+				"summary": "unasign semi-category from main-category",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "semi_id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
 
 		"/semi-category": {
 			"get": {
