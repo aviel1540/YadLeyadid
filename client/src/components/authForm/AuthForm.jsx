@@ -43,7 +43,7 @@ export const AuthForm = () => {
 		<form onSubmit={handleSubmit}>
 			<Stack
 				spacing={2}
-				className="w-1/5 block mt-44 ml-auto mr-auto xl:w-2/5 sm:w-11/12"
+				className="w-1/5 block mt-44 ml-auto mr-auto xl:mt-10 xl:w-2/6 sm:w-11/12"
 			>
 				<img src={logo} alt="logo" />
 				<TextInput
@@ -77,7 +77,7 @@ export const AuthForm = () => {
 					size="large"
 					type="submit"
 					variant="contained"
-					className="!bg-orange !w-1/5 xl:!w-2/5 sm:!w-11/12"
+					className="!bg-orange !w-1/5 xl:!w-2/6 sm:!w-11/12"
 				>
 					התחבר
 				</LoadingButton>

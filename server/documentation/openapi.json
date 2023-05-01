@@ -527,7 +527,7 @@
 				}
 			}
 		},
-		"/main-category/{id}/unasign-category/{semi_Id}": {
+		"/main-category/{id}/unasign-category/{semi_id}": {
 			"delete": {
 				"tags": ["Main Category"],
 				"summary": "unasign semi-category from main-category",
