@@ -10,7 +10,7 @@ export const PopUp = ({ children, setOpen, open }) => {
                     <div
                         className="absolute text-3xl font-bold cursor-pointer text-black z-50 right-2"
                         onClick={() => {
-                            setOpen({ ...open, popUp: false, action: false });
+                            setOpen({ ...open, popUp: false, action: false, id: "", info: {} });
                         }}
                     >
                         &times;

@@ -1,1 +1,6 @@
-export { getProducts, addProduct } from "./products";
+export {
+	getProducts,
+	addProduct,
+	deleteProduct,
+	updateProduct,
+} from "./products";

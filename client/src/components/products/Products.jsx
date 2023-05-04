@@ -27,13 +27,14 @@ export const Products = () => {
 		popUp: false,
 		modalDialog: false,
 		title: "",
+		id: "",
+		info: {},
 	});
 
 	const { data, isLoading, refetch } = useProducts();
 
 
-	const dataResults = data?.filter((d) => d.place === acitveFilters.inStock);
-	console.log("🚀  dataResults:", data)
+	// const dataResults = data?.filter((d) => d.place === acitveFilters.inStock);
 
 
 	if (isLoading) return <Spinner />;
@@ -131,7 +132,7 @@ export const Products = () => {
 										className="!font-bold"
 										align="right"
 									>
-										פרטים נוספים
+										פעולות
 									</TableCell>
 								</TableRow>
 							</TableHead>
@@ -141,6 +142,8 @@ export const Products = () => {
 										key={row._id}
 										row={row}
 										index={index + 1}
+										open={open}
+										setOpen={setOpen}
 									/>
 								))}
 							</TableBody>

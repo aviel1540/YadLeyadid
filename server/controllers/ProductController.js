@@ -57,10 +57,10 @@ exports.updateProduct = async (req, res) => {
 		const checkId = validation.addSlashes(productId);
 		const checkProductName = validation.addSlashes(productName);
 
-		updateProduct = await productService.updateProduct({
+		updateProduct = await productService.updateProduct(
 			checkId,
-			checkProductName,
-		});
+			checkProductName
+		);
 
 		if (!updateProduct)
 			return res.status(401).json({ message: "מוצר לא קיים." });
@@ -78,7 +78,7 @@ exports.deleteProduct = async (req, res) => {
 	try {
 		const checkProductId = validation.addSlashes(productId);
 
-		product = await productService.checkProduct(checkProductId);
+		product = await productService.findProductById(checkProductId);
 
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 

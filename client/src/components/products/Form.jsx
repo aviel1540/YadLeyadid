@@ -3,7 +3,7 @@ import * as toastMessages from "~/utils/notification";
 import { IconButton } from "@mui/material";
 import { MdDone } from "react-icons/md";
 import { TextInput } from "../logic/TextInput";
-import { useAddProduct } from "~/hooks/useProducts";
+import { useAddProduct, useUpdateProduct } from "~/hooks/useProducts";
 
 export const Form = ({ title, setOpen, open, refetch }) => {
     const productNameInputRef = useRef();
@@ -14,7 +14,11 @@ export const Form = ({ title, setOpen, open, refetch }) => {
         refetch
     );
 
-
+    const { mutate: updateMutateProduct } = useUpdateProduct(
+        setOpen,
+        open,
+        refetch
+    );
     const submitHandler = async (e) => {
         e.preventDefault();
 
@@ -28,6 +32,10 @@ export const Form = ({ title, setOpen, open, refetch }) => {
                 }
                 const addProduct = { productName };
                 addMutateProduct(addProduct);
+            }
+            else if (open.title === "edit") {
+                const addProduct = { id: open.id, productName };
+                updateMutateProduct(addProduct);
             }
         } catch (err) {
             toastMessages.error(err);
@@ -43,6 +51,7 @@ export const Form = ({ title, setOpen, open, refetch }) => {
                     originalText={"שם המוצר"}
                     placeholder={"שם המוצר"}
                     className={"w-35 !ml-2"}
+                    info={open.info && open.info.productName}
                     ref={productNameInputRef}
                 />
             </section>

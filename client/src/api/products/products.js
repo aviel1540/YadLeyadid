@@ -11,3 +11,19 @@ export const addProduct = async (productName) => {
 
 	return data;
 };
+
+export const updateProduct = async (request) => {
+	const { id, productName } = request;
+
+	const { data } = await axios.patch(`/products/update/${id}`, {
+		productName,
+	});
+
+	return data;
+};
+
+export const deleteProduct = async (id) => {
+	const { data } = await axios.delete(`/products/delete/${id}`);
+
+	return data;
+};

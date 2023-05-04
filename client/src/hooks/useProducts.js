@@ -16,3 +16,23 @@ export const useAddProduct = (setOpen, open, refetch) =>
 			error(data);
 		},
 	});
+
+export const useUpdateProduct = (setOpen, open, refetch) =>
+	useMutation(products.updateProduct, {
+		onSuccess: (data) => {
+			success(data, setOpen, open, refetch);
+		},
+		onError: (data) => {
+			error(data);
+		},
+	});
+
+export const useDeleteProduct = (setOpen, open, refetch) =>
+	useMutation((id) => products.deleteProduct(id), {
+		onSuccess: (data) => {
+			success(data, setOpen, open, refetch);
+		},
+		onError: (data) => {
+			error(data);
+		},
+	});
