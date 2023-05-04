@@ -5,9 +5,27 @@ const productService = require("../services/productService");
 const userService = require("../services/userService");
 
 exports.getProducts = async (req, res) => {
+  let products = [];
+  let userDetails;
+  let userLoan;
   try {
     const product = await productService.allProducts();
-    return res.status(200).send(product);
+    for (let i = 0; i < product.length; i++) {
+		const productDetails = product[i];
+      if (productDetails.loanBy) {
+        userLoan = await userService.findUserById(productDetails.loanBy);
+        userDetails = {
+          name: userLoan.name,
+          email: userLoan.email,
+          phoneNumber: userLoan.phoneNumber,
+        };
+		products.push({productDetails, userDetails});
+      }
+	  else {
+		products.push(productDetails)
+	  }
+    }
+    return res.status(200).send(products);
   } catch (err) {
     return res.status(401).json({ message: err.message });
   }
@@ -51,7 +69,7 @@ exports.getProductById = async (req, res) => {
       email: userLoan.email,
       phoneNumber: userLoan.phoneNumber,
     };
-	
+
     return res.status(200).json({ product, userDetails });
   } catch (err) {
     return res.status(404).json({ message: err });
