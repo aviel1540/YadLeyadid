@@ -32,6 +32,7 @@ export const Products = () => {
 	});
 
 	const { data, isLoading, refetch } = useProducts();
+	console.log("🚀 data:", data)
 
 
 	// const dataResults = data?.filter((d) => d.place === acitveFilters.inStock);
@@ -109,7 +110,8 @@ export const Products = () => {
 						<Table aria-label="collapsible table">
 							<TableHead>
 								<TableRow>
-									<TableCell />
+									<TableCell align="left" />
+									<TableCell align="left" />
 									<TableCell
 										className="!font-bold"
 										align="right"

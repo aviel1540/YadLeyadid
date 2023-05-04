@@ -1,14 +1,31 @@
-import { IconButton } from "@mui/material";
+import { Box, Collapse, IconButton, Table, TableBody, TableHead, Typography } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdDeleteForever, MdOutlineModeEdit } from "react-icons/md";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 export const Rows = ({ row, index, setOpen, open }) => {
+	const [openTable, setOpenTable] = useState(false);
+
 	return (
 		<Fragment>
 			<TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+				<TableCell>
+					<IconButton
+						aria-label="expand row"
+						size="small"
+						onClick={() => setOpenTable(!openTable)}
+					>
+						{openTable ? (
+							<KeyboardArrowUpIcon />
+						) : (
+							<KeyboardArrowDownIcon />
+						)}
+					</IconButton>
+				</TableCell>
 				<TableCell align="right">{index}.</TableCell>
 				<TableCell align="right">{row.productName}</TableCell>
 
@@ -44,6 +61,77 @@ export const Rows = ({ row, index, setOpen, open }) => {
 					>
 						<MdOutlineModeEdit />
 					</IconButton>
+				</TableCell>
+			</TableRow>
+			<TableRow>
+				<TableCell
+					style={{ paddingBottom: 0, paddingTop: 0 }}
+					colSpan={6}
+					className="!bg-gray/10"
+				>
+					<Collapse in={openTable} timeout="auto" unmountOnExit>
+						<Box sx={{ margin: 1 }}>
+							<Typography
+								variant="h6"
+								gutterBottom
+								component="div"
+								className="!flex"
+							>
+								לקוחות - {row?.userDetails?.length}
+								{/* <IconButton
+									title="שיוך מחלקה"
+									className="!text-green-700 !text-2xl"
+									onClick={() =>
+										actionRow(
+											setOpen,
+											open,
+											setInfo,
+											row,
+											"assignCompanieToCoupon"
+										)
+									}
+								>
+									<RiAddFill />
+								</IconButton> */}
+							</Typography>
+							<Table size="small" aria-label="purchases">
+								<TableHead>
+									<TableRow>
+										<TableCell align="right">שם</TableCell>
+										<TableCell align="right">
+											תעודת זהות
+										</TableCell>
+										<TableCell align="right">
+											מייל
+										</TableCell>
+										<TableCell align="right">
+											מספר פלאפון
+										</TableCell>
+
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									{row?.userDetails?.map((details) => (
+										<TableRow key={details.email}>
+											<TableCell align="right">
+												{details.username}
+											</TableCell>
+											<TableCell align="right">
+												{details.idTeuda}
+											</TableCell>
+											<TableCell align="right">
+												{details.email}
+											</TableCell>
+											<TableCell align="right">
+												{details.phoneNumber}
+											</TableCell>
+
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						</Box>
+					</Collapse>
 				</TableCell>
 			</TableRow>
 		</Fragment>
