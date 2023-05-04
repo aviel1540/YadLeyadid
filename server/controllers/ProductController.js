@@ -6,24 +6,28 @@ const userService = require("../services/userService");
 
 exports.getProducts = async (req, res) => {
   let products = [];
-  let userDetails;
+  let details;
   let userLoan;
   try {
     const product = await productService.allProducts();
     for (let i = 0; i < product.length; i++) {
-		const productDetails = product[i];
+      const productDetails = product[i];
       if (productDetails.loanBy) {
         userLoan = await userService.findUserById(productDetails.loanBy);
-        userDetails = {
-          name: userLoan.name,
+        details = {
+          productName: productDetails.productName,
+          place: productDetails.place,
+          loanDate: productDetails.loanDate,
+          loanReturn: productDetails.loanReturn,
+          inCategory: productDetails.inCategory,
+          user: userLoan.name,
           email: userLoan.email,
           phoneNumber: userLoan.phoneNumber,
         };
-		products.push({productDetails, userDetails});
+        products.push(details);
+      } else {
+        products.push(productDetails);
       }
-	  else {
-		products.push(productDetails)
-	  }
     }
     return res.status(200).send(products);
   } catch (err) {
