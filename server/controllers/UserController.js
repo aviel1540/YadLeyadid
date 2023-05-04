@@ -274,7 +274,8 @@ exports.addProductForUser = async (req, res) => {
       );
 
       if (isFound) {
-        await productService.updateProductAssignToUser(productId, {
+        await productService.updateProductAssignToUser({
+          productId,
           afterThreeMonth,
           checkUserId,
         });

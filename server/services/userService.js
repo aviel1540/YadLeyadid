@@ -10,26 +10,16 @@ exports.findByPhoneNumber = async (phoneNumber) =>
   await User.findOne({ phoneNumber });
 
 exports.addUser = async (request) => {
-  const {
-    checkIdTeuda,
-    checkUsername,
-    checkName,
-    checkEmail,
-    passwordHash,
-    checkPhoneNumber,
-    checkAddress,
-    checkPaymentType,
-  } = request;
 
   return new User({
-    idTeuda: checkIdTeuda,
-    username: checkUsername,
-    name: checkName,
-    password: passwordHash,
-    email: checkEmail,
-    phoneNumber: checkPhoneNumber,
-    address: checkAddress,
-    paymentType: checkPaymentType,
+    idTeuda: request.checkIdTeuda,
+    username: request.checkUsername,
+    name: request.checkName,
+    password: request.passwordHash,
+    email: request.checkEmail,
+    phoneNumber: request.checkPhoneNumber,
+    address: request.checkAddress,
+    paymentType: request.checkPaymentType,
   });
 };
 
@@ -45,24 +35,14 @@ exports.updateUserPassword = async (checkUserId, password) =>
 
 exports.updateUserDetails = async (request) => {
 
-  const {
-    checkUserId,
-    checkIdTeuda,
-    checkUsername,
-    checkName,
-    checkEmail,
-    checkPhoneNumber,
-    checkAddress,
-    checkPaymentType,
-  } = request;
 
-  return await User.findByIdAndUpdate(checkUserId, {
-    idTeuda: checkIdTeuda,
-    username: checkUsername,
-    name: checkName,
-    email: checkEmail,
-    phoneNumber: checkPhoneNumber,
-    address: checkAddress,
-    paymentType: checkPaymentType,
+  return await User.findByIdAndUpdate(request.checkUserId, {
+    idTeuda: request.checkIdTeuda,
+    username: request.checkUsername,
+    name: request.checkName,
+    email: request.checkEmail,
+    phoneNumber: request.checkPhoneNumber,
+    address: request.checkAddress,
+    paymentType: request.checkPaymentType,
   });
 };

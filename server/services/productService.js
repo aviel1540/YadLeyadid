@@ -3,31 +3,19 @@ const { ProductPlace } = require("../constants/productPlace");
 
 exports.allProducts = async () => await Product.find();
 
-exports.addProduct = async (request) => {
-	const { checkProductName } = request;
+exports.addProduct = async (productName) => new Product({productName});
 
-	return new Product({
-		productName: checkProductName,
-	});
-};
+exports.findProductById = async (productId) => await Product.findById(productId);
 
-exports.findProductById = async (productId) => {
-	const product = await Product.findById(productId);
-
-	if (!product) return false;
-	return product;
-};
 
 exports.updateProduct = async (id, productName) =>
-	await Product.findByIdAndUpdate(id, {
-		productName,
-	});
+	await Product.findByIdAndUpdate(id, {productName});
 
 exports.deleteProduct = async (productId) =>
 	await Product.findByIdAndRemove(productId);
 
-exports.updateProductAssignToUser = async (productId, request) => {
-	const { afterThreeMonth, checkUserId } = request;
+exports.updateProductAssignToUser = async (request) => {
+	const {productId, afterThreeMonth, checkUserId } = request;
 	return await Product.findByIdAndUpdate(productId, {
 		place: ProductPlace.LOANED,
 		loanDate: Date.now(),
