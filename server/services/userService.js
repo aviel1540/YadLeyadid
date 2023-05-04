@@ -10,7 +10,6 @@ exports.findByPhoneNumber = async (phoneNumber) =>
   await User.findOne({ phoneNumber });
 
 exports.addUser = async (request) => {
-
   return new User({
     idTeuda: request.checkIdTeuda,
     username: request.checkUsername,
@@ -34,8 +33,6 @@ exports.updateUserPassword = async (checkUserId, password) =>
   await User.findByIdAndUpdate(checkUserId, { password });
 
 exports.updateUserDetails = async (request) => {
-
-
   return await User.findByIdAndUpdate(request.checkUserId, {
     idTeuda: request.checkIdTeuda,
     username: request.checkUsername,
@@ -46,3 +43,14 @@ exports.updateUserDetails = async (request) => {
     paymentType: request.checkPaymentType,
   });
 };
+
+exports.showUserDetailsInProducts = async (userId) => {
+  const user = await User.findById(userId);
+  return {
+    user: user.name,
+    email: user.email,
+    phoneNumber: user.phoneNumber,
+  };
+};
+
+

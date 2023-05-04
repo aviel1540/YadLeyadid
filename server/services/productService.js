@@ -67,3 +67,13 @@ exports.updateProductInCategoryAssignSemiToMain = async (request) => {
 		inCategory: updatedInCategory,
 	});
 };
+
+exports.showProductDetailsInUser = async(productId) => {
+	const product = await Product.findById(productId);
+	return {
+		productName: product.productName,
+		loanDate: product.loanDate,
+		loanReturn: product.loanReturn,
+		inCategory: product.inCategory
+	}
+}

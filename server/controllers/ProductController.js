@@ -13,16 +13,17 @@ exports.getProducts = async (req, res) => {
     for (let i = 0; i < product.length; i++) {
       const productDetails = product[i];
       if (productDetails.loanBy) {
-        userLoan = await userService.findUserById(productDetails.loanBy);
+        userLoan = await userService.showUserDetailsInProducts(productDetails.loanBy);
         details = {
+          productId: productDetails._id,
           productName: productDetails.productName,
           place: productDetails.place,
           loanDate: productDetails.loanDate,
           loanReturn: productDetails.loanReturn,
           inCategory: productDetails.inCategory,
-          user: userLoan.name,
-          email: userLoan.email,
-          phoneNumber: userLoan.phoneNumber,
+          userDetails: [
+              userLoan,
+          ],
         };
         products.push(details);
       } else {
@@ -58,23 +59,12 @@ exports.addProduct = async (req, res) => {
 exports.getProductById = async (req, res) => {
   const productId = escape(req.params.id);
   let product;
-  let userLoan;
   try {
     const checkProductId = validation.addSlashes(productId);
 
     product = await productService.findProductById(checkProductId);
 
-    if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
-    if (product.loanBy)
-      userLoan = await userService.findUserById(product.loanBy);
-
-    const userDetails = {
-      name: userLoan.name,
-      email: userLoan.email,
-      phoneNumber: userLoan.phoneNumber,
-    };
-
-    return res.status(200).json({ product, userDetails });
+    return res.status(200).json(product);
   } catch (err) {
     return res.status(404).json({ message: err });
   }

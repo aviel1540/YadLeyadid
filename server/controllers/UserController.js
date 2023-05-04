@@ -162,8 +162,46 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.getAllUsers = async (req, res) => {
+  let users = [];
+  let products = [];
+  let details;
+  let product;
   try {
-    const users = await userService.allUsers();
+    const user = await userService.allUsers();
+    for(let i =0; i< user.length; i++) {
+      const userDetails = user[i];
+      if(userDetails.productList.length > 0){
+        for(let k =0; k< userDetails.productList.length; k++){
+          const productId = userDetails.productList[k];
+          product = await productService.showProductDetailsInUser(productId);
+          products.push(product);
+        }
+        details = {
+          idTeuda: userDetails.idTeuda,
+          user: userDetails.name,
+          username: userDetails.username,
+          email: userDetails.email,
+          phoneNumber: userDetails.phoneNumber,
+          address: userDetails.address,
+          paymentType: userDetails.paymentType,
+          userProductList: products
+        }
+        users.push(details);
+        products = [];
+      }
+      else {
+        details = {
+          idTeuda: userDetails.idTeuda,
+          user: userDetails.name,
+          username: userDetails.username,
+          email: userDetails.email,
+          phoneNumber: userDetails.phoneNumber,
+          address: userDetails.address,
+          paymentType: userDetails.paymentType,
+        }
+        users.push(details)
+      }
+    }
     return res.status(200).send(users);
   } catch (err) {
     return res.status(404).json({ message: err });
