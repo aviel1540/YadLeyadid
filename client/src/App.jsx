@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function App() {
 	const { isLoggedIn } = useAuthStore();
-
+	//Test - or zarhi
 	const navigate = useNavigate();
 
 	useEffect(() => {
