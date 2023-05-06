@@ -34,8 +34,8 @@ export const Form = ({ title, setOpen, open, refetch }) => {
                 addMutateProduct(addProduct);
             }
             else if (open.title === "edit") {
-                const addProduct = { id: open.id, productName };
-                updateMutateProduct(addProduct);
+                const updateProduct = { id: open.id, productName };
+                updateMutateProduct(updateProduct);
             }
         } catch (err) {
             toastMessages.error(err);
@@ -51,7 +51,7 @@ export const Form = ({ title, setOpen, open, refetch }) => {
                     originalText={"שם המוצר"}
                     placeholder={"שם המוצר"}
                     className={"w-35 !ml-2"}
-                    info={open.info && open.info.productName}
+                    info={open.info.productName}
                     ref={productNameInputRef}
                 />
             </section>

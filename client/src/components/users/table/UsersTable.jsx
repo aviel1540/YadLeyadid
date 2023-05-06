@@ -13,13 +13,16 @@ import { useState } from "react";
 import { useUsers } from "~/hooks/useUsers";
 import { Actions } from "../Actions";
 
-export const UsersTable = ({ setChangeShow, changeShow }) => {
+export const UsersTable = () => {
 	const [inputSearch, setInputSearch] = useState("");
+
 	const [open, setOpen] = useState({
 		action: false,
 		popUp: false,
 		modalDialog: false,
 		title: "",
+		id: "",
+		info: {},
 	});
 
 	const { data: users, isLoading, refetch } = useUsers();
@@ -33,9 +36,9 @@ export const UsersTable = ({ setChangeShow, changeShow }) => {
 			user?.phoneNumber.includes(inputSearch)
 	);
 
-	const userDetails = (username) => {
-		navigate(`details/${username}`);
-	};
+	// const userDetails = (username) => {
+	// 	navigate(`details/${username}`);
+	// };
 
 	if (isLoading) return <Spinner />;
 
@@ -96,12 +99,19 @@ export const UsersTable = ({ setChangeShow, changeShow }) => {
 							<TableHead>
 								<TableRow>
 									<TableCell />
+									<TableCell />
 
 									<TableCell
 										className="!font-bold"
 										align="right"
 									>
 										שם
+									</TableCell>
+									<TableCell
+										className="!font-bold"
+										align="right"
+									>
+										שם משתמש
 									</TableCell>
 									<TableCell
 										className="!font-bold"
@@ -137,7 +147,7 @@ export const UsersTable = ({ setChangeShow, changeShow }) => {
 										className="!font-bold"
 										align="right"
 									>
-										פרטים נוספים
+										פעולות
 									</TableCell>
 								</TableRow>
 							</TableHead>
@@ -145,9 +155,10 @@ export const UsersTable = ({ setChangeShow, changeShow }) => {
 								{dataResults.map((row, index) => (
 									<Rows
 										key={row._id}
-										userDetails={userDetails}
 										row={row}
 										index={index + 1}
+										open={open}
+										setOpen={setOpen}
 									/>
 								))}
 							</TableBody>

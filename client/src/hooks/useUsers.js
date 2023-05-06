@@ -35,3 +35,23 @@ export const useAddUser = (setOpen, open, refetch) =>
 			error(data);
 		},
 	});
+
+export const useUpdateUser = (setOpen, open, refetch) =>
+	useMutation(users.updateUser, {
+		onSuccess: (data) => {
+			success(data, setOpen, open, refetch);
+		},
+		onError: (data) => {
+			error(data);
+		},
+	});
+
+export const useDeleteUser = (setOpen, open, refetch) =>
+	useMutation((id) => users.deleteUser(id), {
+		onSuccess: (data) => {
+			success(data, setOpen, open, refetch);
+		},
+		onError: (data) => {
+			error(data);
+		},
+	});

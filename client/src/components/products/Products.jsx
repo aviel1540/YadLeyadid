@@ -15,12 +15,14 @@ import { Actions } from "./Actions";
 
 export const Products = () => {
 	const [showFilters, setShowFilters] = useState(false);
-	const [acitveFilters, setAcitveFilters] = useState({
-		loaned: false,
-		inStock: false,
-		repair: false
-	});
+	const [acitveFilters, setAcitveFilters] = useState(
+		{
+			loaned: false,
+			inStock: false,
+			repair: false
+		});
 
+	const [loaned, setLoaned] = useState({ label: "מושאל", place: false });
 
 	const [open, setOpen] = useState({
 		action: false,
@@ -32,10 +34,12 @@ export const Products = () => {
 	});
 
 	const { data, isLoading, refetch } = useProducts();
-	console.log("🚀 data:", data)
 
 
-	// const dataResults = data?.filter((d) => d.place === acitveFilters.inStock);
+
+	const dataResults = data?.filter((d) => d.place.includes((loaned.place && loaned.label)));
+	console.log("🚀  dataResults:", dataResults)
+
 
 
 	if (isLoading) return <Spinner />;
@@ -57,20 +61,21 @@ export const Products = () => {
 					<Chip
 						label="מושאל"
 						variant="outlined"
-						className={`!cursor-pointer !ml-2 ${acitveFilters.loaned && "!bg-gray-light"}`}
-						onClick={() => setAcitveFilters({ ...acitveFilters, loaned: !acitveFilters.loaned, inStock: false, repair: false })}
+						className={`!cursor-pointer !ml-2 ${loaned.place && "!bg-gray-light"}`}
+						// onClick={() => setAcitveFilters({ ...acitveFilters, loaned: !acitveFilters.loaned, inStock: false, repair: false })}
+						onClick={() => setLoaned({ ...loaned, place: !loaned.place })}
 					/>
 					<Chip
 						label="קיים במלאי"
 						variant="outlined"
 						className={`!cursor-pointer !ml-2 ${acitveFilters.inStock && "!bg-gray-light"}`}
-						onClick={() => setAcitveFilters({ ...acitveFilters, inStock: !acitveFilters.inStock, loaned: false, repair: false })}
+					// onClick={() => setAcitveFilters({ ...acitveFilters, inStock: !acitveFilters.inStock, loaned: false, repair: false })}
 					/>
 					<Chip
 						label="בתיקון"
 						variant="outlined"
 						className={`!cursor-pointer  ${acitveFilters.repair && "!bg-gray-light"}`}
-						onClick={() => setAcitveFilters({ ...acitveFilters, repair: !acitveFilters.repair, loaned: false, inStock: false })}
+					// onClick={() => setAcitveFilters({ ...acitveFilters, repair: !acitveFilters.repair, loaned: false, inStock: false })}
 					/>
 				</div>
 			)}
@@ -110,8 +115,8 @@ export const Products = () => {
 						<Table aria-label="collapsible table">
 							<TableHead>
 								<TableRow>
-									<TableCell align="left" />
-									<TableCell align="left" />
+									<TableCell />
+									<TableCell />
 									<TableCell
 										className="!font-bold"
 										align="right"

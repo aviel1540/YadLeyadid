@@ -13,8 +13,10 @@ export const Rows = ({ row, index, setOpen, open }) => {
 	return (
 		<Fragment>
 			<TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+				<TableCell align="right">{index}.</TableCell>
+
 				<TableCell>
-					<IconButton
+					{row?.userDetails?.length > 0 && <IconButton
 						aria-label="expand row"
 						size="small"
 						onClick={() => setOpenTable(!openTable)}
@@ -24,9 +26,8 @@ export const Rows = ({ row, index, setOpen, open }) => {
 						) : (
 							<KeyboardArrowDownIcon />
 						)}
-					</IconButton>
+					</IconButton>}
 				</TableCell>
-				<TableCell align="right">{index}.</TableCell>
 				<TableCell align="right">{row.productName}</TableCell>
 
 				<TableCell align="right">{row.place}</TableCell>
@@ -97,14 +98,14 @@ export const Rows = ({ row, index, setOpen, open }) => {
 							<Table size="small" aria-label="purchases">
 								<TableHead>
 									<TableRow>
-										<TableCell align="right">שם</TableCell>
-										<TableCell align="right">
+										<TableCell className="!font-bold" align="right">שם לקוח</TableCell>
+										<TableCell className="!font-bold" align="right">
 											תעודת זהות
 										</TableCell>
-										<TableCell align="right">
-											מייל
+										<TableCell className="!font-bold" align="right">
+											מייל לקוח
 										</TableCell>
-										<TableCell align="right">
+										<TableCell className="!font-bold" align="right">
 											מספר פלאפון
 										</TableCell>
 
@@ -112,7 +113,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 								</TableHead>
 								<TableBody>
 									{row?.userDetails?.map((details) => (
-										<TableRow key={details.email}>
+										<TableRow key={details.idTeuda}>
 											<TableCell align="right">
 												{details.username}
 											</TableCell>

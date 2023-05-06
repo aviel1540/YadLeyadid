@@ -4,4 +4,6 @@ export {
 	getUsers,
 	getUserById,
 	addUser,
+	updateUser,
+	deleteUser,
 } from "./users";

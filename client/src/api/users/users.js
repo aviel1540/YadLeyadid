@@ -6,6 +6,12 @@ export const getUsers = async () => {
 	return data;
 };
 
+export const addUser = async (user) => {
+	const { data } = await axios.post("/users/register", user);
+
+	return data;
+};
+
 export const getUserById = async (id) => {
 	const { data } = await axios.get(`/users/${id}`);
 
@@ -24,8 +30,17 @@ export const getProductsForUser = async (id) => {
 	return data;
 };
 
-export const addUser = async (user) => {
-	const { data } = await axios.post("/users/register", user);
+export const updateUser = async (user) => {
+	const { data } = await axios.patch(
+		`/users/update-details/${user.id}`,
+		user
+	);
+
+	return data;
+};
+
+export const deleteUser = async (id) => {
+	const { data } = await axios.delete(`/users/delete/${id}`);
 
 	return data;
 };

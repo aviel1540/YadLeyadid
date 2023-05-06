@@ -1,4 +1,4 @@
-export const formatDate = (inputDate, seperator = ".", isReverse = false) => {
+export const formatDate = (inputDate, seperator = "/", isReverse = false) => {
 	const date = new Date(inputDate);
 	let day = date.getDate().toString();
 	if (+day < 10) {

@@ -1,14 +1,21 @@
 import { ModalDialog } from "~/components/ui/ModalDialog";
 import { PopUp } from "~/components/ui/PopUp";
 import { Form } from "./Form";
+import { useDeleteUser } from "~/hooks/useUsers";
 
 export const Actions = ({ setOpen, open, refetch }) => {
+
+    const { mutate: deleteMutateUser } = useDeleteUser(
+        setOpen,
+        open,
+        refetch
+    );
 
     return (
         <>
             {open.modalDialog && (
                 <ModalDialog
-                    // onClick={() => deleteMutateShift(info.shiftCode)}
+                    onClick={() => deleteMutateUser(open.id)}
                     title={"האם אתה בטוח ?"}
                     setOpen={setOpen}
                     open={open}

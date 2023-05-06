@@ -29,10 +29,4 @@ router.delete(
 	userController.unassignProductUser
 );
 
-
-
-
-
-
-
 module.exports = router;

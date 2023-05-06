@@ -15,7 +15,6 @@ export const SelectInput = ({
 
     return (
         <Box className={clsx(className)}>
-
             <FormControl fullWidth>
                 <Select
                     value={selectedValue}
