@@ -104,12 +104,6 @@ exports.deleteProduct = async (req, res) => {
 
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
-		if (product.inCategory) {
-			return res
-				.status(401)
-				.json({ message: "לא ניתן למחוק - משוייך לקטגוריה." });
-		}
-
 		if (
 			product.place == ProductPlace.LOANED ||
 			product.place == ProductPlace.REPAIR
@@ -118,6 +112,12 @@ exports.deleteProduct = async (req, res) => {
 				.status(401)
 				.json({ message: "לא ניתן למחוק - המוצר לא זמין במלאי." });
 		}
+		if (product.inCategory) {
+			return res
+				.status(401)
+				.json({ message: "לא ניתן למחוק - משוייך לקטגוריה." });
+		}
+
 		await productService.deleteProduct(checkProductId);
 		return res.status(200).json({ message: "המוצר נמחק בהצלחה." });
 	} catch (err) {
