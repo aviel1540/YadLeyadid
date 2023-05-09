@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const auth = require("../utils/auth");
 const escape = require("escape-html");
 const validation = require("../utils/validation");
-const { sendMail } = require("./sendMail");
 const { ProductPlace } = require("../constants/productPlace");
 const userService = require("../services/userService");
 const productService = require("../services/productService");
@@ -479,3 +478,5 @@ exports.updateDetails = async (req, res) => {
 		return res.status(400).json({ message: err });
 	}
 };
+
+

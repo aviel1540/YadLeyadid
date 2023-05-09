@@ -1,3 +1,5 @@
+const { sendMail } = require("./sendMail");
+
 //TODO: Change real email for user
 				// sendMail(
 				// 	"yakovaviel@outlook.co.il",

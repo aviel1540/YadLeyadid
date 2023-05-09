@@ -856,6 +856,30 @@
 				}
 			}
 		},
+		"/products/ask-extension-request/{id}": {
+			"post": {
+				"tags": ["Product"],
+				"summary": "Add product",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
 		"/products/update/{id}": {
 			"patch": {
 				"tags": ["Product"],
@@ -885,6 +909,36 @@
 						}
 					}
 				},
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/products/{id}/loan-return/{userId}": {
+			"patch": {
+				"tags": ["Product"],
+				"summary": "Update product",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "A list of users."
