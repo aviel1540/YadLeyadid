@@ -35,7 +35,6 @@ exports.updateUserPassword = async (checkUserId, password) =>
 exports.updateUserDetails = async (request) => {
 	return await User.findByIdAndUpdate(request.checkUserId, {
 		idTeuda: request.checkIdTeuda,
-		username: request.checkUsername,
 		name: request.checkName,
 		email: request.checkEmail,
 		phoneNumber: request.checkPhoneNumber,
@@ -53,3 +52,23 @@ exports.showUserDetailsInProducts = async (userId) => {
 		phoneNumber: user.phoneNumber,
 	};
 };
+
+exports.findByIdTeudaForUpdate = async(userId, idTeuda) => {
+	const user = await User.findOne({idTeuda});
+	if(!user) return false;
+	if(user.id === userId) return false;
+	return true;
+}
+
+exports.findByEmailForUpdate = async(userId, email) => {
+	const user = await User.findOne({email});
+	if(!user) return false;
+	if(user.id === userId) return false;
+	return true;
+}
+exports.findByPhoneNumberForUpdate = async(userId, phoneNumber) => {
+	const user = await User.findOne({phoneNumber});
+	if(!user) return false;
+	if(user.id === userId) return false;
+	return true;
+}

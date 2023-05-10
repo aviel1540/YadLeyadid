@@ -205,7 +205,6 @@
 								"type": "object",
 								"properties": {
 									"idTeuda": { "type": "string" },
-									"username": { "type": "string" },
 									"name": { "type": "string" },
 									"email": { "type": "string" },
 									"phoneNumber": { "type": "string" },
@@ -313,30 +312,6 @@
 				}
 			}
 		},
-		"/users/user-list/{id}": {
-			"get": {
-				"tags": ["Users"],
-				"summary": "Get all product for user",
-				"parameters": [
-					{
-						"name": "token",
-						"in": "header",
-						"schema": { "type": "string" }
-					},
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": { "type": "string" }
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A list of users."
-					}
-				}
-			}
-		},
 		"/main-category": {
 			"get": {
 				"tags": ["Main Category"],
@@ -376,31 +351,6 @@
 				"responses": {
 					"200": {
 						"description": "A list of users."
-					}
-				}
-			}
-		},
-		"/main-category/main-list/{id}": {
-			"get": {
-				"tags": ["Main Category"],
-				"summary": "Get all semi-category for main category",
-				"parameters": [
-					{
-						"name": "token",
-						"in": "header",
-						"schema": { "type": "string" }
-					},
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": { "type": "string" }
-					}
-				],
-
-				"responses": {
-					"200": {
-						"description": "A list of semi-category in main category."
 					}
 				}
 			}
@@ -602,31 +552,6 @@
 				}
 			}
 		},
-		"/semi-category/semi-list/{id}": {
-			"get": {
-				"tags": ["Semi Category"],
-				"summary": "Get all product for semi-category",
-				"parameters": [
-					{
-						"name": "token",
-						"in": "header",
-						"schema": { "type": "string" }
-					},
-					{
-						"name": "id",
-						"in": "path",
-						"required": true,
-						"schema": { "type": "string" }
-					}
-				],
-
-				"responses": {
-					"200": {
-						"description": "A list of semi-category products."
-					}
-				}
-			}
-		},
 		"/semi-category/add": {
 			"post": {
 				"tags": ["Semi Category"],
@@ -784,6 +709,24 @@
 		},
 
 		"/products": {
+			"get": {
+				"tags": ["Product"],
+				"summary": "Get all products",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/products/loan-return-close": {
 			"get": {
 				"tags": ["Product"],
 				"summary": "Get all products",

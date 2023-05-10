@@ -21,6 +21,7 @@ const semiCategorySchema = new Schema(
 		},
 		inMainCategory: {
 			type: String,
+			default: null
 		},
 		productList: [
 			{

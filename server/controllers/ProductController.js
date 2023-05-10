@@ -23,6 +23,7 @@ exports.getProducts = async (req, res) => {
           loanDate: productDetails.loanDate,
           loanReturn: productDetails.loanReturn,
           inCategory: productDetails.inCategory,
+          extensionRequest: productDetails.extensionRequest,
           userDetails: [userLoan],
         };
         products.push(details);
@@ -78,6 +79,14 @@ exports.updateProduct = async (req, res) => {
   try {
     const checkId = validation.addSlashes(productId);
     const checkProductName = validation.addSlashes(productName);
+
+    const product = await productService.findProductById(checkId);
+    if(product.inCategory) {
+      return res
+				.status(400)
+				.json({ message: "לא ניתן לשנות שם - משוייך לקטגוריה." });
+    }
+    
 
     updateProduct = await productService.updateProduct(
       checkId,
@@ -160,7 +169,6 @@ exports.updateExtensionRequest = async (req, res) => {
       return res.status(404).json({ message: "העידכון נכשל" });
 
     await updateProduct.save();
-    console.log(updateProduct.extensionRequest);
 
     return res.status(201).json({ message: "תאריך ההחזרה הוארך בהצלחה" });
   } catch (err) {
@@ -177,7 +185,6 @@ exports.askForExtensionRequest = async (req, res) => {
     product = await productService.findProductById(checkProductId);
 
     if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
-    console.log(product.extensionRequest);
     if (product.extensionRequest == true)
       return res.status(401).json({
         message: "לא ניתן לבקש הארכה נוספת - יש ליצור קשר עם נציג שירות",
@@ -189,3 +196,23 @@ exports.askForExtensionRequest = async (req, res) => {
     return res.status(401).json({ message: err.message });
   }
 };
+
+// exports.allProductsWithLoanDateClose = async(req,res) => {
+//   let today = new Date();
+
+//   try {
+//     const product = await productService.allProducts();
+//     for (let i = 0; i < product.length; i++) {
+//       const productDetails = product[i];
+//       if (productDetails.loanBy) {
+//         console.log(today.getMonth() - productDetails.loanReturn.getMonth());
+//       }
+
+//   }
+//   // return res.status(201).json(productDetails.loanReturn);
+
+//   }catch(err) {
+//     return res.status(401).json({ message: err.message });
+    
+//   }
+// }

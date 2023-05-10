@@ -30,7 +30,7 @@ exports.updateProductUnassignToUser = async (productId) => {
 		loanDate: null,
 		loanReturn: null,
 		loanBy: null,
-		extensionRequested: false,
+		extensionRequest: false,
 	});
 };
 
@@ -75,6 +75,14 @@ exports.showProductDetailsInUser = async(productId) => {
 		productName: product.productName,
 		loanDate: product.loanDate,
 		loanReturn: product.loanReturn,
+		inCategory: product.inCategory
+	}
+}
+exports.showProductDetailsInSemiCategory = async(productId) => {
+	const product = await Product.findById(productId);
+	return {
+		productName: product.productName,
+		place: product.place,
 		inCategory: product.inCategory
 	}
 }

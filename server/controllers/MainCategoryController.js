@@ -6,11 +6,40 @@ const productService = require("../services/productService");
 
 
 exports.getAllMainCategory = async (req, res) => {
+  let mainCategories = [];
+  let semiCategories = [];
+  let detailes;
+  let semi;
   try {
-    const categories = await mainCategoryService.findAllMainCategory();
-    res.status(201).json({ categories });
+    const mainCategory = await mainCategoryService.findAllMainCategory();
+    for (let i = 0; i < mainCategory.length; i++) {
+      const mainDetailes = mainCategory[i];
+      if(mainDetailes.semiCategoryList.length > 0) {
+        for (let k = 0; k < mainDetailes.semiCategoryList.length; k++) {
+          const semiId = mainDetailes.semiCategoryList[k];
+          semi = await semiCategoryService.showSemiDetailsInMain(semiId);
+          semiCategories.push(semi);
+        }
+        detailes = {
+          _id: mainDetailes._id,
+          mainCategoryName: mainDetailes.mainCategoryName,
+          semiCategoryList: semiCategories,
+        };
+        mainCategories.push(detailes);
+        semiCategories = [];
+      } else {
+        detailes = {
+          _id: mainDetailes._id,
+          mainCategoryName: mainDetailes.mainCategoryName,
+          semiCategoryList: null,
+        };
+        mainCategories.push(detailes);
+      }
+    }
+
+    return res.status(201).json(mainCategories);
   } catch (err) {
-    res.status(400).json({ message: err });
+    return res.status(400).json({ message: err });
   }
 };
 
@@ -194,37 +223,4 @@ exports.unassignSemiCategoryToMainCategory = async (req, res) => {
   }
 };
 
-exports.getMainCategorySemiCategory = async (req, res) => {
-  const mainCategoryId = escape(req.params.id);
-  const allSemi = [];
-  const mainSemiCategory = [];
-  let mainCategory;
 
-  try {
-    const checkMainId = validation.addSlashes(mainCategoryId);
-
-    mainCategory = await mainCategoryService.findMainCategoryById(checkMainId);
-
-    if (!mainCategory) {
-      return res.status(404).json({ message: "קטגוריה לא קיימת." });
-    }
-
-    const semiCategory = await semiCategoryService.allSemiCategory();
-
-    mainCategory.semiCategoryList.forEach((e) => {
-      allSemi.push(e.toString());
-    });
-
-    semiCategory.forEach((p) => {
-      allSemi.forEach((u) => {
-        if (p._id.toString() === u) {
-          mainSemiCategory.push(p);
-        }
-      });
-    });
-
-    return res.status(200).json(mainSemiCategory);
-  } catch (err) {
-    return res.status(404).json({ message: err });
-  }
-};

@@ -33,7 +33,7 @@ exports.checkPassword = (password) => {
 	return true;
 };
 
-exports.checkUsername = (username) => {
+exports.checkName = (username) => {
 	if (username.length <= 1) return false;
 	return true;
 };
