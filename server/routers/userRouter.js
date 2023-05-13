@@ -7,8 +7,6 @@ router.get("/:id", userController.getUserById);
 
 router.get("/find-by-username/:username", userController.getUserByUsername);
 
-router.get("/user-list/:id", userController.getUserProducts);
-
 router.post("/register", userController.register);
 
 router.post("/login", userController.login);

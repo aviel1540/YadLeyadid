@@ -5,8 +5,6 @@ router.get("/", mainCategoryController.getAllMainCategory);
 
 router.get("/:id", mainCategoryController.getMainCategoryById);
 
-router.get("/main-list/:id", mainCategoryController.getMainCategorySemiCategory)
-
 router.post("/add", mainCategoryController.addMainCategory);
 
 router.post(

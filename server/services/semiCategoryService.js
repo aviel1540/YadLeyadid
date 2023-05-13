@@ -19,7 +19,6 @@ exports.findSemiCategoryBySerialNumber = async (serialNumber) =>
 	await SemiCategory.findOne({ serialNumber });
 
 exports.findSemiCategoryByName = async (name) => {
-	console.log(await SemiCategory.findOne({ name }));
 	return await SemiCategory.findOne({ name });
 };
 
@@ -48,3 +47,11 @@ exports.updateSemiCategoryUnassignMainCategory = async(semiId) => {
 		inMainCategory: null
 	});
 };
+
+
+exports.showSemiDetailsInMain = async(semiId) => {
+	const semiCategory = await SemiCategory.findById(semiId);
+	return {
+		semiCategoryName: semiCategory.name
+	}
+}

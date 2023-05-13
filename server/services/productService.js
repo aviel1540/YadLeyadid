@@ -30,6 +30,7 @@ exports.updateProductUnassignToUser = async (productId) => {
 		loanDate: null,
 		loanReturn: null,
 		loanBy: null,
+		extensionRequest: false,
 	});
 };
 
@@ -76,4 +77,19 @@ exports.showProductDetailsInUser = async(productId) => {
 		loanReturn: product.loanReturn,
 		inCategory: product.inCategory
 	}
+}
+exports.showProductDetailsInSemiCategory = async(productId) => {
+	const product = await Product.findById(productId);
+	return {
+		productName: product.productName,
+		place: product.place,
+		inCategory: product.inCategory
+	}
+}
+
+exports.updateExtensionRequest = async(checkProductId,addNewLoanReturn) => {
+	return await Product.findByIdAndUpdate(checkProductId, {
+		loanReturn: addNewLoanReturn,
+		extensionRequest: true
+	})
 }

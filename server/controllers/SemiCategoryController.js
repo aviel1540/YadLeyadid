@@ -1,14 +1,47 @@
 const escape = require("escape-html");
 const validation = require("../utils/validation");
 const semiCategoryService = require("../services/semiCategoryService");
+
 const productService = require("../services/productService");
 
 exports.getAllSemiCategories = async (req, res) => {
+	let semiCategories = [];
+	let products = [];
+	let details;
+	let product;
 	try {
-		const categories = await semiCategoryService.allSemiCategory();
-		res.status(201).json({ categories });
+		const semiCategory = await semiCategoryService.allSemiCategory();
+		for (let i = 0; i < semiCategory.length; i++) {
+			const semiDetails = semiCategory[i];
+			if (semiDetails.productList.length > 0) {
+				for (let k = 0; k < semiDetails.productList.length; k++) {
+					const productId = semiDetails.productList[k];
+					product = await productService.showProductDetailsInSemiCategory(
+						productId
+					);
+					products.push(product);
+				}
+				details = {
+					_id: semiDetails._id,
+					serialNumber: semiDetails.serialNumber,
+					semiCategoryName: semiDetails.name,
+					productList: products
+				};
+				semiCategories.push(details);
+				products = [];
+			} else {
+				details = {
+					_id: semiDetails._id,
+					serialNumber: semiDetails.serialNumber,
+					semiCategoryName: semiDetails.name,
+					productList: null
+				};
+				semiCategories.push(details);
+			}
+		}
+		return res.status(201).json(semiCategories);
 	} catch (err) {
-		res.status(400).json({ message: err });
+		return res.status(400).json({ message: err });
 	}
 };
 
@@ -87,7 +120,6 @@ exports.updateSemiCategoryDetails = async (req, res) => {
 
 		res.status(201).json({ message: "קטגוריה עודכנה בהצלחה." });
 	} catch (err) {
-		console.log(err);
 		res.status(400).json({ message: err });
 	}
 };
@@ -106,6 +138,11 @@ exports.deleteSemiCategory = async (req, res) => {
 			return res
 				.status(401)
 				.json({ message: "יש למחוק את המוצרים המשוייכים." });
+		}
+		if(categoryResult.inMainCategory){
+			return res
+				.status(401)
+				.json({ message: "משוייך לקטגוריה ראשית - יש לבטל שיוך" });
 		}
 		await semiCategoryService.deleteSemiCategory(checkId);
 		res.status(200).json({ message: "נמחק בהצלחה" });
@@ -216,39 +253,3 @@ exports.unassignProductFromSemiCategory = async (req, res) => {
 	}
 };
 
-exports.getSemiCategoryProducts = async (req, res) => {
-	const allProducts = [];
-	const semiProducts = [];
-	const semiCategoryId = escape(req.params.id);
-	let semiCategory;
-
-	try {
-		const checkSemiId = validation.addSlashes(semiCategoryId);
-
-		semiCategory = await semiCategoryService.findSemiCategoryById(
-			checkSemiId
-		);
-
-		if (!semiCategory) {
-			return res.status(404).json({ message: "קטגוריה לא קיימת." });
-		}
-
-		const products = await productService.allProducts();
-
-		semiCategory.productList.forEach((e) => {
-			allProducts.push(e.toString());
-		});
-
-		products.forEach((p) => {
-			allProducts.forEach((u) => {
-				if (p._id.toString() === u) {
-					semiProducts.push(p);
-				}
-			});
-		});
-
-		return res.status(200).json(semiProducts);
-	} catch (err) {
-		return res.status(404).json({ message: err });
-	}
-};

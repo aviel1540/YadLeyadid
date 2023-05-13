@@ -7,8 +7,6 @@ router.get("/", categoryController.getAllSemiCategories);
 //search category
 router.get("/:id", categoryController.getSemiCategoryById);
 
-router.get("/semi-list/:id", categoryController.getSemiCategoryProducts);
-
 //add new category
 router.post("/add", categoryController.addNewSemiCategory);
 

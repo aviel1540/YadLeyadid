@@ -30,6 +30,10 @@ const productSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "User",
 	},
+	extensionRequest: {
+		type: Boolean,
+		default: false,
+	}
 });
 
 const Product = mongoose.model("product", productSchema);
