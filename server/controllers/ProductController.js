@@ -3,6 +3,7 @@ const validation = require("../utils/validation");
 const { ProductPlace } = require("../constants/productPlace");
 const productService = require("../services/productService");
 const userService = require("../services/userService");
+const mailer = require("../utils/mailer");
 
 exports.getProducts = async (req, res) => {
   let products = [];
@@ -81,12 +82,12 @@ exports.updateProduct = async (req, res) => {
     const checkProductName = validation.addSlashes(productName);
 
     const product = await productService.findProductById(checkId);
-    if(product.inCategory) {
+    if (product.inCategory) {
       return res
-				.status(400)
-				.json({ message: "לא ניתן לשנות שם - משוייך לקטגוריה." });
+        .status(400)
+        .json({ message: "לא ניתן לשנות שם - משוייך לקטגוריה." });
     }
-    
+
 
     updateProduct = await productService.updateProduct(
       checkId,
@@ -137,12 +138,15 @@ exports.deleteProduct = async (req, res) => {
 exports.updateExtensionRequest = async (req, res) => {
   const userId = escape(req.params.userId);
   const productId = escape(req.params.id);
+  const number = escape(req.body.number);
   let product;
   let user;
   let updateProduct;
   try {
     const checkUserId = validation.addSlashes(userId);
     const checkProductId = validation.addSlashes(productId);
+    const checkNumber = validation.addSlashes(number);
+
 
     user = await userService.findUserById(checkUserId);
     product = await productService.findProductById(checkProductId);
@@ -158,7 +162,7 @@ exports.updateExtensionRequest = async (req, res) => {
       return res.status(404).json({ message: "מוצר לא קיים אצל הלקוח" });
 
     const addNewLoanReturn = product.loanReturn;
-    addNewLoanReturn.setMonth(addNewLoanReturn.getMonth() + 3);
+    addNewLoanReturn.setMonth(addNewLoanReturn.getMonth() + checkNumber);
 
     updateProduct = await productService.updateExtensionRequest(
       checkProductId,
@@ -190,29 +194,32 @@ exports.askForExtensionRequest = async (req, res) => {
         message: "לא ניתן לבקש הארכה נוספת - יש ליצור קשר עם נציג שירות",
       });
 
-    //TODO: להוסיף פונקציה לשליחת מייל - לקחת פרטי לקוח מהמוצר
+      
     return res.status(201).json({ message: "הבקשה נשלחה בהצלחה" });
   } catch (err) {
     return res.status(401).json({ message: err.message });
   }
 };
 
-// exports.allProductsWithLoanDateClose = async(req,res) => {
-//   let today = new Date();
+exports.allProductsWithLoanDateClose = async (req, res) => {
+  const today = new Date();
+  try {
+    const product = await productService.allProducts();
+    for (let i = 0; i < product.length; i++) {
+      const productDetails = product[i];
+      if (productDetails.loanBy) {
+        const timeDiff = Math.abs(productDetails.loanReturn.getTime() - today.getTime());
+        const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        if(diffDays <= 90) {
+          console.log(productDetails);
+        }
+      }
 
-//   try {
-//     const product = await productService.allProducts();
-//     for (let i = 0; i < product.length; i++) {
-//       const productDetails = product[i];
-//       if (productDetails.loanBy) {
-//         console.log(today.getMonth() - productDetails.loanReturn.getMonth());
-//       }
+    }
+    // return res.status(201).json(productDetails.loanReturn);
 
-//   }
-//   // return res.status(201).json(productDetails.loanReturn);
+  } catch (err) {
+    return res.status(401).json({ message: err.message });
 
-//   }catch(err) {
-//     return res.status(401).json({ message: err.message });
-    
-//   }
-// }
+  }
+}

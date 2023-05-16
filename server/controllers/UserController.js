@@ -5,6 +5,7 @@ const validation = require("../utils/validation");
 const { ProductPlace } = require("../constants/productPlace");
 const userService = require("../services/userService");
 const productService = require("../services/productService");
+const mailer = require("../utils/mailer");
 
 exports.register = async (req, res) => {
   const idTeuda = escape(req.body.idTeuda);
@@ -325,7 +326,10 @@ exports.addProductForUser = async (req, res) => {
     await Promise.all(products);
 
     await user.save();
-
+    mailer.loanProductsConfirmMail(
+      user.email,
+      "המוצרים הושאלו בהצלחה"
+    );
     return res.status(201).json({ message: "הושאל בהצלחה.", user });
   } catch (err) {
     return res.status(401).json({ message: err.message });
@@ -360,6 +364,11 @@ exports.unassignProductUser = async (req, res) => {
 
     await productService.updateProductUnassignToUser(checkProductId);
     await user.save();
+    const product = await productService.findProductById(checkProductId);
+    mailer.returnProductConfirmMail(
+      user.email,
+      `המוצר - ${product.productName} הוחזר בהצלחה`
+    )
     return res.status(200).json({ message: "נמחק בהצלחה.", user });
   } catch (err) {
     return res.status(401).json({ message: err.message });

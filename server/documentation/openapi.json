@@ -258,30 +258,6 @@
 				}
 			}
 		},
-		"/users/add-product/{user_id}/asign-products": {
-			"post": {
-				"tags": ["Users"],
-				"summary": "Add product to user",
-				"parameters": [
-					{
-						"name": "token",
-						"in": "header",
-						"schema": { "type": "string" }
-					},
-					{
-						"name": "user_id",
-						"in": "path",
-						"required": true,
-						"schema": { "type": "string" }
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A list of users."
-					}
-				}
-			}
-		},
 		"/users/delete-product/{user_id}/productId/{product_id}": {
 			"delete": {
 				"tags": ["Users"],
@@ -882,6 +858,18 @@
 						"schema": { "type": "string" }
 					}
 				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"number": { "type": "number" }
+								}
+							}
+						}
+					}
+				},
 				"responses": {
 					"200": {
 						"description": "A list of users."
