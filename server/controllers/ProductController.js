@@ -3,6 +3,7 @@ const validation = require("../utils/validation");
 const { ProductPlace } = require("../constants/productPlace");
 const productService = require("../services/productService");
 const userService = require("../services/userService");
+const mailer = require("../utils/mailer");
 
 exports.getProducts = async (req, res) => {
 	let products = [];
@@ -136,12 +137,14 @@ exports.deleteProduct = async (req, res) => {
 exports.updateExtensionRequest = async (req, res) => {
 	const userId = escape(req.params.userId);
 	const productId = escape(req.params.id);
+	const number = escape(req.body.number);
 	let product;
 	let user;
 	let updateProduct;
 	try {
 		const checkUserId = validation.addSlashes(userId);
 		const checkProductId = validation.addSlashes(productId);
+		const checkNumber = validation.addSlashes(number);
 
 		user = await userService.findUserById(checkUserId);
 		product = await productService.findProductById(checkProductId);
@@ -157,7 +160,7 @@ exports.updateExtensionRequest = async (req, res) => {
 			return res.status(404).json({ message: "מוצר לא קיים אצל הלקוח" });
 
 		const addNewLoanReturn = product.loanReturn;
-		addNewLoanReturn.setMonth(addNewLoanReturn.getMonth() + 3);
+		addNewLoanReturn.setMonth(addNewLoanReturn.getMonth() + checkNumber);
 
 		updateProduct = await productService.updateExtensionRequest(
 			checkProductId,
@@ -190,7 +193,6 @@ exports.askForExtensionRequest = async (req, res) => {
 					"לא ניתן לבקש הארכה נוספת - יש ליצור קשר עם נציג שירות",
 			});
 
-		//TODO: להוסיף פונקציה לשליחת מייל - לקחת פרטי לקוח מהמוצר
 		return res.status(201).json({ message: "הבקשה נשלחה בהצלחה" });
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
@@ -198,16 +200,19 @@ exports.askForExtensionRequest = async (req, res) => {
 };
 
 exports.allProductsWithLoanDateClose = async (req, res) => {
-	let today = new Date();
-
+	const today = new Date();
 	try {
 		const product = await productService.allProducts();
 		for (let i = 0; i < product.length; i++) {
 			const productDetails = product[i];
 			if (productDetails.loanBy) {
-				console.log(
-					today.getMonth() - productDetails.loanReturn.getMonth()
+				const timeDiff = Math.abs(
+					productDetails.loanReturn.getTime() - today.getTime()
 				);
+				const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+				if (diffDays <= 90) {
+					console.log(productDetails);
+				}
 			}
 		}
 		// return res.status(201).json(productDetails.loanReturn);
