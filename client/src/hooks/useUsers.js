@@ -55,3 +55,13 @@ export const useDeleteUser = (setOpen, open, refetch) =>
 			error(data);
 		},
 	});
+
+export const useAsignProductToUser = (setOpen, open, refetch) =>
+	useMutation(users.assignProductToUser, {
+		onSuccess: (data) => {
+			success(data, setOpen, open, refetch);
+		},
+		onError: (data) => {
+			error(data);
+		},
+	});
