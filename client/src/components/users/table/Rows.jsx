@@ -7,6 +7,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { formatDate } from "~/utils/formatDate";
 import { MdDeleteForever, MdOutlineModeEdit } from "react-icons/md";
+import { RiAddFill } from "react-icons/ri";
 
 export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 	const [openTable, setOpenTable] = useState(false);
@@ -110,21 +111,22 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 								className="!flex"
 							>
 								מוצרים - {row?.userProductList?.length}
-								{/* <IconButton
+								<IconButton
 									title="שיוך מחלקה"
-									className="!text-green-700 !text-2xl"
+									className="!text-green !text-2xl"
 									onClick={() =>
-										actionRow(
-											setOpen,
-											open,
-											setInfo,
-											row,
-											"assignCompanieToCoupon"
-										)
+										setOpen({
+											...open,
+											action: true,
+											popUp: true,
+											title: "asignProductToUser",
+											id: row._id,
+											info: row,
+										})
 									}
 								>
 									<RiAddFill />
-								</IconButton> */}
+								</IconButton>
 							</Typography>
 							<Table size="small" aria-label="purchases">
 								<TableHead>

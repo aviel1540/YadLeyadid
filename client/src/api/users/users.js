@@ -44,3 +44,11 @@ export const deleteUser = async (id) => {
 
 	return data;
 };
+
+export const assignProductToUser = async (userId) => {
+	const { data } = await axios.post(
+		`/users/add-product/${userId}/asign-products`
+	);
+
+	return data;
+};
