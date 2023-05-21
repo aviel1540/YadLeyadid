@@ -6,7 +6,7 @@ export const Home = () => {
 
 	return (
 		<div className="flex justify-center">
-			<span className="text-xl">ברוך הבא {name}</span>
+			<span className="text-xl pt-12">ברוך הבא {name} 👋</span>
 		</div>
 	);
 };

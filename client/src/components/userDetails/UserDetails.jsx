@@ -5,9 +5,11 @@ import { Spinner } from "../ui/Spinner";
 import { TextInput } from "~/components/logic/TextInput";
 import { Button } from "@mui/material";
 import { formatDate } from "~/utils/formatDate";
+import { Header } from "../_client/Header";
 
 export const UserDetails = () => {
 	const username = useParams().username;
+
 
 	const {
 		data: details,
@@ -16,97 +18,83 @@ export const UserDetails = () => {
 	} = useUserByUsername(username);
 	// console.log("🚀  details:", details);
 
-	const { data: products, isLoading: productsLoading } = useProductsForUser(
-		details?._id
-	);
+	// const { data: products, isLoading: productsLoading } = useProductsForUser(
+	// 	details?._id
+	// );
 
-	if (productsLoading || detailsLoading) return <Spinner />;
+	if (detailsLoading) return <Spinner />;
 
 	return (
 		<>
-			{!isFetching && (
-				<>
-					<div className="flex justify-center mb-10">
-						<span className="text-2xl">
-							פרטי משתמש - {details?.name}
-						</span>
-					</div>
-					<div className="flex justify-end relative top-16">
-						<span className="text-xl w-1/5">מוצרים מושאלים</span>
-					</div>
+			<Header />
 
-					<div className="w-1/2 p-10">
-						<div className="flex justify-center">
-							<span className="text-xl ">פרטים אישיים</span>
-						</div>
-						<TextInput
-							info={details?.name}
-							originalText={"שם"}
-							className={"!ml-5 !mt-5 w-35"}
-						// ref={codeInputRef}
-						/>
-						<TextInput
-							info={details?.username}
-							originalText={"שם משתמש"}
-							className={"!ml-5 !mt-5 w-35"}
-						// ref={codeInputRef}
-						/>
+			<div className="grid justify-between grid-cols-2 w-10/12 mr-52 md:mr-0 sm:w-full gap-1  p-8 mt-10 lg:grid-cols-2 sm:grid-cols-2 sm:gap-5 sm:p-3">
+				<TextInput
+					info={details?.name}
+					originalText={"שם"}
+					className={"!ml-5 !mt-5 w-3/5  md:w-full"}
+				// ref={codeInputRef}
+				/>
+				<TextInput
+					info={details?.username}
+					originalText={"שם משתמש"}
+					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
+				// ref={codeInputRef}
+				/>
 
-						<TextInput
-							info={details?.idTeuda}
-							originalText={"תעודת זהות"}
-							className={"!ml-5 !mt-5 w-35"}
-						// ref={codeInputRef}
-						/>
+				<TextInput
+					info={details?.idTeuda}
+					originalText={"תעודת זהות"}
+					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
+				// ref={codeInputRef}
+				/>
 
-						<TextInput
-							info={details?.email}
-							originalText={"אימייל"}
-							className={"!ml-5 !mt-5 w-35"}
-						// ref={codeInputRef}
-						/>
+				<TextInput
+					info={details?.email}
+					originalText={"אימייל"}
+					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
+				// ref={codeInputRef}
+				/>
 
-						<TextInput
-							info={details?.phoneNumber}
-							originalText={"מספר פלאפון"}
-							className={"!ml-5 !mt-5 w-35"}
-						// ref={codeInputRef}
-						/>
-						<TextInput
-							info={details?.address}
-							originalText={"כתובת"}
-							className={"!ml-5 !mt-5 w-35"}
-						// ref={codeInputRef}
-						/>
+				<TextInput
+					info={details?.phoneNumber}
+					originalText={"מספר פלאפון"}
+					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
+				// ref={codeInputRef}
+				/>
+				<TextInput
+					info={details?.address}
+					originalText={"כתובת"}
+					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
+				// ref={codeInputRef}
+				/>
 
-						<TextInput
-							info={details?.paymentType}
-							originalText={"אופן תשלום"}
-							className={"!ml-5 !mt-5 w-35"}
-						// ref={codeInputRef}
-						/>
-						<TextInput
-							info={formatDate(details?.createdAt)}
-							originalText={"תאריך הצטרפות"}
-							className={"!ml-5 !mt-5 w-35"}
-							readOnly={true}
-						// ref={codeInputRef}
-						/>
+				<TextInput
+					info={details?.paymentType}
+					originalText={"אופן תשלום"}
+					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
+				// ref={codeInputRef}
+				/>
+				<TextInput
+					info={formatDate(details?.createdAt)}
+					originalText={"תאריך הצטרפות"}
+					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
+					readOnly={true}
+				// ref={codeInputRef}
+				/>
 
-						<div className="flex justify-center mt-10">
-							<Button
-								size="large"
-								type="submit"
-								variant="contained"
-								className="!bg-green !w-2/6 !text-base sm:!w-4/6"
-							// onClick={submitHandler}
-							>
-								שמירת שינויים
-							</Button>
-						</div>
-					</div>
-				</>
-			)}
+
+
+			</div>
+			<Button
+				size="large"
+				type="submit"
+				variant="contained"
+				className="!bg-green !w-72 !mr-4 !mt-5 !text-base sm:!mr-4 sm:!w-11/12"
+			// onClick={submitHandler}
+			>
+				שמירת שינויים
+			</Button>
 		</>
 	);
 };
