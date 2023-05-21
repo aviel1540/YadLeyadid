@@ -1,9 +1,8 @@
-import React, { useRef } from "react";
-import * as toastMessages from "~/utils/notification";
-import { IconButton } from "@mui/material";
-import { MdDone } from "react-icons/md";
-import { TextInput } from "../logic/TextInput";
+import { Button } from "@mui/material";
+import { useRef } from "react";
 import { useAddProduct, useUpdateProduct } from "~/hooks/useProducts";
+import * as toastMessages from "~/utils/notification";
+import { TextInput } from "../logic/TextInput";
 
 export const Form = ({ title, setOpen, open, refetch }) => {
     const productNameInputRef = useRef();
@@ -44,8 +43,8 @@ export const Form = ({ title, setOpen, open, refetch }) => {
 
     return (
         <>
-            <span className="block text-center text-2xl mb-2">{title}</span>
-            <section className="flex flex-wrap justify-center m-4 p-4 gap-2">
+            <h1 className="block text-center text-2xl mb-2">{title}</h1>
+            <main className="flex flex-wrap justify-center m-4 p-4 gap-2">
 
                 <TextInput
                     originalText={"שם המוצר"}
@@ -54,15 +53,24 @@ export const Form = ({ title, setOpen, open, refetch }) => {
                     info={open.info.productName}
                     ref={productNameInputRef}
                 />
-            </section>
-            <section className="flex items-end flex-col p-2">
-                <IconButton
-                    className="!text-white !bg-green !text-3xl"
-                    onClick={submitHandler}
-                >
-                    <MdDone />
-                </IconButton>
-            </section>
+            </main>
+            <div className="flex justify-center p-2">
+                {open.title === "edit" ?
+                    <Button
+                        className="!text-white w-1/2 !ml-4 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
+                        onClick={submitHandler}
+                    >
+                        עדכון מוצר
+                    </Button>
+                    :
+                    <Button
+                        className="!text-white w-1/2 !ml-4 h-8 !bg-green/80 !text-lg hover:!bg-green"
+                        onClick={submitHandler}
+                    >
+                        הוספת מוצר
+                    </Button>
+                }
+            </div>
         </>
     );
 };

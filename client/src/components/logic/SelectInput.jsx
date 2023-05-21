@@ -29,7 +29,6 @@ export const SelectInput = ({
                     </MenuItem>
                     <MenuItem value={PaymentTypes.CHEQUE}>צ'ק</MenuItem>
                     <MenuItem value={PaymentTypes.CREDITCARD}>כרטיס אשראי</MenuItem>
-
                 </Select>
                 <FormHelperText>{type}</FormHelperText>
             </FormControl>

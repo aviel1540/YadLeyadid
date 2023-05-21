@@ -16,7 +16,7 @@ export const Actions = ({ setOpen, open, refetch }) => {
             {open.modalDialog && (
                 <ModalDialog
                     onClick={() => deleteMutateUser(open.id)}
-                    title={"האם אתה בטוח ?"}
+                    title={"האם את/ה בטוח ?"}
                     setOpen={setOpen}
                     open={open}
                 />
@@ -24,9 +24,6 @@ export const Actions = ({ setOpen, open, refetch }) => {
             {open.popUp && (
                 <PopUp setOpen={setOpen} open={open}>
                     <Form
-                        title={
-                            open.title === "edit" ? "עריכת נתונים" : open.title === "asignProductToUser" ? "שיוך מוצרים ללקוח" : "הוספת לקוח חדש"
-                        }
                         refetch={refetch}
                         setOpen={setOpen}
                         open={open}

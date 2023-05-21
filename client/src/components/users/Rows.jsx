@@ -15,8 +15,6 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 	return (
 		<Fragment>
 			<TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-				<TableCell align="right">{index}.</TableCell>
-
 				<TableCell>
 					{row?.userProductList?.length > 0 && <IconButton
 						aria-label="expand row"
@@ -30,6 +28,8 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 						)}
 					</IconButton>}
 				</TableCell>
+
+				<TableCell align="right">{index}.</TableCell>
 				<TableCell align="right">{row.name}</TableCell>
 				<TableCell align="right">{row.username}</TableCell>
 
@@ -59,11 +59,6 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 
 				<TableCell align="right">{row.paymentType}</TableCell>
 
-				{/* <TableCell align="right" title="הצגת פרטים">
-					<IconButton onClick={() => userDetails(row.username)}>
-						<BsInfoCircle />
-					</IconButton>
-				</TableCell> */}
 				<TableCell align="right">
 					<IconButton
 						title="Remove"
@@ -77,7 +72,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 							})
 						}
 					>
-						<MdDeleteForever />
+						<MdDeleteForever color="#E21818" />
 					</IconButton>
 					<IconButton
 						title="Edit"
@@ -87,12 +82,13 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 								action: true,
 								popUp: true,
 								title: "edit",
+								content: "עריכת נתונים",
 								id: row._id,
 								info: row,
 							})
 						}
 					>
-						<MdOutlineModeEdit />
+						<MdOutlineModeEdit color="#1fb6ff" />
 					</IconButton>
 				</TableCell>
 			</TableRow>
@@ -100,7 +96,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 				<TableCell
 					style={{ paddingBottom: 0, paddingTop: 0 }}
 					colSpan={6}
-					className="!bg-gray/10"
+					className="!bg-gray/5"
 				>
 					<Collapse in={openTable} timeout="auto" unmountOnExit>
 						<Box sx={{ margin: 1 }}>
@@ -112,14 +108,15 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 							>
 								מוצרים - {row?.userProductList?.length}
 								<IconButton
-									title="שיוך מחלקה"
-									className="!text-green !text-2xl"
+									title="שיוך מוצר"
+									className="!text-green !text-2xl !-mt-0.5"
 									onClick={() =>
 										setOpen({
 											...open,
 											action: true,
 											popUp: true,
 											title: "asignProductToUser",
+											content: "שיוך מוצרים ללקוח",
 											id: row._id,
 											info: row,
 										})

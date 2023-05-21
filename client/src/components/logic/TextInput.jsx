@@ -27,7 +27,6 @@ export const TextInput = forwardRef((props, ref) => {
 			variant="outlined"
 			InputProps={{
 				readOnly: props.readOnly,
-
 				endAdornment: props.password && (
 					<InputAdornment position="end">
 						<IconButton
