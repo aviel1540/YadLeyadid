@@ -15,7 +15,6 @@ export const MultipleAutocomplete = ({ options, placeholder, label, isLoading, o
             id="checkboxes-tags-demo"
             options={options}
             disableCloseOnSelect
-
             getOptionLabel={(option) => option.label}
             renderOption={(props, option, { selected }) => (
                 <li {...props}>

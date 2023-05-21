@@ -1,20 +1,18 @@
-import React, { useRef, useState } from "react";
-import * as toastMessages from "~/utils/notification";
-import { IconButton } from "@mui/material";
-import { MdDone } from "react-icons/md";
-import { TextInput } from "../logic/TextInput";
-import { useAddUser, useUpdateUser } from "~/hooks/useUsers";
-import { SelectInput } from "../logic/SelectInput";
-import { MultipleAutocomplete } from "../logic/multipleAutocomplete";
+import { Button } from "@mui/material";
+import { useRef, useState } from "react";
 import { useProducts } from "~/hooks/useProducts";
+import { useAddUser, useUpdateUser } from "~/hooks/useUsers";
+import * as toastMessages from "~/utils/notification";
+import { SelectInput } from "../logic/SelectInput";
+import { TextInput } from "../logic/TextInput";
+import { MultipleAutocomplete } from "../logic/multipleAutocomplete";
 import { Spinner } from "../ui/Spinner";
 
-export const Form = ({ title, setOpen, open, refetch }) => {
-
+export const Form = ({ setOpen, open, refetch }) => {
     const [selectedPaymentType, setSelectedPaymentType] = useState("")
     const [selectedAssign, setSelectedAssign] = useState("")
-    console.log("🚀selectedAssign:", selectedAssign)
 
+    const textBtn = open.title === "add" ? "הוספת לקוח" : "שיוך ללקוח";
 
     const { data: products, isLoading } = useProducts();
 
@@ -96,8 +94,8 @@ export const Form = ({ title, setOpen, open, refetch }) => {
 
     return (
         <>
-            <span className="block text-center text-2xl mb-2">{title}</span>
-            <section className="flex flex-wrap justify-center m-4 p-4 gap-2">
+            <h1 className="block text-center text-2xl mb-2">{open.content}</h1>
+            <main className="flex flex-wrap justify-center m-4 p-4 gap-2">
                 {open.title !== "asignProductToUser" &&
                     <>
                         <TextInput
@@ -174,16 +172,25 @@ export const Form = ({ title, setOpen, open, refetch }) => {
                     : open.title === "asignProductToUser" && <Spinner />
                 }
 
-            </section>
+            </main>
 
-            <section className="flex items-end flex-col p-2">
-                <IconButton
-                    className="!text-white !bg-green !text-3xl"
-                    onClick={submitHandler}
-                >
-                    <MdDone />
-                </IconButton>
-            </section>
+            <div className="flex justify-center p-2">
+                {open.title === "edit" ?
+                    <Button
+                        className="!text-white w-1/2 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
+                        onClick={submitHandler}
+                    >
+                        עדכון לקוח
+                    </Button>
+                    :
+                    <Button
+                        className="!text-white w-1/2 h-8 !bg-green/80 !text-lg hover:!bg-green"
+                        onClick={submitHandler}
+                    >
+                        {textBtn}
+                    </Button>
+                }
+            </div>
         </>
     );
 };

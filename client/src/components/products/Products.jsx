@@ -14,104 +14,66 @@ import { Spinner } from "../ui/Spinner";
 import { Actions } from "./Actions";
 
 export const Products = () => {
-	const [showFilters, setShowFilters] = useState(false);
-	const [acitveFilters, setAcitveFilters] = useState(
-		{
-			loaned: false,
-			inStock: false,
-			repair: false
-		});
-
-	const [loaned, setLoaned] = useState({ label: "מושאל", place: false });
-
+	const [inputSearch, setInputSearch] = useState("");
 	const [open, setOpen] = useState({
 		action: false,
 		popUp: false,
 		modalDialog: false,
 		title: "",
+		content: "",
 		id: "",
 		info: {},
 	});
 
-	const { data, isLoading, refetch } = useProducts();
+	const { data: products, isLoading, refetch } = useProducts();
 
 
-
-	const dataResults = data?.filter((d) => d.place.includes((loaned.place && loaned.label)));
-	console.log("🚀  dataResults:", dataResults)
-
-
+	const dataResults = products?.filter(
+		(product) =>
+			product?.productName.toLowerCase()?.includes(inputSearch?.toLowerCase()) ||
+			product.inCategory?.includes(inputSearch) ||
+			product?.place?.includes(inputSearch)
+	);
 
 	if (isLoading) return <Spinner />;
 
 	return (
 		<>
-			<div className="flex justify-center">
-				<span className="text-2xl mb-8">מוצרים</span>
-			</div>
-
-			<div className="flex justify-center mb-3">
-				<IconButton onClick={() => setShowFilters(!showFilters)}>
-					<GrFilter />
-				</IconButton>
-			</div>
-
-			{showFilters && (
+			<main className={`${(open.popUp || open.modalDialog) && "blur-sm"}`}>
 				<div className="flex justify-center">
-					<Chip
-						label="מושאל"
-						variant="outlined"
-						className={`!cursor-pointer !ml-2 ${loaned.place && "!bg-gray-light"}`}
-						// onClick={() => setAcitveFilters({ ...acitveFilters, loaned: !acitveFilters.loaned, inStock: false, repair: false })}
-						onClick={() => setLoaned({ ...loaned, place: !loaned.place })}
-					/>
-					<Chip
-						label="קיים במלאי"
-						variant="outlined"
-						className={`!cursor-pointer !ml-2 ${acitveFilters.inStock && "!bg-gray-light"}`}
-					// onClick={() => setAcitveFilters({ ...acitveFilters, inStock: !acitveFilters.inStock, loaned: false, repair: false })}
-					/>
-					<Chip
-						label="בתיקון"
-						variant="outlined"
-						className={`!cursor-pointer  ${acitveFilters.repair && "!bg-gray-light"}`}
-					// onClick={() => setAcitveFilters({ ...acitveFilters, repair: !acitveFilters.repair, loaned: false, inStock: false })}
-					/>
+					<h1 className="text-2xl mb-8 underline">מוצרים</h1>
 				</div>
-			)}
+				<section className="relative top-2 w-10/12 block m-auto p-5 xl:w-full xl:relative xl:bottom-4">
+					<div className="flex justify-between flex-row-reverse items-end mb-5">
+						{dataResults.length >= 1 ?
+							<Button
+								className="!bg-green !text-white hover:!bg-green/80 !w-44 !text-sm"
+								onClick={() =>
+									setOpen({
+										...open,
+										popUp: true,
+										action: true,
+										title: "add",
+										content: "הוספת מוצר חדש"
+									})
+								}
+							>
 
-			<div className="flex justify-center">
-				{/* <TextField
-					id="outlined-search"
-					variant="standard"
-					type="search"
-					className="w-50"
-					placeholder="שם, תעדות זהות, פלאפון"
-					helperText="חיפוש לקוח"
-					onChange={({ target }) => setInputSearch(target.value)}
-					color="warning"
-				/> */}
-			</div>
-			{data?.length > 0 ? (
-				<div className="relative top-2 w-10/12 block m-auto p-5 xl:w-full xl:relative xl:bottom-4">
-					<div className="grid justify-items-end mb-5">
-						<Button
-							className={
-								"!bg-green !text-white hover:!bg-green/80 !w-44 !text-sm"
-							}
-							onClick={() =>
-								setOpen({
-									...open,
-									popUp: true,
-									action: true,
-									title: "add",
-								})
-							}
-						>
-							הוספת מוצר
-						</Button>
+								הוספת מוצר
+							</Button>
+							: <div className="visible" />}
+						<TextField
+							id="outlined-search"
+							variant="standard"
+							type="search"
+							className="w-50"
+							placeholder="שם, סטטוס, קטגוריה..."
+							helperText="חיפוש מוצר"
+							onChange={({ target }) => setInputSearch(target.value)}
+							color="warning"
+						/>
 					</div>
-					<TableContainer component={Paper} sx={{ height: 650 }}>
+					{dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 600 }}>
 						<Table aria-label="collapsible table">
 							<TableHead>
 								<TableRow>
@@ -144,24 +106,28 @@ export const Products = () => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{data.map((row, index) => (
+								{dataResults?.map((row, index) => (
 									<Rows
-										key={row._id}
+										key={row?._id}
 										row={row}
 										index={index + 1}
 										open={open}
 										setOpen={setOpen}
 									/>
+
 								))}
 							</TableBody>
 						</Table>
 					</TableContainer>
-				</div>
-			) : (
-				<div className="flex justify-center mt-8">
-					<span className="text-red text-xl">לא נמצאו תוצאות.</span>
-				</div>
-			)}
+						:
+						<div className="flex justify-center mt-24">
+							<span className="text-red text-lg">
+								לא נמצאו תוצאות.
+							</span>
+						</div>
+					}
+				</section>
+			</main>
 			{open.action && (
 				<Actions
 					open={open}

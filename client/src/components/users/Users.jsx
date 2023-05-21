@@ -1,3 +1,4 @@
+import { Button, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -5,15 +6,14 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Rows } from "./Rows";
-import { Spinner } from "~/components/ui/Spinner";
-import { Button, FormControlLabel, Switch, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Spinner } from "~/components/ui/Spinner";
 import { useUsers } from "~/hooks/useUsers";
-import { Actions } from "../Actions";
+import { Actions } from "./Actions";
+import { Rows } from "./Rows";
 
-export const UsersTable = () => {
+export const Users = () => {
 	const [inputSearch, setInputSearch] = useState("");
 
 	const [open, setOpen] = useState({
@@ -21,6 +21,7 @@ export const UsersTable = () => {
 		popUp: false,
 		modalDialog: false,
 		title: "",
+		content: "",
 		id: "",
 		info: {},
 	});
@@ -31,9 +32,9 @@ export const UsersTable = () => {
 
 	const dataResults = users?.filter(
 		(user) =>
-			user?.name.toLowerCase().includes(inputSearch.toLowerCase()) ||
-			user.idTeuda.includes(inputSearch) ||
-			user?.phoneNumber.includes(inputSearch)
+			user?.name.toLowerCase()?.includes(inputSearch?.toLowerCase()) ||
+			user?.idTeuda?.includes(inputSearch) ||
+			user?.phoneNumber?.includes(inputSearch)
 	);
 
 	// const userDetails = (username) => {
@@ -44,57 +45,43 @@ export const UsersTable = () => {
 
 	return (
 		<>
-			<div className="flex justify-center mb-5">
-				<span className="text-2xl mb-8">
-					לקוחות
-				</span>
-			</div>
-			<div className="flex justify-center">
-				<TextField
-					id="outlined-search"
-					variant="standard"
-					type="search"
-					className="w-50"
-					placeholder="שם, תעדות זהות, פלאפון"
-					helperText="חיפוש לקוח"
-					onChange={({ target }) => setInputSearch(target.value)}
-					color="warning"
-				/>
-			</div>
-			{/* <div className="flex justify-start">
-				<FormControlLabel
-					control={
-						<Switch
-							checked={changeShow}
-							onChange={({ target }) =>
-								setChangeShow(target.checked)
-							}
-							color="secondary"
-						/>
-					}
-					label="הצג בכרטיסיות"
-				/>
-			</div> */}
-			{dataResults?.length > 0 ? (
-				<div className="relative top-2 w-10/12 block m-auto p-5 xl:w-full xl:relative xl:bottom-4">
-					<div className="grid justify-items-end mb-5">
-						<Button
-							className={
-								"!bg-green !text-white hover:!bg-green/80 !w-44 !text-sm"
-							}
+			<main className={`${(open.popUp || open.modalDialog) && "blur-sm"}`}>
+				<div className="flex justify-center mb-5">
+					<h1 className="text-2xl mb-8 underline">
+						לקוחות
+					</h1>
+				</div>
+
+				<section className="relative top-2 w-10/12 block m-auto p-5 xl:w-full xl:relative xl:bottom-4">
+					<div className="flex justify-between flex-row-reverse items-end mb-5">
+						{dataResults.length >= 1 ? <Button
+							className="!bg-green/90 !text-white !rounded-md hover:!bg-green !w-44 !text-sm"
 							onClick={() =>
 								setOpen({
 									...open,
 									popUp: true,
 									action: true,
 									title: "add",
+									content: "הוספת לקוח חדש"
 								})
 							}
 						>
 							הוספת לקוח
 						</Button>
+							: <div className="visible" />}
+						<TextField
+							id="outlined-search"
+							variant="standard"
+							type="search"
+							className="w-50"
+							placeholder="שם, תעדות זהות, פלאפון..."
+							helperText="חיפוש לקוח"
+							onChange={({ target }) => setInputSearch(target.value)}
+							color="warning"
+						/>
+
 					</div>
-					<TableContainer component={Paper} sx={{ height: 550 }}>
+					{dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 550 }}>
 						<Table aria-label="collapsible table">
 							<TableHead>
 								<TableRow>
@@ -152,7 +139,7 @@ export const UsersTable = () => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{dataResults.map((row, index) => (
+								{dataResults?.map((row, index) => (
 									<Rows
 										key={row._id}
 										row={row}
@@ -164,19 +151,24 @@ export const UsersTable = () => {
 							</TableBody>
 						</Table>
 					</TableContainer>
-				</div>
-			) : (
-				<div className="flex justify-center mt-8">
-					<span className="text-red text-xl">לא נמצאו תוצאות.</span>
-				</div>
-			)}
-			{open.action && (
-				<Actions
-					open={open}
-					setOpen={setOpen}
-					refetch={refetch}
-				/>
-			)}
-		</>
+						:
+						<div className="flex justify-center mt-24">
+							<span className="text-red text-lg">
+								לא נמצאו תוצאות.
+							</span>
+						</div>
+					}
+				</section>
+			</main>
+			{
+				open.action && (
+					<Actions
+						open={open}
+						setOpen={setOpen}
+						refetch={refetch}
+					/>
+				)
+			}
+		</ >
 	);
 };

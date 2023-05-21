@@ -13,7 +13,6 @@ export const Rows = ({ row, index, setOpen, open }) => {
 	return (
 		<Fragment>
 			<TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-				<TableCell align="right">{index}.</TableCell>
 
 				<TableCell>
 					{row?.userDetails?.length > 0 && <IconButton
@@ -28,6 +27,8 @@ export const Rows = ({ row, index, setOpen, open }) => {
 						)}
 					</IconButton>}
 				</TableCell>
+				<TableCell align="right">{index}.</TableCell>
+
 				<TableCell align="right">{row.productName}</TableCell>
 
 				<TableCell align="right">{row.place}</TableCell>
@@ -45,7 +46,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 							})
 						}
 					>
-						<MdDeleteForever />
+						<MdDeleteForever color="#E21818" />
 					</IconButton>
 					<IconButton
 						title="Edit"
@@ -55,12 +56,13 @@ export const Rows = ({ row, index, setOpen, open }) => {
 								action: true,
 								popUp: true,
 								title: "edit",
+								content: "עריכת נתונים",
 								id: row._id,
 								info: row,
 							})
 						}
 					>
-						<MdOutlineModeEdit />
+						<MdOutlineModeEdit color="#1fb6ff" />
 					</IconButton>
 				</TableCell>
 			</TableRow>
@@ -68,7 +70,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 				<TableCell
 					style={{ paddingBottom: 0, paddingTop: 0 }}
 					colSpan={6}
-					className="!bg-gray/10"
+					className="!bg-gray/5"
 				>
 					<Collapse in={openTable} timeout="auto" unmountOnExit>
 						<Box sx={{ margin: 1 }}>
@@ -79,21 +81,6 @@ export const Rows = ({ row, index, setOpen, open }) => {
 								className="!flex"
 							>
 								לקוחות - {row?.userDetails?.length}
-								{/* <IconButton
-									title="שיוך מחלקה"
-									className="!text-green-700 !text-2xl"
-									onClick={() =>
-										actionRow(
-											setOpen,
-											open,
-											setInfo,
-											row,
-											"assignCompanieToCoupon"
-										)
-									}
-								>
-									<RiAddFill />
-								</IconButton> */}
 							</Typography>
 							<Table size="small" aria-label="purchases">
 								<TableHead>
