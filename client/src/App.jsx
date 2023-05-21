@@ -9,8 +9,8 @@ import { useAuthStore } from "./store/auth";
 import { useNavigate } from "react-router-dom";
 
 function App() {
-	const { isLoggedIn } = useAuthStore();
-	//Test - or zarhi
+	const { isLoggedIn, isAdmin } = useAuthStore();
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -33,7 +33,7 @@ function App() {
 					pauseOnHover
 					theme="light"
 				/>
-				{isLoggedIn && <SideBar />}
+				{isLoggedIn && isAdmin && <SideBar />}
 				<Routers />
 				<ReactQueryDevtools />
 			</QueryClientProvider>

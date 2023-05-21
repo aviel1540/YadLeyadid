@@ -171,7 +171,7 @@ export const Form = ({ title, setOpen, open, refetch }) => {
                         isLoading={isLoading}
                         label={"מוצרים"}
                     />
-                    : <Spinner />
+                    : open.title === "asignProductToUser" && <Spinner />
                 }
 
             </section>
