@@ -33,6 +33,10 @@ const productSchema = new Schema({
 	extensionRequest: {
 		type: Boolean,
 		default: false,
+	},
+	requestAlert: {
+		type: Boolean,
+		default: false,
 	}
 });
 

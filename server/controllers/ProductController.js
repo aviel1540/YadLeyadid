@@ -6,217 +6,233 @@ const userService = require("../services/userService");
 const mailer = require("../utils/mailer");
 
 exports.getProducts = async (req, res) => {
-	let products = [];
-	let details;
-	let userLoan;
-	try {
-		const product = await productService.allProducts();
-		for (let i = 0; i < product.length; i++) {
-			const productDetails = product[i];
-			if (productDetails.loanBy) {
-				userLoan = await userService.showUserDetailsInProducts(
-					productDetails.loanBy
-				);
-				details = {
-					_id: productDetails._id,
-					productName: productDetails.productName,
-					place: productDetails.place,
-					loanDate: productDetails.loanDate,
-					loanReturn: productDetails.loanReturn,
-					inCategory: productDetails.inCategory,
-					extensionRequest: productDetails.extensionRequest,
-					userDetails: [userLoan],
-				};
-				products.push(details);
-			} else {
-				products.push(productDetails);
-			}
-		}
-		return res.status(200).send(products);
-	} catch (err) {
-		return res.status(401).json({ message: err.message });
-	}
+  let products = [];
+  let details;
+  let userLoan;
+  try {
+    const product = await productService.allProducts();
+    for (let i = 0; i < product.length; i++) {
+      const productDetails = product[i];
+      if (productDetails.loanBy) {
+        userLoan = await userService.showUserDetailsInProducts(
+          productDetails.loanBy
+        );
+        details = {
+          _id: productDetails._id,
+          productName: productDetails.productName,
+          place: productDetails.place,
+          loanDate: productDetails.loanDate,
+          loanReturn: productDetails.loanReturn,
+          inCategory: productDetails.inCategory,
+          extensionRequest: productDetails.extensionRequest,
+          userDetails: [userLoan],
+        };
+        products.push(details);
+      } else {
+        products.push(productDetails);
+      }
+    }
+    return res.status(200).send(products);
+  } catch (err) {
+    return res.status(401).json({ message: err.message });
+  }
 };
 
 exports.addProduct = async (req, res) => {
-	const productName = escape(req.body.productName);
-	let product;
+  const productName = escape(req.body.productName);
+  let product;
 
-	try {
-		if (!productName) {
-			return res.status(400).json({ message: "יש למלא את השדות." });
-		}
+  try {
+    if (!productName) {
+      return res.status(400).json({ message: "יש למלא את השדות." });
+    }
 
-		const checkProductName = validation.addSlashes(productName);
+    const checkProductName = validation.addSlashes(productName);
 
-		product = await productService.addProduct(checkProductName);
+    product = await productService.addProduct(checkProductName);
 
-		await product.save();
-		res.status(201).json(product);
-	} catch (err) {
-		return res.status(401).json({ message: err.message });
-	}
+    await product.save();
+    res.status(201).json(product);
+  } catch (err) {
+    return res.status(401).json({ message: err.message });
+  }
 };
 
 exports.getProductById = async (req, res) => {
-	const productId = escape(req.params.id);
-	let product;
-	try {
-		const checkProductId = validation.addSlashes(productId);
+  const productId = escape(req.params.id);
+  let product;
+  try {
+    const checkProductId = validation.addSlashes(productId);
 
-		product = await productService.findProductById(checkProductId);
+    product = await productService.findProductById(checkProductId);
 
-		return res.status(200).json(product);
-	} catch (err) {
-		return res.status(404).json({ message: err });
-	}
+    return res.status(200).json(product);
+  } catch (err) {
+    return res.status(404).json({ message: err });
+  }
 };
 
 exports.updateProduct = async (req, res) => {
-	const productId = escape(req.params.id);
-	const productName = escape(req.body.productName);
+  const productId = escape(req.params.id);
+  const productName = escape(req.body.productName);
 
-	let updateProduct;
-	try {
-		const checkId = validation.addSlashes(productId);
-		const checkProductName = validation.addSlashes(productName);
+  let updateProduct;
+  try {
+    const checkId = validation.addSlashes(productId);
+    const checkProductName = validation.addSlashes(productName);
 
-		const product = await productService.findProductById(checkId);
-		if (product.inCategory) {
-			return res
-				.status(400)
-				.json({ message: "לא ניתן לשנות שם - משוייך לקטגוריה." });
-		}
+    const product = await productService.findProductById(checkId);
+    if (product.inCategory) {
+      return res
+        .status(400)
+        .json({ message: "לא ניתן לשנות שם - משוייך לקטגוריה." });
+    }
 
-		updateProduct = await productService.updateProduct(
-			checkId,
-			checkProductName
-		);
 
-		if (!updateProduct)
-			return res.status(401).json({ message: "מוצר לא קיים." });
+    updateProduct = await productService.updateProduct(
+      checkId,
+      checkProductName
+    );
 
-		await updateProduct.save();
-		return res.status(201).json({ message: "המוצר התעדכן בהצלחה." });
-	} catch (err) {
-		return res.status(400).json({ message: err });
-	}
+    if (!updateProduct)
+      return res.status(401).json({ message: "מוצר לא קיים." });
+
+    await updateProduct.save();
+    return res.status(201).json({ message: "המוצר התעדכן בהצלחה." });
+  } catch (err) {
+    return res.status(400).json({ message: err });
+  }
 };
 
 exports.deleteProduct = async (req, res) => {
-	const productId = escape(req.params.id);
-	let product;
-	try {
-		const checkProductId = validation.addSlashes(productId);
+  const productId = escape(req.params.id);
+  let product;
+  try {
+    const checkProductId = validation.addSlashes(productId);
 
-		product = await productService.findProductById(checkProductId);
+    product = await productService.findProductById(checkProductId);
 
-		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
+    if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
-		if (
-			product.place == ProductPlace.LOANED ||
-			product.place == ProductPlace.REPAIR
-		) {
-			return res
-				.status(401)
-				.json({ message: "לא ניתן למחוק - המוצר לא זמין במלאי." });
-		}
-		if (product.inCategory) {
-			return res
-				.status(401)
-				.json({ message: "לא ניתן למחוק - משוייך לקטגוריה." });
-		}
+    if (
+      product.place == ProductPlace.LOANED ||
+      product.place == ProductPlace.REPAIR
+    ) {
+      return res
+        .status(401)
+        .json({ message: "לא ניתן למחוק - המוצר לא זמין במלאי." });
+    }
+    if (product.inCategory) {
+      return res
+        .status(401)
+        .json({ message: "לא ניתן למחוק - משוייך לקטגוריה." });
+    }
 
-		await productService.deleteProduct(checkProductId);
-		return res.status(200).json({ message: "המוצר נמחק בהצלחה." });
-	} catch (err) {
-		return res.status(404).json({ message: err });
-	}
+    await productService.deleteProduct(checkProductId);
+    return res.status(200).json({ message: "המוצר נמחק בהצלחה." });
+  } catch (err) {
+    return res.status(404).json({ message: err });
+  }
 };
 
 exports.updateExtensionRequest = async (req, res) => {
-	const userId = escape(req.params.userId);
-	const productId = escape(req.params.id);
-	const number = escape(req.body.number);
-	let product;
-	let user;
-	let updateProduct;
-	try {
-		const checkUserId = validation.addSlashes(userId);
-		const checkProductId = validation.addSlashes(productId);
-		const checkNumber = validation.addSlashes(number);
+  const userId = escape(req.params.userId);
+  const productId = escape(req.params.id);
+  const number = escape(req.body.number);
+  let product;
+  let user;
+  let updateProduct;
+  try {
+    const checkUserId = validation.addSlashes(userId);
+    const checkProductId = validation.addSlashes(productId);
+    const checkNumber = validation.addSlashes(number);
 
-		user = await userService.findUserById(checkUserId);
-		product = await productService.findProductById(checkProductId);
 
-		if (!user) return res.status(404).json({ message: "לקוח לא קיים." });
-		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
+    user = await userService.findUserById(checkUserId);
+    product = await productService.findProductById(checkProductId);
 
-		const isFound = user.productList.map(
-			(product) => product.id.toString() === checkProductId
-		);
+    if (!user) return res.status(404).json({ message: "לקוח לא קיים." });
+    if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
-		if (!isFound)
-			return res.status(404).json({ message: "מוצר לא קיים אצל הלקוח" });
+    const isFound = user.productList.map(
+      (product) => product.id.toString() === checkProductId
+    );
 
-		const addNewLoanReturn = product.loanReturn;
-		addNewLoanReturn.setMonth(addNewLoanReturn.getMonth() + checkNumber);
+    if (!isFound)
+      return res.status(404).json({ message: "מוצר לא קיים אצל הלקוח" });
 
-		updateProduct = await productService.updateExtensionRequest(
-			checkProductId,
-			addNewLoanReturn
-		);
+    const addNewLoanReturn = product.loanReturn;
+    addNewLoanReturn.setMonth(product.loanReturn.getMonth() + Number(checkNumber));
+    updateProduct = await productService.updateExtensionRequest(
+      checkProductId,
+      addNewLoanReturn
+    );
 
-		if (!updateProduct)
-			return res.status(404).json({ message: "העידכון נכשל" });
+    if (!updateProduct)
+      return res.status(404).json({ message: "העידכון נכשל" });
 
-		await updateProduct.save();
-
-		return res.status(201).json({ message: "תאריך ההחזרה הוארך בהצלחה" });
-	} catch (err) {
-		return res.status(401).json({ message: err.message });
-	}
+    await updateProduct.save();
+    mailer.sendMailFunc(
+      user.email,
+      `המוצר ${product.productName} הוארך בהצלחה `
+    );
+    return res.status(201).json({ message: "תאריך ההחזרה הוארך בהצלחה" });
+  } catch (err) {
+    return res.status(401).json({ message: err.message });
+  }
 };
 
 exports.askForExtensionRequest = async (req, res) => {
-	const productId = escape(req.params.id);
-	let product;
-	try {
-		const checkProductId = validation.addSlashes(productId);
+  const productId = escape(req.params.id);
+  let product;
+  try {
+    const checkProductId = validation.addSlashes(productId);
 
-		product = await productService.findProductById(checkProductId);
+    product = await productService.findProductById(checkProductId);
 
-		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
-		if (product.extensionRequest == true)
-			return res.status(401).json({
-				message:
-					"לא ניתן לבקש הארכה נוספת - יש ליצור קשר עם נציג שירות",
-			});
-
-		return res.status(201).json({ message: "הבקשה נשלחה בהצלחה" });
-	} catch (err) {
-		return res.status(401).json({ message: err.message });
-	}
+    if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
+    if (product.extensionRequest == true)
+      return res.status(401).json({
+        message: "לא ניתן לבקש הארכה נוספת - יש ליצור קשר עם נציג שירות",
+      });
+    await productService.updateAlertRequest(checkProductId);
+    return res.status(201).json({ message: "הבקשה נשלחה בהצלחה" });
+  } catch (err) {
+    return res.status(401).json({ message: err.message });
+  }
 };
 
 exports.allProductsWithLoanDateClose = async (req, res) => {
-	const today = new Date();
-	try {
-		const product = await productService.allProducts();
-		for (let i = 0; i < product.length; i++) {
-			const productDetails = product[i];
-			if (productDetails.loanBy) {
-				const timeDiff = Math.abs(
-					productDetails.loanReturn.getTime() - today.getTime()
-				);
-				const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-				if (diffDays <= 90) {
-					console.log(productDetails);
-				}
-			}
-		}
-		// return res.status(201).json(productDetails.loanReturn);
-	} catch (err) {
-		return res.status(401).json({ message: err.message });
-	}
-};
+  const today = new Date();
+  let products = [];
+  let detailes;
+  let userLoan;
+  try {
+    const product = await productService.allProducts();
+    for (let i = 0; i < product.length; i++) {
+      const productDetails = product[i];
+      if (productDetails.loanBy) {
+        const timeDiff = Math.abs(productDetails.loanReturn.getTime() - today.getTime());
+        const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        if (diffDays <= 5) {
+            userLoan = await userService.findUserById(
+              productDetails.loanBy
+            );
+            detailes = {
+              productName: productDetails.productName,
+              name: userLoan.name,
+              loanDate: productDetails.loanDate,
+              loanReturn: productDetails.loanReturn,
+              days: diffDays, 
+              phoneNumber: userLoan.phoneNumber,
+            }
+            products.push(detailes);
+          }
+        }
+      }
+      return res.status(201).json(products);
+    } catch (err) {
+      return res.status(401).json({ message: err.message });
+
+    }
+}

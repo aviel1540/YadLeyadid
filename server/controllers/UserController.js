@@ -168,6 +168,9 @@ exports.getAllUsers = async (req, res) => {
   let product;
   try {
     const user = await userService.allUsers();
+    if (!user) {
+      return res.status(404).json({ message: "מאגר משתמשים ריק" });
+    }
     for (let i = 0; i < user.length; i++) {
       const userDetails = user[i];
       if (userDetails.productList.length > 0) {
@@ -211,19 +214,50 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserByUsername = async (req, res) => {
   const username = escape(req.params.username);
+  let products = [];
+  let details;
+  let product;
   let user;
   try {
     const checkUsername = validation.addSlashes(username);
     user = await userService.findByUsername(checkUsername);
-
     if (!user) {
       return res.status(404).json({ message: "לא קיים משתמש." });
     }
+    if (user.productList.length > 0) {
+      for (let i = 0; i < user.productList.length; i++) {
+        const productId = user.productList[i];
+        product = await productService.showProductDetailsInUser(productId);
+        products.push(product);
+      }
+      details = {
+        _id: user._id,
+        idTeuda: user.idTeuda,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+        paymentType: user.paymentType,
+        userProductList: products,
+      };
+    } else {
+      details = {
+        _id: user._id,
+        idTeuda: user.idTeuda,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+        paymentType: user.paymentType,
+      };
+    }
+    return res.status(200).json(details);
   } catch (err) {
     return res.status(400).json({ message: err });
   }
 
-  return res.status(200).json(user);
 };
 
 exports.getUserById = async (req, res) => {
@@ -326,7 +360,7 @@ exports.addProductForUser = async (req, res) => {
     await Promise.all(products);
 
     await user.save();
-    mailer.loanProductsConfirmMail(
+    mailer.sendMailFunc(
       user.email,
       "המוצרים הושאלו בהצלחה"
     );
@@ -365,7 +399,7 @@ exports.unassignProductUser = async (req, res) => {
     await productService.updateProductUnassignToUser(checkProductId);
     await user.save();
     const product = await productService.findProductById(checkProductId);
-    mailer.returnProductConfirmMail(
+    mailer.sendMailFunc(
       user.email,
       `המוצר - ${product.productName} הוחזר בהצלחה`
     )
