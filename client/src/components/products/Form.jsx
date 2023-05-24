@@ -54,17 +54,17 @@ export const Form = ({ title, setOpen, open, refetch }) => {
                     ref={productNameInputRef}
                 />
             </main>
-            <div className="flex justify-center p-2">
+            <div className="flex justify-end p-2">
                 {open.title === "edit" ?
                     <Button
-                        className="!text-white w-1/2 !ml-4 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
+                        className="!text-white w-2/5 !ml-4 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
                         onClick={submitHandler}
                     >
                         עדכון מוצר
                     </Button>
                     :
                     <Button
-                        className="!text-white w-1/2 !ml-4 h-8 !bg-green/80 !text-lg hover:!bg-green"
+                        className="!text-white w-2/5 !ml-4 h-8 !bg-green/80 !text-lg hover:!bg-green"
                         onClick={submitHandler}
                     >
                         הוספת מוצר

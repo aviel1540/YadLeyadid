@@ -19,7 +19,7 @@ export const Client = () => {
             <main className={`${open.action && "blur-sm"}`}>
                 <Header />
                 <div className="flex justify-center">
-                    <h1 className="text-2xl pt-6 underline">ברוך הבא {name} 👋</h1>
+                    <h1 className="text-2xl pt-6 underline">ברוך הבא - {name} 👋</h1>
                 </div>
             </main>
             <ProductDetails username={username} open={open} setOpen={setOpen} />

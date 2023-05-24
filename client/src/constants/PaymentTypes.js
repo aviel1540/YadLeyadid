@@ -1,4 +1,10 @@
-export const PaymentTypes = {
-	CHEQUE: "שק",
-	CREDITCARD: "כרטיס אשראי",
-};
+export const paymentTypes = [
+	{
+		id: "CHEQUE",
+		label: "שק",
+	},
+	{
+		id: "CREDITCARD",
+		label: "כרטיס אשראי",
+	},
+];

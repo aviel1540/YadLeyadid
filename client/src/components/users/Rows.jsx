@@ -6,8 +6,9 @@ import { BsInfoCircle } from "react-icons/bs";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { formatDate } from "~/utils/formatDate";
-import { MdDeleteForever, MdOutlineModeEdit } from "react-icons/md";
+import { MdDeleteForever, MdOutlineModeEdit, MdRemoveCircleOutline } from "react-icons/md";
 import { RiAddFill } from "react-icons/ri";
+import { replace } from "~/utils/replace";
 
 export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 	const [openTable, setOpenTable] = useState(false);
@@ -128,6 +129,8 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 							<Table size="small" aria-label="purchases">
 								<TableHead>
 									<TableRow>
+										<TableCell className="!font-bold" align="right" />
+
 										<TableCell className="!font-bold" align="right">
 											שם מוצר
 										</TableCell>
@@ -140,13 +143,19 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 										<TableCell className="!font-bold" align="right">
 											תאריך החזרה
 										</TableCell>
+										<TableCell className="!font-bold" align="right">
+											הסר שיוך
+										</TableCell>
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{row?.userProductList?.map((details) => (
+									{row?.userProductList?.map((details, index) => (
 										<TableRow key={details.loanDate}>
 											<TableCell align="right">
-												{details.productName}
+												{index + 1}.
+											</TableCell>
+											<TableCell align="right">
+												{replace(details.productName)}
 											</TableCell>
 											<TableCell align="right">
 												{details.inCategory}
@@ -156,6 +165,23 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 											</TableCell>
 											<TableCell align="right">
 												{formatDate(details.loanReturn)}
+											</TableCell>
+											<TableCell align="right">
+												<IconButton
+													title="Remove"
+													onClick={() =>
+														setOpen({
+															...open,
+															action: true,
+															modalDialog: true,
+															title: "delete-unassign",
+															id: details._id,
+															info: row
+														})
+													}
+												>
+													<MdRemoveCircleOutline color="#E94944" />
+												</IconButton>
 											</TableCell>
 										</TableRow>
 									))}

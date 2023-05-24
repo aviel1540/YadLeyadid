@@ -3,10 +3,10 @@ import { useRef, useState } from "react";
 import { useProducts } from "~/hooks/useProducts";
 import { useAddUser, useUpdateUser } from "~/hooks/useUsers";
 import * as toastMessages from "~/utils/notification";
-import { SelectInput } from "../logic/SelectInput";
-import { TextInput } from "../logic/TextInput";
-import { MultipleAutocomplete } from "../logic/multipleAutocomplete";
+import { TextInput, SelectInput, MultipleAutocomplete } from "../logic";
 import { Spinner } from "../ui/Spinner";
+import { paymentTypes } from "~/constants/PaymentTypes";
+import { ProductPlace } from "~/constants/productPlace";
 
 export const Form = ({ setOpen, open, refetch }) => {
     const [selectedPaymentType, setSelectedPaymentType] = useState("")
@@ -15,6 +15,8 @@ export const Form = ({ setOpen, open, refetch }) => {
     const textBtn = open.title === "add" ? "הוספת לקוח" : "שיוך ללקוח";
 
     const { data: products, isLoading } = useProducts();
+
+    const activeProducts = products?.filter((p) => p.place != ProductPlace.LOANED)
 
     const idTeudaeInputRef = useRef();
     const usernameInputRef = useRef();
@@ -99,11 +101,11 @@ export const Form = ({ setOpen, open, refetch }) => {
                 {open.title !== "asignProductToUser" &&
                     <>
                         <TextInput
-                            originalText={"תעודת זהות"}
-                            placeholder={"תעודת זהות"}
+                            originalText={"שם"}
+                            placeholder={"שם"}
                             className={"w-35 !ml-2"}
-                            info={open.info.idTeuda}
-                            ref={idTeudaeInputRef}
+                            info={open.info.name}
+                            ref={nameInputRef}
                         />
                         <TextInput
                             originalText={"שם משתמש"}
@@ -113,26 +115,20 @@ export const Form = ({ setOpen, open, refetch }) => {
                             ref={usernameInputRef}
                         />
                         <TextInput
-                            originalText={"שם"}
-                            placeholder={"שם"}
+                            originalText={"תעודת זהות"}
+                            placeholder={"תעודת זהות"}
                             className={"w-35 !ml-2"}
-                            info={open.info.name}
-                            ref={nameInputRef}
+                            info={open.info.idTeuda}
+                            ref={idTeudaeInputRef}
                         />
-                        {open.title === 'add' && <TextInput
-                            originalText={"סיסמא"}
-                            placeholder={"סיסמא"}
-                            className={"w-56"}
-                            password={true}
-                            ref={passwordInputRef}
-                        />}
-                        <TextInput
-                            originalText={"מייל"}
-                            placeholder={"מייל"}
-                            className={"w-35 !ml-2"}
-                            info={open.info.email}
-                            ref={emailInputRef}
-                        />
+                        {open.title === 'add' &&
+                            <TextInput
+                                originalText={"סיסמא"}
+                                placeholder={"סיסמא"}
+                                className={"w-56"}
+                                password={true}
+                                ref={passwordInputRef}
+                            />}
                         <TextInput
                             originalText={"מספר פלאפון"}
                             placeholder={"מספר פלאפון"}
@@ -141,24 +137,39 @@ export const Form = ({ setOpen, open, refetch }) => {
                             ref={phoneNumberInputRef}
                         />
                         <TextInput
+                            originalText={"מייל"}
+                            placeholder={"מייל"}
+                            className={"w-35 !ml-2"}
+                            info={open.info.email}
+                            ref={emailInputRef}
+                        />
+
+                        <TextInput
                             originalText={"כתובת"}
                             placeholder={"כתובת"}
                             className={"w-35 !ml-2"}
                             info={open.info.address}
                             ref={addressInputRef}
                         />
-
                         <SelectInput
                             type={open.title === 'add' ? 'אופן תשלום' : open.info.paymentType}
-                            className={"!w-56"}
                             selectedValue={selectedPaymentType}
+                            className={"!w-56 sm!w-full"}
                             setSelectedValue={setSelectedPaymentType}
+                            data={paymentTypes?.map(
+                                ({ label, id, }) => ({
+                                    key: id,
+                                    code: label,
+                                    name: label,
+                                })
+                            )}
+                            isLoading={!paymentTypes ? true : false}
                         />
                     </>
                 }
                 {open.title === "asignProductToUser" && !isLoading ?
                     <MultipleAutocomplete
-                        options={products?.map(
+                        options={activeProducts?.map(
                             (product) => ({
                                 label: product?.productName,
                                 id: product?._id,
@@ -174,17 +185,17 @@ export const Form = ({ setOpen, open, refetch }) => {
 
             </main>
 
-            <div className="flex justify-center p-2">
+            <div className="flex justify-end p-2">
                 {open.title === "edit" ?
                     <Button
-                        className="!text-white w-1/2 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
+                        className="!text-white w-2/5 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
                         onClick={submitHandler}
                     >
                         עדכון לקוח
                     </Button>
                     :
                     <Button
-                        className="!text-white w-1/2 h-8 !bg-green/80 !text-lg hover:!bg-green"
+                        className="!text-white w-2/5 h-8 !bg-green/80 !text-lg hover:!bg-green"
                         onClick={submitHandler}
                     >
                         {textBtn}

@@ -1,7 +1,7 @@
-import * as toastMessage from "./notification/index";
+import { error } from "./notification";
 
-export const error = (data) => {
-	const error = data?.response?.data?.message;
-	if (error) toastMessage.error(error);
-	else toastMessage.error("משהו השתבש, נא לנסות שוב.");
+export const onError = (data) => {
+	const err = data?.response?.data?.message;
+	if (err) error(err);
+	else error("משהו השתבש, נא לנסות שוב.");
 };

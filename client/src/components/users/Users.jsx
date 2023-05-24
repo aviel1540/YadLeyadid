@@ -25,6 +25,7 @@ export const Users = () => {
 		id: "",
 		info: {},
 	});
+	console.log("🚀open:", open)
 
 	const { data: users, isLoading, refetch } = useUsers();
 

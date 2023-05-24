@@ -27,3 +27,11 @@ export const deleteProduct = async (id) => {
 
 	return data;
 };
+
+export const askExtensionRequest = async (request) => {
+	const { id } = request;
+
+	const { data } = await axios.post(`/products/ask-extension-request/${id}`);
+
+	return data;
+};
