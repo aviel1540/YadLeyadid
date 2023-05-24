@@ -5,24 +5,20 @@ import { Spinner } from "../ui/Spinner";
 import { TextInput } from "~/components/logic/TextInput";
 import { Button } from "@mui/material";
 import { formatDate } from "~/utils/formatDate";
-import { Header } from "../_client/Header";
+import { Header } from "./Header";
 
 export const UserDetails = () => {
 	const username = useParams().username;
 
 
-	const {
-		data: details,
-		isLoading: detailsLoading,
-		isFetching,
-	} = useUserByUsername(username);
-	// console.log("🚀  details:", details);
+	const { data: details, isLoading, } = useUserByUsername(username);
+	console.log("🚀 details:", details)
 
 	// const { data: products, isLoading: productsLoading } = useProductsForUser(
 	// 	details?._id
 	// );
 
-	if (detailsLoading) return <Spinner />;
+	if (isLoading) return <Spinner />;
 
 	return (
 		<>
@@ -33,68 +29,57 @@ export const UserDetails = () => {
 					info={details?.name}
 					originalText={"שם"}
 					className={"!ml-5 !mt-5 w-3/5  md:w-full"}
-				// ref={codeInputRef}
+					readOnly={true}
 				/>
 				<TextInput
 					info={details?.username}
 					originalText={"שם משתמש"}
 					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
-				// ref={codeInputRef}
+					readOnly={true}
 				/>
-
 				<TextInput
 					info={details?.idTeuda}
 					originalText={"תעודת זהות"}
 					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
-				// ref={codeInputRef}
+					readOnly={true}
 				/>
-
-				<TextInput
-					info={details?.email}
-					originalText={"אימייל"}
-					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
-				// ref={codeInputRef}
-				/>
-
 				<TextInput
 					info={details?.phoneNumber}
 					originalText={"מספר פלאפון"}
 					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
-				// ref={codeInputRef}
+					readOnly={true}
+				/>
+				<TextInput
+					info={details?.email}
+					originalText={"מייל"}
+					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
+					readOnly={true}
 				/>
 				<TextInput
 					info={details?.address}
 					originalText={"כתובת"}
 					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
-				// ref={codeInputRef}
+					readOnly={true}
 				/>
-
 				<TextInput
 					info={details?.paymentType}
 					originalText={"אופן תשלום"}
 					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
-				// ref={codeInputRef}
+					readOnly={true}
 				/>
 				<TextInput
 					info={formatDate(details?.createdAt)}
 					originalText={"תאריך הצטרפות"}
 					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
 					readOnly={true}
-				// ref={codeInputRef}
 				/>
-
-
-
+				<div className="mt-10 ml-16 w-full text-lg md:w-[16rem]">
+					<span>*במידה ונמצאה טעות בפרטים, נא להתקשר לחברה.</span>
+					<div>
+						<span>יד לידיד: 04-3368822.</span>
+					</div>
+				</div>
 			</div>
-			<Button
-				size="large"
-				type="submit"
-				variant="contained"
-				className="!bg-green !w-72 !mr-4 !mt-5 !text-base sm:!mr-4 sm:!w-11/12"
-			// onClick={submitHandler}
-			>
-				שמירת שינויים
-			</Button>
 		</>
 	);
 };
