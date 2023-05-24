@@ -9,6 +9,7 @@ export const Routers = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<Pages.LoginPage />} exact />
+			<Route path="*" element={<Pages.NotFoundPage />} exact />
 			{isAdmin &&
 				<>
 					<Route path="/home" element={<Pages.HomePage />} exact />

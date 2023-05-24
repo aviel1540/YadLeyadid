@@ -7,4 +7,5 @@ export {
 	updateUser,
 	deleteUser,
 	assignProductToUser,
+	unassignProductToUser,
 } from "./users";

@@ -65,3 +65,13 @@ export const useAsignProductToUser = (setOpen, open, refetch) =>
 			onError(data);
 		},
 	});
+
+export const useUnassignProductToUser = (setOpen, open, refetch) =>
+	useMutation((id) => users.unassignProductToUser(id), {
+		onSuccess: (data) => {
+			onSuccess(data, setOpen, open, refetch);
+		},
+		onError: (data) => {
+			onError(data);
+		},
+	});

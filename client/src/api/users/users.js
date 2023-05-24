@@ -52,3 +52,12 @@ export const assignProductToUser = async (userId) => {
 
 	return data;
 };
+
+export const unassignProductToUser = async (request) => {
+	const { user_id, product_id } = request;
+	const { data } = await axios.delete(
+		`/users/delete-product/${user_id}/productId/${product_id}`
+	);
+
+	return data;
+};

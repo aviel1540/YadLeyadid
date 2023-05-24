@@ -37,10 +37,10 @@ export const useDeleteProduct = (setOpen, open, refetch) =>
 		},
 	});
 
-export const useAskExtensionRequest = (setOpen, open) =>
+export const useAskExtensionRequest = (setOpen, open, refetch) =>
 	useMutation(products.askExtensionRequest, {
 		onSuccess: (data) => {
-			onSuccess(data, setOpen, open);
+			onSuccess(data, setOpen, open, refetch);
 		},
 		onError: (data) => {
 			onError(data);

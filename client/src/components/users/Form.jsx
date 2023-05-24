@@ -101,11 +101,11 @@ export const Form = ({ setOpen, open, refetch }) => {
                 {open.title !== "asignProductToUser" &&
                     <>
                         <TextInput
-                            originalText={"תעודת זהות"}
-                            placeholder={"תעודת זהות"}
+                            originalText={"שם"}
+                            placeholder={"שם"}
                             className={"w-35 !ml-2"}
-                            info={open.info.idTeuda}
-                            ref={idTeudaeInputRef}
+                            info={open.info.name}
+                            ref={nameInputRef}
                         />
                         <TextInput
                             originalText={"שם משתמש"}
@@ -115,26 +115,20 @@ export const Form = ({ setOpen, open, refetch }) => {
                             ref={usernameInputRef}
                         />
                         <TextInput
-                            originalText={"שם"}
-                            placeholder={"שם"}
+                            originalText={"תעודת זהות"}
+                            placeholder={"תעודת זהות"}
                             className={"w-35 !ml-2"}
-                            info={open.info.name}
-                            ref={nameInputRef}
+                            info={open.info.idTeuda}
+                            ref={idTeudaeInputRef}
                         />
-                        {open.title === 'add' && <TextInput
-                            originalText={"סיסמא"}
-                            placeholder={"סיסמא"}
-                            className={"w-56"}
-                            password={true}
-                            ref={passwordInputRef}
-                        />}
-                        <TextInput
-                            originalText={"מייל"}
-                            placeholder={"מייל"}
-                            className={"w-35 !ml-2"}
-                            info={open.info.email}
-                            ref={emailInputRef}
-                        />
+                        {open.title === 'add' &&
+                            <TextInput
+                                originalText={"סיסמא"}
+                                placeholder={"סיסמא"}
+                                className={"w-56"}
+                                password={true}
+                                ref={passwordInputRef}
+                            />}
                         <TextInput
                             originalText={"מספר פלאפון"}
                             placeholder={"מספר פלאפון"}
@@ -142,6 +136,14 @@ export const Form = ({ setOpen, open, refetch }) => {
                             info={open.info.phoneNumber}
                             ref={phoneNumberInputRef}
                         />
+                        <TextInput
+                            originalText={"מייל"}
+                            placeholder={"מייל"}
+                            className={"w-35 !ml-2"}
+                            info={open.info.email}
+                            ref={emailInputRef}
+                        />
+
                         <TextInput
                             originalText={"כתובת"}
                             placeholder={"כתובת"}
@@ -183,17 +185,17 @@ export const Form = ({ setOpen, open, refetch }) => {
 
             </main>
 
-            <div className="flex justify-center p-2">
+            <div className="flex justify-end p-2">
                 {open.title === "edit" ?
                     <Button
-                        className="!text-white w-2/3 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
+                        className="!text-white w-2/5 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
                         onClick={submitHandler}
                     >
                         עדכון לקוח
                     </Button>
                     :
                     <Button
-                        className="!text-white w-2/3 h-8 !bg-green/80 !text-lg hover:!bg-green"
+                        className="!text-white w-2/5 h-8 !bg-green/80 !text-lg hover:!bg-green"
                         onClick={submitHandler}
                     >
                         {textBtn}
