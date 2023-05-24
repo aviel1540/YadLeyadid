@@ -3,19 +3,19 @@ const { ProductPlace } = require("../constants/productPlace");
 
 exports.allProducts = async () => await Product.find();
 
-exports.addProduct = async (productName) => new Product({productName});
+exports.addProduct = async (productName) => new Product({ productName });
 
-exports.findProductById = async (productId) => await Product.findById(productId);
-
+exports.findProductById = async (productId) =>
+	await Product.findById(productId);
 
 exports.updateProduct = async (id, productName) =>
-	await Product.findByIdAndUpdate(id, {productName});
+	await Product.findByIdAndUpdate(id, { productName });
 
 exports.deleteProduct = async (productId) =>
 	await Product.findByIdAndRemove(productId);
 
 exports.updateProductAssignToUser = async (request) => {
-	const {productId, afterThreeMonth, checkUserId } = request;
+	const { productId, afterThreeMonth, checkUserId } = request;
 	return await Product.findByIdAndUpdate(productId, {
 		place: ProductPlace.LOANED,
 		loanDate: Date.now(),
@@ -31,7 +31,7 @@ exports.updateProductUnassignToUser = async (productId) => {
 		loanReturn: null,
 		loanBy: null,
 		extensionRequest: false,
-		requestAlert: false
+		requestAlert: false,
 	});
 };
 
@@ -70,33 +70,34 @@ exports.updateProductInCategoryAssignSemiToMain = async (request) => {
 	});
 };
 
-exports.showProductDetailsInUser = async(productId) => {
+exports.showProductDetailsInUser = async (productId) => {
 	const product = await Product.findById(productId);
 	return {
 		productName: product.productName,
 		loanDate: product.loanDate,
 		loanReturn: product.loanReturn,
-		inCategory: product.inCategory
-	}
-}
-exports.showProductDetailsInSemiCategory = async(productId) => {
+		inCategory: product.inCategory,
+		_id: product._id,
+	};
+};
+exports.showProductDetailsInSemiCategory = async (productId) => {
 	const product = await Product.findById(productId);
 	return {
 		productName: product.productName,
 		place: product.place,
-		inCategory: product.inCategory
-	}
-}
+		inCategory: product.inCategory,
+	};
+};
 
-exports.updateExtensionRequest = async(checkProductId,addNewLoanReturn) => {
+exports.updateExtensionRequest = async (checkProductId, addNewLoanReturn) => {
 	return await Product.findByIdAndUpdate(checkProductId, {
 		loanReturn: addNewLoanReturn,
-		extensionRequest: true
-	})
-}
+		extensionRequest: true,
+	});
+};
 
-exports.updateAlertRequest = async(productId) => {
+exports.updateAlertRequest = async (productId) => {
 	return await Product.findByIdAndUpdate(productId, {
 		requestAlert: true,
-	})
-}
+	});
+};
