@@ -46,29 +46,31 @@ exports.updateUserDetails = async (request) => {
 exports.showUserDetailsInProducts = async (userId) => {
 	const user = await User.findById(userId);
 	return {
-		username: user.name,
+		username: user.username,
 		idTeuda: user.idTeuda,
 		email: user.email,
 		phoneNumber: user.phoneNumber,
+		address: user.address,
+		name: user.name,
 	};
 };
 
-exports.findByIdTeudaForUpdate = async(userId, idTeuda) => {
-	const user = await User.findOne({idTeuda});
-	if(!user) return false;
-	if(user.id === userId) return false;
+exports.findByIdTeudaForUpdate = async (userId, idTeuda) => {
+	const user = await User.findOne({ idTeuda });
+	if (!user) return false;
+	if (user.id === userId) return false;
 	return true;
-}
+};
 
-exports.findByEmailForUpdate = async(userId, email) => {
-	const user = await User.findOne({email});
-	if(!user) return false;
-	if(user.id === userId) return false;
+exports.findByEmailForUpdate = async (userId, email) => {
+	const user = await User.findOne({ email });
+	if (!user) return false;
+	if (user.id === userId) return false;
 	return true;
-}
-exports.findByPhoneNumberForUpdate = async(userId, phoneNumber) => {
-	const user = await User.findOne({phoneNumber});
-	if(!user) return false;
-	if(user.id === userId) return false;
+};
+exports.findByPhoneNumberForUpdate = async (userId, phoneNumber) => {
+	const user = await User.findOne({ phoneNumber });
+	if (!user) return false;
+	if (user.id === userId) return false;
 	return true;
-}
+};

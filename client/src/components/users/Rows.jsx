@@ -8,6 +8,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { formatDate } from "~/utils/formatDate";
 import { MdDeleteForever, MdOutlineModeEdit } from "react-icons/md";
 import { RiAddFill } from "react-icons/ri";
+import { replace } from "~/utils/replace";
 
 export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 	const [openTable, setOpenTable] = useState(false);
@@ -128,6 +129,8 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 							<Table size="small" aria-label="purchases">
 								<TableHead>
 									<TableRow>
+										<TableCell className="!font-bold" align="right" />
+
 										<TableCell className="!font-bold" align="right">
 											שם מוצר
 										</TableCell>
@@ -143,10 +146,13 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{row?.userProductList?.map((details) => (
+									{row?.userProductList?.map((details, index) => (
 										<TableRow key={details.loanDate}>
 											<TableCell align="right">
-												{details.productName}
+												{index + 1}.
+											</TableCell>
+											<TableCell align="right">
+												{replace(details.productName)}
 											</TableCell>
 											<TableCell align="right">
 												{details.inCategory}

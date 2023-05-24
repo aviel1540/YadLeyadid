@@ -6,6 +6,7 @@ import { BsInfoCircle } from "react-icons/bs";
 import { MdDeleteForever, MdOutlineModeEdit } from "react-icons/md";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { replace } from "~/utils/replace";
 
 export const Rows = ({ row, index, setOpen, open }) => {
 	const [openTable, setOpenTable] = useState(false);
@@ -29,7 +30,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 				</TableCell>
 				<TableCell align="right">{index}.</TableCell>
 
-				<TableCell align="right">{row.productName}</TableCell>
+				<TableCell align="right">{replace(row.productName)}</TableCell>
 
 				<TableCell align="right">{row.place}</TableCell>
 				<TableCell align="right">{row.inCategory}</TableCell>
@@ -86,21 +87,28 @@ export const Rows = ({ row, index, setOpen, open }) => {
 								<TableHead>
 									<TableRow>
 										<TableCell className="!font-bold" align="right">שם לקוח</TableCell>
+										<TableCell className="!font-bold" align="right">שם משתמש</TableCell>
 										<TableCell className="!font-bold" align="right">
 											תעודת זהות
 										</TableCell>
 										<TableCell className="!font-bold" align="right">
-											מייל לקוח
-										</TableCell>
-										<TableCell className="!font-bold" align="right">
 											מספר פלאפון
 										</TableCell>
+										<TableCell className="!font-bold" align="right">
+											מייל
+										</TableCell>
 
+										<TableCell className="!font-bold" align="right">
+											כתובת
+										</TableCell>
 									</TableRow>
 								</TableHead>
 								<TableBody>
 									{row?.userDetails?.map((details) => (
 										<TableRow key={details.idTeuda}>
+											<TableCell align="right">
+												{details.name}
+											</TableCell>
 											<TableCell align="right">
 												{details.username}
 											</TableCell>
@@ -108,12 +116,14 @@ export const Rows = ({ row, index, setOpen, open }) => {
 												{details.idTeuda}
 											</TableCell>
 											<TableCell align="right">
+												{details.phoneNumber}
+											</TableCell>
+											<TableCell align="right">
 												{details.email}
 											</TableCell>
 											<TableCell align="right">
-												{details.phoneNumber}
+												{details.address}
 											</TableCell>
-
 										</TableRow>
 									))}
 								</TableBody>

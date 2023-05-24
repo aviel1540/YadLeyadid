@@ -1,13 +1,10 @@
 import { LoadingButton } from "@mui/lab";
-import {
-	Checkbox,
-	Stack
-} from "@mui/material";
+import { Checkbox, Stack } from "@mui/material";
 import { useRef, useState } from "react";
 import logo from "~/assets/images/logo.jpeg";
 import { useLogin } from "~/hooks/useLogin";
-import * as toastMessage from "~/utils/notification/index";
-import { TextInput } from "../logic/TextInput";
+import { info, error } from "~/utils/notification";
+import { TextInput } from "../logic";
 
 export const AuthForm = () => {
 	const [iAgree, setIAgree] = useState(true);
@@ -25,17 +22,17 @@ export const AuthForm = () => {
 
 		try {
 			if (!idTeuda || !password)
-				toastMessage.info("נא למלא את כל השדות.");
+				info("נא למלא את כל השדות.");
 			else {
 				if (!iAgree) {
-					toastMessage.info("נא לאשר תנאי שימוש.");
+					info("נא לאשר תנאי שימוש.");
 				} else {
 					const user = { idTeuda, password };
 					login(user);
 				}
 			}
 		} catch {
-			toastMessage.error("משהו השתבש, נא לנסות שוב.");
+			error("משהו השתבש, נא לנסות שוב.");
 		}
 	};
 

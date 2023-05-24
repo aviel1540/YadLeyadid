@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from "react-query";
 import * as users from "~/api/users";
 import { queryKeys } from "~/react-query/queryKeys";
-import { error } from "~/utils/onError";
-import { success } from "~/utils/onSuccess";
+import { onError } from "~/utils/onError";
+import { onSuccess } from "~/utils/onSuccess";
 
 export const useUsers = () => useQuery([queryKeys.users], users.getUsers);
 
@@ -29,39 +29,39 @@ export const useProductsForUser = (id) =>
 export const useAddUser = (setOpen, open, refetch) =>
 	useMutation(users.addUser, {
 		onSuccess: (data) => {
-			success(data, setOpen, open, refetch);
+			onSuccess(data, setOpen, open, refetch);
 		},
 		onError: (data) => {
-			error(data);
+			onError(data);
 		},
 	});
 
 export const useUpdateUser = (setOpen, open, refetch) =>
 	useMutation(users.updateUser, {
 		onSuccess: (data) => {
-			success(data, setOpen, open, refetch);
+			onSuccess(data, setOpen, open, refetch);
 		},
 		onError: (data) => {
-			error(data);
+			onError(data);
 		},
 	});
 
 export const useDeleteUser = (setOpen, open, refetch) =>
 	useMutation((id) => users.deleteUser(id), {
 		onSuccess: (data) => {
-			success(data, setOpen, open, refetch);
+			onSuccess(data, setOpen, open, refetch);
 		},
 		onError: (data) => {
-			error(data);
+			onError(data);
 		},
 	});
 
 export const useAsignProductToUser = (setOpen, open, refetch) =>
 	useMutation(users.assignProductToUser, {
 		onSuccess: (data) => {
-			success(data, setOpen, open, refetch);
+			onSuccess(data, setOpen, open, refetch);
 		},
 		onError: (data) => {
-			error(data);
+			onError(data);
 		},
 	});

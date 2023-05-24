@@ -15,7 +15,7 @@ function App() {
 
 	useEffect(() => {
 		if (isLoggedIn) return;
-		navigate("/login");
+		navigate("/");
 	}, [isLoggedIn]);
 
 	return (

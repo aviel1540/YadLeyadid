@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
-import { SelectInput1 } from '../logic/SelectInput1'
+import { SelectInput } from '../logic/SelectInput'
 import { monthsRequest } from '~/constants/monthsRequest';
 import { Button } from '@mui/material';
+import { useAskExtensionRequest } from '~/hooks/useProducts';
 
 export const Form = ({ open, setOpen }) => {
     const [selectedValue, setSelectedValue] = useState("");
+
+
+    const { mutate: askExtensionRequest } = useAskExtensionRequest(
+        setOpen,
+        open,
+    );
 
     return (
         <>
@@ -12,8 +19,9 @@ export const Form = ({ open, setOpen }) => {
                 {open.content}
             </span>
             <main className="flex flex-wrap justify-center m-4 p-4 gap-x-5 gap-y-3">
-                <SelectInput1
+                <SelectInput
                     type={"בקשת הארכה"}
+                    className={"!w-72 sm!w-full"}
                     selectedValue={selectedValue}
                     setSelectedValue={setSelectedValue}
                     data={monthsRequest?.map(

@@ -3,10 +3,10 @@ import { useRef, useState } from "react";
 import { useProducts } from "~/hooks/useProducts";
 import { useAddUser, useUpdateUser } from "~/hooks/useUsers";
 import * as toastMessages from "~/utils/notification";
-import { SelectInput } from "../logic/SelectInput";
-import { TextInput } from "../logic/TextInput";
-import { MultipleAutocomplete } from "../logic/multipleAutocomplete";
+import { TextInput, SelectInput, MultipleAutocomplete } from "../logic";
 import { Spinner } from "../ui/Spinner";
+import { paymentTypes } from "~/constants/PaymentTypes";
+import { ProductPlace } from "~/constants/productPlace";
 
 export const Form = ({ setOpen, open, refetch }) => {
     const [selectedPaymentType, setSelectedPaymentType] = useState("")
@@ -15,6 +15,8 @@ export const Form = ({ setOpen, open, refetch }) => {
     const textBtn = open.title === "add" ? "הוספת לקוח" : "שיוך ללקוח";
 
     const { data: products, isLoading } = useProducts();
+
+    const activeProducts = products?.filter((p) => p.place != ProductPlace.LOANED)
 
     const idTeudaeInputRef = useRef();
     const usernameInputRef = useRef();
@@ -147,18 +149,25 @@ export const Form = ({ setOpen, open, refetch }) => {
                             info={open.info.address}
                             ref={addressInputRef}
                         />
-
                         <SelectInput
                             type={open.title === 'add' ? 'אופן תשלום' : open.info.paymentType}
-                            className={"!w-56"}
                             selectedValue={selectedPaymentType}
+                            className={"!w-56 sm!w-full"}
                             setSelectedValue={setSelectedPaymentType}
+                            data={paymentTypes?.map(
+                                ({ label, id, }) => ({
+                                    key: id,
+                                    code: label,
+                                    name: label,
+                                })
+                            )}
+                            isLoading={!paymentTypes ? true : false}
                         />
                     </>
                 }
                 {open.title === "asignProductToUser" && !isLoading ?
                     <MultipleAutocomplete
-                        options={products?.map(
+                        options={activeProducts?.map(
                             (product) => ({
                                 label: product?.productName,
                                 id: product?._id,
@@ -177,14 +186,14 @@ export const Form = ({ setOpen, open, refetch }) => {
             <div className="flex justify-center p-2">
                 {open.title === "edit" ?
                     <Button
-                        className="!text-white w-1/2 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
+                        className="!text-white w-2/3 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
                         onClick={submitHandler}
                     >
                         עדכון לקוח
                     </Button>
                     :
                     <Button
-                        className="!text-white w-1/2 h-8 !bg-green/80 !text-lg hover:!bg-green"
+                        className="!text-white w-2/3 h-8 !bg-green/80 !text-lg hover:!bg-green"
                         onClick={submitHandler}
                     >
                         {textBtn}

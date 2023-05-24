@@ -8,10 +8,10 @@ export const Routers = () => {
 
 	return (
 		<Routes>
-			<Route path="/login" element={<Pages.LoginPage />} exact />
+			<Route path="/" element={<Pages.LoginPage />} exact />
 			{isAdmin &&
 				<>
-					<Route path="/" element={<Pages.HomePage />} exact />
+					<Route path="/home" element={<Pages.HomePage />} exact />
 					<Route path="/settings" element={<Pages.InformationPage />} exact />
 					<Route path="/users" element={<Pages.UsersPage />} exact />
 					<Route path="/products" element={<Pages.productsPage />} exact />

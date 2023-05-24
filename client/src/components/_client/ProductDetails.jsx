@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useUserByUsername } from '~/hooks/useUsers';
 import { Spinner } from '../ui/Spinner';
 import { formatDate } from '~/utils/formatDate';
 import { Button } from '@mui/material';
 import { Actions } from './Actions';
+import { replace } from '~/utils/replace';
 
 export const ProductDetails = ({ username, open, setOpen }) => {
-
-
     const { data: details, isLoading, } = useUserByUsername(username);
 
     if (isLoading) return <Spinner />;
@@ -25,7 +24,7 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                             key={product._id}
                         >
                             <span className="text-2xl font-semibold text-gray-800">
-                                {product.productName.replace(/[^א-ת]+/g, ' ')}
+                                {replace(product.productName)}
                             </span>
                             <div>
                                 <span className="text-base font-semibold">

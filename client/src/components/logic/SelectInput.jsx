@@ -1,11 +1,12 @@
-import { Box, FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/material";
-import { PaymentTypes } from "~/constants/PaymentTypes";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import clsx from "clsx";
 
 export const SelectInput = ({
     type,
     selectedValue,
     setSelectedValue,
+    data,
+    isLoading,
     className
 }) => {
     const handleChange = (e) => {
@@ -16,21 +17,32 @@ export const SelectInput = ({
     return (
         <Box className={clsx(className)}>
             <FormControl fullWidth>
+                <InputLabel
+                    id="demo-simple-select-label"
+                    sx={{ direction: "rtl" }}
+                >
+                    {type}
+                </InputLabel>
                 <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
                     value={selectedValue}
+                    label={type}
                     onChange={handleChange}
                     required
-                    displayEmpty
+                    disabled={isLoading}
                     color="warning"
-                    inputProps={{ 'aria-label': 'Without label' }}
                 >
                     <MenuItem value="">
                         <em className="text-gray/70">{type}</em>
                     </MenuItem>
-                    <MenuItem value={PaymentTypes.CHEQUE}>צ'ק</MenuItem>
-                    <MenuItem value={PaymentTypes.CREDITCARD}>כרטיס אשראי</MenuItem>
+                    {!isLoading &&
+                        data?.map((type) => (
+                            <MenuItem key={type?.key} value={type?.code}>
+                                {type?.name}
+                            </MenuItem>
+                        ))}
                 </Select>
-                <FormHelperText>{type}</FormHelperText>
             </FormControl>
         </Box>
     );

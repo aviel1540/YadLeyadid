@@ -1,14 +1,14 @@
-import * as toastMessage from "./notification/index";
+import { success } from "./notification";
 
-export const success = (
+export const onSuccess = (
 	data,
 	setOpen,
 	open,
-	refetch,
+	refetch = () => {},
 	clearInputs = () => {}
 ) => {
 	setOpen({ ...open, popUp: false, action: false, modalDialog: false });
-	toastMessage.success(data.message);
+	success(data.message);
 	refetch();
 	clearInputs();
 };

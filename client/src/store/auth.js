@@ -21,7 +21,6 @@ export const mainStore = (set) => {
 
 	const logoutStore = () => {
 		tokenCookies.remove();
-
 		set({
 			isLoggedIn: false,
 			token: undefined,
