@@ -25,7 +25,6 @@ export const Users = () => {
 		id: "",
 		info: {},
 	});
-	console.log("🚀open:", open)
 
 	const { data: users, isLoading, refetch } = useUsers();
 
@@ -82,7 +81,7 @@ export const Users = () => {
 						/>
 
 					</div>
-					{dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 550 }}>
+					{dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 750 }}>
 						<Table aria-label="collapsible table">
 							<TableHead>
 								<TableRow>
@@ -124,6 +123,18 @@ export const Users = () => {
 										align="right"
 									>
 										מייל
+									</TableCell>
+									<TableCell
+										className="!font-bold"
+										align="right"
+									>
+										תאריך הצטרפות
+									</TableCell>
+									<TableCell
+										className="!font-bold"
+										align="right"
+									>
+										תאריך עדכון
 									</TableCell>
 									<TableCell
 										className="!font-bold"

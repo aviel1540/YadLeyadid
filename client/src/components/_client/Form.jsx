@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
-import { SelectInput } from '../logic/SelectInput'
-import { monthsRequest } from '~/constants/monthsRequest';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
+import { useRef } from 'react';
 import { useAskExtensionRequest } from '~/hooks/useProducts';
+import { formatDate } from '~/utils/formatDate';
 import { error, info } from '~/utils/notification';
 import { replace } from '~/utils/replace';
 
 export const Form = ({ open, setOpen, refetch }) => {
-    const [selectedValue, setSelectedValue] = useState("");
-
+    const dateInputRef = useRef();
 
     const { mutate: askExtensionRequest } = useAskExtensionRequest(
         setOpen,
@@ -20,12 +18,17 @@ export const Form = ({ open, setOpen, refetch }) => {
     const submitHandler = async (e) => {
         e.preventDefault();
 
+        const date = dateInputRef?.current?.value;
+
         try {
             if (open.title === "extensionRequest") {
-                const askExtension = { id: open.id };
+                if (date === formatDate(new Date(Date.now()), "yyyy-MM-dd")) {
+                    info("נא לבחור תאריך הארכה.")
+                    return;
+                }
+                const askExtension = { id: open.id, date };
                 askExtensionRequest(askExtension);
             }
-
 
         } catch (err) {
             error(err);
@@ -34,28 +37,13 @@ export const Form = ({ open, setOpen, refetch }) => {
 
     return (
         <>
-            <h1 className="block text-center text-2xl mb-2 sm:mt-2 sm:text-xl">
+            <h1 className="block text-center text-2xl mb-2 sm:mt-2 sm:text-xl font-bold underline">
                 {open.content}
             </h1>
-            <div className='flex justify-center p-4'>
-                <span className='text-lg'>האם לשלוח בקשת הארכה למוצר <span className='font-bold'>{replace(open.info?.productName)}</span>?</span>
+            <div className='flex flex-wrap justify-center m-4 p-4 gap-2'>
+                <span className='text-lg'>נא לבחור תאריך הארכה למוצר <span className='underline'>{replace(open.info?.productName)}</span></span>
+                <TextField type='date' className='!w-8/12 !mt-3 sm:!w-full' inputRef={dateInputRef} defaultValue={formatDate(new Date(Date.now()), "yyyy-MM-dd")} />
             </div>
-            {/* <main className="flex flex-wrap justify-center m-4 p-4 gap-x-5 gap-y-3">
-                <SelectInput
-                    type={"בקשת הארכה"}
-                    className={"!w-72 sm!w-full"}
-                    selectedValue={selectedValue}
-                    setSelectedValue={setSelectedValue}
-                    data={monthsRequest?.map(
-                        ({ label, id, }) => ({
-                            key: id,
-                            code: id,
-                            name: label,
-                        })
-                    )}
-                    isLoading={!monthsRequest ? true : false}
-                />
-            </main> */}
             <div className="flex justify-end p-3">
                 <Button className="!text-white w-1/3 h-8 !bg-green/80 !text-lg hover:!bg-green sm:w-full" onClick={submitHandler}>
                     שלח

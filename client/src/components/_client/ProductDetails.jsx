@@ -40,8 +40,14 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                                     {formatDate(product.loanReturn)}
                                 </label>
                             </div>
+                            <div>
+                                <label className="text-base text-red">
+                                    תאריך הארכה: {" "}
+                                    {formatDate(product.requestDate)}
+                                </label>
+                            </div>
                             <div className='mt-6'>
-                                <Button className={`!w-36 !text-white ${product.requestAlert ? "!bg-orange/70" : "!bg-orange"}  !border`}
+                                <Button className={`!w-44 !text-white ${product.requestDate ? "!bg-orange/70" : "!bg-orange"}  !border`}
                                     onClick={() => setOpen({
                                         ...open,
                                         popUp: true,
@@ -51,10 +57,11 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                                         id: product._id,
                                         info: product
                                     })}
-                                    disabled={product.requestAlert}
+                                    disabled={product.requestDate ? true : false}
                                 >
-                                    {product.requestAlert ? "נשלחה בקשה" : "בקשת הארכה"}
+                                    {product.requestDate ? "נשלחה בקשה להארכה" : "בקשת הארכה"}
                                 </Button>
+                                {product.requestDate && <p className='text-sm mt-3'>ברגע שהבקשה תאושר הטקסט יצבע בירוק.</p>}
                             </div>
                         </section>
                     ))}

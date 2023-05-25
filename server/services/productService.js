@@ -78,7 +78,7 @@ exports.showProductDetailsInUser = async (productId) => {
 		loanDate: product.loanDate,
 		loanReturn: product.loanReturn,
 		inCategory: product.inCategory,
-		requestAlert: product.requestAlert,
+		requestDate: product.requestDate,
 		extensionRequest: product.extensionRequest,
 	};
 };
@@ -98,8 +98,8 @@ exports.updateExtensionRequest = async (checkProductId, addNewLoanReturn) => {
 	});
 };
 
-exports.updateAlertRequest = async (productId) => {
+exports.updateAlertRequest = async (productId, checkDate) => {
 	return await Product.findByIdAndUpdate(productId, {
-		requestAlert: true,
+		requestDate: checkDate,
 	});
 };

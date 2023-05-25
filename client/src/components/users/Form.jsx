@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { useRef, useState } from "react";
 import { useProducts } from "~/hooks/useProducts";
 import { useAddUser, useUpdateUser } from "~/hooks/useUsers";
@@ -7,6 +7,8 @@ import { TextInput, SelectInput, MultipleAutocomplete } from "../logic";
 import { Spinner } from "../ui/Spinner";
 import { paymentTypes } from "~/constants/PaymentTypes";
 import { ProductPlace } from "~/constants/productPlace";
+import { formatDate } from "~/utils/formatDate";
+import { BsFillSendCheckFill } from "react-icons/bs";
 
 export const Form = ({ setOpen, open, refetch }) => {
     const [selectedPaymentType, setSelectedPaymentType] = useState("")
@@ -139,7 +141,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                         <TextInput
                             originalText={"מייל"}
                             placeholder={"מייל"}
-                            className={"w-35 !ml-2"}
+                            className={"w-35"}
                             info={open.info.email}
                             ref={emailInputRef}
                         />
@@ -154,7 +156,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                         <SelectInput
                             type={open.title === 'add' ? 'אופן תשלום' : open.info.paymentType}
                             selectedValue={selectedPaymentType}
-                            className={"!w-56 sm!w-full"}
+                            className={"!w-56 !ml-[2px] sm!w-full"}
                             setSelectedValue={setSelectedPaymentType}
                             data={paymentTypes?.map(
                                 ({ label, id, }) => ({
@@ -186,21 +188,12 @@ export const Form = ({ setOpen, open, refetch }) => {
             </main>
 
             <div className="flex justify-end p-2">
-                {open.title === "edit" ?
-                    <Button
-                        className="!text-white w-2/5 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
+                <IconButton >
+                    <BsFillSendCheckFill
                         onClick={submitHandler}
-                    >
-                        עדכון לקוח
-                    </Button>
-                    :
-                    <Button
-                        className="!text-white w-2/5 h-8 !bg-green/80 !text-lg hover:!bg-green"
-                        onClick={submitHandler}
-                    >
-                        {textBtn}
-                    </Button>
-                }
+                        color={`${open.title === "edit" ? "#1fb6ff" : "#13ce66"}`}
+                        className="text-3xl" />
+                </IconButton>
             </div>
         </>
     );

@@ -34,10 +34,10 @@ const productSchema = new Schema({
 		type: Boolean,
 		default: false,
 	},
-	requestAlert: {
-		type: Boolean,
-		default: false,
-	}
+	requestDate: {
+		type: Date,
+		default: null,
+	},
 });
 
 const Product = mongoose.model("product", productSchema);
