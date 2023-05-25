@@ -5,12 +5,15 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import { createElement, Fragment, useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "~/store/auth";
 import { menus, settings } from "./menus";
+import logo from "~/assets/images/logo.jpeg";
 
 export const SideBar = () => {
 	const { logoutStore } = useAuthStore();
+
+	const navigate = useNavigate();
 
 	const [openMenu, setOpenMenu] = useState(true);
 	const [state, setState] = useState({
@@ -37,21 +40,21 @@ export const SideBar = () => {
 			onClick={toggleDrawer(anchor, false)}
 			onKeyDown={toggleDrawer(anchor, false)}
 		>
-			{/* {state.right && (
+			{state.right && (
 				<img
-					className="w-4/5 h-14 mt-5 mr-5 sm:w-4/5"
-					src={maxsoftIcon}
-					alt="maxsoft-icon"
+					className="w-11/12 h-[5rem] mt-5  cursor-pointer"
+					src={logo}
+					alt="logo"
+					onClick={() => navigate('/home')}
 				/>
-			)} */}
+			)}
 			<List>
 				{menus?.map((menu, i) => (
 					<Link
 						to={menu?.link}
 						key={i}
-						className={` ${
-							menu?.margin && "mt-8 xl:mt-5"
-						} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-light rounded-md`}
+						className={` ${menu?.margin && "mt-8 xl:mt-5"
+							} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-light rounded-md`}
 					>
 						<div
 							title={menu?.title}
@@ -65,17 +68,15 @@ export const SideBar = () => {
 							style={{
 								transitionDelay: `${i + 3}00ms`,
 							}}
-							className={`whitespace-pre duration-700 ${
-								!openMenu &&
+							className={`whitespace-pre duration-700 ${!openMenu &&
 								"opacity-0 translate-x-300 overflow-hidden"
-							}`}
+								}`}
 						>
 							{menu?.name}
 						</h2>
 						<h2
-							className={`${
-								openMenu && "hidden"
-							} absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
+							className={`${openMenu && "hidden"
+								} absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
 						>
 							{menu?.name}
 						</h2>
@@ -88,9 +89,8 @@ export const SideBar = () => {
 					<Link
 						to={menu?.link}
 						key={i}
-						className={` ${
-							menu?.margin && "mt-5 xl:mt-5"
-						} group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-light rounded-md`}
+						className={` ${menu?.margin && "mt-5 xl:mt-5"
+							} group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-light rounded-md`}
 						onClick={() => {
 							menu?.onClick === "logout" && logoutStore();
 						}}
@@ -107,17 +107,15 @@ export const SideBar = () => {
 							style={{
 								transitionDelay: `${i + 3}00ms`,
 							}}
-							className={`whitespace-pre duration-700 ${
-								!openMenu &&
+							className={`whitespace-pre duration-700 ${!openMenu &&
 								"opacity-0 translate-x-300 overflow-hidden"
-							}`}
+								}`}
 						>
 							{menu?.name}
 						</h2>
 						<h2
-							className={`${
-								openMenu && "hidden"
-							} absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
+							className={`${openMenu && "hidden"
+								} absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
 						>
 							{menu?.name}
 						</h2>

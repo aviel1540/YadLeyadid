@@ -198,6 +198,8 @@ exports.getAllUsers = async (req, res) => {
 					phoneNumber: userDetails.phoneNumber,
 					address: userDetails.address,
 					paymentType: userDetails.paymentType,
+					createdAt: userDetails.createdAt,
+					updatedAt: userDetails.updatedAt,
 					userProductList: products,
 				};
 				users.push(details);
@@ -212,6 +214,8 @@ exports.getAllUsers = async (req, res) => {
 					phoneNumber: userDetails.phoneNumber,
 					address: userDetails.address,
 					paymentType: userDetails.paymentType,
+					createdAt: userDetails.createdAt,
+					updatedAt: userDetails.updatedAt,
 				};
 				users.push(details);
 			}
@@ -338,7 +342,7 @@ exports.addProductForUser = async (req, res) => {
 				return res.status(404).json({ message: "מוצר לא קיים." });
 
 			if (product.place !== ProductPlace.IN_STOCK) {
-				return res.status(400).json({ message: "מוצר לא זמין." });
+				return res.status(404).json({ message: "מוצר לא זמין." });
 			}
 
 			const productExist = user.productList.find(

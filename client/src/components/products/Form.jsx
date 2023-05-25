@@ -1,8 +1,9 @@
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { useRef } from "react";
 import { useAddProduct, useUpdateProduct } from "~/hooks/useProducts";
 import * as toastMessages from "~/utils/notification";
 import { TextInput } from "../logic/TextInput";
+import { BsFillSendCheckFill } from "react-icons/bs";
 
 export const Form = ({ title, setOpen, open, refetch }) => {
     const productNameInputRef = useRef();
@@ -55,21 +56,12 @@ export const Form = ({ title, setOpen, open, refetch }) => {
                 />
             </main>
             <div className="flex justify-end p-2">
-                {open.title === "edit" ?
-                    <Button
-                        className="!text-white w-2/5 !ml-4 h-8 !bg-blue/80 !text-lg hover:!bg-blue"
+                <IconButton >
+                    <BsFillSendCheckFill
                         onClick={submitHandler}
-                    >
-                        עדכון מוצר
-                    </Button>
-                    :
-                    <Button
-                        className="!text-white w-2/5 !ml-4 h-8 !bg-green/80 !text-lg hover:!bg-green"
-                        onClick={submitHandler}
-                    >
-                        הוספת מוצר
-                    </Button>
-                }
+                        color={`${open.title === "edit" ? "#1fb6ff" : "#13ce66"}`}
+                        className="text-3xl" />
+                </IconButton>
             </div>
         </>
     );

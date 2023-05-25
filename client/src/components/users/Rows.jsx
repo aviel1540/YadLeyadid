@@ -17,7 +17,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 		<Fragment>
 			<TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
 				<TableCell>
-					{row?.userProductList?.length > 0 && <IconButton
+					<IconButton
 						aria-label="expand row"
 						size="small"
 						onClick={() => setOpenTable(!openTable)}
@@ -27,7 +27,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 						) : (
 							<KeyboardArrowDownIcon />
 						)}
-					</IconButton>}
+					</IconButton>
 				</TableCell>
 
 				<TableCell align="right">{index}.</TableCell>
@@ -58,6 +58,8 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 					<a href={`mailto:${row.email}`}>{row.email}</a>
 				</TableCell>
 
+				<TableCell align="right">{formatDate(row.createdAt)}</TableCell>
+				<TableCell align="right">{formatDate(row.updatedAt)}</TableCell>
 				<TableCell align="right">{row.paymentType}</TableCell>
 
 				<TableCell align="right">

@@ -73,7 +73,7 @@ export const Products = () => {
 							color="warning"
 						/>
 					</div>
-					{dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 600 }}>
+					{dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 750 }}>
 						<Table aria-label="collapsible table">
 							<TableHead>
 								<TableRow>

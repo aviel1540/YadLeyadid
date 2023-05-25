@@ -184,21 +184,27 @@ exports.updateExtensionRequest = async (req, res) => {
 
 exports.askForExtensionRequest = async (req, res) => {
 	const productId = escape(req.params.id);
+	const date = escape(req.body.date);
 	let product;
 
 	try {
 		const checkProductId = validation.addSlashes(productId);
+		const checkDate = validation.addSlashes(date);
 
 		product = await productService.findProductById(checkProductId);
 
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
-		if (product.requestAlert)
-			return res.status(404).json({
+
+		//TODO: לבדוק אם התאריך שבקישו גדול מהתאריך הנוכחי
+
+		if (product.requestDate)
+			return res.status(400).json({
 				message:
 					"לא ניתן לבקש הארכה נוספת - יש ליצור קשר עם נציג שירות.",
 			});
-		await productService.updateAlertRequest(checkProductId);
-		return res.status(201).json({ message: "הבקשה נשלחה בהצלחה" });
+		await productService.updateAlertRequest(checkProductId, checkDate);
+
+		return res.status(201).json({ message: "הבקשה נשלחה בהצלחה." });
 	} catch (err) {
 		return res.status(400).json({ message: err.message });
 	}
