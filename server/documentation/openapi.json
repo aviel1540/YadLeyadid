@@ -778,7 +778,7 @@
 		"/products/ask-extension-request/{id}": {
 			"post": {
 				"tags": ["Product"],
-				"summary": "Add product",
+				"summary": "ask for extension request , set time in (YYYY-MM-DD)",
 				"parameters": [
 					{
 						"name": "token",
@@ -792,6 +792,18 @@
 						"schema": { "type": "string" }
 					}
 				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"date": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
 				"responses": {
 					"200": {
 						"description": "Success"

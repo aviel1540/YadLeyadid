@@ -31,7 +31,7 @@ exports.updateProductUnassignToUser = async (productId) => {
 		loanReturn: null,
 		loanBy: null,
 		extensionRequest: false,
-		requestAlert: false,
+		requestDate: null,
 	});
 };
 

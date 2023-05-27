@@ -135,9 +135,8 @@ exports.deleteProduct = async (req, res) => {
 };
 
 exports.updateExtensionRequest = async (req, res) => {
-	const userId = escape(req.params.userId);
 	const productId = escape(req.params.id);
-	const number = escape(req.body.number);
+	const answer = escape(req.body.number);
 	let product;
 	let user;
 	let updateProduct;
@@ -195,15 +194,18 @@ exports.askForExtensionRequest = async (req, res) => {
 
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
-		//TODO: לבדוק אם התאריך שבקישו גדול מהתאריך הנוכחי
-
 		if (product.requestDate)
 			return res.status(400).json({
 				message:
 					"לא ניתן לבקש הארכה נוספת - יש ליצור קשר עם נציג שירות.",
 			});
-		await productService.updateAlertRequest(checkProductId, checkDate);
+		const askedDate = new Date(checkDate);
+		if(askedDate < product.loanReturn) return res.status(400).json({message: " תאריך לא תקין"});
+		console.log(askedDate);
 
+		await productService.updateAlertRequest(checkProductId, askedDate);
+		await product.save();
+		console.log(product.requestDate);
 		return res.status(201).json({ message: "הבקשה נשלחה בהצלחה." });
 	} catch (err) {
 		return res.status(400).json({ message: err.message });
