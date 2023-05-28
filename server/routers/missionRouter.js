@@ -1,12 +1,12 @@
 const router = require("express").Router();
-const missionController = require("../controllers/MissionController");S
+const missionController = require("../controllers/MissionController");
 
 router.get('/', missionController.getAllMissions);
 
-router.post("/add-mission", missionController.addMission);
+// router.post("/add-mission", missionController.addMission);
 
-router.patch("/update-mission/:id", missionController.updateMission);
+// router.patch("/update-mission/:id", missionController.updateMission);
 
-router.delete("/delete-mission/:id", missionController.deleteMission);
+// router.delete("/delete-mission/:id", missionController.deleteMission);
 
 module.exports = router;
