@@ -103,3 +103,9 @@ exports.updateAlertRequest = async (productId, checkDate) => {
 		requestDate: checkDate,
 	});
 };
+
+const unacceptExtensionRequest = async(checkProductId) => {
+	return await Product.findByIdAndUpdate(checkProductId, {
+		requestDate: null
+	});
+}

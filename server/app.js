@@ -16,6 +16,7 @@ const semiCategoryRouter = require("./routers/semiCategoryRouter");
 const mainCategoryRouter = require("./routers/mainCategoryRouter");
 const userRouter = require("./routers/userRouter");
 const productRouter = require("./routers/productRouter");
+const missionRouter = require("./routers/missionRouter");
 const URI = process.env.URI;
 const URL = process.env.URL;
 
@@ -42,6 +43,7 @@ app.use("/api/main-category/", mainCategoryRouter);
 app.use("/api/semi-category/", semiCategoryRouter);
 app.use("/api/users/", userRouter);
 app.use("/api/products/", productRouter);
+app.use("/api/missions/", missionRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

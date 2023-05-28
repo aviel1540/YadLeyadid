@@ -136,28 +136,26 @@ exports.deleteProduct = async (req, res) => {
 
 exports.updateExtensionRequest = async (req, res) => {
 	const productId = escape(req.params.id);
-	const answer = escape(req.body.number);
+	const answer = escape(req.body.answer);
 	let product;
 	let user;
 	let updateProduct;
 	try {
-		const checkUserId = validation.addSlashes(userId);
 		const checkProductId = validation.addSlashes(productId);
-		const checkNumber = validation.addSlashes(number);
+		const checkAnswer = validation.addSlashes(answer);
 
-		user = await userService.findUserById(checkUserId);
 		product = await productService.findProductById(checkProductId);
 
-		if (!user) return res.status(404).json({ message: "לקוח לא קיים." });
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
-		const isFound = user.productList.map(
-			(product) => product.id.toString() === checkProductId
-		);
-
-		if (!isFound)
-			return res.status(404).json({ message: "מוצר לא קיים אצל הלקוח" });
-
+		if(!checkAnswer) {
+			mailer.sendMailFunc(
+				user.email,
+				` למוצר ${product.productName} לא אושרה הארכת השאלה , יש ליצור קשר עם המוקד`
+			);
+			productService.unacceptExtensionRequest(checkProductId);
+			return res.status(200).json({ message: "ביטול הארכה בוצע בהצלחה"})
+		}
 		const addNewLoanReturn = product.loanReturn;
 		addNewLoanReturn.setMonth(
 			product.loanReturn.getMonth() + Number(checkNumber)
@@ -201,7 +199,6 @@ exports.askForExtensionRequest = async (req, res) => {
 			});
 		const askedDate = new Date(checkDate);
 		if(askedDate < product.loanReturn) return res.status(400).json({message: " תאריך לא תקין"});
-		console.log(askedDate);
 
 		await productService.updateAlertRequest(checkProductId, askedDate);
 		await product.save();
@@ -247,3 +244,9 @@ exports.allProductsWithLoanDateClose = async (req, res) => {
 		return res.status(401).json({ message: err.message });
 	}
 };
+
+exports.allProductsAskedExtensionRequest = async(req,res) => {
+	let products = [];
+	let details;
+	
+}
