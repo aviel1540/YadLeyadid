@@ -39,7 +39,7 @@ export const Products = () => {
 
 	return (
 		<>
-			<main className={`${(open.popUp || open.modalDialog) && "blur-sm"}`}>
+			<main className={`${open.action && "blur-sm"}`}>
 				<div className="flex justify-center">
 					<h1 className="text-2xl mb-8 underline">מוצרים</h1>
 				</div>

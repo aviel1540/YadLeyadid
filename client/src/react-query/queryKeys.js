@@ -1,7 +1,8 @@
 export const queryKeys = {
-	users: "users",
-	products: "products",
-	userById: "userById",
-	userByUsername: "userByUsername",
-	productsForUser: "productsForUser",
+  users: 'users',
+  products: 'products',
+  missions: 'missions',
+  userById: 'userById',
+  userByUsername: 'userByUsername',
+  productsForUser: 'productsForUser',
 };

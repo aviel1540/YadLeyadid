@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import ReactApexChart from 'react-apexcharts'
 
-export const Line = () => {
+export const Line = ({ blur }) => {
 
     const info = useRef({
         series: [{
@@ -42,7 +42,7 @@ export const Line = () => {
 
 
     return (
-        <div className='p-6 w-full mr-5 mt-10 shadow-md shadow-black/10 md:w-full'>
+        <div className={`${blur && "blur-sm"} p-6 w-full mr-5 mt-10 shadow-md shadow-black/10 md:w-full`}>
             <ReactApexChart
                 options={info.current.options}
                 series={info.current.series}

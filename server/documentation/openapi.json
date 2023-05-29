@@ -987,7 +987,7 @@
 				}
 			}
 		},
-		"/missions/{userId}": {
+		"/missions/{username}": {
 			"get": {
 				"tags": ["Mission"],
 				"summary": "Get product by id",
@@ -998,7 +998,7 @@
 						"schema": { "type": "string" }
 					},
 					{
-						"name": "userId",
+						"name": "username",
 						"in": "path",
 						"required": true,
 						"schema": { "type": "string" }
@@ -1012,7 +1012,7 @@
 				}
 			}
 		},
-		"/missions/add-mission/{userId}": {
+		"/missions/add-mission/{username}": {
 			"post": {
 				"tags": ["Mission"],
 				"summary": "show all mission",
@@ -1023,7 +1023,7 @@
 						"schema": { "type": "string" }
 					},
 					{
-						"name": "userId",
+						"name": "username",
 						"in": "path",
 						"required": true,
 						"schema": { "type": "string" }
