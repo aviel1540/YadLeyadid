@@ -5,7 +5,13 @@ router.get("/", productController.getProducts);
 
 router.get("/loan-return-close", productController.allProductsWithLoanDateClose);
 
+router.get("/wait-confirm-extension-request", productController.allProductsWaitConfirmExtensionRequest);
+
+router.get("/accepted-extension-request", productController.allProductsAcceptedExtensionRequest);
+
 router.post("/add-product", productController.addProduct);
+
+router.post("/extension-request-answer/:id", productController.updateExtensionRequest);
 
 router.post("/ask-extension-request/:id", productController.askForExtensionRequest);
 

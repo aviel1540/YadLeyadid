@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const missionController = require("../controllers/MissionController");
 
-router.get('/', missionController.getAllMissions);
+router.get('/:userId', missionController.getAllMissions);
 
-// router.post("/add-mission", missionController.addMission);
+router.post("/add-mission/:userId", missionController.addNewMission);
 
 // router.patch("/update-mission/:id", missionController.updateMission);
 

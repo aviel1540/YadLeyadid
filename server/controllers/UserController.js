@@ -202,6 +202,7 @@ exports.getAllUsers = async (req, res) => {
 					updatedAt: userDetails.updatedAt,
 					userProductList: products,
 				};
+
 				users.push(details);
 				products = [];
 			} else {
@@ -415,11 +416,6 @@ exports.unassignProductUser = async (req, res) => {
 
 		await productService.updateProductUnassignToUser(checkProductId);
 		await user.save();
-		const product = await productService.findProductById(checkProductId);
-		mailer.sendMailFunc(
-			user.email,
-			`המוצר - ${product.productName} הוחזר בהצלחה`
-		);
 		return res.status(200).json({ message: "נמחק בהצלחה.", user });
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
@@ -429,6 +425,7 @@ exports.unassignProductUser = async (req, res) => {
 exports.updateDetails = async (req, res) => {
 	const userId = escape(req.params.id);
 	const idTeuda = escape(req.body.idTeuda);
+	const username = escape(req.body.username);
 	const name = escape(req.body.name);
 	const email = escape(req.body.email);
 	const phoneNumber = escape(req.body.phoneNumber);
@@ -438,6 +435,7 @@ exports.updateDetails = async (req, res) => {
 	try {
 		if (
 			!idTeuda ||
+			!username ||
 			!name ||
 			!email ||
 			!phoneNumber ||
@@ -456,6 +454,7 @@ exports.updateDetails = async (req, res) => {
 
 		const checkUserId = validation.addSlashes(userId);
 		const checkIdTeuda = validation.addSlashes(idTeuda);
+		const checkUserName = validation.addSlashes(username);
 		const checkName = validation.addSlashes(name);
 		const checkEmail = validation.addSlashes(email);
 		const checkPhoneNumber = validation.addSlashes(phoneNumber);
@@ -466,11 +465,20 @@ exports.updateDetails = async (req, res) => {
 			checkUserId,
 			checkIdTeuda
 		);
-
 		if (userIdTeuda) {
 			return res
 				.status(400)
 				.json({ message: "תעודת זהות קיימת במערכת." });
+		}
+		const userUserName = await userService.findByUserNameForUpdate(
+			checkUserId,
+			checkUserName
+		)
+
+		if (userUserName) {
+			return res
+				.status(400)
+				.json({ message: "שם המשתמש קיים במערכת" });
 		}
 
 		const userEmail = await userService.findByEmailForUpdate(
@@ -493,14 +501,14 @@ exports.updateDetails = async (req, res) => {
 
 		updateUser = await userService.updateUserDetails({
 			checkUserId,
-			userIdTeuda,
+			checkIdTeuda,
+			checkUserName,
 			checkName,
 			userEmail,
 			userPhoneNumber,
 			checkAddress,
 			checkPaymentType,
 		});
-
 		if (!updateUser)
 			return res
 				.status(401)

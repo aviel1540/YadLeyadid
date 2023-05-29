@@ -52,7 +52,7 @@ exports.addProduct = async (req, res) => {
 		product = await productService.addProduct(checkProductName);
 
 		await product.save();
-		res.status(201).json(product);
+		return res.status(201).json(product);
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
 	}
@@ -145,8 +145,9 @@ exports.updateExtensionRequest = async (req, res) => {
 		const checkAnswer = validation.addSlashes(answer);
 
 		product = await productService.findProductById(checkProductId);
-
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
+
+		user = await userService.findUserById(product.loanBy);
 
 		if(!checkAnswer) {
 			mailer.sendMailFunc(
@@ -156,13 +157,10 @@ exports.updateExtensionRequest = async (req, res) => {
 			productService.unacceptExtensionRequest(checkProductId);
 			return res.status(200).json({ message: "ביטול הארכה בוצע בהצלחה"})
 		}
-		const addNewLoanReturn = product.loanReturn;
-		addNewLoanReturn.setMonth(
-			product.loanReturn.getMonth() + Number(checkNumber)
-		);
+		const returnDate = product.requestDate;
 		updateProduct = await productService.updateExtensionRequest(
 			checkProductId,
-			addNewLoanReturn
+			returnDate,
 		);
 
 		if (!updateProduct)
@@ -192,7 +190,7 @@ exports.askForExtensionRequest = async (req, res) => {
 
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
-		if (product.requestDate)
+		if (product.extensionRequest) 
 			return res.status(400).json({
 				message:
 					"לא ניתן לבקש הארכה נוספת - יש ליצור קשר עם נציג שירות.",
@@ -245,8 +243,53 @@ exports.allProductsWithLoanDateClose = async (req, res) => {
 	}
 };
 
-exports.allProductsAskedExtensionRequest = async(req,res) => {
+exports.allProductsWaitConfirmExtensionRequest = async(req,res) => {
 	let products = [];
 	let details;
-	
+	let user;
+	try {
+		const product = await productService.allProducts();
+		for (let i = 0; i < product.length; i++) {
+			const productDetails = product[i];
+			if(productDetails.requestDate){
+				user = await userService.findUserById(productDetails.loanBy);
+				details = {
+					productName: productDetails.productName,
+					loanDate: productDetails.loanDate,
+					loanReturn: productDetails.loanReturn,
+					requestDate: productDetails.requestDate,
+					name: user.name
+				}
+				products.push(details);
+			}
+		}
+		return res.status(200).json(products);
+	} catch(err) {
+		return res.status(401).json({message: err.message});
+	}
+}
+exports.allProductsAcceptedExtensionRequest = async(req,res) => {
+	let products = [];
+	let details;
+	let user;
+	try {
+		const product = await productService.allProducts();
+		for (let i = 0; i < product.length; i++) {
+			const productDetails = product[i];
+			if(productDetails.extensionRequest){
+				user = await userService.findUserById(productDetails.loanBy);
+				details = {
+					productName: productDetails.productName,
+					loanDate: productDetails.loanDate,
+					loanReturn: productDetails.loanReturn,
+					requestDate: productDetails.requestDate,
+					name: user.name
+				}
+				products.push(details);
+			}
+		}
+		return res.status(200).json(products);
+	} catch(err) {
+		return res.status(401).json({message: err.message});
+	}
 }

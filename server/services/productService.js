@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 const { ProductPlace } = require("../constants/productPlace");
+const { request } = require("express");
 
 exports.allProducts = async () => await Product.find();
 
@@ -73,7 +74,6 @@ exports.updateProductInCategoryAssignSemiToMain = async (request) => {
 exports.showProductDetailsInUser = async (productId) => {
 	const product = await Product.findById(productId);
 	return {
-		_id: product._id,
 		productName: product.productName,
 		loanDate: product.loanDate,
 		loanReturn: product.loanReturn,
@@ -91,10 +91,11 @@ exports.showProductDetailsInSemiCategory = async (productId) => {
 	};
 };
 
-exports.updateExtensionRequest = async (checkProductId, addNewLoanReturn) => {
+exports.updateExtensionRequest = async (checkProductId, newReturnDate) => {
 	return await Product.findByIdAndUpdate(checkProductId, {
-		loanReturn: addNewLoanReturn,
+		loanReturn: newReturnDate,
 		extensionRequest: true,
+		requestDate: null
 	});
 };
 
@@ -104,7 +105,7 @@ exports.updateAlertRequest = async (productId, checkDate) => {
 	});
 };
 
-const unacceptExtensionRequest = async(checkProductId) => {
+exports.unacceptExtensionRequest = async(checkProductId) => {
 	return await Product.findByIdAndUpdate(checkProductId, {
 		requestDate: null
 	});

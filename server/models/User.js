@@ -59,6 +59,12 @@ const userSchema = new Schema(
 				ref: "Product",
 			},
 		],
+		missionList: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "Mission"
+			}
+		]
 	},
 	{
 		timestamps: true,
