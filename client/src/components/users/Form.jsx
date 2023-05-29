@@ -2,7 +2,7 @@ import { Button, IconButton } from "@mui/material";
 import { useRef, useState } from "react";
 import { useProducts } from "~/hooks/useProducts";
 import { useAddUser, useUpdateUser } from "~/hooks/useUsers";
-import * as toastMessages from "~/utils/notification";
+import { error, info } from "~/utils/notification";
 import { TextInput, SelectInput, MultipleAutocomplete } from "../logic";
 import { Spinner } from "../ui/Spinner";
 import { paymentTypes } from "~/constants/PaymentTypes";
@@ -58,7 +58,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                     !name || !password ||
                     !email || !phoneNumber ||
                     !address || !selectedPaymentType) {
-                    toastMessages.info("נא למלא את כל השדות.");
+                    info("נא למלא את כל השדות.");
                     return;
                 }
                 const addUser = {
@@ -73,7 +73,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                 if (!idTeuda || !username ||
                     !name || !email ||
                     !phoneNumber || !address) {
-                    toastMessages.info("נא למלא את כל השדות.");
+                    info("נא למלא את כל השדות.");
                     return;
                 }
                 const updateUser = {
@@ -87,7 +87,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                 updateMutateUser(updateUser);
             }
         } catch (err) {
-            toastMessages.error(err);
+            error(err);
         }
     };
 
