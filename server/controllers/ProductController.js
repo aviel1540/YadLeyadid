@@ -52,7 +52,7 @@ exports.addProduct = async (req, res) => {
 		product = await productService.addProduct(checkProductName);
 
 		await product.save();
-		return res.status(201).json(product);
+		return res.status(201).json({ message: "מוצר נוסף בהצלחה." });
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
 	}
@@ -149,18 +149,18 @@ exports.updateExtensionRequest = async (req, res) => {
 
 		user = await userService.findUserById(product.loanBy);
 
-		if(!checkAnswer) {
+		if (!checkAnswer) {
 			mailer.sendMailFunc(
 				user.email,
 				` למוצר ${product.productName} לא אושרה הארכת השאלה , יש ליצור קשר עם המוקד`
 			);
 			productService.unacceptExtensionRequest(checkProductId);
-			return res.status(200).json({ message: "ביטול הארכה בוצע בהצלחה"})
+			return res.status(200).json({ message: "ביטול הארכה בוצע בהצלחה" });
 		}
 		const returnDate = product.requestDate;
 		updateProduct = await productService.updateExtensionRequest(
 			checkProductId,
-			returnDate,
+			returnDate
 		);
 
 		if (!updateProduct)
@@ -190,13 +190,14 @@ exports.askForExtensionRequest = async (req, res) => {
 
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
-		if (product.extensionRequest) 
+		if (product.extensionRequest)
 			return res.status(400).json({
 				message:
 					"לא ניתן לבקש הארכה נוספת - יש ליצור קשר עם נציג שירות.",
 			});
 		const askedDate = new Date(checkDate);
-		if(askedDate < product.loanReturn) return res.status(400).json({message: " תאריך לא תקין"});
+		if (askedDate < product.loanReturn)
+			return res.status(400).json({ message: " תאריך לא תקין" });
 
 		await productService.updateAlertRequest(checkProductId, askedDate);
 		await product.save();
@@ -243,7 +244,7 @@ exports.allProductsWithLoanDateClose = async (req, res) => {
 	}
 };
 
-exports.allProductsWaitConfirmExtensionRequest = async(req,res) => {
+exports.allProductsWaitConfirmExtensionRequest = async (req, res) => {
 	let products = [];
 	let details;
 	let user;
@@ -251,24 +252,24 @@ exports.allProductsWaitConfirmExtensionRequest = async(req,res) => {
 		const product = await productService.allProducts();
 		for (let i = 0; i < product.length; i++) {
 			const productDetails = product[i];
-			if(productDetails.requestDate){
+			if (productDetails.requestDate) {
 				user = await userService.findUserById(productDetails.loanBy);
 				details = {
 					productName: productDetails.productName,
 					loanDate: productDetails.loanDate,
 					loanReturn: productDetails.loanReturn,
 					requestDate: productDetails.requestDate,
-					name: user.name
-				}
+					name: user.name,
+				};
 				products.push(details);
 			}
 		}
 		return res.status(200).json(products);
-	} catch(err) {
-		return res.status(401).json({message: err.message});
+	} catch (err) {
+		return res.status(401).json({ message: err.message });
 	}
-}
-exports.allProductsAcceptedExtensionRequest = async(req,res) => {
+};
+exports.allProductsAcceptedExtensionRequest = async (req, res) => {
 	let products = [];
 	let details;
 	let user;
@@ -276,20 +277,20 @@ exports.allProductsAcceptedExtensionRequest = async(req,res) => {
 		const product = await productService.allProducts();
 		for (let i = 0; i < product.length; i++) {
 			const productDetails = product[i];
-			if(productDetails.extensionRequest){
+			if (productDetails.extensionRequest) {
 				user = await userService.findUserById(productDetails.loanBy);
 				details = {
 					productName: productDetails.productName,
 					loanDate: productDetails.loanDate,
 					loanReturn: productDetails.loanReturn,
 					requestDate: productDetails.requestDate,
-					name: user.name
-				}
+					name: user.name,
+				};
 				products.push(details);
 			}
 		}
 		return res.status(200).json(products);
-	} catch(err) {
-		return res.status(401).json({message: err.message});
+	} catch (err) {
+		return res.status(401).json({ message: err.message });
 	}
-}
+};

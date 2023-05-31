@@ -7,6 +7,7 @@ import { MdDeleteForever, MdOutlineModeEdit } from "react-icons/md";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { replace } from "~/utils/replace";
+import { ProductPlace } from "~/constants/productPlace";
 
 export const Rows = ({ row, index, setOpen, open }) => {
 	const [openTable, setOpenTable] = useState(false);
@@ -32,7 +33,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 
 				<TableCell align="right">{replace(row.productName)}</TableCell>
 
-				<TableCell align="right">{row.place}</TableCell>
+				<TableCell align="right" className={`${row.place === ProductPlace.IN_STOCK && "!text-green"}`} >{row.place}</TableCell>
 				<TableCell align="right">{row.inCategory}</TableCell>
 				<TableCell align="right">
 					<IconButton

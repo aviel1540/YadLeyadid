@@ -1,6 +1,7 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import clsx from "clsx";
 
+
 export const SelectInput = ({
     type,
     selectedValue,
@@ -9,6 +10,7 @@ export const SelectInput = ({
     isLoading,
     className
 }) => {
+
     const handleChange = (e) => {
         const value = e.target.value;
         setSelectedValue(value);
@@ -31,7 +33,6 @@ export const SelectInput = ({
                     onChange={handleChange}
                     required
                     disabled={isLoading}
-                    color="warning"
                 >
                     <MenuItem value="">
                         <em className="text-gray/70">{type}</em>

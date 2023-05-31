@@ -473,12 +473,10 @@ exports.updateDetails = async (req, res) => {
 		const userUserName = await userService.findByUserNameForUpdate(
 			checkUserId,
 			checkUserName
-		)
+		);
 
 		if (userUserName) {
-			return res
-				.status(400)
-				.json({ message: "שם המשתמש קיים במערכת" });
+			return res.status(400).json({ message: "שם המשתמש קיים במערכת" });
 		}
 
 		const userEmail = await userService.findByEmailForUpdate(
@@ -504,8 +502,8 @@ exports.updateDetails = async (req, res) => {
 			checkIdTeuda,
 			checkUserName,
 			checkName,
-			userEmail,
-			userPhoneNumber,
+			checkEmail,
+			checkPhoneNumber,
 			checkAddress,
 			checkPaymentType,
 		});
