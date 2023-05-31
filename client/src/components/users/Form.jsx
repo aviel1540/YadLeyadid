@@ -14,11 +14,9 @@ export const Form = ({ setOpen, open, refetch }) => {
     const [selectedPaymentType, setSelectedPaymentType] = useState("")
     const [selectedAssign, setSelectedAssign] = useState("")
 
-    const textBtn = open.title === "add" ? "הוספת לקוח" : "שיוך ללקוח";
-
     const { data: products, isLoading } = useProducts();
 
-    const activeProducts = products?.filter((p) => p.place != ProductPlace.LOANED)
+    const activeProducts = products?.filter((p) => p.place !== ProductPlace.LOANED)
 
     const idTeudaeInputRef = useRef();
     const usernameInputRef = useRef();

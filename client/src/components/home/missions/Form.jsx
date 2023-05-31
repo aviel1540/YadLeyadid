@@ -41,7 +41,6 @@ export const Form = ({ setOpen, open, refetch }) => {
         <>
             <h1 className="block text-center text-2xl mb-2">{open.content}</h1>
             <main className="flex flex-wrap justify-center m-4 p-4 gap-2">
-
                 <TextInput
                     originalText={"משימה"}
                     placeholder={"משימה"}
@@ -51,7 +50,6 @@ export const Form = ({ setOpen, open, refetch }) => {
                 />
 
             </main>
-
             <div className="flex justify-end p-2">
                 <IconButton>
                     <BsFillSendCheckFill
