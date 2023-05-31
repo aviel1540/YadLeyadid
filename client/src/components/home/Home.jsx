@@ -9,7 +9,7 @@ import { ProductPlace } from "~/constants/productPlace";
 import { HiOutlineUsers } from "react-icons/hi";
 import { useUsers } from "~/hooks/useUsers";
 import { TbShoppingCartX } from "react-icons/tb"
-import { Line, Pie } from "./chart";
+import { Columns, Line, Pie } from "./chart";
 import { Missions } from "./missions";
 
 export const Home = () => {
@@ -46,24 +46,28 @@ export const Home = () => {
 				</div>
 				<section className="flex justify-center flex-row-reverse  gap-10 m-4 mt-16 sm:flex-wrap">
 					<SquareInfo
+						animate={"animate-[wiggleReverse_1s_ease-in-out_forwards]"}
 						content={"סך מכירות"}
 						total={"₪ 486,710"}
 						icon={<AiOutlineShoppingCart />}
 						style={"rgb(139, 172, 170,0.7)"}
 					/>
 					<SquareInfo
+						animate={"animate-[wiggle_2s_ease-in-out_forwards]"}
 						content={"לקוחות"}
 						total={users?.length}
 						icon={<HiOutlineUsers />}
 						style={"rgb(176, 71, 89,0.7)"}
 					/>
 					<SquareInfo
+						animate={"animate-[wiggleReverse_3s_ease-in-out_forwards]"}
 						content={"מוצרים מושאלים"}
 						total={products?.length - availableProducts}
 						icon={<TbShoppingCartX />}
 						style={"rgb(231, 97, 97,0.7)"}
 					/>
 					<SquareInfo
+						animate={"animate-[wiggle_2s_ease-in-out_forwards]"}
 						content={"מוצרים זמינים"}
 						total={availableProducts}
 						icon={<AiOutlineShoppingCart />}
@@ -72,9 +76,10 @@ export const Home = () => {
 				</section>
 			</main>
 			<section className="grid justify-items-center grid-cols-2 gap-10 md:grid-cols-1 md:gap-5 md:p-3">
-				<Pie users={users} blur={open.action} />
+				<Pie products={products} blur={open.action} />
 				<Missions setOpen={setOpen} open={open} />
-				<Line blur={open.action} />
+				<Columns users={users} blur={open.action} />
+				{/* <Line users={users} blur={open.action} /> */}
 				<Notification blur={open.action} />
 			</section>
 		</>

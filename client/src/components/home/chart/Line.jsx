@@ -1,12 +1,16 @@
 import React, { useRef } from 'react'
 import ReactApexChart from 'react-apexcharts'
 
-export const Line = ({ blur }) => {
+export const Line = ({ blur, users }) => {
+
+    const usersName = users?.map((u) => u.name);
+    const productsList = users?.map((u) => u.userProductList === undefined ? 0 : u.userProductList.length);
 
     const info = useRef({
         series: [{
-            name: "Desktops",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+            name: "מוצרים",
+            data: productsList,
+            color: "#F97B22",
         }],
         options: {
             chart: {
@@ -23,8 +27,8 @@ export const Line = ({ blur }) => {
                 curve: 'straight'
             },
             title: {
-                text: 'Product Trends by Month',
-                align: 'left'
+                text: 'מוצרים מושאלים ללקוחות',
+                align: 'center'
             },
             grid: {
                 row: {
@@ -33,7 +37,7 @@ export const Line = ({ blur }) => {
                 },
             },
             xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                categories: usersName,
             }
         },
     })

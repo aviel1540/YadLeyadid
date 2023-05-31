@@ -18,7 +18,7 @@ export const Missions = ({ setOpen, open }) => {
         <>
             <main className={`${open.action && "blur-sm"} p-6 w-full ml-5  mt-10 shadow-md shadow-black/10 md:w-full`}>
                 <div className='flex justify-between'>
-                    <h1 className='text-lg h-8 mb-5'>משימות</h1>
+                    <h1 className='text-lg h-8 mb-5 font-bold underline'>משימות</h1>
                     <Button
                         className="!bg-green/90 !h-8 !text-white !rounded-md hover:!bg-green !w-26 !text-sm"
                         onClick={() =>
@@ -34,7 +34,7 @@ export const Missions = ({ setOpen, open }) => {
                         הוספת משימה חדשה
                     </Button>
                 </div>
-                <ul class="flex flex-col w-full gap-1 mt-3 sm:max-w-md m-auto">
+                <ul className="flex flex-col w-full gap-1 mt-3 sm:max-w-md m-auto">
                     {missions?.map((mission, index) => (
                         <div key={mission._id}>
                             <div className='flex justify-around'>

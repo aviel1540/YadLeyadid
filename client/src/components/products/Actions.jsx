@@ -24,11 +24,8 @@ export const Actions = ({ setOpen, open, refetch }) => {
             {open.popUp && (
                 <PopUp setOpen={setOpen} open={open}>
                     <Form
-                        title={
-                            open.title === "edit"
-                                ? "עריכת נתונים"
-                                : "הוספת מוצר חדש"
-                        }
+                        content={open.content}
+                        title={open.title}
                         refetch={refetch}
                         setOpen={setOpen}
                         open={open}

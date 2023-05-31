@@ -24,7 +24,7 @@ mongoose.set("strictQuery", true);
 const app = express();
 
 app.use(express.json());
-app.use(cors({ credentials: true, origin: URL }));
+app.use(cors({ credentials: true, origin: [URL, "http://localhost:3000"] }));
 
 mongoose
 	.connect(URI)

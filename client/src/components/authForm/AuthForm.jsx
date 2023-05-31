@@ -1,84 +1,44 @@
 import { LoadingButton } from "@mui/lab";
-import { Checkbox, Stack } from "@mui/material";
-import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import logo from "~/assets/images/logo.jpeg";
 import { useLogin } from "~/hooks/useLogin";
-import { info, error } from "~/utils/notification";
-import { TextInput } from "../logic";
+import { error } from "~/utils/notification";
 
 export const AuthForm = () => {
-	const [iAgree, setIAgree] = useState(true);
+	const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-	const idInputRef = useRef();
-	const passwordInputRef = useRef();
+	const { mutate: login } = useLogin(reset);
 
-	const { mutate: login } = useLogin();
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		const idTeuda = idInputRef?.current?.value;
-		const password = passwordInputRef?.current?.value;
+	const onSubmit = (data) => {
+		const { idTeuda, password } = data;
 
 		try {
-			if (!idTeuda || !password)
-				info("נא למלא את כל השדות.");
-			else {
-				if (!iAgree) {
-					info("נא לאשר תנאי שימוש.");
-				} else {
-					const user = { idTeuda, password };
-					login(user);
-				}
-			}
+			const user = { idTeuda, password };
+			login(user);
 		} catch {
 			error("משהו השתבש, נא לנסות שוב.");
 		}
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<Stack
-				spacing={2}
-				className="w-1/5 block mt-44 ml-auto mr-auto xl:mt-10 xl:w-2/6 sm:w-11/12"
+		<form onSubmit={handleSubmit(onSubmit)} className="w-1/4 block mt-44 ml-auto mr-auto xl:mt-10 xl:w-2/6 sm:w-11/12">
+			<img src={logo} alt="logo" />
+			<label htmlFor="idTeuda" className="block text-sm font-semibold mt-1">תעודת זהות:</label>
+			<input type="text" id="idTeuda" className="block w-full px-4 py-2 mt-2 border rounded-md" placeholder="תעודת זהות" {...register("idTeuda", { required: { value: true, message: "שדה חובה." } })} />
+			<p className="text-red text-sm">{errors.idTeuda?.message}</p>
+
+			<label htmlFor="password" className="block text-sm font-semibold mt-3">סיסמא:</label>
+			<input type="password" id="password" className="block w-full px-4 py-2 mt-2 border rounded-md" placeholder="סיסמא" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
+			<p className="text-red text-sm">{errors.password?.message}</p>
+
+			<LoadingButton
+				size="large"
+				type="submit"
+				variant="contained"
+				className="!bg-orange !w-full !text-base !mt-6 !rounded-md"
 			>
-				<img src={logo} alt="logo" />
-				<TextInput
-					originalText={"תעודת זהות"}
-					placeholder={"תעודת זהות"}
-					className={"!mt-5 w-35"}
-					ref={idInputRef}
-				/>
-
-				<TextInput
-					originalText={"סיסמא"}
-					placeholder={"סיסמא"}
-					className={"!mt-5 w-35 "}
-					password={true}
-					ref={passwordInputRef}
-				/>
-
-				<Stack direction="row" alignItems="center" sx={{ my: 2 }}>
-					<Checkbox
-						name="iAgree"
-						checked={iAgree}
-						onClick={() => setIAgree(!iAgree)}
-						color="secondary"
-					/>
-					אני מאשר/ת תנאי שימוש.
-				</Stack>
-			</Stack>
-
-			<Stack className="flex flex-col items-center w-full text-base mt-2">
-				<LoadingButton
-					size="large"
-					type="submit"
-					variant="contained"
-					className="!bg-orange !w-1/5 xl:!w-2/6 sm:!w-11/12"
-				>
-					התחבר
-				</LoadingButton>
-			</Stack>
+				התחבר
+			</LoadingButton>
 		</form>
 	);
 };

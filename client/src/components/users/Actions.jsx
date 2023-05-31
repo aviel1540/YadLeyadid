@@ -42,6 +42,8 @@ export const Actions = ({ setOpen, open, refetch }) => {
             {open.popUp && (
                 <PopUp setOpen={setOpen} open={open}>
                     <Form
+                        content={open.content}
+                        title={open.title}
                         refetch={refetch}
                         setOpen={setOpen}
                         open={open}

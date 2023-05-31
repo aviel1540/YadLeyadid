@@ -17,10 +17,10 @@ export const Actions = ({ setOpen, open, refetch }) => {
             {open.popUp && (
                 <PopUp setOpen={setOpen} open={open}>
                     <Form
-                        title={open.content}
                         refetch={refetch}
                         setOpen={setOpen}
                         open={open}
+                        content={open.content}
                     />
                 </PopUp>
             )}
