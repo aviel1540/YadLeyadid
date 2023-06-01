@@ -10,7 +10,7 @@ export const Routers = () => {
 		<Routes>
 			<Route path="/" element={<Pages.LoginPage />} exact />
 			<Route path="*" element={<Pages.NotFoundPage />} exact />
-			{isAdmin &&
+			{isLoggedIn && isAdmin &&
 				<>
 					<Route path="/home" element={<Pages.HomePage />} exact />
 					<Route path="/settings" element={<Pages.InformationPage />} exact />

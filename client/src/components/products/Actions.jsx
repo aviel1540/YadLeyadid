@@ -16,7 +16,7 @@ export const Actions = ({ setOpen, open, refetch }) => {
             {open.modalDialog && (
                 <ModalDialog
                     onClick={() => deleteMutateProduct(open.id)}
-                    title={"האם אתה בטוח ?"}
+                    title={"האם את/ה בטוח ?"}
                     setOpen={setOpen}
                     open={open}
                 />
