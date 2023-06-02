@@ -8,7 +8,7 @@ const productService = require("../services/productService");
 const mailer = require("../utils/mailer");
 
 exports.register = async (req, res) => {
-	const idTeuda = escape(req.body.idTeuda);
+	const entityCard = escape(req.body.entityCard);
 	const username = escape(req.body.username);
 	const name = escape(req.body.name);
 	const password = escape(req.body.password);
@@ -20,7 +20,7 @@ exports.register = async (req, res) => {
 	let user;
 	try {
 		if (
-			!idTeuda ||
+			!entityCard ||
 			!name ||
 			!username ||
 			!password ||
@@ -31,7 +31,7 @@ exports.register = async (req, res) => {
 		) {
 			return res.status(400).json({ message: "נא למלא את כל השדות." });
 		}
-		if (!validation.iDValidator(idTeuda)) {
+		if (!validation.iDValidator(entityCard)) {
 			return res.status(400).json({ message: "תעודת זהות לא תקינה." });
 		}
 
@@ -51,7 +51,7 @@ exports.register = async (req, res) => {
 				.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים." });
 		}
 
-		const checkIdTeuda = validation.addSlashes(idTeuda);
+		const checkEntityCard = validation.addSlashes(entityCard);
 		const checkUsername = validation.addSlashes(username);
 		const checkName = validation.addSlashes(name);
 		const checkPassword = validation.addSlashes(password);
@@ -66,9 +66,11 @@ exports.register = async (req, res) => {
 			return res.status(400).json({ message: "שם משתמש קיים במערכת." });
 		}
 
-		const userIdTeuda = await userService.findByIdTeuda(checkIdTeuda);
+		const userEntityCard = await userService.findByEntityCard(
+			checkEntityCard
+		);
 
-		if (userIdTeuda) {
+		if (userEntityCard) {
 			return res
 				.status(400)
 				.json({ message: "תעודת זהות קיימת במערכת." });
@@ -91,7 +93,7 @@ exports.register = async (req, res) => {
 		const passwordHash = await auth.hashPassword(checkPassword);
 
 		user = await userService.addUser({
-			checkIdTeuda,
+			checkEntityCard,
 			checkUsername,
 			checkName,
 			checkEmail,
@@ -114,17 +116,17 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-	const idTeuda = escape(req.body.idTeuda);
+	const entityCard = escape(req.body.userId);
 	const password = escape(req.body.password);
 
 	try {
-		if (!idTeuda || !password) {
+		if (!entityCard || !password) {
 			return res.status(400).json({ message: "נא למלא את כל השדות." });
 		}
-		const checkIdTeuda = validation.addSlashes(idTeuda);
+		const checkEntityCard = validation.addSlashes(entityCard);
 		const checkPassword = validation.addSlashes(password);
 
-		const user = await auth.login(checkIdTeuda, checkPassword);
+		const user = await auth.login(checkEntityCard, checkPassword);
 		if (!user) {
 			return res
 				.status(400)
@@ -179,7 +181,7 @@ exports.getAllUsers = async (req, res) => {
 		if (!result) {
 			return res.status(404).json({ message: "מאגר משתמשים ריק" });
 		}
-		const user = result.filter(result => !result.isAdmin);
+		const user = result.filter((result) => !result.isAdmin);
 		for (let i = 0; i < user.length; i++) {
 			const userDetails = user[i];
 			if (userDetails.productList.length > 0) {
@@ -192,7 +194,7 @@ exports.getAllUsers = async (req, res) => {
 				}
 				details = {
 					_id: userDetails._id,
-					idTeuda: userDetails.idTeuda,
+					entityCard: userDetails.entityCard,
 					name: userDetails.name,
 					username: userDetails.username,
 					email: userDetails.email,
@@ -209,7 +211,7 @@ exports.getAllUsers = async (req, res) => {
 			} else {
 				details = {
 					_id: userDetails._id,
-					idTeuda: userDetails.idTeuda,
+					entityCard: userDetails.entityCard,
 					name: userDetails.name,
 					username: userDetails.username,
 					email: userDetails.email,
@@ -250,7 +252,7 @@ exports.getUserByUsername = async (req, res) => {
 			}
 			details = {
 				_id: user._id,
-				idTeuda: user.idTeuda,
+				entityCard: user.entityCard,
 				name: user.name,
 				username: user.username,
 				email: user.email,
@@ -263,7 +265,7 @@ exports.getUserByUsername = async (req, res) => {
 		} else {
 			details = {
 				_id: user._id,
-				idTeuda: user.idTeuda,
+				entityCard: user.entityCard,
 				name: user.name,
 				username: user.username,
 				email: user.email,
@@ -417,7 +419,7 @@ exports.unassignProductUser = async (req, res) => {
 
 		await productService.updateProductUnassignToUser(checkProductId);
 		await user.save();
-		return res.status(200).json({ message: "נמחק בהצלחה.", user });
+		return res.status(200).json({ message: "השיוך הוסר בהצלחה." });
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
 	}
@@ -425,7 +427,7 @@ exports.unassignProductUser = async (req, res) => {
 
 exports.updateDetails = async (req, res) => {
 	const userId = escape(req.params.id);
-	const idTeuda = escape(req.body.idTeuda);
+	const entityCard = escape(req.body.entityCard);
 	const username = escape(req.body.username);
 	const name = escape(req.body.name);
 	const email = escape(req.body.email);
@@ -435,7 +437,7 @@ exports.updateDetails = async (req, res) => {
 	let updateUser;
 	try {
 		if (
-			!idTeuda ||
+			!entityCard ||
 			!username ||
 			!name ||
 			!email ||
@@ -445,7 +447,7 @@ exports.updateDetails = async (req, res) => {
 		) {
 			return res.status(400).json({ message: "נא למלא את כל השדות." });
 		}
-		if (!validation.iDValidator(idTeuda)) {
+		if (!validation.iDValidator(entityCard)) {
 			return res.status(400).json({ message: "תעודת זהות לא תקינה." });
 		}
 
@@ -454,7 +456,7 @@ exports.updateDetails = async (req, res) => {
 		}
 
 		const checkUserId = validation.addSlashes(userId);
-		const checkIdTeuda = validation.addSlashes(idTeuda);
+		const checkEntityCard = validation.addSlashes(entityCard);
 		const checkUserName = validation.addSlashes(username);
 		const checkName = validation.addSlashes(name);
 		const checkEmail = validation.addSlashes(email);
@@ -462,37 +464,36 @@ exports.updateDetails = async (req, res) => {
 		const checkAddress = validation.addSlashes(address);
 		const checkPaymentType = validation.addSlashes(paymentType);
 
-		const userIdTeuda = await userService.findByIdTeudaForUpdate(
-			checkUserId,
-			checkIdTeuda
+		const userEntityCard = await userService.findByEntityCard(
+			checkEntityCard
 		);
-		if (userIdTeuda) {
+
+		if (userEntityCard?.entityCard !== checkEntityCard && userEntityCard) {
 			return res
 				.status(400)
 				.json({ message: "תעודת זהות קיימת במערכת." });
 		}
-		const userUserName = await userService.findByUserNameForUpdate(
-			checkUserId,
-			checkUserName
-		);
 
-		if (userUserName) {
-			return res.status(400).json({ message: "שם המשתמש קיים במערכת" });
+		const userUserName = await userService.findByUsername(checkUserName);
+
+		if (userUserName?.username !== checkUserName && userUserName) {
+			return res.status(400).json({ message: "שם המשתמש קיים במערכת." });
 		}
 
-		const userEmail = await userService.findByEmailForUpdate(
-			checkUserId,
-			checkEmail
-		);
-		if (userEmail) {
+		const userEmail = await userService.findByEmail(checkEmail);
+
+		if (userEmail?.email !== checkEmail && userEmail) {
 			return res.status(400).json({ message: "מייל קיים במערכת." });
 		}
 
-		const userPhoneNumber = await userService.findByPhoneNumberForUpdate(
-			checkUserId,
+		const userPhoneNumber = await userService.findByPhoneNumber(
 			checkPhoneNumber
 		);
-		if (userPhoneNumber) {
+
+		if (
+			userPhoneNumber?.phoneNumber !== checkPhoneNumber &&
+			userPhoneNumber
+		) {
 			return res
 				.status(400)
 				.json({ message: "מספר פלאפון קיים במערכת." });
@@ -500,7 +501,7 @@ exports.updateDetails = async (req, res) => {
 
 		updateUser = await userService.updateUserDetails({
 			checkUserId,
-			checkIdTeuda,
+			checkEntityCard,
 			checkUserName,
 			checkName,
 			checkEmail,
@@ -508,6 +509,7 @@ exports.updateDetails = async (req, res) => {
 			checkAddress,
 			checkPaymentType,
 		});
+
 		if (!updateUser)
 			return res
 				.status(401)

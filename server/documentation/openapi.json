@@ -37,7 +37,7 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"idTeuda": { "type": "string" },
+									"entityCard": { "type": "string" },
 									"username": { "type": "string" },
 									"name": { "type": "string" },
 									"password": { "type": "string" },
@@ -74,7 +74,7 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"idTeuda": { "type": "string" },
+									"entityCard": { "type": "string" },
 									"password": { "type": "string" }
 								}
 							}
@@ -204,7 +204,7 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"idTeuda": { "type": "string" },
+									"entityCard": { "type": "string" },
 									"username": { "type": "string" },
 									"name": { "type": "string" },
 									"email": { "type": "string" },
@@ -1072,8 +1072,7 @@
 								"type": "object",
 								"properties": {
 									"title": { "type": "string" },
-									"finish": { "type": "string" }
-
+									"finished": { "type": "boolean" }
 								}
 							}
 						}

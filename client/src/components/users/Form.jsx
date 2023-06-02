@@ -27,22 +27,23 @@ export const Form = ({ setOpen, open, refetch, content, title }) => {
     const activeProducts = products?.filter((p) => p.place !== ProductPlace.LOANED)
 
     const onSubmit = (data) => {
-        const { idTeuda, username, name, password, email, phoneNumber, address } = data;
+        const { entityCard, username, name, password, email, phoneNumber, address } = data;
 
         try {
             if (title === "add") {
                 const addUser = {
-                    idTeuda, username,
+                    entityCard, username,
                     name, password,
                     email, phoneNumber,
                     address, paymentType: selectedPaymentType
                 };
+
                 addMutateUser(addUser);
             }
             else if (title === "edit") {
                 const updateUser = {
                     id: open.id,
-                    idTeuda, username,
+                    entityCard, username,
                     name, email,
                     phoneNumber,
                     address, paymentType: selectedPaymentType.length > 0 ? selectedPaymentType : open.info.paymentType
@@ -76,15 +77,15 @@ export const Form = ({ setOpen, open, refetch, content, title }) => {
                             <p className="text-red text-sm font-normal">{errors.username?.message}</p>
                         </label>
 
-                        <label htmlFor="idTeuda" className="block text-sm font-semibold mt-1">תעודת זהות:
-                            <input type="text" id="idTeuda" name="idTeuda" defaultValue={title === "edit" ? open.info.idTeuda : null} className="block w-35 px-5 h-14 border border-gray font-normal rounded-lg" placeholder="תעודת זהות" {...register("idTeuda", { required: { value: true, message: "שדה חובה." } })} />
-                            <p className="text-red text-sm font-normal">{errors.idTeuda?.message}</p>
+                        <label htmlFor="entityCard" className="block text-sm font-semibold mt-1">תעודת זהות:
+                            <input type="text" id="entityCard" name="entityCard" defaultValue={title === "edit" ? open.info.entityCard : null} className="block w-35 px-5 h-14 border border-gray font-normal rounded-lg" placeholder="תעודת זהות" {...register("entityCard", { required: { value: true, message: "שדה חובה." } })} />
+                            <p className="text-red text-sm font-normal">{errors.entityCard?.message}</p>
                         </label>
 
                         {title === 'add' &&
                             <label htmlFor="password" className="block text-sm font-semibold mt-1">סיסמא:
                                 <input type="password" id="password" name="password" className="block w-35 px-5 h-14 border border-gray font-normal rounded-lg" placeholder="סיסמא" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
-                                <p className="text-red text-sm font-normal">{errors.idTeuda?.message}</p>
+                                <p className="text-red text-sm font-normal">{errors.entityCard?.message}</p>
                             </label>
                         }
 

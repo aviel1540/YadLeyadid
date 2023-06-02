@@ -29,7 +29,7 @@ export const UserDetails = () => {
 					readOnly={true}
 				/>
 				<TextInput
-					info={details?.idTeuda}
+					info={details?.entityCard}
 					originalText={"תעודת זהות"}
 					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
 					readOnly={true}
