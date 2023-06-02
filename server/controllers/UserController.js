@@ -175,10 +175,11 @@ exports.getAllUsers = async (req, res) => {
 	let details;
 	let product;
 	try {
-		const user = await userService.allUsers();
-		if (!user) {
+		const result = await userService.allUsers();
+		if (!result) {
 			return res.status(404).json({ message: "מאגר משתמשים ריק" });
 		}
+		const user = result.filter(result => !result.isAdmin);
 		for (let i = 0; i < user.length; i++) {
 			const userDetails = user[i];
 			if (userDetails.productList.length > 0) {
