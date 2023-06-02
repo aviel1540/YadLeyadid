@@ -14,9 +14,7 @@ exports.getProducts = async (req, res) => {
 		for (let i = 0; i < product.length; i++) {
 			const productDetails = product[i];
 			if (productDetails.loanBy) {
-				userLoan = await userService.showUserDetailsInProducts(
-					productDetails.loanBy
-				);
+				userLoan = await userService.userDetails(productDetails.loanBy);
 				details = {
 					_id: productDetails._id,
 					productName: productDetails.productName,

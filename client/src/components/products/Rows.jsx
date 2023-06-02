@@ -106,7 +106,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 								</TableHead>
 								<TableBody>
 									{row?.userDetails?.map((details) => (
-										<TableRow key={details.idTeuda}>
+										<TableRow key={details.entityCard}>
 											<TableCell align="right">
 												{details.name}
 											</TableCell>
@@ -114,7 +114,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 												{details.username}
 											</TableCell>
 											<TableCell align="right">
-												{details.idTeuda}
+												{details.entityCard}
 											</TableCell>
 											<TableCell align="right">
 												{details.phoneNumber}

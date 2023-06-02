@@ -34,7 +34,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 				<TableCell align="right">{row.name}</TableCell>
 				<TableCell align="right">{row.username}</TableCell>
 
-				<TableCell align="right">{row.idTeuda}</TableCell>
+				<TableCell align="right">{row.entityCard}</TableCell>
 
 				<TableCell align="right" title="שליחת הודעה">
 					<a

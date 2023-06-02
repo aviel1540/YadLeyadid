@@ -33,7 +33,7 @@ export const Users = () => {
 	const dataResults = users?.filter(
 		(user) =>
 			user?.name.toLowerCase()?.includes(inputSearch?.toLowerCase()) ||
-			user?.idTeuda?.includes(inputSearch) ||
+			user?.entityCard?.includes(inputSearch) ||
 			user?.phoneNumber?.includes(inputSearch)
 	);
 

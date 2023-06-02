@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
 	{
-		idTeuda: {
+		entityCard: {
 			type: String,
 			trim: true,
 			required: true,
@@ -62,9 +62,9 @@ const userSchema = new Schema(
 		missionList: [
 			{
 				type: Schema.Types.ObjectId,
-				ref: "Mission"
-			}
-		]
+				ref: "Mission",
+			},
+		],
 	},
 	{
 		timestamps: true,

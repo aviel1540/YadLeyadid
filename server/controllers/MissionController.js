@@ -80,20 +80,20 @@ exports.addNewMission = async (req, res) => {
 exports.updateMission = async (req, res) => {
 	const missionId = escape(req.params.missionId);
 	const title = escape(req.body.title);
-	const finish = escape(req.body.finish);
+	const finished = escape(req.body.finished);
 	let mission;
 	try {
 		const checkMissionId = validation.addSlashes(missionId);
 		const checkTitle = validation.addSlashes(title);
-		const checkFinish = validation.addSlashes(finish);
+		const checkFinished = validation.addSlashes(finished);
 
 		mission = await missionService.updateMissionDetails({
 			checkMissionId,
 			checkTitle,
-			checkFinish
+			checkFinished,
 		});
 
-		if(!mission) {
+		if (!mission) {
 			return res.status(401).json({ message: "לא נמצאה משימה." });
 		}
 		await mission.save();
@@ -101,9 +101,4 @@ exports.updateMission = async (req, res) => {
 	} catch (err) {
 		res.status(400).json({ message: err });
 	}
-
-
-
-
-
-}
+};

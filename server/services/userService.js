@@ -1,8 +1,13 @@
 const User = require("../models/User");
 
+exports.allUsers = async () => await User.find();
+
+exports.findUserById = async (userId) => await User.findById(userId);
+
 exports.findByUsername = async (username) => await User.findOne({ username });
 
-exports.findByIdTeuda = async (idTeuda) => await User.findOne({ idTeuda });
+exports.findByEntityCard = async (entityCard) =>
+	await User.findOne({ entityCard });
 
 exports.findByEmail = async (email) => await User.findOne({ email });
 
@@ -11,7 +16,7 @@ exports.findByPhoneNumber = async (phoneNumber) =>
 
 exports.addUser = async (request) => {
 	return new User({
-		idTeuda: request.checkIdTeuda,
+		entityCard: request.checkEntityCard,
 		username: request.checkUsername,
 		name: request.checkName,
 		password: request.passwordHash,
@@ -22,19 +27,14 @@ exports.addUser = async (request) => {
 	});
 };
 
-exports.findUserById = async (checkUserId) => await User.findById(checkUserId);
+exports.deleteUser = async (userId) => await User.findByIdAndRemove(userId);
 
-exports.deleteUser = async (checkUserId) =>
-	await User.findByIdAndRemove(checkUserId);
-
-exports.allUsers = async () => await User.find();
-
-exports.updateUserPassword = async (checkUserId, password) =>
-	await User.findByIdAndUpdate(checkUserId, { password });
+exports.updateUserPassword = async (userId, password) =>
+	await User.findByIdAndUpdate(userId, { password });
 
 exports.updateUserDetails = async (request) => {
 	return await User.findByIdAndUpdate(request.checkUserId, {
-		idTeuda: request.checkIdTeuda,
+		entityCard: request.checkEntityCard,
 		username: request.checkUserName,
 		name: request.checkName,
 		email: request.checkEmail,
@@ -44,40 +44,14 @@ exports.updateUserDetails = async (request) => {
 	});
 };
 
-exports.showUserDetailsInProducts = async (userId) => {
-	const user = await User.findById(userId);
+exports.userDetails = async (userId) => {
+	const user = await this.findUserById(userId);
 	return {
 		username: user.username,
-		idTeuda: user.idTeuda,
+		entityCard: user.entityCard,
 		email: user.email,
 		phoneNumber: user.phoneNumber,
 		address: user.address,
 		name: user.name,
 	};
-};
-
-exports.findByIdTeudaForUpdate = async (userId, idTeuda) => {
-	const user = await User.findOne({ idTeuda });
-	if (!user) return false;
-	if (user.id === userId) return false;
-	return true;
-};
-
-exports.findByEmailForUpdate = async (userId, email) => {
-	const user = await User.findOne({ email });
-	if (!user) return false;
-	if (user.id === userId) return false;
-	return true;
-};
-exports.findByPhoneNumberForUpdate = async (userId, phoneNumber) => {
-	const user = await User.findOne({ phoneNumber });
-	if (!user) return false;
-	if (user.id === userId) return false;
-	return true;
-};
-exports.findByUserNameForUpdate = async (userId, username) => {
-	const user = await User.findOne({ username });
-	if (!user) return false;
-	if (user.id === userId) return false;
-	return true;
 };
