@@ -66,7 +66,7 @@ exports.addNewMission = async (req, res) => {
 			});
 		}
 
-		mission = await missionService.addMission(checkTitle);
+		mission = missionService.addMission(checkTitle);
 		await mission.save();
 
 		user.missionList.push(mission);
@@ -80,17 +80,17 @@ exports.addNewMission = async (req, res) => {
 exports.updateMission = async (req, res) => {
 	const missionId = escape(req.params.missionId);
 	const title = escape(req.body.title);
-	const finished = escape(req.body.finished);
+	const completed = escape(req.body.completed);
 	let mission;
 	try {
 		const checkMissionId = validation.addSlashes(missionId);
 		const checkTitle = validation.addSlashes(title);
-		const checkFinished = validation.addSlashes(finished);
+		const checkCompleted = validation.addSlashes(completed);
 
 		mission = await missionService.updateMissionDetails({
 			checkMissionId,
 			checkTitle,
-			checkFinished,
+			checkCompleted,
 		});
 
 		if (!mission) {

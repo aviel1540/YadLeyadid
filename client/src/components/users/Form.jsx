@@ -94,8 +94,8 @@ export const Form = ({ setOpen, open, refetch, content, title }) => {
                             <p className="text-red text-sm font-normal">{errors.phoneNumber?.message}</p>
                         </label>
 
-                        <label htmlFor="email" className="block text-sm font-semibold mt-1">אימייל:
-                            <input type="email" id="email" name="email" defaultValue={title === "edit" ? open.info.email : null} className="block w-35 px-5 h-14 border border-gray font-normal rounded-lg" placeholder="אימייל" {...register("email", { required: { value: true, message: "שדה חובה." }, pattern: /^\S+@\S+$/i })} />
+                        <label htmlFor="email" className="block text-sm font-semibold mt-1">מייל:
+                            <input type="email" id="email" name="email" defaultValue={title === "edit" ? open.info.email : null} className="block w-35 px-5 h-14 border border-gray font-normal rounded-lg" placeholder="מייל" {...register("email", { required: { value: true, message: "שדה חובה." }, pattern: /^\S+@\S+$/i })} />
                             <p className="text-red text-sm font-normal">{errors.email?.message}</p>
                         </label>
 
@@ -108,7 +108,7 @@ export const Form = ({ setOpen, open, refetch, content, title }) => {
                             <SelectInput
                                 type={title === 'add' ? 'אופן תשלום' : open.info.paymentType}
                                 selectedValue={selectedPaymentType}
-                                className={"!w-56 sm!w-full"}
+                                className={"!w-[12.5rem] sm!w-full"}
                                 setSelectedValue={setSelectedPaymentType}
                                 data={paymentTypes?.map(
                                     ({ label, id, }) => ({

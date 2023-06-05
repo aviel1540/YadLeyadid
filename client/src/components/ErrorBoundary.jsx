@@ -23,7 +23,7 @@ class ErrorBoundary extends React.Component {
             return (
                 <div className='h-screen flex flex-col justify-center items-center'>
                     <span className='text-red text-xl'>משהו כנראה השתבש, בואו נחזור למקום בטוח.</span>
-                    <button className='bg-blue text-white w-48 rounded-md mt-5 border' onClick={handleClick}>אל מקום בטוח ⛵</button>
+                    <button className='bg-blue/80 text-white w-48 rounded-md mt-5 border' onClick={handleClick}>אל מקום בטוח ⛵</button>
                 </div>
             )
         }

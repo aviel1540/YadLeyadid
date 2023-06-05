@@ -18,10 +18,11 @@ export const SelectInput = ({
 
     return (
         <Box className={clsx(className)}>
-            <FormControl fullWidth>
+            <FormControl fullWidth >
                 <InputLabel
                     id="demo-simple-select-label"
                     sx={{ direction: "rtl" }}
+                    className="!text-gray/70"
                 >
                     {type}
                 </InputLabel>
@@ -33,6 +34,7 @@ export const SelectInput = ({
                     onChange={handleChange}
                     required
                     disabled={isLoading}
+
                 >
                     <MenuItem value="">
                         <em className="text-gray/70">{type}</em>

@@ -41,7 +41,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 						href={`https://api.whatsapp.com/send/?phone=972${row.phoneNumber}&text=שלום ${row.name},&type=phone_number&app_absent=0`}
 						target="_blank"
 					>
-						{row.phoneNumber}
+						{row.phoneNumber.slice(0, 3)}-{row.phoneNumber.slice(3, 6)}-{row.phoneNumber.slice(6, 10)}
 					</a>
 				</TableCell>
 
@@ -64,7 +64,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 
 				<TableCell align="right">
 					<IconButton
-						title="Remove"
+						title="מחיקה"
 						onClick={() =>
 							setOpen({
 								...open,
@@ -78,7 +78,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 						<MdDeleteForever color="#E21818" />
 					</IconButton>
 					<IconButton
-						title="Edit"
+						title="עריכה"
 						onClick={() =>
 							setOpen({
 								...open,
