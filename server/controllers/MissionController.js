@@ -61,7 +61,7 @@ exports.addNewMission = async (req, res) => {
 			return res.status(404).json({ message: "משתמש לא קיים." });
 		}
 		if (!user.isAdmin) {
-			return res.status(403).json({
+			return res.status(401).json({
 				message: "לקוח לא מנהל - לא ניתן להוסיף משימות.",
 			});
 		}
@@ -102,7 +102,7 @@ exports.updateMission = async (req, res) => {
 };
 
 exports.deleteMission = async (req, res) => {
-	const missionId = escape(req.params.id);
+	const missionId = escape(req.params.missionId);
 
 	try {
 		const checkMissionId = validation.addSlashes(missionId);
