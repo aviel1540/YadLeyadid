@@ -6,12 +6,15 @@ import { queryClient } from "./react-query/queryClient";
 import { SideBar } from "./components/sideBar/SideBar";
 import { useEffect } from "react";
 import { useAuthStore } from "./store/auth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function App() {
 	const { isLoggedIn, isAdmin } = useAuthStore();
 
 	const navigate = useNavigate();
+	const location = useLocation();
+
+	const hidde = isLoggedIn && isAdmin && location.pathname !== "/";
 
 	useEffect(() => {
 		if (isLoggedIn) return;
@@ -33,7 +36,7 @@ function App() {
 					pauseOnHover
 					theme="light"
 				/>
-				{isLoggedIn && isAdmin && <SideBar />}
+				{hidde && <SideBar />}
 				<Routers />
 				<ReactQueryDevtools />
 			</QueryClientProvider>

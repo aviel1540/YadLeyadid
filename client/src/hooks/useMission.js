@@ -15,3 +15,23 @@ export const useAddMission = (setOpen, open, refetch) =>
       onError(data);
     },
   });
+
+export const useUpdateMission = (setOpen, open, refetch) =>
+  useMutation(mission.updateMission, {
+    onSuccess: (data) => {
+      onSuccess(data, setOpen, open, refetch);
+    },
+    onError: (data) => {
+      onError(data);
+    },
+  });
+
+export const useDeleteMission = (setOpen, open, refetch) =>
+  useMutation((id) => mission.deleteMission(id), {
+    onSuccess: (data) => {
+      onSuccess(data, setOpen, open, refetch);
+    },
+    onError: (data) => {
+      onError(data);
+    },
+  });

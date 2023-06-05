@@ -50,7 +50,9 @@ export const Line = ({ blur, users }) => {
             <ReactApexChart
                 options={info.current.options}
                 series={info.current.series}
-                type="line" height={350} />
+                type="line"
+                height={350}
+            />
         </div >
     )
 }

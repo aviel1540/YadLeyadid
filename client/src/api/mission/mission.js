@@ -12,3 +12,16 @@ export const addMission = async (request) => {
 
   return data;
 };
+
+export const updateMission = async (request) => {
+  const { missionId } = request;
+  const { data } = await axios.patch(`/missions/update-mission/${missionId}`, request);
+
+  return data;
+};
+
+export const deleteMission = async (id) => {
+  const { data } = await axios.delete(`/missions/delete-mission/${id}`);
+
+  return data;
+};
