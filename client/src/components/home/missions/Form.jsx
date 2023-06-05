@@ -2,19 +2,20 @@ import { Checkbox, FormControl, FormControlLabel, FormLabel, IconButton, Radio, 
 import React, { useRef, useState } from 'react'
 import { BsFillSendCheckFill } from 'react-icons/bs'
 import { TextInput } from '../../logic'
-import { useAddMission } from '~/hooks/useMission'
+import { useAddMission, useUpdateMission } from '~/hooks/useMission'
 import { error, info } from '~/utils/notification'
 import { useAuthStore } from '~/store/auth'
 import { useForm } from 'react-hook-form'
 
 export const Form = ({ setOpen, open, refetch, content }) => {
-    console.log("🚀 open:", open)
     const { username } = useAuthStore();
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(open.title === "edit" ? open.info?.completed : false);
+
     const { mutate: addMutateMission } = useAddMission(setOpen, open, refetch);
+    const { mutate: updateMutateMission } = useUpdateMission(setOpen, open, refetch);
 
     const handleChange = () => setChecked(!checked)
 
@@ -26,7 +27,10 @@ export const Form = ({ setOpen, open, refetch, content }) => {
                 const addMission = { username, title };
                 addMutateMission(addMission);
             }
-
+            else if (open.title === "edit") {
+                const editMission = { missionId: open.id, title, completed: checked };
+                updateMutateMission(editMission);
+            }
         } catch (err) {
             error(err);
         }
@@ -56,6 +60,7 @@ export const Form = ({ setOpen, open, refetch, content }) => {
                         name="row-radio-buttons-group"
                         required
                         defaultValue={open.info?.completed}
+                        onChange={handleChange}
                     >
                         <FormControlLabel value="true" control={<Radio />} label="כן" />
                         <FormControlLabel value="false" control={<Radio />} label="לא" />

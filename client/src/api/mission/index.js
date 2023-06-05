@@ -1,1 +1,1 @@
-export { addMission, getMissions } from './mission';
+export { addMission, getMissions, deleteMission, updateMission } from './mission';
