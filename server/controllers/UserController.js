@@ -6,7 +6,7 @@ const { ProductPlace } = require("../constants/productPlace");
 const userService = require("../services/userService");
 const productService = require("../services/productService");
 const mailer = require("../utils/mailer");
-
+// test
 exports.register = async (req, res) => {
 	const entityCard = escape(req.body.entityCard);
 	const username = escape(req.body.username);
