@@ -5,7 +5,7 @@ export const Columns = ({ blur, users }) => {
 
     const usersName = users?.map((u) => u.name);
     const productsList = users?.map((u) => u.userProductList === undefined ? 0 : u.userProductList.length);
-    console.log("🚀  productsList:", productsList)
+    // console.log("🚀  productsList:", productsList)
 
     const info = useRef({
         series: [

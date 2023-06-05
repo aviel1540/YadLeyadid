@@ -95,7 +95,7 @@ export const Products = () => {
 										className="!font-bold"
 										align="right"
 									>
-										מושייך לקטגוריה
+										משוייך לקטגוריה
 									</TableCell>
 									<TableCell
 										className="!font-bold"

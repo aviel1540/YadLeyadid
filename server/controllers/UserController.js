@@ -116,7 +116,7 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-	const entityCard = escape(req.body.userId);
+	const entityCard = escape(req.body.entityCard);
 	const password = escape(req.body.password);
 
 	try {

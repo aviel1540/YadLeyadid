@@ -1,16 +1,24 @@
 import React, { useState } from 'react'
 import { TextInput } from '../../logic'
-import { Button } from '@mui/material'
+import { Button, IconButton } from '@mui/material'
 import { Actions } from './Actions';
 import { useMissions } from '~/hooks/useMission';
 import { Spinner } from '../../ui/Spinner';
 import { useAuthStore } from '~/store/auth';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import { MdDeleteForever, MdOutlineModeEdit } from 'react-icons/md';
 
 export const Missions = ({ setOpen, open }) => {
     const { username } = useAuthStore();
 
     const { data: missions, isLoading, refetch } = useMissions(username);
+
+    const [threeDots, setThreeDots] = useState({
+        click: false,
+        index: null,
+    })
+
+    const handlerThreeDots = (index) => setThreeDots({ ...threeDots, click: !threeDots.click, index })
 
     if (isLoading) return <Spinner />
 
@@ -38,8 +46,37 @@ export const Missions = ({ setOpen, open }) => {
                     {missions?.map((mission, index) => (
                         <div key={mission._id}>
                             <div className='flex justify-around'>
-                                <li className='w-full bg-gray-100 dark:bg-white/5 p-3 rounded-md'>{index + 1}. {mission.title}</li>
-                                <BsThreeDotsVertical />
+                                <li className={`w-full p-2 ${mission.completed && "line-through"} `}>{index + 1}. {mission.title}</li>
+                                <IconButton onClick={() => handlerThreeDots(index + 1)}>
+                                    <BsThreeDotsVertical />
+                                </IconButton>
+                                {(threeDots.click && threeDots.index === index + 1) &&
+                                    <div className='flex justify-around bg-gray-light/40 w-32 rounded-xl'>
+                                        <MdDeleteForever color="#E21818" size={25} className='!mt-2 !cursor-pointer' title="מחיקה"
+                                            onClick={() =>
+                                                setOpen({
+                                                    ...open,
+                                                    action: true,
+                                                    modalDialog: true,
+                                                    title: "delete",
+                                                    id: mission._id
+                                                })
+                                            }
+                                        />
+                                        <MdOutlineModeEdit color="#1fb6ff" size={25} className='!mt-2 !cursor-pointer' title="עריכה"
+                                            onClick={() =>
+                                                setOpen({
+                                                    ...open,
+                                                    action: true,
+                                                    popUp: true,
+                                                    title: "edit",
+                                                    content: "עריכת נתונים",
+                                                    id: mission._id,
+                                                    info: mission,
+                                                })
+                                            } />
+                                    </div>
+                                }
                             </div>
                         </div>
                     ))}

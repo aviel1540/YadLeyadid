@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import ReactApexChart from "react-apexcharts";
 
 export const Pie = ({ products, blur }) => {
-    console.log("🚀  products:", products)
+    // console.log("🚀  products:", products)
 
     // const usersName = users?.map((u) => u.name);
     // const productsList = users?.map((u) => u.userProductList === undefined ? 0 : u.userProductList.length);
