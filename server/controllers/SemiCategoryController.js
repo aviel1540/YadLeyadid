@@ -253,3 +253,21 @@ exports.unassignProductFromSemiCategory = async (req, res) => {
 	}
 };
 
+exports.showSemiCategoryProductsPlaceCounter = async(req,res) => {
+	let details = {
+		productName: null,
+		inStock: 0,
+		loan: 0,
+		repair: 0
+	};
+	let allCounters = [];
+	try {
+		const semiCategories = await semiCategoryService.allSemiCategory();
+		semiCategories.map((semi) => {
+			semi.productList.forEach
+		})
+	} catch(err) {
+
+	}
+}
+

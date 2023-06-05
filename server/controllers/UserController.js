@@ -176,12 +176,20 @@ exports.getAllUsers = async (req, res) => {
 	let products = [];
 	let details;
 	let product;
-	try {
+	try {	
 		const result = await userService.allUsers();
 		if (!result) {
 			return res.status(404).json({ message: "מאגר משתמשים ריק" });
 		}
-		const user = result.sort((result) => result.isAdmin);
+		const user = result.sort((a, b) => {
+			if (a.isAdmin && !b.isAdmin) {
+			  return -1; // a comes before b
+			} else if (!a.isAdmin && b.isAdmin) {
+			  return 1; // b comes before a
+			}
+			return 0; // no sorting needed
+		  });
+		
 		for (let i = 0; i < user.length; i++) {
 			const userDetails = user[i];
 			if (userDetails.productList.length > 0) {

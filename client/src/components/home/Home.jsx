@@ -29,7 +29,6 @@ export const Home = () => {
 	const { data: users, isLoading: isLoadingUsers } = useUsers();
 
 
-
 	const availableProducts = products?.map((p) => p.place !== ProductPlace.LOANED).reduce((partialtotal, a) => partialtotal + a, 0);
 	// const requestExtension = users?.map((u) => u?.userProductList?.map((p) => p?.requestDate))
 	// console.log("🚀requestExtension:", requestExtension)

@@ -703,6 +703,24 @@
 				}
 			}
 		},
+		"/products/product-place-counters": {
+			"get": {
+				"tags": ["Product"],
+				"summary": "Get all products",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
 		"/products/loan-return-close": {
 			"get": {
 				"tags": ["Product"],

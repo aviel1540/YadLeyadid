@@ -9,6 +9,8 @@ router.get("/wait-confirm-extension-request", productController.allProductsWaitC
 
 router.get("/accepted-extension-request", productController.allProductsAcceptedExtensionRequest);
 
+router.get("/product-place-counters", productController.productsCounters);
+
 router.post("/add-product", productController.addProduct);
 
 router.post("/extension-request-answer/:id", productController.updateExtensionRequest);

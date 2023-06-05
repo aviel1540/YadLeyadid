@@ -292,3 +292,23 @@ exports.allProductsAcceptedExtensionRequest = async (req, res) => {
 		return res.status(401).json({ message: err.message });
 	}
 };
+
+exports.productsCounters = async (req, res) => {
+	let details;
+	try {
+		details = {
+			inStock: 0,
+			loan: 0,
+			repair: 0
+		}
+		const products = await productService.allProducts();
+		products.map((product) => {
+			if (product.place == ProductPlace.IN_STOCK) details.inStock++;
+			else if (product.place == ProductPlace.LOANED) details.loan++;
+			else details.repair++;
+		})
+		res.status(200).json(details);
+	} catch (err) {
+		res.status(500).json({message: err.message});
+	}
+}
