@@ -104,15 +104,15 @@ exports.register = async (req, res) => {
 		});
 
 		await user.save();
+		if (!user) {
+			return res
+				.status(500)
+				.json({ message: "לא נוסף הלקוח, נא לנסות שוב." });
+		}
+		return res.status(201).json({ message: "לקוח נוסף בהצלחה." });
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
-	if (!user) {
-		return res
-			.status(500)
-			.json({ message: "לא נוסף הלקוח, נא לנסות שוב." });
-	}
-	return res.status(201).json({ message: "לקוח נוסף בהצלחה." });
 };
 
 exports.login = async (req, res) => {
@@ -143,7 +143,7 @@ exports.login = async (req, res) => {
 
 		return res.status(200).json(token);
 	} catch (err) {
-		return res.status(401).json({ message: err });
+		return res.status(500).json({ message: err });
 	}
 };
 
@@ -167,7 +167,7 @@ exports.deleteUser = async (req, res) => {
 
 		return res.status(200).json({ message: "המשתמש נמחק בהצלחה." });
 	} catch (err) {
-		return res.status(404).json({ message: err });
+		return res.status(500).json({ message: err });
 	}
 };
 
@@ -181,7 +181,7 @@ exports.getAllUsers = async (req, res) => {
 		if (!result) {
 			return res.status(404).json({ message: "מאגר משתמשים ריק" });
 		}
-		const user = result.filter((result) => !result.isAdmin);
+		const user = result.sort((result) => result.isAdmin);
 		for (let i = 0; i < user.length; i++) {
 			const userDetails = user[i];
 			if (userDetails.productList.length > 0) {
@@ -226,7 +226,7 @@ exports.getAllUsers = async (req, res) => {
 		}
 		return res.status(200).send(users);
 	} catch (err) {
-		return res.status(404).json({ message: err });
+		return res.status(500).json({ message: err });
 	}
 };
 

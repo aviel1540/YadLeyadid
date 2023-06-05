@@ -78,7 +78,7 @@ exports.addNewMission = async (req, res) => {
 };
 
 exports.updateMission = async (req, res) => {
-	const missionId = escape(req.params.missionId);
+	const missionId = escape(req.params.id);
 	const title = escape(req.body.title);
 	const completed = escape(req.body.completed);
 	let mission;

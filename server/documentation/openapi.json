@@ -1048,7 +1048,7 @@
 				}
 			}
 		},
-		"/missions/update-mission/{missionId}": {
+		"/missions/update-mission/{id}": {
 			"patch": {
 				"tags": ["Mission"],
 				"summary": "show all mission",
@@ -1059,7 +1059,7 @@
 						"schema": { "type": "string" }
 					},
 					{
-						"name": "missionId",
+						"name": "id",
 						"in": "path",
 						"required": true,
 						"schema": { "type": "string" }

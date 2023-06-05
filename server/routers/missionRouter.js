@@ -5,7 +5,7 @@ router.get("/:username", missionController.getAllMissions);
 
 router.post("/add-mission/:username", missionController.addNewMission);
 
-router.patch("/update-mission/:missionId", missionController.updateMission);
+router.patch("/update-mission/:id", missionController.updateMission);
 
 router.delete("/delete-mission/:id", missionController.deleteMission);
 
