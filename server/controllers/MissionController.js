@@ -39,7 +39,7 @@ exports.getAllMissions = async (req, res) => {
 
 		return res.status(200).send(missionsUser);
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -58,10 +58,10 @@ exports.addNewMission = async (req, res) => {
 
 		user = await userService.findByUsername(checkUsername);
 		if (!user) {
-			return res.status(400).json({ message: "משתמש לא קיים." });
+			return res.status(404).json({ message: "משתמש לא קיים." });
 		}
 		if (!user.isAdmin) {
-			return res.status(403).json({
+			return res.status(401).json({
 				message: "לקוח לא מנהל - לא ניתן להוסיף משימות.",
 			});
 		}
@@ -73,7 +73,7 @@ exports.addNewMission = async (req, res) => {
 		await user.save();
 		return res.status(201).json({ message: "המשימה נוספה בהצלחה." });
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -92,26 +92,25 @@ exports.updateMission = async (req, res) => {
 			completed,
 		});
 		if (!mission) {
-			return res.status(401).json({ message: "לא נמצאה משימה." });
+			return res.status(404).json({ message: "לא נמצאה משימה." });
 		}
 		await mission.save();
-		res.status(201).json({ message: "המשימה עודכנה בהצלחה." });
+		res.status(200).json({ message: "המשימה עודכנה בהצלחה." });
 	} catch (err) {
 		res.status(400).json({ message: err });
 	}
 };
 
-exports.deleteMission = async(req,res) => {
-	const missionId = escape(req.params.id);
+exports.deleteMission = async (req, res) => {
+	const missionId = escape(req.params.missionId);
 
-	let mission;
 	try {
 		const checkMissionId = validation.addSlashes(missionId);
-		
-		mission = await missionService.deleteMission(checkMissionId)
 
-		return res.status(200).json({ message:"המשימה נמחקה בהצלחה"});
-	} catch(err) {
-		return res.status(404).json({ message: err });
+		const mission = await missionService.deleteMission(checkMissionId);
+
+		return res.status(200).json({ message: "המשימה נמחקה בהצלחה." });
+	} catch (err) {
+		return res.status(500).json({ message: err });
 	}
-}
+};
