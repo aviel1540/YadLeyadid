@@ -85,14 +85,12 @@ exports.updateMission = async (req, res) => {
 	try {
 		const checkMissionId = validation.addSlashes(missionId);
 		const checkTitle = validation.addSlashes(title);
-		const checkCompleted = validation.addSlashes(completed);
 
 		mission = await missionService.updateMissionDetails({
 			checkMissionId,
 			checkTitle,
-			checkCompleted,
+			completed,
 		});
-
 		if (!mission) {
 			return res.status(401).json({ message: "לא נמצאה משימה." });
 		}
@@ -102,3 +100,18 @@ exports.updateMission = async (req, res) => {
 		res.status(400).json({ message: err });
 	}
 };
+
+exports.deleteMission = async(req,res) => {
+	const missionId = escape(req.params.id);
+
+	let mission;
+	try {
+		const checkMissionId = validation.addSlashes(missionId);
+		
+		mission = await missionService.deleteMission(checkMissionId)
+
+		return res.status(200).json({ message:"המשימה נמחקה בהצלחה"});
+	} catch(err) {
+		return res.status(404).json({ message: err });
+	}
+}
