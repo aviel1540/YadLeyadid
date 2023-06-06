@@ -12,6 +12,7 @@ import { Spinner } from "~/components/ui/Spinner";
 import { useUsers } from "~/hooks/useUsers";
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
+import { filterData } from "~/utils/filterData";
 
 export const Users = () => {
 	const [inputSearch, setInputSearch] = useState("");
@@ -30,13 +31,7 @@ export const Users = () => {
 
 	const navigate = useNavigate();
 
-	const dataResults = users?.filter(
-		(user) =>
-			user?.name.toLowerCase()?.includes(inputSearch?.toLowerCase()) ||
-			user?.entityCard?.includes(inputSearch) ||
-			user?.phoneNumber?.includes(inputSearch)
-	);
-
+	const dataResults = filterData(users, inputSearch)
 	// const userDetails = (username) => {
 	// 	navigate(`details/${username}`);
 	// };

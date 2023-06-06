@@ -78,7 +78,7 @@ exports.addNewMission = async (req, res) => {
 };
 
 exports.updateMission = async (req, res) => {
-	const missionId = escape(req.params.id);
+	const missionId = escape(req.params.missionId);
 	const title = escape(req.body.title);
 	const completed = escape(req.body.completed);
 	let mission;
@@ -107,7 +107,7 @@ exports.deleteMission = async (req, res) => {
 	try {
 		const checkMissionId = validation.addSlashes(missionId);
 
-		const mission = await missionService.deleteMission(checkMissionId);
+		await missionService.deleteMission(checkMissionId);
 
 		return res.status(200).json({ message: "המשימה נמחקה בהצלחה." });
 	} catch (err) {

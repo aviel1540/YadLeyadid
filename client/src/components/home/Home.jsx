@@ -3,7 +3,7 @@ import { useAuthStore } from "~/store/auth";
 import { SquareInfo } from "./SquareInfo";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Notification } from "./Notification";
-import { useProducts } from "~/hooks/useProducts";
+import { useProducts, useProductsPlaces } from "~/hooks/useProducts";
 import { Spinner } from "../ui/Spinner";
 import { ProductPlace } from "~/constants/productPlace";
 import { HiOutlineUsers } from "react-icons/hi";
@@ -13,6 +13,8 @@ import { Columns, Line, Pie } from "./chart";
 import { Missions } from "./missions";
 
 export const Home = () => {
+	const { name } = useAuthStore();
+
 	const [open, setOpen] = useState({
 		action: false,
 		popUp: false,
@@ -23,18 +25,13 @@ export const Home = () => {
 		info: {},
 	});
 
-	const { name } = useAuthStore();
 
+	const { data: productsPlaces, isLoading: isLoadingProductsPlaces } = useProductsPlaces()
 	const { data: products, isLoading: isLoadingProducts } = useProducts();
 	const { data: users, isLoading: isLoadingUsers } = useUsers();
 
 
-	const availableProducts = products?.map((p) => p.place !== ProductPlace.LOANED).reduce((partialtotal, a) => partialtotal + a, 0);
-	// const requestExtension = users?.map((u) => u?.userProductList?.map((p) => p?.requestDate))
-	// console.log("🚀requestExtension:", requestExtension)
-
-
-	if (isLoadingProducts || isLoadingUsers) return <Spinner />;
+	if (isLoadingProducts || isLoadingUsers || isLoadingProductsPlaces) return <Spinner />;
 
 
 	return (
@@ -45,30 +42,31 @@ export const Home = () => {
 				</div>
 				<section className="flex justify-center flex-row-reverse  gap-10 m-4 mt-16 sm:flex-wrap">
 					<SquareInfo
-						animate={"animate-[wiggleReverse_1s_ease-in-out_forwards]"}
-						content={"סך מכירות"}
-						total={"₪ 486,710"}
-						icon={<AiOutlineShoppingCart />}
-						style={"rgb(139, 172, 170,0.7)"}
-					/>
-					<SquareInfo
 						animate={"animate-[wiggle_2s_ease-in-out_forwards]"}
 						content={"לקוחות"}
 						total={users?.length}
 						icon={<HiOutlineUsers />}
+						style={"rgb(139, 172, 170,0.7)"}
+					/>
+					<SquareInfo
+						animate={"animate-[wiggleReverse_1s_ease-in-out_forwards]"}
+						content={"מוצרים בתיקון"}
+						total={productsPlaces?.repair}
+						icon={<AiOutlineShoppingCart />}
 						style={"rgb(176, 71, 89,0.7)"}
 					/>
+
 					<SquareInfo
 						animate={"animate-[wiggleReverse_3s_ease-in-out_forwards]"}
 						content={"מוצרים מושאלים"}
-						total={products?.length - availableProducts}
+						total={productsPlaces?.loan}
 						icon={<TbShoppingCartX />}
 						style={"rgb(231, 97, 97,0.7)"}
 					/>
 					<SquareInfo
 						animate={"animate-[wiggle_2s_ease-in-out_forwards]"}
 						content={"מוצרים זמינים"}
-						total={availableProducts}
+						total={productsPlaces?.inStock}
 						icon={<AiOutlineShoppingCart />}
 						style={"rgb(249, 155, 125,0.7)"}
 					/>

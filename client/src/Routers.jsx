@@ -16,6 +16,7 @@ export const Routers = () => {
 					<Route path="/settings" element={<Pages.InformationPage />} exact />
 					<Route path="/users" element={<Pages.UsersPage />} exact />
 					<Route path="/products" element={<Pages.productsPage />} exact />
+					<Route path="/administrator" element={<Pages.AdministratorPage />} exact />
 
 				</>
 			}

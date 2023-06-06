@@ -6,6 +6,12 @@ export const getProducts = async () => {
   return data;
 };
 
+export const getProductsPlaces = async () => {
+  const { data } = await axios.get('/products/product-place-counters');
+
+  return data;
+};
+
 export const addProduct = async (productName) => {
   const { data } = await axios.post('/products/add-product', productName);
 

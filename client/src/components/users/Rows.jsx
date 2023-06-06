@@ -60,7 +60,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 
 				<TableCell align="right">{formatDate(row.createdAt)}</TableCell>
 				<TableCell align="right">{formatDate(row.updatedAt)}</TableCell>
-				<TableCell align="right">{row.paymentType}</TableCell>
+				<TableCell align="right">{row.paymentType !== 'null' ? row.paymentType : "נא לעדכן אופן תשלום"}</TableCell>
 
 				<TableCell align="right">
 					<IconButton

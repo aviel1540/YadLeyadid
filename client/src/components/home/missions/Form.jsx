@@ -1,11 +1,11 @@
-import { Checkbox, FormControl, FormControlLabel, FormLabel, IconButton, Radio, RadioGroup } from '@mui/material'
-import React, { useRef, useState } from 'react'
-import { BsFillSendCheckFill } from 'react-icons/bs'
-import { TextInput } from '../../logic'
-import { useAddMission, useUpdateMission } from '~/hooks/useMission'
-import { error, info } from '~/utils/notification'
-import { useAuthStore } from '~/store/auth'
+import { IconButton } from '@mui/material'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { BsFillSendCheckFill } from 'react-icons/bs'
+import { RadioButtons } from '~/components/logic'
+import { useAddMission, useUpdateMission } from '~/hooks/useMission'
+import { useAuthStore } from '~/store/auth'
+import { error } from '~/utils/notification'
 
 export const Form = ({ setOpen, open, refetch, content }) => {
     const { username } = useAuthStore();
@@ -52,21 +52,11 @@ export const Form = ({ setOpen, open, refetch, content }) => {
                 </label>
             </main>
             {open.title === "edit" && <div className='flex justify-center'>
-                <FormControl>
-                    <FormLabel id="demo-row-radio-buttons-group-label">האם המשימה הושלמה?</FormLabel>
-                    <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
-                        required
-                        defaultValue={open.info?.completed}
-                        onChange={handleChange}
-                    >
-                        <FormControlLabel value="true" control={<Radio />} label="כן" />
-                        <FormControlLabel value="false" control={<Radio />} label="לא" />
-
-                    </RadioGroup>
-                </FormControl>
+                <RadioButtons
+                    title={"האם המשימה הושלמה?"}
+                    defaultValue={open.info?.completed}
+                    onChange={handleChange}
+                />
             </div>
             }
 

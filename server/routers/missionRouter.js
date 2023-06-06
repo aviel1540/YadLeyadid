@@ -5,8 +5,8 @@ router.get("/:username", missionController.getAllMissions);
 
 router.post("/add-mission/:username", missionController.addNewMission);
 
-router.patch("/update-mission/:id", missionController.updateMission);
+router.patch("/update-mission/:missionId", missionController.updateMission);
 
-router.delete("/delete-mission/:id", missionController.deleteMission);
+router.delete("/delete-mission/:missionId", missionController.deleteMission);
 
 module.exports = router;

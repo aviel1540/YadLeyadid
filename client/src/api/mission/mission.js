@@ -20,8 +20,8 @@ export const updateMission = async (request) => {
   return data;
 };
 
-export const deleteMission = async (id) => {
-  const { data } = await axios.delete(`/missions/delete-mission/${id}`);
+export const deleteMission = async (missionId) => {
+  const { data } = await axios.delete(`/missions/delete-mission/${missionId}`);
 
   return data;
 };

@@ -46,8 +46,8 @@ const userSchema = new Schema(
 		paymentType: {
 			type: String,
 			trim: true,
-			required: true,
-			enum: [PaymentTypes.CHEQUE, PaymentTypes.CREDITCARD],
+			default: "null",
+			enum: [PaymentTypes.CHEQUE, PaymentTypes.CREDITCARD, null, "null"],
 		},
 		isAdmin: {
 			type: Boolean,

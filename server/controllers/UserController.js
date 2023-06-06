@@ -7,7 +7,6 @@ const userService = require("../services/userService");
 const productService = require("../services/productService");
 const mailer = require("../utils/mailer");
 
-
 exports.register = async (req, res) => {
 	const entityCard = escape(req.body.entityCard);
 	const username = escape(req.body.username);
@@ -17,6 +16,7 @@ exports.register = async (req, res) => {
 	const phoneNumber = escape(req.body.phoneNumber);
 	const address = escape(req.body.address);
 	const paymentType = escape(req.body.paymentType);
+	const admin = escape(req.body.admin);
 
 	let user;
 	try {
@@ -27,10 +27,15 @@ exports.register = async (req, res) => {
 			!password ||
 			!email ||
 			!phoneNumber ||
-			!address ||
-			!paymentType
+			!address
 		) {
 			return res.status(400).json({ message: "נא למלא את כל השדות." });
+		}
+
+		if (!admin && (paymentType === "" || !paymentType)) {
+			return res
+				.status(400)
+				.json({ message: "נא לבחור את אופן התשלום." });
 		}
 		if (!validation.iDValidator(entityCard)) {
 			return res.status(400).json({ message: "תעודת זהות לא תקינה." });
@@ -40,6 +45,11 @@ exports.register = async (req, res) => {
 			return res.status(400).json({ message: "מייל לא תקין." });
 		}
 
+		if (!validation.phoneNumber(phoneNumber)) {
+			return res.status(400).json({
+				message: "מספר פלאפון צריך להכיל 10 ספרות בלבד.",
+			});
+		}
 		if (!validation.checkName(name)) {
 			return res.status(400).json({
 				message: "שם צריך להכיל מינימום 2 תווים.",
@@ -59,8 +69,6 @@ exports.register = async (req, res) => {
 		const checkEmail = validation.addSlashes(email);
 		const checkPhoneNumber = validation.addSlashes(phoneNumber);
 		const checkAddress = validation.addSlashes(address);
-		const checkPaymentType = validation.addSlashes(paymentType);
-
 		const userUsername = await userService.findByUsername(checkUsername);
 
 		if (userUsername) {
@@ -101,7 +109,8 @@ exports.register = async (req, res) => {
 			passwordHash,
 			checkPhoneNumber,
 			checkAddress,
-			checkPaymentType,
+			paymentType,
+			admin,
 		});
 
 		await user.save();
@@ -110,7 +119,9 @@ exports.register = async (req, res) => {
 				.status(500)
 				.json({ message: "לא נוסף הלקוח, נא לנסות שוב." });
 		}
-		return res.status(201).json({ message: "לקוח נוסף בהצלחה." });
+		return res.status(201).json({
+			message: user.isAdmin ? "מנהל נוסף בהצלחה." : "לקוח נוסף בהצלחה.",
+		});
 	} catch (err) {
 		return res.status(500).json({ message: err.message });
 	}
@@ -190,7 +201,7 @@ exports.getAllUsers = async (req, res) => {
 		// 	}
 		// 	return 0; // no sorting needed
 		//   });
-		const user = result.filter((user) => !user.isAdmin)
+		const user = result.filter((user) => !user.isAdmin);
 		for (let i = 0; i < user.length; i++) {
 			const userDetails = user[i];
 			if (userDetails.productList.length > 0) {
@@ -212,6 +223,7 @@ exports.getAllUsers = async (req, res) => {
 					paymentType: userDetails.paymentType,
 					createdAt: userDetails.createdAt,
 					updatedAt: userDetails.updatedAt,
+					isAdmin: userDetails.isAdmin,
 					userProductList: products,
 				};
 
@@ -229,6 +241,7 @@ exports.getAllUsers = async (req, res) => {
 					paymentType: userDetails.paymentType,
 					createdAt: userDetails.createdAt,
 					updatedAt: userDetails.updatedAt,
+					isAdmin: userDetails.isAdmin,
 				};
 				users.push(details);
 			}
@@ -256,15 +269,15 @@ exports.getAllAdmins = async (req, res) => {
 				phoneNumber: user.phoneNumber,
 				address: user.address,
 				paymentType: user.paymentType,
-				isAdmin: user.isAdmin									
-			}
+				isAdmin: user.isAdmin,
+			};
 			users.push(details);
-		})
+		});
 		return res.status(200).json(users);
 	} catch (err) {
-		return res.status(500).json({message: err.message});
+		return res.status(500).json({ message: err.message });
 	}
-}
+};
 
 exports.getUserByUsername = async (req, res) => {
 	const username = escape(req.params.username);
@@ -472,6 +485,7 @@ exports.updateDetails = async (req, res) => {
 	const paymentType = escape(req.body.paymentType);
 	const admin = escape(req.body.admin);
 	let updateUser;
+
 	try {
 		if (
 			!entityCard ||
@@ -488,6 +502,16 @@ exports.updateDetails = async (req, res) => {
 		if (!validation.iDValidator(entityCard)) {
 			return res.status(400).json({ message: "תעודת זהות לא תקינה." });
 		}
+		if (!validation.phoneNumber(phoneNumber)) {
+			return res.status(400).json({
+				message: "מספר פלאפון צריך להכיל 10 ספרות בלבד.",
+			});
+		}
+		if (!validation.checkName(name)) {
+			return res.status(400).json({
+				message: "שם צריך להכיל מינימום 2 תווים.",
+			});
+		}
 
 		if (!validation.checkEmail(email)) {
 			return res.status(400).json({ message: "מייל לא תקין." });
@@ -500,7 +524,6 @@ exports.updateDetails = async (req, res) => {
 		const checkEmail = validation.addSlashes(email);
 		const checkPhoneNumber = validation.addSlashes(phoneNumber);
 		const checkAddress = validation.addSlashes(address);
-		const checkPaymentType = validation.addSlashes(paymentType);
 
 		const userEntityCard = await userService.findByEntityCard(
 			checkEntityCard
@@ -545,29 +568,30 @@ exports.updateDetails = async (req, res) => {
 			checkEmail,
 			checkPhoneNumber,
 			checkAddress,
-			checkPaymentType,
-			admin
+			paymentType,
+			admin,
 		});
 
 		if (!updateUser)
 			return res
-				.status(401)
+				.status(400)
 				.json({ message: "העידכון נכשל, נא לנסות שוב." });
 		await updateUser.save();
 
-		return res.status(201).json({ message: "הלקוח התעדכן בהצלחה." });
+		return res.status(200).json({
+			message: updateUser.isAdmin
+				? "המנהל התעדכן בהצלחה."
+				: "הלקוח התעדכן בהצלחה.",
+		});
 	} catch (err) {
 		return res.status(400).json({ message: err });
 	}
 };
 
-exports.checkEmailForChangePass = async(req,res) => {
+exports.checkEmailForChangePass = async (req, res) => {
 	const email = escape(req.body.email);
 	try {
 		const number = Math.floor(Math.random() * 10000) + 1000;
 		console.log(number);
-	} catch(err) {
-
-	}
-}
-
+	} catch (err) {}
+};

@@ -1,11 +1,12 @@
 export {
-	getProductsForUser,
-	getUserByUsername,
-	getUsers,
-	getUserById,
-	addUser,
-	updateUser,
-	deleteUser,
-	assignProductToUser,
-	unassignProductToUser,
-} from "./users";
+  getProductsForUser,
+  getUserByUsername,
+  getUsers,
+  getAdministrators,
+  getUserById,
+  addUser,
+  updateUser,
+  deleteUser,
+  assignProductToUser,
+  unassignProductToUser,
+} from './users';
