@@ -253,6 +253,7 @@ exports.unassignProductFromSemiCategory = async (req, res) => {
 	}
 };
 
+//FINISH CONTROLLER
 exports.showSemiCategoryProductsPlaceCounter = async(req,res) => {
 	let details = {
 		productName: null,

@@ -6,7 +6,8 @@ const { ProductPlace } = require("../constants/productPlace");
 const userService = require("../services/userService");
 const productService = require("../services/productService");
 const mailer = require("../utils/mailer");
-// test
+
+
 exports.register = async (req, res) => {
 	const entityCard = escape(req.body.entityCard);
 	const username = escape(req.body.username);
@@ -176,20 +177,20 @@ exports.getAllUsers = async (req, res) => {
 	let products = [];
 	let details;
 	let product;
-	try {	
+	try {
 		const result = await userService.allUsers();
 		if (!result) {
 			return res.status(404).json({ message: "מאגר משתמשים ריק" });
 		}
-		const user = result.sort((a, b) => {
-			if (a.isAdmin && !b.isAdmin) {
-			  return -1; // a comes before b
-			} else if (!a.isAdmin && b.isAdmin) {
-			  return 1; // b comes before a
-			}
-			return 0; // no sorting needed
-		  });
-		
+		// const user = result.sort((a, b) => {
+		// 	if (a.isAdmin && !b.isAdmin) {
+		// 	  return -1; // a comes before b
+		// 	} else if (!a.isAdmin && b.isAdmin) {
+		// 	  return 1; // b comes before a
+		// 	}
+		// 	return 0; // no sorting needed
+		//   });
+		const user = result.filter((user) => !user.isAdmin)
 		for (let i = 0; i < user.length; i++) {
 			const userDetails = user[i];
 			if (userDetails.productList.length > 0) {
@@ -237,6 +238,33 @@ exports.getAllUsers = async (req, res) => {
 		return res.status(500).json({ message: err });
 	}
 };
+
+exports.getAllAdmins = async (req, res) => {
+	let users = [];
+	let result;
+	let details;
+	try {
+		result = await userService.allUsers();
+		const admin = result.filter((user) => user.isAdmin);
+		admin.map((user) => {
+			details = {
+				_id: user._id,
+				entityCard: user.entityCard,
+				name: user.name,
+				username: user.username,
+				email: user.email,
+				phoneNumber: user.phoneNumber,
+				address: user.address,
+				paymentType: user.paymentType,
+				isAdmin: user.isAdmin									
+			}
+			users.push(details);
+		})
+		return res.status(200).json(users);
+	} catch (err) {
+		return res.status(500).json({message: err.message});
+	}
+}
 
 exports.getUserByUsername = async (req, res) => {
 	const username = escape(req.params.username);
@@ -442,6 +470,7 @@ exports.updateDetails = async (req, res) => {
 	const phoneNumber = escape(req.body.phoneNumber);
 	const address = escape(req.body.address);
 	const paymentType = escape(req.body.paymentType);
+	const admin = escape(req.body.admin);
 	let updateUser;
 	try {
 		if (
@@ -451,7 +480,8 @@ exports.updateDetails = async (req, res) => {
 			!email ||
 			!phoneNumber ||
 			!address ||
-			!paymentType
+			!paymentType ||
+			!admin
 		) {
 			return res.status(400).json({ message: "נא למלא את כל השדות." });
 		}
@@ -516,6 +546,7 @@ exports.updateDetails = async (req, res) => {
 			checkPhoneNumber,
 			checkAddress,
 			checkPaymentType,
+			admin
 		});
 
 		if (!updateUser)
@@ -529,3 +560,14 @@ exports.updateDetails = async (req, res) => {
 		return res.status(400).json({ message: err });
 	}
 };
+
+exports.checkEmailForChangePass = async(req,res) => {
+	const email = escape(req.body.email);
+	try {
+		const number = Math.floor(Math.random() * 10000) + 1000;
+		console.log(number);
+	} catch(err) {
+
+	}
+}
+

@@ -106,6 +106,24 @@
 				}
 			}
 		},
+		"/users/admins": {
+			"get": {
+				"tags": ["Users"],
+				"summary": "Get all admins",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
 		"/users/{id}": {
 			"get": {
 				"tags": ["Users"],
@@ -123,6 +141,37 @@
 						"schema": { "type": "string" }
 					}
 				],
+
+				"responses": {
+					"200": {
+						"description": "A list of users."
+					}
+				}
+			}
+		},
+		"/users/validation-mail": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "Get user by id",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "header",
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"email": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
 
 				"responses": {
 					"200": {
@@ -210,7 +259,9 @@
 									"email": { "type": "string" },
 									"phoneNumber": { "type": "string" },
 									"address": { "type": "string" },
-									"paymentType": { "type": "string" }
+									"paymentType": { "type": "string" },
+									"admin": { "type": "boolean" }
+
 								}
 							}
 						}

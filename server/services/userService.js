@@ -41,6 +41,7 @@ exports.updateUserDetails = async (request) => {
 		phoneNumber: request.checkPhoneNumber,
 		address: request.checkAddress,
 		paymentType: request.checkPaymentType,
+		isAdmin: request.admin
 	});
 };
 

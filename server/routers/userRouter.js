@@ -3,7 +3,11 @@ const userController = require("../controllers/UserController");
 
 router.get("/", userController.getAllUsers);
 
+router.get("/admins", userController.getAllAdmins);
+
 router.get("/:id", userController.getUserById);
+
+router.post("/validation-mail", userController.checkEmailForChangePass);
 
 router.get("/find-by-username/:username", userController.getUserByUsername);
 
