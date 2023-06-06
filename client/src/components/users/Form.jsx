@@ -7,18 +7,22 @@ import { ProductPlace } from "~/constants/productPlace";
 import { useProducts } from "~/hooks/useProducts";
 import { useAddUser, useUpdateUser } from "~/hooks/useUsers";
 import { error } from "~/utils/notification";
-import { MultipleAutocomplete, SelectInput } from "../logic";
+import { MultipleAutocomplete, RadioButtons, SelectInput } from "../logic";
 import { Spinner } from "../ui/Spinner";
 import { replace } from "~/utils/replace";
+import { useLocation } from "react-router-dom";
 
 export const Form = ({ setOpen, open, refetch, content, title }) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const [selectedPaymentType, setSelectedPaymentType] = useState("")
     const [selectedAssign, setSelectedAssign] = useState("")
+    const [checked, setChecked] = useState(open.title === "edit" ? open.info?.isAdmin : false);
+
+    const location = useLocation();
+    const administratorLocation = location.pathname === "/administrator";
 
     const { data: products, isLoading } = useProducts();
-
 
     const { mutate: addMutateUser } = useAddUser(setOpen, open, refetch);
 
@@ -26,16 +30,25 @@ export const Form = ({ setOpen, open, refetch, content, title }) => {
 
     const activeProducts = products?.filter((p) => p.place !== ProductPlace.LOANED)
 
+    const handleChange = () => setChecked(!checked)
+
     const onSubmit = (data) => {
         const { entityCard, username, name, password, email, phoneNumber, address } = data;
 
         try {
             if (title === "add") {
+                if (!administratorLocation && (!selectedPaymentType || selectedPaymentType == "")) {
+                    error("נא לבחור את אופן התשלום.");
+                    return;
+                }
+
                 const addUser = {
                     entityCard, username,
                     name, password,
                     email, phoneNumber,
-                    address, paymentType: selectedPaymentType
+                    address,
+                    paymentType: selectedPaymentType,
+                    admin: !administratorLocation ? false : true
                 };
 
                 addMutateUser(addUser);
@@ -46,7 +59,8 @@ export const Form = ({ setOpen, open, refetch, content, title }) => {
                     entityCard, username,
                     name, email,
                     phoneNumber,
-                    address, paymentType: selectedPaymentType.length > 0 ? selectedPaymentType : open.info.paymentType
+                    address, paymentType: selectedPaymentType.length > 0 ? selectedPaymentType : open.info.paymentType,
+                    admin: checked
                 };
 
                 updateMutateUser(updateUser);
@@ -104,23 +118,32 @@ export const Form = ({ setOpen, open, refetch, content, title }) => {
                             <p className="text-red text-sm font-normal">{errors.address?.message}</p>
                         </label>
 
-                        <label className="block text-sm font-semibold mt-1">אופן תשלום:
-                            <SelectInput
-                                type={title === 'add' ? 'אופן תשלום' : open.info.paymentType}
-                                selectedValue={selectedPaymentType}
-                                className={"!w-[12.5rem] sm!w-full"}
-                                setSelectedValue={setSelectedPaymentType}
-                                data={paymentTypes?.map(
-                                    ({ label, id, }) => ({
-                                        key: id,
-                                        code: label,
-                                        name: label,
-                                    })
-                                )}
-                                isLoading={!paymentTypes ? true : false}
-                            />
-                            <p className="text-red text-sm font-normal">{errors.email?.message}</p>
-                        </label>
+                        {!administratorLocation &&
+                            <>
+                                <label className="block text-sm font-semibold mt-1">אופן תשלום:
+                                    <SelectInput
+                                        type={(title === 'add' || open.info.paymentType === 'null') ? 'אופן תשלום' : open.info.paymentType}
+                                        selectedValue={selectedPaymentType}
+                                        className={`${title === "edit" ? " !w-[24rem] mb-3" : "w-[12.5rem]"} sm!w-full`}
+                                        setSelectedValue={setSelectedPaymentType}
+                                        data={paymentTypes?.map(
+                                            ({ label, id, }) => ({
+                                                key: id,
+                                                code: label,
+                                                name: label,
+                                            })
+                                        )}
+                                        required={!administratorLocation}
+                                        isLoading={!paymentTypes ? true : false}
+                                    />
+                                    <p className="text-red text-sm font-normal">{errors.email?.message}</p>
+                                </label>
+                            </>}
+                        {title === "edit" && <RadioButtons
+                            title={!administratorLocation ? "האם הלקוח מנהל מערכת ?" : "האם המנהל מנהל מערכת ?"}
+                            defaultValue={open.info?.isAdmin}
+                            onChange={handleChange}
+                        />}
                     </>
                 }
                 {title === "asignProductToUser" && !isLoading ?

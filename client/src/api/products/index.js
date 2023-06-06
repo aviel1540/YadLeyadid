@@ -1,7 +1,8 @@
 export {
-	getProducts,
-	addProduct,
-	deleteProduct,
-	updateProduct,
-	askExtensionRequest,
-} from "./products";
+  getProducts,
+  getProductsPlaces,
+  addProduct,
+  deleteProduct,
+  updateProduct,
+  askExtensionRequest,
+} from './products';

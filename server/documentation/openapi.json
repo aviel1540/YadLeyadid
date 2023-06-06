@@ -261,7 +261,6 @@
 									"address": { "type": "string" },
 									"paymentType": { "type": "string" },
 									"admin": { "type": "boolean" }
-
 								}
 							}
 						}
@@ -1128,7 +1127,7 @@
 						"schema": { "type": "string" }
 					},
 					{
-						"name": "id",
+						"name": "missionId",
 						"in": "path",
 						"required": true,
 						"schema": { "type": "string" }
@@ -1165,7 +1164,7 @@
 						"schema": { "type": "string" }
 					},
 					{
-						"name": "id",
+						"name": "missionId",
 						"in": "path",
 						"required": true,
 						"schema": { "type": "string" }

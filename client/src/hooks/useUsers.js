@@ -5,6 +5,7 @@ import { onError } from '~/utils/onError';
 import { onSuccess } from '~/utils/onSuccess';
 
 export const useUsers = () => useQuery([queryKeys.users], users.getUsers);
+export const useAdministrators = () => useQuery([queryKeys.users], users.getAdministrators);
 
 export const useUserById = (id) =>
   useQuery([queryKeys.userById], () => users.getUserById(id), {

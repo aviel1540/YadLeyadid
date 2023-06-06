@@ -37,3 +37,7 @@ exports.checkName = (username) => {
 	if (username.length <= 1) return false;
 	return true;
 };
+exports.phoneNumber = (phoneNumber) => {
+	if (phoneNumber.length <= 9 || phoneNumber.length >= 11) return false;
+	return true;
+};

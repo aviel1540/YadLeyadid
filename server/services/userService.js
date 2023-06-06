@@ -23,7 +23,8 @@ exports.addUser = async (request) => {
 		email: request.checkEmail,
 		phoneNumber: request.checkPhoneNumber,
 		address: request.checkAddress,
-		paymentType: request.checkPaymentType,
+		paymentType: request.paymentType ? request.paymentType : null,
+		isAdmin: request.admin,
 	});
 };
 
@@ -40,8 +41,8 @@ exports.updateUserDetails = async (request) => {
 		email: request.checkEmail,
 		phoneNumber: request.checkPhoneNumber,
 		address: request.checkAddress,
-		paymentType: request.checkPaymentType,
-		isAdmin: request.admin
+		paymentType: request.paymentType ? request.paymentType : null,
+		isAdmin: request.admin,
 	});
 };
 

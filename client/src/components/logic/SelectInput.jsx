@@ -8,6 +8,7 @@ export const SelectInput = ({
     setSelectedValue,
     data,
     isLoading,
+    required,
     className
 }) => {
 
@@ -32,11 +33,10 @@ export const SelectInput = ({
                     value={selectedValue}
                     label={type}
                     onChange={handleChange}
-                    required
                     disabled={isLoading}
-
+                    required={required}
                 >
-                    <MenuItem value="">
+                    <MenuItem value={0}>
                         <em className="text-gray/70">{type}</em>
                     </MenuItem>
                     {!isLoading &&
