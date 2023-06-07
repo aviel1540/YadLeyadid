@@ -42,7 +42,7 @@ export const SideBar = () => {
 		>
 			{state.right && (
 				<img
-					className="w-11/12 h-[5rem] mt-5  cursor-pointer"
+					className="not-drag w-11/12 h-[5rem] mt-5 cursor-pointer"
 					src={logo}
 					alt="logo"
 					onClick={() => navigate('/home')}
