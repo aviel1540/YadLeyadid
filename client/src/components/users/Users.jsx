@@ -79,7 +79,7 @@ export const Users = () => {
 					{dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 750 }}>
 						<Table aria-label="collapsible table">
 							<TableHead>
-								<TableRow>
+								<TableRow className="table-row">
 									<TableCell />
 									<TableCell />
 
@@ -139,7 +139,7 @@ export const Users = () => {
 									</TableCell>
 									<TableCell
 										className="!font-bold"
-										align="right"
+										align="center"
 									>
 										פעולות
 									</TableCell>

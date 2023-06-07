@@ -3,6 +3,7 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { Fragment } from "react";
 import { MdDeleteForever, MdOutlineModeEdit } from "react-icons/md";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 
@@ -24,21 +25,24 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
                     {row.email}
                 </TableCell>
 
-                <TableCell align="right">
+                <TableCell align="center">
                     <IconButton
-                        title="מחיקה"
+                        title="עריכת סיסמא"
                         onClick={() =>
                             setOpen({
                                 ...open,
                                 action: true,
-                                modalDialog: true,
-                                title: "delete",
-                                id: row._id
+                                popUp: true,
+                                title: "editPassword",
+                                content: "עריכת סיסמא",
+                                id: row._id,
+                                info: row,
                             })
                         }
                     >
-                        <MdDeleteForever color="#E21818" />
+                        <RiLockPasswordLine color="#000000" />
                     </IconButton>
+
                     <IconButton
                         title="עריכה"
                         onClick={() =>
@@ -54,6 +58,20 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
                         }
                     >
                         <MdOutlineModeEdit color="#1fb6ff" />
+                    </IconButton>
+                    <IconButton
+                        title="מחיקה"
+                        onClick={() =>
+                            setOpen({
+                                ...open,
+                                action: true,
+                                modalDialog: true,
+                                title: "delete",
+                                id: row._id
+                            })
+                        }
+                    >
+                        <MdDeleteForever color="#E21818" />
                     </IconButton>
                 </TableCell>
             </TableRow>

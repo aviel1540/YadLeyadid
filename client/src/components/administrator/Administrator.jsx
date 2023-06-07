@@ -74,7 +74,7 @@ export const Administrator = () => {
                     {dataResults?.length >= 1 ? <TableContainer component={Paper} sx={{ height: 600 }}>
                         <Table aria-label="collapsible table">
                             <TableHead>
-                                <TableRow>
+                                <TableRow className='table-row'>
                                     <TableCell />
 
                                     <TableCell
@@ -117,7 +117,7 @@ export const Administrator = () => {
 
                                     <TableCell
                                         className="!font-bold"
-                                        align="right"
+                                        align="center"
                                     >
                                         פעולות
                                     </TableCell>

@@ -1,15 +1,12 @@
-import { Button, IconButton } from "@mui/material";
-import { useRef } from "react";
+import { IconButton } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { BsFillSendCheckFill } from "react-icons/bs";
 import { useAddProduct, useUpdateProduct } from "~/hooks/useProducts";
 import { error } from "~/utils/notification";
-import { TextInput } from "../logic/TextInput";
-import { BsFillSendCheckFill } from "react-icons/bs";
-import { useForm } from "react-hook-form";
 import { replace } from "~/utils/replace";
 
 export const Form = ({ setOpen, open, refetch, title, content }) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-
 
     const { mutate: addMutateProduct } = useAddProduct(setOpen, open, refetch);
 
@@ -35,18 +32,18 @@ export const Form = ({ setOpen, open, refetch, title, content }) => {
     return (
         <>
             <h1 className="block text-center text-2xl mb-2">{content}</h1>
-            <main className="flex flex-wrap justify-center m-4 p-4 gap-4">
-                <label htmlFor="productName" className="block text-sm font-semibold mt-1">שם מוצר:
+            <main className="flex flex-wrap justify-center  m-4 p-4 gap-4">
+                <label htmlFor="productName" className="form-label w-1/2">שם מוצר:
                     <input
                         type="text"
                         id="productName"
                         name="productName"
                         defaultValue={title === "edit" ? replace(open.info.productName) : null}
-                        className="block w-full px-5 h-14 border border-gray font-normal rounded-lg"
+                        className="form-input w-full"
                         placeholder="שם מוצר"
                         {...register("productName", { required: { value: true, message: "שדה חובה." } })}
                     />
-                    <p className="text-red text-sm font-normal">{errors.productName?.message}</p>
+                    <p className="form-p_error">{errors.productName?.message}</p>
                 </label>
 
             </main>

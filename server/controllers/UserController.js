@@ -366,12 +366,12 @@ exports.updatePassword = async (req, res) => {
 
 		return res.status(200).json({ message: "עודכן בהצלחה." });
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
 exports.addProductForUser = async (req, res) => {
-	const userId = escape(req.params.user_id);
+	const userId = escape(req.params.userId);
 	const productsArr = req.body;
 	let manyProductsIds = [];
 	let user;
@@ -441,8 +441,8 @@ exports.addProductForUser = async (req, res) => {
 };
 
 exports.unassignProductUser = async (req, res) => {
-	const userId = escape(req.params.user_id);
-	const productId = escape(req.params.product_id);
+	const userId = escape(req.params.userId);
+	const productId = escape(req.params.productId);
 	try {
 		const checkUserId = validation.addSlashes(userId);
 		const checkProductId = validation.addSlashes(productId);

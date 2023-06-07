@@ -1,9 +1,8 @@
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import { Spinner } from '../ui/Spinner';
-import Checkbox from '@mui/material/Checkbox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import Autocomplete from '@mui/material/Autocomplete';
+import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
 
 export const MultipleAutocomplete = ({ options, placeholder, label, isLoading, onChange }) => {
     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -15,7 +14,9 @@ export const MultipleAutocomplete = ({ options, placeholder, label, isLoading, o
             id="checkboxes-tags-demo"
             options={options}
             disableCloseOnSelect
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             getOptionLabel={(option) => option.label}
+            onChange={onChange}
             renderOption={(props, option, { selected }) => (
                 <li {...props}>
                     <Checkbox
@@ -23,7 +24,6 @@ export const MultipleAutocomplete = ({ options, placeholder, label, isLoading, o
                         checkedIcon={checkedIcon}
                         style={{ marginRight: 8 }}
                         checked={selected}
-                        onChange={(_, value) => console.log(value)}
                     />
                     {option.label}
                 </li>

@@ -17,7 +17,6 @@ export const UpdateDetails = () => {
 		isFetching,
 	} = useUserByUsername(username);
 
-	console.log("details:", details);
 
 	if (detailsLoading) return <Spinner />;
 

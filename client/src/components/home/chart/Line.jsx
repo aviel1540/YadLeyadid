@@ -4,7 +4,7 @@ import ReactApexChart from 'react-apexcharts';
 export const Line = ({ blur, users }) => {
   const usersName = users?.map((u) => u.name);
   const productsList = users?.map((u) => (u.userProductList === undefined ? 0 : u.userProductList.length));
-  console.log("users");
+
   const info = useRef({
     series: [
       {

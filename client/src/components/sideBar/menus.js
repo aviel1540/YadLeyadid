@@ -4,6 +4,7 @@ import { GrUserAdmin } from 'react-icons/gr';
 import { HiOutlineUsers } from 'react-icons/hi';
 import { ImExit } from 'react-icons/im';
 import { RiSettings4Line } from 'react-icons/ri';
+import { BiCategory } from 'react-icons/bi';
 
 export const menus = [
   {
@@ -18,6 +19,12 @@ export const menus = [
     title: 'לקוחות',
     link: '/users',
     icon: HiOutlineUsers,
+  },
+  {
+    name: 'קטגוריות',
+    title: 'קטגוריות',
+    link: '/main-category',
+    icon: BiCategory,
   },
   {
     name: 'מוצרים',
@@ -35,12 +42,12 @@ export const settings = [
     link: '/administrator',
     margin: true,
   },
-  {
-    name: 'הגדרות',
-    title: 'הגדרות',
-    icon: RiSettings4Line,
-    link: '/settings',
-  },
+  // {
+  //   name: 'הגדרות',
+  //   title: 'הגדרות',
+  //   icon: RiSettings4Line,
+  //   link: '/settings',
+  // },
   {
     name: 'יציאה',
     title: 'יציאה',

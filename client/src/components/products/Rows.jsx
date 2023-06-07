@@ -35,21 +35,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 
 				<TableCell align="right" className={`${row.place === ProductPlace.IN_STOCK && "!text-green"}`} >{row.place}</TableCell>
 				<TableCell align="right">{row.inCategory}</TableCell>
-				<TableCell align="right">
-					<IconButton
-						title="Remove"
-						onClick={() =>
-							setOpen({
-								...open,
-								action: true,
-								modalDialog: true,
-								title: "delete",
-								id: row._id
-							})
-						}
-					>
-						<MdDeleteForever color="#E21818" />
-					</IconButton>
+				<TableCell align="center">
 					<IconButton
 						title="Edit"
 						onClick={() =>
@@ -66,6 +52,21 @@ export const Rows = ({ row, index, setOpen, open }) => {
 					>
 						<MdOutlineModeEdit color="#1fb6ff" />
 					</IconButton>
+					<IconButton
+						title="Remove"
+						onClick={() =>
+							setOpen({
+								...open,
+								action: true,
+								modalDialog: true,
+								title: "delete",
+								id: row._id
+							})
+						}
+					>
+						<MdDeleteForever color="#E21818" />
+					</IconButton>
+
 				</TableCell>
 			</TableRow>
 			<TableRow>

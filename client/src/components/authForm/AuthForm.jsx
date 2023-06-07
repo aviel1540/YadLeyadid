@@ -31,6 +31,10 @@ export const AuthForm = () => {
 			<input type="password" id="password" className="block w-full px-4 py-2 mt-2 border rounded-md" placeholder="סיסמא" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
 			<p className="text-red text-sm">{errors.password?.message}</p>
 
+			<div className="flex justify-end mt-2 mr-0.5">
+				<span className="font-semibold cursor-pointer hover:tracking-wide">שכחתי סיסמא?</span>
+			</div>
+
 			<LoadingButton
 				size="large"
 				type="submit"
