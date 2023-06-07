@@ -299,13 +299,13 @@ exports.productsCounters = async (req, res) => {
 	try {
 		details = {
 			inStock: 0,
-			loan: 0,
+			loaned: 0,
 			repair: 0,
 		};
 		const products = await productService.allProducts();
 		products.map((product) => {
 			if (product.place == ProductPlace.IN_STOCK) details.inStock++;
-			else if (product.place == ProductPlace.LOANED) details.loan++;
+			else if (product.place == ProductPlace.LOANED) details.loaned++;
 			else details.repair++;
 		});
 		res.status(200).json(details);

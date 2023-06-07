@@ -22,7 +22,7 @@ export const AuthForm = () => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="w-1/4 block mt-44 ml-auto mr-auto xl:mt-10 xl:w-2/6 sm:w-11/12">
-			<img src={logo} alt="logo" />
+			<img src={logo} alt="logo" className="not-drag" />
 			<label htmlFor="entityCard" className="block text-sm font-semibold mt-1">תעודת זהות:</label>
 			<input type="text" id="entityCard" className="block w-full px-4 py-2 mt-2 border rounded-md" placeholder="תעודת זהות" {...register("entityCard", { required: { value: true, message: "שדה חובה." } })} />
 			<p className="text-red text-sm">{errors.entityCard?.message}</p>

@@ -25,7 +25,6 @@ export const Home = () => {
 		info: {},
 	});
 
-
 	const { data: productsPlaces, isLoading: isLoadingProductsPlaces } = useProductsPlaces()
 	const { data: products, isLoading: isLoadingProducts } = useProducts();
 	const { data: users, isLoading: isLoadingUsers } = useUsers();
@@ -38,7 +37,7 @@ export const Home = () => {
 		<>
 			<main className={`${open.action && "blur-sm"}`}>
 				<div className="flex justify-center">
-					<span className="text-2xl pt-12 underline">ברוך הבא - {name} 👋</span>
+					<h1 className="text-2xl pt-12 underline">ברוך הבא - {name} 👋</h1>
 				</div>
 				<section className="flex justify-center flex-row-reverse  gap-10 m-4 mt-16 sm:flex-wrap">
 					<SquareInfo
@@ -59,7 +58,7 @@ export const Home = () => {
 					<SquareInfo
 						animate={"animate-[wiggleReverse_3s_ease-in-out_forwards]"}
 						content={"מוצרים מושאלים"}
-						total={productsPlaces?.loan}
+						total={productsPlaces?.loaned}
 						icon={<TbShoppingCartX />}
 						style={"rgb(231, 97, 97,0.7)"}
 					/>
@@ -73,7 +72,7 @@ export const Home = () => {
 				</section>
 			</main>
 			<section className="grid justify-items-center grid-cols-2 gap-10 md:grid-cols-1 md:gap-5 md:p-3">
-				<Pie products={products} blur={open.action} />
+				<Pie product={productsPlaces} blur={open.action} />
 				<Missions setOpen={setOpen} open={open} />
 				<Columns users={users} blur={open.action} />
 				{/* <Line users={users} blur={open.action} /> */}

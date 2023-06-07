@@ -1,20 +1,16 @@
 import React, { useRef } from 'react'
 import ReactApexChart from "react-apexcharts";
-
-export const Pie = ({ products, blur }) => {
-    // console.log("🚀  products:", products)
-
-    // const usersName = users?.map((u) => u.name);
-    // const productsList = users?.map((u) => u.userProductList === undefined ? 0 : u.userProductList.length);
+import { ProductPlace } from '~/constants/productPlace';
+export const Pie = ({ product, blur }) => {
 
     const info = useRef({
-        series: [0, 5],
+        series: [product?.repair, product?.loaned, product?.inStock],
         options: {
             chart: {
                 width: 380,
                 type: 'pie',
             },
-            labels: ["productsList"],
+            labels: [ProductPlace.REPAIR, ProductPlace.LOANED, ProductPlace.IN_STOCK],
             responsive: [{
                 breakpoint: 480,
                 options: {

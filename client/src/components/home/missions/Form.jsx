@@ -40,15 +40,15 @@ export const Form = ({ setOpen, open, refetch, content }) => {
         <>
             <h1 className="block text-center text-2xl mb-2">{content}</h1>
             <main className="flex flex-wrap justify-center m-4 p-4 gap-2">
-                <label htmlFor="title" className="block text-sm font-semibold mt-1">משימה:
+                <label htmlFor="title" className="form-label mt-1 w-1/2">משימה:
                     <input
                         type="text"
                         id="title"
                         name="title"
                         defaultValue={open.title === "edit" ? open.info.title : null}
-                        className="block w-full px-5 h-14 border border-gray font-normal rounded-lg"
+                        className="form-input w-full"
                         placeholder="משימה" {...register("title", { required: { value: true, message: "שדה חובה." } })} />
-                    <p className="text-red text-sm font-normal">{errors.title?.message}</p>
+                    <p className="form-p_error">{errors.title?.message}</p>
                 </label>
             </main>
             {open.title === "edit" && <div className='flex justify-center'>
