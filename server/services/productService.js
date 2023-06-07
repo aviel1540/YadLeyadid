@@ -74,6 +74,7 @@ exports.updateProductInCategoryAssignSemiToMain = async (request) => {
 exports.showProductDetailsInUser = async (productId) => {
 	const product = await Product.findById(productId);
 	return {
+		id: product._id,
 		productName: product.productName,
 		loanDate: product.loanDate,
 		loanReturn: product.loanReturn,
@@ -95,7 +96,7 @@ exports.updateExtensionRequest = async (checkProductId, newReturnDate) => {
 	return await Product.findByIdAndUpdate(checkProductId, {
 		loanReturn: newReturnDate,
 		extensionRequest: true,
-		requestDate: null
+		requestDate: null,
 	});
 };
 
@@ -105,8 +106,8 @@ exports.updateAlertRequest = async (productId, checkDate) => {
 	});
 };
 
-exports.unacceptExtensionRequest = async(checkProductId) => {
+exports.unacceptExtensionRequest = async (checkProductId) => {
 	return await Product.findByIdAndUpdate(checkProductId, {
-		requestDate: null
+		requestDate: null,
 	});
-}
+};

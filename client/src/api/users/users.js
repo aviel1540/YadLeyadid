@@ -48,15 +48,16 @@ export const deleteUser = async (id) => {
   return data;
 };
 
-export const assignProductToUser = async (userId) => {
-  const { data } = await axios.post(`/users/add-product/${userId}/asign-products`);
+export const assignProductToUser = async (request) => {
+  const { userId } = request;
+  const { data } = await axios.post(`/users/add-product/${userId}/asign-products`, request);
 
   return data;
 };
 
 export const unassignProductToUser = async (request) => {
-  const { user_id, product_id } = request;
-  const { data } = await axios.delete(`/users/delete-product/${user_id}/productId/${product_id}`);
+  const { userId, productId } = request;
+  const { data } = await axios.delete(`/users/delete-product/${userId}/productId/${productId}`);
 
   return data;
 };

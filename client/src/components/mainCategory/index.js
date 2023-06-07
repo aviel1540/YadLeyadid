@@ -1,0 +1,1 @@
+export { MainCategory } from './MainCategory';

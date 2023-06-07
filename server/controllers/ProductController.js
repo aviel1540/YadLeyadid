@@ -200,9 +200,9 @@ exports.askForExtensionRequest = async (req, res) => {
 		await productService.updateAlertRequest(checkProductId, askedDate);
 		await product.save();
 		console.log(product.requestDate);
-		return res.status(201).json({ message: "הבקשה נשלחה בהצלחה." });
+		return res.status(200).json({ message: "הבקשה נשלחה בהצלחה." });
 	} catch (err) {
-		return res.status(400).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -236,9 +236,9 @@ exports.allProductsWithLoanDateClose = async (req, res) => {
 				}
 			}
 		}
-		return res.status(201).json(products);
+		return res.status(200).json(products);
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -267,6 +267,7 @@ exports.allProductsWaitConfirmExtensionRequest = async (req, res) => {
 		return res.status(401).json({ message: err.message });
 	}
 };
+
 exports.allProductsAcceptedExtensionRequest = async (req, res) => {
 	let products = [];
 	let details;
@@ -299,16 +300,16 @@ exports.productsCounters = async (req, res) => {
 		details = {
 			inStock: 0,
 			loan: 0,
-			repair: 0
-		}
+			repair: 0,
+		};
 		const products = await productService.allProducts();
 		products.map((product) => {
 			if (product.place == ProductPlace.IN_STOCK) details.inStock++;
 			else if (product.place == ProductPlace.LOANED) details.loan++;
 			else details.repair++;
-		})
+		});
 		res.status(200).json(details);
 	} catch (err) {
-		res.status(500).json({message: err.message});
+		res.status(500).json({ message: err.message });
 	}
-}
+};

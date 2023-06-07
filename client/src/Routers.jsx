@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import * as Pages from "./pages";
+import * as Pages from "./pages/_index";
 import { useAuthStore } from "./store/auth";
 
 export const Routers = () => {
@@ -15,6 +15,7 @@ export const Routers = () => {
 					<Route path="/home" element={<Pages.HomePage />} exact />
 					<Route path="/settings" element={<Pages.InformationPage />} exact />
 					<Route path="/users" element={<Pages.UsersPage />} exact />
+					<Route path="/main-category" element={<Pages.mainCategoryPage />} exact />
 					<Route path="/products" element={<Pages.productsPage />} exact />
 					<Route path="/administrator" element={<Pages.AdministratorPage />} exact />
 

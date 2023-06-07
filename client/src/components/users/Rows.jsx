@@ -7,8 +7,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { formatDate } from "~/utils/formatDate";
 import { MdDeleteForever, MdOutlineModeEdit, MdRemoveCircleOutline } from "react-icons/md";
-import { RiAddFill } from "react-icons/ri";
+import { RiAddFill, RiLockPasswordLine } from "react-icons/ri";
 import { replace } from "~/utils/replace";
+import { PaymentTypes } from "~/constants/PaymentTypes";
 
 export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 	const [openTable, setOpenTable] = useState(false);
@@ -60,22 +61,24 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 
 				<TableCell align="right">{formatDate(row.createdAt)}</TableCell>
 				<TableCell align="right">{formatDate(row.updatedAt)}</TableCell>
-				<TableCell align="right">{row.paymentType !== 'null' ? row.paymentType : "נא לעדכן אופן תשלום"}</TableCell>
+				<TableCell align="right">{row.paymentType !== PaymentTypes.NOTHING ? row.paymentType : "נא לעדכן אופן תשלום"}</TableCell>
 
-				<TableCell align="right">
+				<TableCell align="center">
 					<IconButton
-						title="מחיקה"
+						title="עריכת סיסמא"
 						onClick={() =>
 							setOpen({
 								...open,
 								action: true,
-								modalDialog: true,
-								title: "delete",
-								id: row._id
+								popUp: true,
+								title: "editPassword",
+								content: "עריכת סיסמא",
+								id: row._id,
+								info: row,
 							})
 						}
 					>
-						<MdDeleteForever color="#E21818" />
+						<RiLockPasswordLine color="#000000" />
 					</IconButton>
 					<IconButton
 						title="עריכה"
@@ -92,6 +95,20 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 						}
 					>
 						<MdOutlineModeEdit color="#1fb6ff" />
+					</IconButton>
+					<IconButton
+						title="מחיקה"
+						onClick={() =>
+							setOpen({
+								...open,
+								action: true,
+								modalDialog: true,
+								title: "delete",
+								id: row._id
+							})
+						}
+					>
+						<MdDeleteForever color="#E21818" />
 					</IconButton>
 				</TableCell>
 			</TableRow>
@@ -177,7 +194,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 															action: true,
 															modalDialog: true,
 															title: "delete-unassign",
-															id: details._id,
+															id: details.id,
 															info: row
 														})
 													}

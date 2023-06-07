@@ -5,3 +5,27 @@
 .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: black !important;
 }
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(63, 63, 63, 0.604);
+}
+
+.table-row {
+  @apply bg-gray-light sticky top-0 z-50;
+}
+
+.form-input {
+  @apply block  px-5 h-14 border border-gray font-normal rounded-lg;
+}
+
+.form-label {
+  @apply block text-sm font-semibold mt-1;
+}
+
+.form-p_error {
+  @apply text-red text-sm font-normal;
+}

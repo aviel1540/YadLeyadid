@@ -16,7 +16,7 @@ router.post("/register", userController.register);
 router.post("/login", userController.login);
 
 router.post(
-	"/add-product/:user_id/asign-products",
+	"/add-product/:userId/asign-products",
 	userController.addProductForUser
 );
 
@@ -27,7 +27,7 @@ router.patch("/update-details/:id", userController.updateDetails);
 router.delete("/delete/:id", userController.deleteUser);
 
 router.delete(
-	"/delete-product/:user_id/productId/:product_id",
+	"/delete-product/:userId/productId/:productId",
 	userController.unassignProductUser
 );
 
