@@ -296,7 +296,10 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"password": { "type": "string" }
+									"oldPassword": { "type": "string" },
+									"newPassword": { "type": "string" },
+									"verifyNewPassword": { "type": "string" }
+
 								}
 							}
 						}

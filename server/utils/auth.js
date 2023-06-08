@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const User = require("../models/User");
 const { findByEntityCard } = require("../services/userService");
 
 exports.hashPassword = async (value) => {
@@ -11,14 +10,15 @@ exports.login = async (entityCard, password) => {
 	try {
 		const user = await findByEntityCard(entityCard);
 		if (user) {
-			const isMatch = await bcrypt.compare(password, user?.password);
+			const isMatch = await this.comparePassword(password, user?.password);
 
-			if (!isMatch) return false;
-
-			return user;
+			return isMatch ? user : false;
 		}
 		return false;
 	} catch (err) {
-		return res.status(400).json({ message: err });
+		return res.status(500).json({ message: err });
 	}
 };
+
+exports.comparePassword = async (password,userPassword) => await bcrypt.compare(password, userPassword);
+

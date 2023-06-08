@@ -193,14 +193,6 @@ exports.getAllUsers = async (req, res) => {
 		if (!result) {
 			return res.status(404).json({ message: "מאגר משתמשים ריק" });
 		}
-		// const user = result.sort((a, b) => {
-		// 	if (a.isAdmin && !b.isAdmin) {
-		// 	  return -1; // a comes before b
-		// 	} else if (!a.isAdmin && b.isAdmin) {
-		// 	  return 1; // b comes before a
-		// 	}
-		// 	return 0; // no sorting needed
-		//   });
 		const user = result.filter((user) => !user.isAdmin);
 		for (let i = 0; i < user.length; i++) {
 			const userDetails = user[i];
@@ -350,16 +342,31 @@ exports.getUserById = async (req, res) => {
 
 exports.updatePassword = async (req, res) => {
 	const userId = escape(req.params.id);
-	const newPassword = escape(req.body.password);
-
+	const oldPassword = escape(req.body.oldPassword);
+	const newPassword = escape(req.body.newPassword);
+	const verifyNewPassword = escape(req.body.verifyNewPassword);
+	let user;
 	try {
-		if (!validation.checkPassword(newPassword)) {
+		if (!validation.checkPassword(oldPassword) ||
+			!validation.checkPassword(newPassword) ||
+			!validation.checkPassword(verifyNewPassword)) {
 			return res
 				.status(400)
 				.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים." });
 		}
 
 		const checkUserId = validation.addSlashes(userId);
+		user = await userService.findUserById(userId);
+
+		const isMatch = await auth.comparePassword(oldPassword, user.password);
+		console.log(isMatch)
+		if (!isMatch) {
+			return res.status(400).json({ message: "סיסמא נוכחית אינה תואמת." });
+		}
+
+		if (newPassword !== verifyNewPassword) {
+			return res.status(400).json({ message: "סיסמת אימות אינה תואמת." });
+		}
 		const password = await auth.hashPassword(newPassword);
 
 		await userService.updateUserPassword(checkUserId, password);
@@ -591,7 +598,18 @@ exports.updateDetails = async (req, res) => {
 exports.checkEmailForChangePass = async (req, res) => {
 	const email = escape(req.body.email);
 	try {
-		const number = Math.floor(Math.random() * 10000) + 1000;
-		console.log(number);
-	} catch (err) {}
+
+		const checkEmail = validation.addSlashes(email);
+
+		// const emailExist = await userService.findByEmail(checkEmail);
+		// if (!emailExist)
+		// 	return res.status(404).json({ message: "מייל לא קיים במערכת." })
+
+
+		const varification = Math.floor(Math.random() * 95648231564).toString(20);
+		console.log(varification);
+		return;
+	} catch (err) {
+		return;
+	}
 };
