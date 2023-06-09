@@ -23,11 +23,6 @@ exports.iDValidator = (id) => {
 	// return sum % 10 === 0;
 };
 
-exports.isEmpty = (value) => {
-	if (!value) return false;
-	return true;
-};
-
 exports.checkPassword = (password) => {
 	if (password.length <= 8) return false;
 	return true;

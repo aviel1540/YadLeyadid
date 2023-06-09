@@ -21,13 +21,15 @@ exports.register = async (req, res) => {
 	let user;
 	try {
 		if (
-			!entityCard ||
-			!name ||
-			!username ||
-			!password ||
-			!email ||
-			!phoneNumber ||
-			!address
+			![
+				entityCard,
+				name,
+				username,
+				password,
+				email,
+				phoneNumber,
+				address,
+			].every(Boolean)
 		) {
 			return res.status(400).json({ message: "נא למלא את כל השדות." });
 		}
@@ -132,9 +134,10 @@ exports.login = async (req, res) => {
 	const password = escape(req.body.password);
 
 	try {
-		if (!entityCard || !password) {
+		if (![entityCard, password].every(Boolean)) {
 			return res.status(400).json({ message: "נא למלא את כל השדות." });
 		}
+
 		const checkEntityCard = validation.addSlashes(entityCard);
 		const checkPassword = validation.addSlashes(password);
 
@@ -342,14 +345,17 @@ exports.getUserById = async (req, res) => {
 
 exports.updatePassword = async (req, res) => {
 	const userId = escape(req.params.id);
-	const oldPassword = escape(req.body.oldPassword);
+	const currentPassword = escape(req.body.currentPassword);
 	const newPassword = escape(req.body.newPassword);
 	const verifyNewPassword = escape(req.body.verifyNewPassword);
 	let user;
+
 	try {
-		if (!validation.checkPassword(oldPassword) ||
+		if (
+			!validation.checkPassword(currentPassword) ||
 			!validation.checkPassword(newPassword) ||
-			!validation.checkPassword(verifyNewPassword)) {
+			!validation.checkPassword(verifyNewPassword)
+		) {
 			return res
 				.status(400)
 				.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים." });
@@ -358,10 +364,15 @@ exports.updatePassword = async (req, res) => {
 		const checkUserId = validation.addSlashes(userId);
 		user = await userService.findUserById(userId);
 
-		const isMatch = await auth.comparePassword(oldPassword, user.password);
-		console.log(isMatch)
+		const isMatch = await auth.comparePassword(
+			currentPassword,
+			user.password
+		);
+		console.log(isMatch);
 		if (!isMatch) {
-			return res.status(400).json({ message: "סיסמא נוכחית אינה תואמת." });
+			return res
+				.status(400)
+				.json({ message: "סיסמא נוכחית אינה תואמת." });
 		}
 
 		if (newPassword !== verifyNewPassword) {
@@ -495,14 +506,16 @@ exports.updateDetails = async (req, res) => {
 
 	try {
 		if (
-			!entityCard ||
-			!username ||
-			!name ||
-			!email ||
-			!phoneNumber ||
-			!address ||
-			!paymentType ||
-			!admin
+			![
+				entityCard,
+				username,
+				name,
+				email,
+				phoneNumber,
+				address,
+				paymentType,
+				admin,
+			].every(Boolean)
 		) {
 			return res.status(400).json({ message: "נא למלא את כל השדות." });
 		}
@@ -598,15 +611,15 @@ exports.updateDetails = async (req, res) => {
 exports.checkEmailForChangePass = async (req, res) => {
 	const email = escape(req.body.email);
 	try {
-
 		const checkEmail = validation.addSlashes(email);
 
 		// const emailExist = await userService.findByEmail(checkEmail);
 		// if (!emailExist)
 		// 	return res.status(404).json({ message: "מייל לא קיים במערכת." })
 
-
-		const varification = Math.floor(Math.random() * 95648231564).toString(20);
+		const varification = Math.floor(Math.random() * 95648231564).toString(
+			20
+		);
 		console.log(varification);
 		return;
 	} catch (err) {

@@ -10,7 +10,10 @@ exports.login = async (entityCard, password) => {
 	try {
 		const user = await findByEntityCard(entityCard);
 		if (user) {
-			const isMatch = await this.comparePassword(password, user?.password);
+			const isMatch = await this.comparePassword(
+				password,
+				user?.password
+			);
 
 			return isMatch ? user : false;
 		}
@@ -20,5 +23,5 @@ exports.login = async (entityCard, password) => {
 	}
 };
 
-exports.comparePassword = async (password,userPassword) => await bcrypt.compare(password, userPassword);
-
+exports.comparePassword = async (password, userPassword) =>
+	await bcrypt.compare(password, userPassword);

@@ -42,7 +42,7 @@ exports.addProduct = async (req, res) => {
 
 	try {
 		if (!productName) {
-			return res.status(400).json({ message: "יש למלא את השדות." });
+			return res.status(400).json({ message: "נא למלא את השדה." });
 		}
 
 		const checkProductName = validation.addSlashes(productName);
@@ -78,6 +78,10 @@ exports.updateProduct = async (req, res) => {
 	try {
 		const checkId = validation.addSlashes(productId);
 		const checkProductName = validation.addSlashes(productName);
+
+		if (!checkProductName) {
+			return res.status(400).json({ message: "נא למלא את השדה." });
+		}
 
 		const product = await productService.findProductById(checkId);
 		if (product.inCategory) {
