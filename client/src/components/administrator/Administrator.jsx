@@ -114,7 +114,6 @@ export const Administrator = () => {
                                         מייל
                                     </TableCell>
 
-
                                     <TableCell
                                         className="!font-bold"
                                         align="center"
