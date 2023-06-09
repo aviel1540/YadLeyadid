@@ -13,7 +13,9 @@
 ::-webkit-scrollbar-thumb {
   background-color: rgba(63, 63, 63, 0.604);
 }
-
+.table-style {
+  @apply relative top-2 w-10/12 block m-auto p-5;
+}
 .table-row {
   @apply bg-gray-light sticky top-0 z-50;
 }

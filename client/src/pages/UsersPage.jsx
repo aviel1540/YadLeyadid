@@ -1,6 +1,11 @@
 import React from "react";
-import { Users } from "~/components";
+import { Users, TitleTab } from "~/components";
 
 export const UsersPage = () => {
-	return <Users />;
+	return (
+		<>
+			<TitleTab title="לקוחות" />
+			<Users />
+		</>
+	);
 };

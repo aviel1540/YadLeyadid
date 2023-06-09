@@ -2,7 +2,6 @@ export { LoginPage } from './LoginPage';
 export { HomePage } from './HomePage';
 export { UsersPage } from './UsersPage';
 export { UserDetailsPage } from './UserDetailsPage';
-export { InformationPage } from './InformationPage';
 export { productsPage } from './productsPage';
 export { ClientPage } from './ClientPage';
 export { NotFoundPage } from './NotFoundPage';

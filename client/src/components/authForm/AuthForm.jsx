@@ -1,8 +1,8 @@
-import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import logo from "~/assets/images/logo.jpeg";
 import { useLogin } from "~/hooks/useLogin";
 import { error } from "~/utils/notification";
+import { Button } from "../logic";
 
 export const AuthForm = () => {
 	const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -35,14 +35,7 @@ export const AuthForm = () => {
 				<span className="font-semibold cursor-pointer hover:tracking-wide">שכחתי סיסמא?</span>
 			</div>
 
-			<LoadingButton
-				size="large"
-				type="submit"
-				variant="contained"
-				className="!bg-orange !w-full !text-base !mt-6 !rounded-md"
-			>
-				התחבר
-			</LoadingButton>
+			<Button className="bg-orange text-white h-9 w-full text-base mt-6 rounded-md hover:shadow hover:shadow-black/50" title="התחבר" />
 		</form>
 	);
 };

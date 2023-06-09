@@ -25,20 +25,18 @@ export const Actions = ({ setOpen, open, refetch }) => {
         <>
             {open.modalDialog && (
                 <ModalDialog
-                    onClick={submitHandler}
-                    title={"האם את/ה בטוח ?"}
-                    setOpen={setOpen}
                     open={open}
+                    setOpen={setOpen}
+                    title={"האם את/ה בטוח ?"}
+                    onClick={submitHandler}
                 />
             )}
             {open.popUp && (
                 <PopUp setOpen={setOpen} open={open}>
                     <Form
-                        content={open.content}
-                        title={open.title}
-                        refetch={refetch}
-                        setOpen={setOpen}
                         open={open}
+                        setOpen={setOpen}
+                        refetch={refetch}
                     />
                 </PopUp>
             )}

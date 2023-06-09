@@ -1,18 +1,18 @@
-import { IconButton } from '@mui/material'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { BsFillSendCheckFill } from 'react-icons/bs'
-import { RadioButtons } from '~/components/logic'
+import { RadioButtons, SendIcon } from '~/components/logic'
 import { useAddMission, useUpdateMission } from '~/hooks/useMission'
 import { useAuthStore } from '~/store/auth'
 import { error } from '~/utils/notification'
 
-export const Form = ({ setOpen, open, refetch, content }) => {
+export const Form = ({ setOpen, open, refetch }) => {
+    const { id, content, info } = open;
+
     const { username } = useAuthStore();
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-    const [checked, setChecked] = useState(open.title === "edit" ? open.info?.completed : false);
+    const [checked, setChecked] = useState(open.title === "edit" ? info?.completed : false);
 
     const { mutate: addMutateMission } = useAddMission(setOpen, open, refetch);
     const { mutate: updateMutateMission } = useUpdateMission(setOpen, open, refetch);
@@ -28,7 +28,7 @@ export const Form = ({ setOpen, open, refetch, content }) => {
                 addMutateMission(addMission);
             }
             else if (open.title === "edit") {
-                const editMission = { missionId: open.id, title, completed: checked };
+                const editMission = { missionId: id, title, completed: checked };
                 updateMutateMission(editMission);
             }
         } catch (err) {
@@ -45,7 +45,7 @@ export const Form = ({ setOpen, open, refetch, content }) => {
                         type="text"
                         id="title"
                         name="title"
-                        defaultValue={open.title === "edit" ? open.info.title : null}
+                        defaultValue={open.title === "edit" ? info.title : null}
                         className="form-input w-full"
                         placeholder="משימה" {...register("title", { required: { value: true, message: "שדה חובה." } })} />
                     <p className="form-p_error">{errors.title?.message}</p>
@@ -54,18 +54,14 @@ export const Form = ({ setOpen, open, refetch, content }) => {
             {open.title === "edit" && <div className='flex justify-center'>
                 <RadioButtons
                     title={"האם המשימה הושלמה?"}
-                    defaultValue={open.info?.completed}
+                    defaultValue={info?.completed}
                     onChange={handleChange}
                 />
             </div>
             }
 
             <div className="flex justify-end p-2">
-                <IconButton onClick={handleSubmit(onSubmit)}>
-                    <BsFillSendCheckFill
-                        color={`${open.title === "edit" ? "#1fb6ff" : "#13ce66"}`}
-                        className="text-3xl" />
-                </IconButton>
+                <SendIcon onClick={handleSubmit(onSubmit)} title={open.title} className="text-3xl" />
             </div>
         </>
     )
