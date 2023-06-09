@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useProducts } from "~/hooks/useProducts";
+import { Button, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,11 +6,11 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Rows } from "./Rows";
-import { Button, Chip, IconButton, Stack, TextField } from "@mui/material";
-import { GrFilter } from "react-icons/gr";
+import { useState } from "react";
+import { useProducts } from "~/hooks/useProducts";
 import { Spinner } from "../ui/Spinner";
 import { Actions } from "./Actions";
+import { Rows } from "./Rows";
 
 export const Products = () => {
 	const [inputSearch, setInputSearch] = useState("");
@@ -43,7 +42,7 @@ export const Products = () => {
 				<div className="flex justify-center">
 					<h1 className="text-2xl mb-8 underline">מוצרים</h1>
 				</div>
-				<section className="relative top-2 w-10/12 block m-auto p-5 xl:w-full xl:relative xl:bottom-4">
+				<section className="relative top-2 w-10/12 block m-auto p-5 xl:relative xl:bottom-4">
 					<div className="flex justify-between flex-row-reverse items-end mb-5">
 						{dataResults.length >= 1 ?
 							<Button
