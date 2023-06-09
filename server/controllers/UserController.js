@@ -248,7 +248,7 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.getAllAdmins = async (req, res) => {
-	let users = [];
+	let admins = [];
 	let result;
 	let details;
 	try {
@@ -266,9 +266,9 @@ exports.getAllAdmins = async (req, res) => {
 				paymentType: user.paymentType,
 				isAdmin: user.isAdmin,
 			};
-			users.push(details);
+			admins.push(details);
 		});
-		return res.status(200).json(users);
+		return res.status(200).json(admins);
 	} catch (err) {
 		return res.status(500).json({ message: err.message });
 	}

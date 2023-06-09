@@ -10,9 +10,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "~/components/ui/Spinner";
 import { useUsers } from "~/hooks/useUsers";
+import { filterData } from "~/utils/filterData";
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
-import { filterData } from "~/utils/filterData";
 
 export const Users = () => {
 	const [inputSearch, setInputSearch] = useState("");
@@ -47,7 +47,7 @@ export const Users = () => {
 					</h1>
 				</div>
 
-				<section className="relative top-2 w-10/12 block m-auto p-5 xl:9/12 xl:relative xl:bottom-4">
+				<section className="table-style xl:9/12 xl:relative xl:bottom-4 md:w-full">
 					<div className="flex justify-between flex-row-reverse items-end mb-5">
 						{dataResults.length >= 1 ? <Button
 							className="!bg-green/90 !text-white !rounded-md hover:!bg-green !w-44 !text-sm"

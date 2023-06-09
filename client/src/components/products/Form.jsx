@@ -1,11 +1,12 @@
-import { IconButton } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { BsFillSendCheckFill } from "react-icons/bs";
 import { useAddProduct, useUpdateProduct } from "~/hooks/useProducts";
 import { error } from "~/utils/notification";
 import { replace } from "~/utils/replace";
+import { SendIcon } from "../logic";
 
-export const Form = ({ setOpen, open, refetch, title, content }) => {
+export const Form = ({ setOpen, open, refetch }) => {
+    const { title, content } = open;
+
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const { mutate: addMutateProduct } = useAddProduct(setOpen, open, refetch);
@@ -48,11 +49,7 @@ export const Form = ({ setOpen, open, refetch, title, content }) => {
 
             </main>
             <div className="flex justify-end p-2">
-                <IconButton onClick={handleSubmit(onSubmit)} >
-                    <BsFillSendCheckFill
-                        color={`${title === "edit" ? "#1fb6ff" : "#13ce66"}`}
-                        className="text-3xl" />
-                </IconButton>
+                <SendIcon onClick={handleSubmit(onSubmit)} title={title} className="text-3xl" />
             </div>
         </>
     );

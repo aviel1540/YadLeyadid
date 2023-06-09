@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from './logic';
 
 class ErrorBoundary extends React.Component {
 
@@ -18,12 +19,16 @@ class ErrorBoundary extends React.Component {
         if (this.state.hasError) {
 
             const handleClick = () => {
-                window.location.href = "/home"
+                if (window.location.pathname !== '/client') {
+                    window.location.href = "/home"
+                } else {
+                    window.location.href = "/client"
+                }
             }
             return (
                 <div className='h-screen flex flex-col justify-center items-center'>
                     <span className='text-xl'>משהו כנראה השתבש, בואו נחזור למקום בטוח.</span>
-                    <button className='bg-blue/80 text-white w-48 rounded-md mt-5 border' onClick={handleClick}>אל מקום בטוח ⛵</button>
+                    <Button className='bg-blue/40  w-48 rounded-md mt-5 border hover:bg-blue/70' onClick={handleClick} title="אל מקום בטוח ⛵" />
                 </div>
             )
         }

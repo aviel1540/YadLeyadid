@@ -12,8 +12,8 @@ function App() {
 	const { isLoggedIn, isAdmin } = useAuthStore();
 
 	const navigate = useNavigate();
-	const location = useLocation();
 
+	const location = useLocation();
 	const hidde = isLoggedIn && isAdmin && location.pathname !== "/";
 
 	useEffect(() => {

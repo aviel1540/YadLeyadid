@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { Button } from '@mui/material';
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,13 +6,13 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Rows } from './Rows';
+import TextField from '@mui/material/TextField';
+import { useState } from 'react';
 import { Spinner } from "~/components/ui/Spinner";
 import { useAdministrators } from '~/hooks/useUsers';
-import TextField from '@mui/material/TextField';
-import { Actions } from '../users/Actions';
-import { Button } from '@mui/material';
 import { filterData } from '~/utils/filterData';
+import { Actions } from '../users/Actions';
+import { Rows } from './Rows';
 
 export const Administrator = () => {
     const { data: administrators, isLoading, refetch } = useAdministrators();
@@ -42,7 +42,7 @@ export const Administrator = () => {
                     </h1>
                 </div>
 
-                <section className="relative top-2 w-10/12 block m-auto p-5 xl:w-full xl:relative xl:bottom-4">
+                <section className="table-style xl:9/12 xl:relative xl:bottom-4 md:w-full">
                     <div className="flex justify-between flex-row-reverse items-end mb-5">
                         {dataResults.length >= 1 ? <Button
                             className="!bg-green/90 !text-white !rounded-md hover:!bg-green !w-44 !text-sm"

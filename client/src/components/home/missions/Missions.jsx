@@ -26,7 +26,7 @@ export const Missions = ({ setOpen, open }) => {
         <>
             <main className={`${open.action && "blur-sm"} p-6 w-full ml-5  mt-10 shadow-md shadow-black/10 md:w-full`}>
                 <div className='flex justify-between'>
-                    <h1 className='text-lg h-8 mb-5 font-bold underline'>משימות</h1>
+                    <h1 className='text-lg h-8 mb-5 underline'>משימות</h1>
                     <Button
                         className="!bg-green/90 !h-8 !text-white !rounded-md hover:!bg-green !w-26 !text-sm"
                         onClick={() =>

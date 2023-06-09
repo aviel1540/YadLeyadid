@@ -15,20 +15,18 @@ export const Actions = ({ setOpen, open, refetch }) => {
         <>
             {open.modalDialog && (
                 <ModalDialog
+                    open={open}
+                    setOpen={setOpen}
                     onClick={() => deleteMutateProduct(open.id)}
                     title={"האם את/ה בטוח ?"}
-                    setOpen={setOpen}
-                    open={open}
                 />
             )}
             {open.popUp && (
                 <PopUp setOpen={setOpen} open={open}>
                     <Form
-                        content={open.content}
-                        title={open.title}
-                        refetch={refetch}
-                        setOpen={setOpen}
                         open={open}
+                        setOpen={setOpen}
+                        refetch={refetch}
                     />
                 </PopUp>
             )}

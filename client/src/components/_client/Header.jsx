@@ -36,7 +36,7 @@ export const Header = () => {
                         <Link to={`/details/${username}`} className={`${click.details && "underline decoration-orange decoration-wavy"}`}>פרטים אישיים</Link>
                     </li>
                     <li className="absolute left-0 ml-10 sm:ml-4">
-                        <button onClick={() => logoutStore()}>יציאה</button>
+                        <span className="cursor-pointer" onClick={() => logoutStore()}>יציאה</span>
                     </li>
                 </ul>
             </nav>

@@ -1,6 +1,11 @@
 import React from "react";
-import { Home } from "~/components";
+import { Home, TitleTab } from "~/components";
 
 export const HomePage = () => {
-	return <Home />;
+	return (
+		<>
+			<TitleTab title="בית" />
+			<Home />
+		</>
+	);
 };

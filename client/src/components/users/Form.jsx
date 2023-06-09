@@ -1,19 +1,18 @@
-import { IconButton } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { BsFillSendCheckFill } from "react-icons/bs";
+import { useLocation } from "react-router-dom";
 import { PaymentTypes, paymentTypes } from "~/constants/PaymentTypes";
 import { ProductPlace } from "~/constants/productPlace";
 import { useProducts } from "~/hooks/useProducts";
 import { useAddUser, useAsignProductToUser, useUpdateUser } from "~/hooks/useUsers";
-import { error } from "~/utils/notification";
-import { MultipleAutocomplete, RadioButtons, SelectInput } from "../logic";
-import { Spinner } from "../ui/Spinner";
+import { error, info } from "~/utils/notification";
 import { replace } from "~/utils/replace";
-import { useLocation } from "react-router-dom";
-import { info } from "autoprefixer";
+import { MultipleAutocomplete, RadioButtons, SelectInput, SendIcon } from "../logic";
+import { Spinner } from "../ui/Spinner";
 
-export const Form = ({ setOpen, open, refetch, content, title }) => {
+export const Form = ({ setOpen, open, refetch }) => {
+    const { title, content } = open;
+
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const [selectedPaymentType, setSelectedPaymentType] = useState("")
@@ -150,11 +149,14 @@ export const Form = ({ setOpen, open, refetch, content, title }) => {
                                 </label>
                             </>}
                         {title === "edit" &&
-                            <RadioButtons
-                                title={!administratorLocation ? "האם הלקוח מנהל מערכת ?" : "האם המנהל מנהל מערכת ?"}
-                                defaultValue={open.info?.isAdmin}
-                                onChange={handleChange}
-                            />}
+                            <div className="mt-5">
+                                <RadioButtons
+                                    title={!administratorLocation ? "האם הלקוח מנהל מערכת ?" : "האם המנהל מנהל מערכת ?"}
+                                    defaultValue={open.info?.isAdmin}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        }
                     </>
                 }
                 {title === "asignProductToUser" && !isLoading ?
@@ -178,6 +180,7 @@ export const Form = ({ setOpen, open, refetch, content, title }) => {
                             <input type="password" id="password" name="password" className="form-input w-full" placeholder="סיסמא נוכחית" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.password?.message}</p>
                         </label>
+
                         <label htmlFor="password" className="form-label">סיסמא חדשה:
                             <input type="password" id="password" name="password" className="form-input" placeholder="סיסמא חדשה" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.password?.message}</p>
@@ -191,11 +194,7 @@ export const Form = ({ setOpen, open, refetch, content, title }) => {
             </main>
 
             <div className="flex justify-end p-2">
-                <IconButton onClick={handleSubmit(onSubmit)}>
-                    <BsFillSendCheckFill
-                        color={`${title !== "add" ? "#1fb6ff" : "#13ce66"}`}
-                        className="text-3xl" />
-                </IconButton>
+                <SendIcon onClick={handleSubmit(onSubmit)} title={title} className="text-3xl" />
             </div>
         </>
     );

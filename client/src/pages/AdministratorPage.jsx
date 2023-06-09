@@ -1,6 +1,11 @@
 import React from 'react'
-import { Administrator } from '~/components'
+import { Administrator, TitleTab } from '~/components'
 
 export const AdministratorPage = () => {
-    return <Administrator />
+    return (
+        <>
+            <TitleTab title="מנהלי מערכת" />
+            <Administrator />
+        </>
+    )
 }
