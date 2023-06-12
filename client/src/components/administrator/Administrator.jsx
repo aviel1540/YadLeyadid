@@ -42,7 +42,7 @@ export const Administrator = () => {
                     </h1>
                 </div>
 
-                <section className="table-style xl:9/12 xl:relative xl:bottom-4 md:w-full">
+                <section className="table-style xl:w-full xl:relative xl:bottom-4 md:w-full">
                     <div className="flex justify-between flex-row-reverse items-end mb-5">
                         {dataResults.length >= 1 ? <Button
                             className="!bg-green/90 !text-white !rounded-md hover:!bg-green !w-44 !text-sm"

@@ -6,6 +6,12 @@ exports.findUserById = async (userId) => await User.findById(userId);
 
 exports.findByUsername = async (username) => await User.findOne({ username });
 
+exports.findPasswordResetToken = async (passwordResetToken) =>
+	await User.findOne({
+		passwordResetToken,
+		passwordResetExpires: { $gt: Date.now() },
+	});
+
 exports.findByEntityCard = async (entityCard) =>
 	await User.findOne({ entityCard });
 

@@ -42,7 +42,7 @@ export const Products = () => {
 				<div className="flex justify-center">
 					<h1 className="text-2xl mb-8 underline">מוצרים</h1>
 				</div>
-				<section className="table-style xl:9/12 xl:relative xl:bottom-4 md:w-full">
+				<section className="table-style xl:w-full xl:relative xl:bottom-4 md:w-full">
 					<div className="flex justify-between flex-row-reverse items-end mb-5">
 						{dataResults.length >= 1 ?
 							<Button
