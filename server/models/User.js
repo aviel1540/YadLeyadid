@@ -70,6 +70,14 @@ const userSchema = new Schema(
 				ref: "Mission",
 			},
 		],
+		passwordResetToken: {
+			type: String,
+			default: null,
+		},
+		passwordResetExpires: {
+			type: Date,
+			default: null,
+		},
 	},
 	{
 		timestamps: true,

@@ -7,9 +7,13 @@ router.get("/admins", userController.getAllAdmins);
 
 router.get("/:id", userController.getUserById);
 
-router.post("/validation-mail", userController.checkEmailForChangePass);
-
 router.get("/find-by-username/:username", userController.getUserByUsername);
+
+router.post("/forgot-password", userController.forgotPassword);
+
+router.post("/verification-code", userController.verificationCode);
+
+router.post("/change-password", userController.changePassword);
 
 router.post("/register", userController.register);
 

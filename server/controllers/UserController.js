@@ -6,6 +6,7 @@ const { ProductPlace } = require("../constants/productPlace");
 const userService = require("../services/userService");
 const productService = require("../services/productService");
 const mailer = require("../utils/mailer");
+const User = require("../models/User");
 
 exports.register = async (req, res) => {
 	const entityCard = escape(req.body.entityCard);
@@ -604,25 +605,86 @@ exports.updateDetails = async (req, res) => {
 				: "הלקוח התעדכן בהצלחה.",
 		});
 	} catch (err) {
-		return res.status(400).json({ message: err });
+		return res.status(500).json({ message: err });
 	}
 };
 
-exports.checkEmailForChangePass = async (req, res) => {
+exports.forgotPassword = async (req, res) => {
 	const email = escape(req.body.email);
 	try {
 		const checkEmail = validation.addSlashes(email);
 
-		// const emailExist = await userService.findByEmail(checkEmail);
-		// if (!emailExist)
-		// 	return res.status(404).json({ message: "מייל לא קיים במערכת." })
+		const emailUser = await userService.findByEmail(checkEmail);
+		if (!emailUser)
+			return res.status(200).json({ message: "קוד אימות נשלח בהצלחה." });
 
 		const varification = Math.floor(Math.random() * 95648231564).toString(
 			20
 		);
-		console.log(varification);
-		return;
+
+		emailUser.passwordResetToken = varification;
+		emailUser.passwordResetExpires = Date.now() + 600000;
+
+		await emailUser.save();
+		return res.status(200).json({ message: "קוד אימות נשלח בהצלחה." });
 	} catch (err) {
-		return;
+		return res.status(500).json({ message: err });
+	}
+};
+
+exports.verificationCode = async (req, res) => {
+	try {
+		const code = escape(req.body.code);
+
+		const checkCode = validation.addSlashes(code);
+
+		const user = await userService.findPasswordResetToken(checkCode);
+
+		if (!user) {
+			return res
+				.status(400)
+				.json({ message: "האימות נכשל, נא לנסות שוב." });
+		}
+
+		return res.status(200).json({
+			message: "האימות התבצע בהצלחה.",
+		});
+	} catch (err) {
+		return res.status(500).json({ message: err.message });
+	}
+};
+
+exports.changePassword = async (req, res) => {
+	const email = escape(req.body.email);
+	const password = escape(req.body.password);
+	const confrimPassword = escape(req.body.confrimPassword);
+
+	try {
+		if (![password, confrimPassword].every(Boolean)) {
+			return res.status(400).json({ message: "נא למלא את כל השדות." });
+		}
+		if (!validation.checkPassword(password)) {
+			return res
+				.status(400)
+				.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים." });
+		}
+		if (password !== confrimPassword) {
+			return res.status(400).json({ message: "הסיסמאות אינן תאומות." });
+		}
+
+		const checkEmail = validation.addSlashes(email);
+		const checkPassword = validation.addSlashes(password);
+
+		const user = await userService.findByEmail(checkEmail);
+
+		const passwordHash = await auth.hashPassword(checkPassword);
+
+		await User.findByIdAndUpdate(user._id, {
+			password: passwordHash,
+		});
+
+		return res.status(200).json({ message: "הסיסמא עודכנה בהצלחה." });
+	} catch (err) {
+		return res.status(500).json({ message: err.message });
 	}
 };

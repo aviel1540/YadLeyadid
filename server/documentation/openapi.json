@@ -149,7 +149,7 @@
 				}
 			}
 		},
-		"/users/validation-mail": {
+		"/users/forgot-password": {
 			"post": {
 				"tags": ["Users"],
 				"summary": "Get user by id",
@@ -299,7 +299,6 @@
 									"oldPassword": { "type": "string" },
 									"newPassword": { "type": "string" },
 									"verifyNewPassword": { "type": "string" }
-
 								}
 							}
 						}
