@@ -7,3 +7,4 @@ export { ClientPage } from './ClientPage';
 export { NotFoundPage } from './NotFoundPage';
 export { AdministratorPage } from './AdministratorPage';
 export { mainCategoryPage } from './mainCategoryPage';
+export { SemiCategoryPage } from './SemiCategoryPage';

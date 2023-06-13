@@ -1,1 +1,1 @@
-export { getMainCategory } from './mainCategory';
+export { getMainCategory, addMainCategory, updateMainCategory, deleteMainCategory } from './mainCategory';
