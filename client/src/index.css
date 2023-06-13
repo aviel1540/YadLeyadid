@@ -14,6 +14,9 @@
   background-color: rgba(63, 63, 63, 0.604);
 }
 
+.form-wrapper {
+  @apply flex flex-wrap justify-center m-4 p-4 gap-4;
+}
 .button-add {
   @apply bg-green/90 h-8 text-white rounded-md text-sm hover:bg-green;
 }
@@ -25,7 +28,7 @@
 }
 
 .form-input {
-  @apply block  px-5 h-14 border border-gray font-normal rounded-lg;
+  @apply block px-5 h-14 border border-gray font-normal rounded-lg;
 }
 
 .form-label {

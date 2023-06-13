@@ -103,7 +103,7 @@ export const Form = ({ setOpen, open, refetch }) => {
     return (
         <>
             <h1 className="block text-center text-2xl mb-2">{content}</h1>
-            <main className="flex flex-wrap justify-center m-4 p-4 gap-4">
+            <main className="form-wrapper">
                 {(title == "add" || title === "edit") &&
                     <>
                         <label htmlFor="name" className="form-label">שם מלא:

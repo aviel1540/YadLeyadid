@@ -8,4 +8,5 @@ export const queryKeys = {
   userByUsername: 'userByUsername',
   productsForUser: 'productsForUser',
   mainCategory: 'mainCategory',
+  semiCategory: 'semiCategory',
 };

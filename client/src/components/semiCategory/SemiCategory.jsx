@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,14 +5,15 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useMainCategory } from '~/hooks/useMainCategory';
-import { Spinner } from '../ui/Spinner';
-import { Rows } from './Rows';
-import { Button } from '../logic';
+import { useState } from 'react';
 import { TextField } from '@mui/material';
+import { useSemiCategory } from '~/hooks/useSemiCategory';
+import { Button } from '../logic';
+import { Spinner } from '../ui/Spinner';
 import { Actions } from './Actions';
+import { Rows } from './Rows';
 
-export const MainCategory = () => {
+export const SemiCategory = () => {
     const [inputSearch, setInputSearch] = useState("");
 
     const [open, setOpen] = useState({
@@ -26,9 +26,10 @@ export const MainCategory = () => {
         info: {},
     });
 
-    const { data: mainCategory, isLoading, refetch } = useMainCategory();
+    const { data: semiCategory, isLoading, refetch } = useSemiCategory();
 
-    const dataResults = mainCategory?.filter((data) => data.mainCategoryName.includes(inputSearch));
+    const dataResults = semiCategory?.filter((data) => data.semiCategoryName.includes(inputSearch));
+
 
     if (isLoading) return <Spinner />;
 
@@ -37,7 +38,7 @@ export const MainCategory = () => {
             <main className={`${open.action && "blur-sm"}`}>
                 <div className="flex justify-center mb-5">
                     <h1 className="text-2xl mb-8 underline">
-                        קטגוריה ראשית
+                        קטגוריה משנית
                     </h1>
                 </div>
 
@@ -45,7 +46,7 @@ export const MainCategory = () => {
                     <div className="flex justify-between flex-row-reverse items-end mb-5">
                         {dataResults.length >= 1 ?
                             <Button
-                                title="הוספת קטגוריה ראשית חדשה"
+                                title="הוספת קטגוריה משנית חדשה"
                                 className="button-add w-56"
                                 onClick={() =>
                                     setOpen({
@@ -53,7 +54,7 @@ export const MainCategory = () => {
                                         popUp: true,
                                         action: true,
                                         title: "add",
-                                        content: "הוספת קטגוריה ראשית חדשה"
+                                        content: "הוספת קטגוריה משנית חדשה"
                                     })
                                 }
                             />
@@ -66,18 +67,24 @@ export const MainCategory = () => {
                             type="search"
                             className="w-50"
                             placeholder="שם..."
-                            helperText="חיפוש קטגוריה ראשית"
+                            helperText="חיפוש משנית ראשית"
                             onChange={({ target }) => setInputSearch(target.value)}
                             color="warning"
                         />
 
                     </div>
-                    {dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 750 }}>
+                    {dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 900 }}>
                         <Table aria-label="collapsible table">
                             <TableHead>
                                 <TableRow className="table-row">
                                     <TableCell />
                                     <TableCell />
+                                    <TableCell
+                                        className="!font-bold"
+                                        align="right"
+                                    >
+                                        מספר סידורי
+                                    </TableCell>
                                     <TableCell
                                         className="!font-bold"
                                         align="right"
@@ -123,6 +130,6 @@ export const MainCategory = () => {
                     />
                 )
             }
-        </>
+        </ >
     )
 }

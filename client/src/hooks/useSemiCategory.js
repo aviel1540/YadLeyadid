@@ -1,12 +1,12 @@
 import { useMutation, useQuery } from 'react-query';
 import { queryKeys } from '~/react-query/queryKeys';
-import * as mainCategory from '~/api/mainCategory';
+import * as semiCategory from '~/api/semiCategory';
 import { onSuccess, onError } from '~/utils';
 
-export const useMainCategory = () => useQuery([queryKeys.mainCategory], mainCategory.getMainCategory);
+export const useSemiCategory = () => useQuery([queryKeys.semiCategory], semiCategory.getSemiCategory);
 
-export const useAddMainCategory = (setOpen, open, refetch) =>
-  useMutation(mainCategory.addMainCategory, {
+export const useAddSemiCategory = (setOpen, open, refetch) =>
+  useMutation(semiCategory.addSemiCategory, {
     onSuccess: (data) => {
       onSuccess(data, setOpen, open, refetch);
     },
@@ -15,8 +15,8 @@ export const useAddMainCategory = (setOpen, open, refetch) =>
     },
   });
 
-export const useUpdateMainCategory = (setOpen, open, refetch) =>
-  useMutation(mainCategory.updateMainCategory, {
+export const useUpdateSemiCategory = (setOpen, open, refetch) =>
+  useMutation(semiCategory.updateSemiCategory, {
     onSuccess: (data) => {
       onSuccess(data, setOpen, open, refetch);
     },
@@ -25,8 +25,8 @@ export const useUpdateMainCategory = (setOpen, open, refetch) =>
     },
   });
 
-export const useDeleteMainCategory = (setOpen, open, refetch) =>
-  useMutation((id) => mainCategory.deleteMainCategory(id), {
+export const useDeleteSemiCategory = (setOpen, open, refetch) =>
+  useMutation((id) => semiCategory.deleteSemiCategory(id), {
     onSuccess: (data) => {
       onSuccess(data, setOpen, open, refetch);
     },

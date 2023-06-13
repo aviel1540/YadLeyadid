@@ -39,7 +39,7 @@ export const Form = ({ setOpen, open }) => {
     return (
         <>
             <h1 className="block text-center text-2xl mb-2">{content}</h1>
-            <main className="flex flex-wrap justify-center  m-4 p-4 gap-4">
+            <main className="form-wrapper">
                 {title === "fogotPassword" &&
                     <label htmlFor="email" className="form-label w-1/2">מייל לאימות
                         <input

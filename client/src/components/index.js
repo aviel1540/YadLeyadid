@@ -7,4 +7,5 @@ export { Administrator } from './administrator';
 export { MainCategory } from './mainCategory';
 export { TitleTab } from './TitleTab';
 export { ErrorBoundary } from './ErrorBoundary';
-export { SideBar } from './sideBar/SideBar';
+export { SideBar } from './sideBar';
+export { SemiCategory } from './semiCategory';

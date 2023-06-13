@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { useAuthStore } from "~/store/auth";
-import { SquareInfo } from "./SquareInfo";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import { Notification } from "./Notification";
-import { useProducts, useProductsPlaces } from "~/hooks/useProducts";
-import { Spinner } from "../ui/Spinner";
-import { ProductPlace } from "~/constants/productPlace";
+import { useState } from "react";
+import { BsCartCheck, BsCartX } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi";
+import { TbShoppingCartOff } from "react-icons/tb";
+import { useProducts, useProductsPlaces } from "~/hooks/useProducts";
 import { useUsers } from "~/hooks/useUsers";
-import { TbShoppingCartX } from "react-icons/tb"
-import { Columns, Line, Pie } from "./chart";
+import { useAuthStore } from "~/store/auth";
+import { Spinner } from "../ui/Spinner";
+import { Notification } from "./Notification";
+import { SquareInfo } from "./SquareInfo";
+import { Columns, Pie } from "./chart";
 import { Missions } from "./missions";
 
 export const Home = () => {
@@ -41,32 +40,32 @@ export const Home = () => {
 				</div>
 				<section className="flex justify-center flex-row-reverse  gap-10 m-4 mt-16 sm:flex-wrap">
 					<SquareInfo
-						animate={"animate-[wiggle_2s_ease-in-out_forwards]"}
+						className={"animate-[wiggle_2s_ease-in-out_forwards] hover:shadow hover:shadow-black/50"}
 						content={"לקוחות"}
 						total={users?.length}
 						icon={<HiOutlineUsers />}
 						style={"rgb(139, 172, 170,0.7)"}
 					/>
 					<SquareInfo
-						animate={"animate-[wiggleReverse_1s_ease-in-out_forwards]"}
+						className={"animate-[wiggleReverse_1s_ease-in-out_forwards] hover:shadow hover:shadow-black/50"}
 						content={"מוצרים בתיקון"}
 						total={productsPlaces?.repair}
-						icon={<AiOutlineShoppingCart />}
+						icon={<BsCartX />}
 						style={"rgb(176, 71, 89,0.7)"}
 					/>
 
 					<SquareInfo
-						animate={"animate-[wiggleReverse_3s_ease-in-out_forwards]"}
+						className={"animate-[wiggleReverse_3s_ease-in-out_forwards] hover:shadow hover:shadow-black/50"}
 						content={"מוצרים מושאלים"}
 						total={productsPlaces?.loaned}
-						icon={<TbShoppingCartX />}
+						icon={<TbShoppingCartOff />}
 						style={"rgb(231, 97, 97,0.7)"}
 					/>
 					<SquareInfo
-						animate={"animate-[wiggle_2s_ease-in-out_forwards]"}
+						className={"animate-[wiggle_2s_ease-in-out_forwards] hover:shadow hover:shadow-black/50"}
 						content={"מוצרים זמינים"}
 						total={productsPlaces?.inStock}
-						icon={<AiOutlineShoppingCart />}
+						icon={<BsCartCheck />}
 						style={"rgb(249, 155, 125,0.7)"}
 					/>
 				</section>

@@ -1,11 +1,11 @@
 import { ModalDialog } from "~/components/ui/ModalDialog";
 import { PopUp } from "~/components/ui/PopUp";
 import { Form } from "./Form";
-import { useDeleteMainCategory } from "~/hooks/useMainCategory";
+import { useDeleteSemiCategory } from "~/hooks/useSemiCategory";
 
 export const Actions = ({ setOpen, open, refetch }) => {
 
-    const { mutate: deleteMutateMainCategory } = useDeleteMainCategory(setOpen, open, refetch);
+    const { mutate: deleteMutateSemiCategory } = useDeleteSemiCategory(setOpen, open, refetch);
 
     return (
         <>
@@ -14,7 +14,7 @@ export const Actions = ({ setOpen, open, refetch }) => {
                     open={open}
                     setOpen={setOpen}
                     title={"האם את/ה בטוח ?"}
-                    onClick={() => deleteMutateMainCategory(open.id)}
+                    onClick={() => deleteMutateSemiCategory(open.id)}
                 />
             )}
             {open.popUp && (

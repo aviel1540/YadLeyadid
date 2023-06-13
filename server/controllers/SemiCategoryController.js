@@ -16,16 +16,17 @@ exports.getAllSemiCategories = async (req, res) => {
 			if (semiDetails.productList.length > 0) {
 				for (let k = 0; k < semiDetails.productList.length; k++) {
 					const productId = semiDetails.productList[k];
-					product = await productService.showProductDetailsInSemiCategory(
-						productId
-					);
+					product =
+						await productService.showProductDetailsInSemiCategory(
+							productId
+						);
 					products.push(product);
 				}
 				details = {
 					_id: semiDetails._id,
 					serialNumber: semiDetails.serialNumber,
 					semiCategoryName: semiDetails.name,
-					productList: products
+					productList: products,
 				};
 				semiCategories.push(details);
 				products = [];
@@ -34,14 +35,18 @@ exports.getAllSemiCategories = async (req, res) => {
 					_id: semiDetails._id,
 					serialNumber: semiDetails.serialNumber,
 					semiCategoryName: semiDetails.name,
-					productList: null
+					productList: null,
 				};
 				semiCategories.push(details);
 			}
 		}
-		return res.status(201).json(semiCategories);
+		const sortSemiCategories = semiCategories.sort(
+			(a, b) => a.serialNumber - b.serialNumber
+		);
+
+		return res.status(200).json(sortSemiCategories);
 	} catch (err) {
-		return res.status(400).json({ message: err });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -52,10 +57,10 @@ exports.getSemiCategoryById = async (req, res) => {
 		const category = await semiCategoryService.findSemiCategoryById(
 			checkIdSearch
 		);
-		if (!category) return res.status(400).send("קטגוריה לא נמצאה.");
+		if (!category) return res.status(404).send("קטגוריה לא נמצאה.");
 		res.status(200).json({ category });
 	} catch (err) {
-		res.status(400).json({ message: err });
+		res.status(500).json({ message: err.message });
 	}
 };
 
@@ -92,7 +97,7 @@ exports.addNewSemiCategory = async (req, res) => {
 		await category.save();
 		return res.status(201).json({ message: "קטגוריה נוספה בהצלחה." });
 	} catch (err) {
-		return res.status(400).json({ message: err });
+		return res.status(400).json({ message: err.message });
 	}
 };
 
@@ -114,13 +119,13 @@ exports.updateSemiCategoryDetails = async (req, res) => {
 		});
 
 		if (!updatedCategory) {
-			return res.status(401).json({ message: "לא נמצאה קטגוריה." });
+			return res.status(404).json({ message: "לא נמצאה קטגוריה." });
 		}
 		await updatedCategory.save();
 
-		res.status(201).json({ message: "קטגוריה עודכנה בהצלחה." });
+		res.status(200).json({ message: "קטגוריה עודכנה בהצלחה." });
 	} catch (err) {
-		res.status(400).json({ message: err });
+		res.status(500).json({ message: err.message });
 	}
 };
 
@@ -139,15 +144,15 @@ exports.deleteSemiCategory = async (req, res) => {
 				.status(401)
 				.json({ message: "יש למחוק את המוצרים המשוייכים." });
 		}
-		if(categoryResult.inMainCategory){
+		if (categoryResult.inMainCategory) {
 			return res
 				.status(401)
-				.json({ message: "משוייך לקטגוריה ראשית - יש לבטל שיוך" });
+				.json({ message: "משוייך לקטגוריה ראשית - יש לבטל שיוך." });
 		}
 		await semiCategoryService.deleteSemiCategory(checkId);
-		res.status(200).json({ message: "נמחק בהצלחה" });
+		res.status(200).json({ message: "נמחק בהצלחה." });
 	} catch (err) {
-		res.status(400).json({ message: err });
+		res.status(400).json({ message: err.message });
 	}
 };
 
@@ -170,7 +175,7 @@ exports.assignProductToSemiCategory = async (req, res) => {
 		if (product.inCategory)
 			return res
 				.status(400)
-				.json({ message: "המוצר משוייך לקטגוריה אחרת" });
+				.json({ message: "המוצר משוייך לקטגוריה אחרת." });
 
 		const productExist = category.productList.find(
 			(id) => id.toString() === checkProductId
@@ -249,26 +254,23 @@ exports.unassignProductFromSemiCategory = async (req, res) => {
 
 		return res.status(200).json({ message: "נמחק בהצלחה.", semiCategory });
 	} catch (err) {
-		return res.status(400).json({ message: err });
+		return res.status(400).json({ message: err.message });
 	}
 };
 
 //FINISH CONTROLLER
-exports.showSemiCategoryProductsPlaceCounter = async(req,res) => {
+exports.showSemiCategoryProductsPlaceCounter = async (req, res) => {
 	let details = {
 		productName: null,
 		inStock: 0,
 		loan: 0,
-		repair: 0
+		repair: 0,
 	};
 	let allCounters = [];
 	try {
 		const semiCategories = await semiCategoryService.allSemiCategory();
 		semiCategories.map((semi) => {
-			semi.productList.forEach
-		})
-	} catch(err) {
-
-	}
-}
-
+			semi.productList.forEach;
+		});
+	} catch (err) {}
+};

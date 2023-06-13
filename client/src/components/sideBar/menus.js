@@ -5,6 +5,7 @@ import { HiOutlineUsers } from 'react-icons/hi';
 import { ImExit } from 'react-icons/im';
 import { RiSettings4Line } from 'react-icons/ri';
 import { BiCategory } from 'react-icons/bi';
+import { MdOutlineCategory } from 'react-icons/md';
 
 export const menus = [
   {
@@ -25,6 +26,12 @@ export const menus = [
     title: 'מוצרים',
     link: '/products',
     icon: GiShoppingCart,
+  },
+  {
+    name: 'קטגוריה משנית',
+    title: 'קטגוריה משנית',
+    link: '/semi-category',
+    icon: MdOutlineCategory,
   },
   {
     name: 'קטגוריה ראשית',
