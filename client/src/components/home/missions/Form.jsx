@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { RadioButtons, SendIcon } from '~/components/logic'
 import { useAddMission, useUpdateMission } from '~/hooks/useMission'
 import { useAuthStore } from '~/store/auth'
-import { error } from '~/utils/notification'
+import { error } from '~/utils'
 
 export const Form = ({ setOpen, open, refetch }) => {
     const { id, content, info } = open;

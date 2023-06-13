@@ -5,13 +5,11 @@ import { PaymentTypes, paymentTypes } from "~/constants/PaymentTypes";
 import { ProductPlace } from "~/constants/productPlace";
 import { useProducts } from "~/hooks/useProducts";
 import { useAddUser, useAsignProductToUser, useUpdatePassword, useUpdateUser } from "~/hooks/useUsers";
-import { error, info } from "~/utils/notification";
-import { replace } from "~/utils/replace";
+import { error, info, replace } from "~/utils";
 import { MultipleAutocomplete, RadioButtons, SelectInput, SendIcon } from "../logic";
 import { Spinner } from "../ui/Spinner";
 
 export const Form = ({ setOpen, open, refetch }) => {
-    console.log("🚀 open:", open)
     const { title, content } = open;
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();

@@ -6,9 +6,7 @@ import { twMerge } from 'tailwind-merge'
 
 export const SendIcon = ({ onClick, title, className }) => {
 
-    const cn = (...input) => {
-        return twMerge(clsx(input))
-    }
+    const cn = (...input) => twMerge(clsx(input))
 
     return (
         <IconButton onClick={onClick} >

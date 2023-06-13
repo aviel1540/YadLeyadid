@@ -1,14 +1,15 @@
+import React from "react";
 import { ToastContainer } from "react-toastify";
 import { Routers } from "./Routers";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { queryClient } from "./react-query/queryClient";
-import { SideBar } from "./components/sideBar/SideBar";
+import { SideBar } from "./components";
 import { useEffect } from "react";
 import { useAuthStore } from "./store/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function App() {
+export const App = () => {
 	const { isLoggedIn, isAdmin } = useAuthStore();
 
 	const navigate = useNavigate();
@@ -43,5 +44,3 @@ function App() {
 		</>
 	);
 }
-
-export default App;

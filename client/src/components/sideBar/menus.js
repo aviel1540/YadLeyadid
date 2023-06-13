@@ -21,16 +21,16 @@ export const menus = [
     icon: HiOutlineUsers,
   },
   {
-    name: 'קטגוריות',
-    title: 'קטגוריות',
-    link: '/main-category',
-    icon: BiCategory,
-  },
-  {
     name: 'מוצרים',
     title: 'מוצרים',
     link: '/products',
     icon: GiShoppingCart,
+  },
+  {
+    name: 'קטגוריה ראשית',
+    title: 'קטגוריה ראשית',
+    link: '/main-category',
+    icon: BiCategory,
   },
 ];
 

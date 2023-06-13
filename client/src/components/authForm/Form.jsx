@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { useChangePassword, useForgotPassword, useVerificationCode } from "~/hooks/useUsers";
-import { error } from "~/utils/notification";
+import { useChangePassword, useForgotPassword, useVerificationCode } from "~/hooks/useAuth";
+import { error } from "~/utils";
 import { SendIcon } from "../logic";
 import { useState } from "react";
 
@@ -14,8 +14,6 @@ export const Form = ({ setOpen, open }) => {
     const { mutate: forgotMutatePassword } = useForgotPassword(setOpen, open, resetField);
     const { mutate: verificationMutatePassword } = useVerificationCode(setOpen, open, resetField);
     const { mutate: changeMutatePassword } = useChangePassword(setOpen, open);
-
-
 
     const onSubmit = async (data) => {
         const { email, code, password, verifyPassword } = data;

@@ -5,10 +5,9 @@ import { Fragment, useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { formatDate } from "~/utils/formatDate";
+import { formatDate, replace } from "~/utils";
 import { MdDeleteForever, MdOutlineModeEdit, MdRemoveCircleOutline } from "react-icons/md";
 import { RiAddFill, RiLockPasswordLine } from "react-icons/ri";
-import { replace } from "~/utils/replace";
 import { PaymentTypes } from "~/constants/PaymentTypes";
 
 export const Rows = ({ row, userDetails, index, setOpen, open }) => {

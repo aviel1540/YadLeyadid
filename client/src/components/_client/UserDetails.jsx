@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { TextInput } from "~/components/logic/TextInput";
 import { useUserByUsername } from "~/hooks/useUsers";
-import { formatDate } from "~/utils/formatDate";
+import { formatDate } from "~/utils";
 import { Spinner } from "../ui/Spinner";
 import { Header } from "./Header";
 

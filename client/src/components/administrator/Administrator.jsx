@@ -1,4 +1,3 @@
-import { Button } from '@mui/material';
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,13 +5,14 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import TextField from '@mui/material/TextField';
+import { TextField } from '@mui/material';
 import { useState } from 'react';
 import { Spinner } from "~/components/ui/Spinner";
 import { useAdministrators } from '~/hooks/useUsers';
-import { filterData } from '~/utils/filterData';
 import { Actions } from '../users/Actions';
 import { Rows } from './Rows';
+import { filterData } from '../users/filterData';
+import { Button } from "../logic";
 
 export const Administrator = () => {
     const { data: administrators, isLoading, refetch } = useAdministrators();
@@ -44,20 +44,21 @@ export const Administrator = () => {
 
                 <section className="table-style xl:w-full xl:relative xl:bottom-4 md:w-full">
                     <div className="flex justify-between flex-row-reverse items-end mb-5">
-                        {dataResults.length >= 1 ? <Button
-                            className="!bg-green/90 !text-white !rounded-md hover:!bg-green !w-44 !text-sm"
-                            onClick={() =>
-                                setOpen({
-                                    ...open,
-                                    popUp: true,
-                                    action: true,
-                                    title: "add",
-                                    content: "הוספת מנהל מערכת חדש"
-                                })
-                            }
-                        >
-                            הוספת מנהל מערכת
-                        </Button>
+                        {dataResults.length >= 1 ?
+                            <Button
+                                className="button-add w-52"
+                                title="הוספת מנהל מערכת חדש"
+                                onClick={() =>
+                                    setOpen({
+                                        ...open,
+                                        popUp: true,
+                                        action: true,
+                                        title: "add",
+                                        content: "הוספת מנהל מערכת חדש"
+                                    })
+                                }
+                            />
+
                             : <div className="visible" />}
                         <TextField
                             id="outlined-search"
