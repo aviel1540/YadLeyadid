@@ -6,7 +6,11 @@ export {
   getUserById,
   addUser,
   updateUser,
+  updatePassword,
   deleteUser,
   assignProductToUser,
   unassignProductToUser,
+  forgotPassword,
+  verificationCode,
+  changePassword,
 } from './users';

@@ -153,6 +153,7 @@ exports.updateExtensionRequest = async (req, res) => {
 
 		if (!checkAnswer) {
 			mailer.sendMailFunc(
+				"updateExtensionRequest",
 				user.email,
 				` למוצר ${product.productName} לא אושרה הארכת השאלה , יש ליצור קשר עם המוקד`
 			);
@@ -170,6 +171,7 @@ exports.updateExtensionRequest = async (req, res) => {
 
 		await updateProduct.save();
 		mailer.sendMailFunc(
+			"updateExtensionRequest",
 			user.email,
 			`המוצר ${product.productName} הוארך בהצלחה `
 		);

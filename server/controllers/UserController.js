@@ -369,7 +369,7 @@ exports.updatePassword = async (req, res) => {
 			currentPassword,
 			user.password
 		);
-		console.log(isMatch);
+
 		if (!isMatch) {
 			return res
 				.status(400)
@@ -452,7 +452,11 @@ exports.addProductForUser = async (req, res) => {
 		await Promise.all(products);
 
 		await user.save();
-		mailer.sendMailFunc(user.email, "המוצרים הושאלו בהצלחה");
+		mailer.sendMailFunc(
+			"addProductForUser",
+			user.email,
+			"המוצרים הושאלו בהצלחה"
+		);
 		return res.status(201).json({ message: "הושאל בהצלחה.", user });
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
@@ -614,9 +618,15 @@ exports.forgotPassword = async (req, res) => {
 	try {
 		const checkEmail = validation.addSlashes(email);
 
+		if (!validation.checkEmail(checkEmail)) {
+			return res.status(400).json({ message: "מייל לא תקין." });
+		}
+
 		const emailUser = await userService.findByEmail(checkEmail);
-		if (!emailUser)
+
+		if (!emailUser) {
 			return res.status(200).json({ message: "קוד אימות נשלח בהצלחה." });
+		}
 
 		const varification = Math.floor(Math.random() * 95648231564).toString(
 			20
@@ -626,6 +636,14 @@ exports.forgotPassword = async (req, res) => {
 		emailUser.passwordResetExpires = Date.now() + 600000;
 
 		await emailUser.save();
+
+		mailer.sendMailFunc(
+			"forgotPassword",
+			checkEmail,
+			"קוד האימות הינו",
+			varification
+		);
+
 		return res.status(200).json({ message: "קוד אימות נשלח בהצלחה." });
 	} catch (err) {
 		return res.status(500).json({ message: err });
@@ -646,6 +664,8 @@ exports.verificationCode = async (req, res) => {
 				.json({ message: "האימות נכשל, נא לנסות שוב." });
 		}
 
+		await userService.updatePasswordResetToken(user._id);
+
 		return res.status(200).json({
 			message: "האימות התבצע בהצלחה.",
 		});
@@ -657,23 +677,34 @@ exports.verificationCode = async (req, res) => {
 exports.changePassword = async (req, res) => {
 	const email = escape(req.body.email);
 	const password = escape(req.body.password);
-	const confrimPassword = escape(req.body.confrimPassword);
+	const verifyPassword = escape(req.body.verifyPassword);
+	console.log("🚀  password:", password);
+	console.log("🚀  verifyPassword:", verifyPassword);
 
 	try {
-		if (![password, confrimPassword].every(Boolean)) {
+		if (![password, verifyPassword].every(Boolean)) {
 			return res.status(400).json({ message: "נא למלא את כל השדות." });
 		}
+		const checkEmail = validation.addSlashes(email);
+		const checkPassword = validation.addSlashes(password);
+
+		const userExists = await userService.findByEmail(checkEmail);
+		console.log("🚀 userExists:", userExists);
+
+		if (userExists.passwordResetToken || userExists.passwordResetExpires) {
+			return res
+				.status(400)
+				.json({ message: "האימות נכשל, נא לנסות שוב." });
+		}
+
 		if (!validation.checkPassword(password)) {
 			return res
 				.status(400)
 				.json({ message: "סיסמא צריכה להכיל מינימום 9 תווים." });
 		}
-		if (password !== confrimPassword) {
+		if (password !== verifyPassword) {
 			return res.status(400).json({ message: "הסיסמאות אינן תאומות." });
 		}
-
-		const checkEmail = validation.addSlashes(email);
-		const checkPassword = validation.addSlashes(password);
 
 		const user = await userService.findByEmail(checkEmail);
 
