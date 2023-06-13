@@ -10,7 +10,4 @@ export {
   deleteUser,
   assignProductToUser,
   unassignProductToUser,
-  forgotPassword,
-  verificationCode,
-  changePassword,
 } from './users';

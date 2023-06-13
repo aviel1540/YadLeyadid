@@ -1,8 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { queryKeys } from '~/react-query/queryKeys';
 import * as products from '~/api/products';
-import { onSuccess } from '~/utils/onSuccess';
-import { onError } from '~/utils/onError';
+import { onSuccess, onError } from '~/utils';
 
 export const useProducts = () => useQuery([queryKeys.products], products.getProducts);
 

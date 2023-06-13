@@ -13,6 +13,10 @@
 ::-webkit-scrollbar-thumb {
   background-color: rgba(63, 63, 63, 0.604);
 }
+
+.button-add {
+  @apply bg-green/90 h-8 text-white rounded-md text-sm hover:bg-green;
+}
 .table-style {
   @apply relative top-2 w-10/12 block m-auto p-5;
 }

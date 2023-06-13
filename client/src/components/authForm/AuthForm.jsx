@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import logo from "~/assets/images/logo.jpeg";
-import { useLogin } from "~/hooks/useLogin";
-import { error } from "~/utils/notification";
+import { useLogin } from "~/hooks/useAuth";
+import { error } from "~/utils";
 import { Button } from "../logic";
 import { Actions } from "./Actions";
 import { useState } from "react";

@@ -6,3 +6,5 @@ export { Client, UserDetails } from './_client';
 export { Administrator } from './administrator';
 export { MainCategory } from './mainCategory';
 export { TitleTab } from './TitleTab';
+export { ErrorBoundary } from './ErrorBoundary';
+export { SideBar } from './sideBar/SideBar';

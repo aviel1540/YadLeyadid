@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,6 +11,7 @@ import { useProducts } from "~/hooks/useProducts";
 import { Spinner } from "../ui/Spinner";
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
+import { Button } from "../logic";
 
 export const Products = () => {
 	const [inputSearch, setInputSearch] = useState("");
@@ -46,7 +47,8 @@ export const Products = () => {
 					<div className="flex justify-between flex-row-reverse items-end mb-5">
 						{dataResults.length >= 1 ?
 							<Button
-								className="!bg-green !text-white hover:!bg-green/80 !w-44 !text-sm"
+								className="button-add w-44"
+								title="הוספת מוצר חדש"
 								onClick={() =>
 									setOpen({
 										...open,
@@ -56,10 +58,9 @@ export const Products = () => {
 										content: "הוספת מוצר חדש"
 									})
 								}
-							>
+							/>
 
-								הוספת מוצר
-							</Button>
+
 							: <div className="visible" />}
 						<TextField
 							id="outlined-search"

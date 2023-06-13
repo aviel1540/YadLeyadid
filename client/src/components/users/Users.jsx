@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,9 +10,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "~/components/ui/Spinner";
 import { useUsers } from "~/hooks/useUsers";
-import { filterData } from "~/utils/filterData";
+
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
+import { filterData } from "./filterData";
+import { Button } from "../logic";
 
 export const Users = () => {
 	const [inputSearch, setInputSearch] = useState("");
@@ -49,20 +51,22 @@ export const Users = () => {
 
 				<section className="table-style xl:w-full xl:relative xl:bottom-4 md:w-full">
 					<div className="flex justify-between flex-row-reverse items-end mb-5">
-						{dataResults.length >= 1 ? <Button
-							className="!bg-green/90 !text-white !rounded-md hover:!bg-green !w-44 !text-sm"
-							onClick={() =>
-								setOpen({
-									...open,
-									popUp: true,
-									action: true,
-									title: "add",
-									content: "הוספת לקוח חדש"
-								})
-							}
-						>
-							הוספת לקוח
-						</Button>
+						{dataResults.length >= 1 ?
+							<Button
+								title="הוספת לקוח חדש"
+								className="button-add w-44"
+								onClick={() =>
+									setOpen({
+										...open,
+										popUp: true,
+										action: true,
+										title: "add",
+										content: "הוספת לקוח חדש"
+									})
+								}
+							/>
+
+
 							: <div className="visible" />}
 						<TextField
 							id="outlined-search"

@@ -1,9 +1,7 @@
 import { TextField } from '@mui/material';
 import { useRef } from 'react';
 import { useAskExtensionRequest } from '~/hooks/useProducts';
-import { formatDate } from '~/utils/formatDate';
-import { error, info } from '~/utils/notification';
-import { replace } from '~/utils/replace';
+import { error, formatDate, replace } from '~/utils';
 import { SendIcon } from '../logic';
 
 export const Form = ({ open, setOpen, refetch }) => {

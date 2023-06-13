@@ -1,9 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import * as users from '~/api/users';
 import { queryKeys } from '~/react-query/queryKeys';
-import { success } from '~/utils/notification';
-import { onError } from '~/utils/onError';
-import { onSuccess } from '~/utils/onSuccess';
+import { onError, onSuccess, success } from '~/utils';
 
 export const useUsers = () => useQuery([queryKeys.users], users.getUsers);
 export const useAdministrators = () => useQuery([queryKeys.users], users.getAdministrators);
@@ -78,40 +76,6 @@ export const useUnassignProductToUser = (setOpen, open, refetch) =>
   useMutation((id) => users.unassignProductToUser(id), {
     onSuccess: (data) => {
       onSuccess(data, setOpen, open, refetch);
-    },
-    onError: (data) => {
-      onError(data);
-    },
-  });
-
-export const useForgotPassword = (setOpen, open, resetField) =>
-  useMutation(users.forgotPassword, {
-    onSuccess: (data) => {
-      success(data.message);
-      setOpen({ ...open, title: 'verificationCode', content: 'אימות קוד סודי' });
-      resetField('email');
-    },
-    onError: (data) => {
-      onError(data);
-    },
-  });
-
-export const useVerificationCode = (setOpen, open, resetField) =>
-  useMutation(users.verificationCode, {
-    onSuccess: (data) => {
-      success(data.message);
-      setOpen({ ...open, title: 'changePassword', content: 'החלפת סיסמא' });
-      resetField('code');
-    },
-    onError: (data) => {
-      onError(data);
-    },
-  });
-
-export const useChangePassword = (setOpen, open) =>
-  useMutation(users.changePassword, {
-    onSuccess: (data) => {
-      onSuccess(data, setOpen, open);
     },
     onError: (data) => {
       onError(data);

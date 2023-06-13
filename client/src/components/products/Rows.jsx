@@ -1,13 +1,12 @@
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Box, Collapse, IconButton, Table, TableBody, TableHead, Typography } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { Fragment, useState } from "react";
-import { BsInfoCircle } from "react-icons/bs";
 import { MdDeleteForever, MdOutlineModeEdit } from "react-icons/md";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { replace } from "~/utils/replace";
 import { ProductPlace } from "~/constants/productPlace";
+import { replace } from "~/utils";
 
 export const Rows = ({ row, index, setOpen, open }) => {
 	const [openTable, setOpenTable] = useState(false);

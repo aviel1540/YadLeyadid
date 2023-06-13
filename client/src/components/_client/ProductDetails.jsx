@@ -1,10 +1,9 @@
 import React from 'react'
 import { useUserByUsername } from '~/hooks/useUsers';
 import { Spinner } from '../ui/Spinner';
-import { formatDate } from '~/utils/formatDate';
+import { formatDate, replace } from '~/utils';
 import { Button } from '@mui/material';
 import { Actions } from './Actions';
-import { replace } from '~/utils/replace';
 
 export const ProductDetails = ({ username, open, setOpen }) => {
     const { data: details, isLoading, refetch } = useUserByUsername(username);

@@ -7,4 +7,5 @@ export const queryKeys = {
   userById: 'userById',
   userByUsername: 'userByUsername',
   productsForUser: 'productsForUser',
+  mainCategory: 'mainCategory',
 };
