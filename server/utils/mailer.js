@@ -1,8 +1,7 @@
 const nodemailer = require("nodemailer");
-let url = "https://YadLeyadid.com";
-let text = "למעבר לאתר";
+const { htmlMailer } = require("./htmlMailer");
 
-exports.sendMailFunc = (clientMail, title) => {
+exports.sendMailFunc = (identification, clientMail, title, subTitle = "") => {
 	let mailDetails;
 	const transporter = nodemailer.createTransport({
 		service: "gmail",
@@ -15,10 +14,7 @@ exports.sendMailFunc = (clientMail, title) => {
 		from: process.env.EMAIL_AUTH,
 		to: clientMail,
 		subject: "Yad Leyadid",
-		html: `<div style="max-width: 700px; margin: auto; border: 10px solid #ddd; padding: 50px 20px;font-size: 110%">
-		<h1 style="text-align:center; text-transform: uppercase;color: black;">${title}</h1>
-		<a href=${url} style="background:crimson;text-decoration: none;color: white; padding: 10px 20px; margin: 10px 0;display: inline-block">${text}</a>  
-		</div>`,
+		html: htmlMailer(identification, title, subTitle),
 	};
 	transporter.sendMail(mailDetails, (error, info) => {
 		if (error) return error;

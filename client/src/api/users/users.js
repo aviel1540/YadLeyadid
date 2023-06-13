@@ -42,6 +42,13 @@ export const updateUser = async (user) => {
   return data;
 };
 
+export const updatePassword = async (request) => {
+  const { userId } = request;
+  const { data } = await axios.patch(`/users/update-password/${userId}`, request);
+
+  return data;
+};
+
 export const deleteUser = async (id) => {
   const { data } = await axios.delete(`/users/delete/${id}`);
 
@@ -58,6 +65,24 @@ export const assignProductToUser = async (request) => {
 export const unassignProductToUser = async (request) => {
   const { userId, productId } = request;
   const { data } = await axios.delete(`/users/delete-product/${userId}/productId/${productId}`);
+
+  return data;
+};
+
+export const forgotPassword = async (email) => {
+  const { data } = await axios.post(`/users/forgot-password`, email);
+
+  return data;
+};
+
+export const verificationCode = async (code) => {
+  const { data } = await axios.post(`/users/verification-code`, code);
+
+  return data;
+};
+
+export const changePassword = async (request) => {
+  const { data } = await axios.post(`/users/change-password`, request);
 
   return data;
 };

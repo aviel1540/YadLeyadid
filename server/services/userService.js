@@ -20,8 +20,8 @@ exports.findByEmail = async (email) => await User.findOne({ email });
 exports.findByPhoneNumber = async (phoneNumber) =>
 	await User.findOne({ phoneNumber });
 
-exports.addUser = async (request) => {
-	return new User({
+exports.addUser = async (request) =>
+	new User({
 		entityCard: request.checkEntityCard,
 		username: request.checkUsername,
 		name: request.checkName,
@@ -32,15 +32,20 @@ exports.addUser = async (request) => {
 		paymentType: request.paymentType ? request.paymentType : null,
 		isAdmin: request.admin,
 	});
-};
 
 exports.deleteUser = async (userId) => await User.findByIdAndRemove(userId);
 
 exports.updateUserPassword = async (userId, password) =>
 	await User.findByIdAndUpdate(userId, { password });
 
-exports.updateUserDetails = async (request) => {
-	return await User.findByIdAndUpdate(request.checkUserId, {
+exports.updatePasswordResetToken = async (userId) =>
+	await User.findByIdAndUpdate(userId, {
+		passwordResetToken: null,
+		passwordResetExpires: null,
+	});
+
+exports.updateUserDetails = async (request) =>
+	await User.findByIdAndUpdate(request.checkUserId, {
 		entityCard: request.checkEntityCard,
 		username: request.checkUserName,
 		name: request.checkName,
@@ -50,7 +55,6 @@ exports.updateUserDetails = async (request) => {
 		paymentType: request.paymentType ? request.paymentType : null,
 		isAdmin: request.admin,
 	});
-};
 
 exports.userDetails = async (userId) => {
 	const user = await this.findUserById(userId);

@@ -4,13 +4,14 @@ import { useLocation } from "react-router-dom";
 import { PaymentTypes, paymentTypes } from "~/constants/PaymentTypes";
 import { ProductPlace } from "~/constants/productPlace";
 import { useProducts } from "~/hooks/useProducts";
-import { useAddUser, useAsignProductToUser, useUpdateUser } from "~/hooks/useUsers";
+import { useAddUser, useAsignProductToUser, useUpdatePassword, useUpdateUser } from "~/hooks/useUsers";
 import { error, info } from "~/utils/notification";
 import { replace } from "~/utils/replace";
 import { MultipleAutocomplete, RadioButtons, SelectInput, SendIcon } from "../logic";
 import { Spinner } from "../ui/Spinner";
 
 export const Form = ({ setOpen, open, refetch }) => {
+    console.log("🚀 open:", open)
     const { title, content } = open;
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -25,6 +26,7 @@ export const Form = ({ setOpen, open, refetch }) => {
     const { data: products, isLoading } = useProducts();
     const { mutate: addMutateUser } = useAddUser(setOpen, open, refetch);
     const { mutate: updateMutateUser } = useUpdateUser(setOpen, open, refetch);
+    const { mutate: updateMutatePassword } = useUpdatePassword(setOpen, open, refetch);
     const { mutate: asignMutateProductToUser } = useAsignProductToUser(setOpen, open, refetch);
 
     const activeProducts = products?.filter((p) => p.place !== ProductPlace.LOANED)
@@ -32,7 +34,13 @@ export const Form = ({ setOpen, open, refetch }) => {
     const handleChange = () => setChecked(!checked)
 
     const onSubmit = (data) => {
-        const { entityCard, username, name, password, email, phoneNumber, address } = data;
+        const {
+            entityCard, username,
+            name, password,
+            email, phoneNumber,
+            address, currentPassword,
+            newPassword, verifyNewPassword
+        } = data;
 
         try {
             if (title === "add") {
@@ -74,6 +82,16 @@ export const Form = ({ setOpen, open, refetch }) => {
                     ids: selectedAssign.map((s) => s.id),
                 }
                 asignMutateProductToUser(asignProductToUser)
+            }
+            else if (title === "editPassword") {
+                const updatePassword = {
+                    userId: open.id,
+                    currentPassword,
+                    newPassword,
+                    verifyNewPassword
+                }
+
+                updateMutatePassword(updatePassword)
             }
         } catch (err) {
             error(err);
@@ -177,16 +195,16 @@ export const Form = ({ setOpen, open, refetch }) => {
                 {title === "editPassword" &&
                     <>
                         <label htmlFor="password" className="form-label w-10/12">סיסמא נוכחית:
-                            <input type="password" id="password" name="password" className="form-input w-full" placeholder="סיסמא נוכחית" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
+                            <input type="password" id="password" name="password" className="form-input w-full" placeholder="סיסמא נוכחית" {...register("currentPassword", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.password?.message}</p>
                         </label>
 
                         <label htmlFor="password" className="form-label">סיסמא חדשה:
-                            <input type="password" id="password" name="password" className="form-input" placeholder="סיסמא חדשה" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
+                            <input type="password" id="password" name="password" className="form-input" placeholder="סיסמא חדשה" {...register("newPassword", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.password?.message}</p>
                         </label>
                         <label htmlFor="password" className="form-label">אימות סיסמא חדשה:
-                            <input type="password" id="password" name="password" className="form-input" placeholder="אימות סיסמא חדשה" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
+                            <input type="password" id="password" name="password" className="form-input" placeholder="אימות סיסמא חדשה" {...register("verifyNewPassword", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.password?.message}</p>
                         </label>
                     </>
