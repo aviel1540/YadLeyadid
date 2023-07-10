@@ -1,6 +1,13 @@
 import React from 'react'
-import { Client } from '~/components'
+import { Client, TitleTab } from '~/components'
 
 export const ClientPage = () => {
-    return <Client />
+
+    return (
+        <>
+            <TitleTab title="איזור אישי" />
+            <Client />
+        </>
+
+    )
 }

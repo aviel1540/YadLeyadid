@@ -33,8 +33,6 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
                 <TableCell align="right">{index}.</TableCell>
                 <TableCell align="right">{row.serialNumber}</TableCell>
                 <TableCell align="right">{row.semiCategoryName}</TableCell>
-
-
                 <TableCell align="center">
                     <IconButton
                         title="עריכה"

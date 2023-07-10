@@ -1,11 +1,20 @@
-import { ModalDialog } from "~/components/ui/ModalDialog";
-import { PopUp } from "~/components/ui/PopUp";
+import { ModalDialog, PopUp } from "~/components/ui";
 import { Form } from "./Form";
 import { useDeleteMission } from "~/hooks/useMission";
 
 export const Actions = ({ setOpen, open, refetch }) => {
+    const { title } = open
 
     const { mutate: deleteMission } = useDeleteMission(setOpen, open, refetch);
+
+    const handleSubmit = () => {
+        if (title === "delete") {
+            deleteMission(open.id);
+        }
+        else if (title === 'cancel') {
+            alert('cancel')
+        }
+    }
 
     return (
         <>
@@ -13,7 +22,7 @@ export const Actions = ({ setOpen, open, refetch }) => {
                 <ModalDialog
                     open={open}
                     setOpen={setOpen}
-                    onClick={() => deleteMission(open.id)}
+                    onClick={handleSubmit}
                     title={"האם אתה בטוח ?"}
                 />
             )}

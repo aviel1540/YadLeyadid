@@ -41,3 +41,9 @@ export const askExtensionRequest = async (request) => {
 
   return data;
 };
+
+export const waitConfirmExtensionRequest = async () => {
+  const { data } = await axios.get('/products/wait-confirm-extension-request');
+
+  return data;
+};

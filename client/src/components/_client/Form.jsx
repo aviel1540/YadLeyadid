@@ -5,7 +5,7 @@ import { error, formatDate, replace } from '~/utils';
 import { SendIcon } from '../ui/SendIcon';
 
 export const Form = ({ open, setOpen, refetch }) => {
-    const { id, content, info, edit } = open;
+    const { content, info, edit } = open;
 
     const dateInputRef = useRef();
 
@@ -23,7 +23,7 @@ export const Form = ({ open, setOpen, refetch }) => {
                     info("נא לבחור תאריך הארכה.")
                     return;
                 }
-                const askExtension = { id, date };
+                const askExtension = { id: info.id, date };
                 askExtensionRequest(askExtension);
             }
 
@@ -38,8 +38,15 @@ export const Form = ({ open, setOpen, refetch }) => {
                 {content}
             </h1>
             <div className='flex flex-wrap justify-center m-4 p-4 gap-2'>
-                <span className='text-lg'>נא לבחור תאריך הארכה למוצר <span className='underline'>{replace(open.info?.productName)}</span></span>
-                <TextField type='date' className='!w-8/12 !mt-3 sm:!w-full' inputRef={dateInputRef} defaultValue={formatDate(new Date(info?.loanReturn), "yyyy-MM-dd")} />
+                <span className='text-lg'>נא לבחור תאריך הארכה למוצר <b>{replace(open.info?.productName)}</b></span>
+                <TextField
+                    type='date'
+                    className='!w-8/12 !mt-3 sm:!w-full'
+                    inputRef={dateInputRef}
+                    defaultValue={formatDate(new Date(info?.loanReturn), "yyyy-MM-dd")}
+                    InputProps={{ inputProps: { min: formatDate(new Date(info?.loanReturn), "yyyy-MM-dd") } }}
+
+                />
             </div>
             <div className="flex justify-end p-3">
                 <SendIcon onClick={submitHandler} title={edit} className="text-3xl" />

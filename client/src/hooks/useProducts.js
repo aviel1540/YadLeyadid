@@ -46,3 +46,6 @@ export const useAskExtensionRequest = (setOpen, open, refetch) =>
       onError(data);
     },
   });
+
+export const useWaitConfirmExtensionRequest = () =>
+  useQuery([queryKeys.waitConfirmExtensionRequest], products.waitConfirmExtensionRequest);

@@ -46,7 +46,7 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                                 </label>
                             </div>
                             <div>
-                                <label className="text-base text-red">
+                                <label className={`text-base text-red ${!product.requestDate && "invisible"}`}>
                                     תאריך הארכה: {" "}
                                     {formatDate(product.requestDate)}
                                 </label>
@@ -72,7 +72,13 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                     ))}
                 </div>
             </main>
-            {open.action && <Actions open={open} setOpen={setOpen} refetch={refetch} />}
+            {open.action &&
+                <Actions
+                    open={open}
+                    setOpen={setOpen}
+                    refetch={refetch}
+                />
+            }
         </>
     )
 }

@@ -15,11 +15,11 @@ export const UserDetails = () => {
 	return (
 		<>
 			<Header />
-			<section className="grid justify-between grid-cols-2 w-10/12 mr-52 md:mr-0 sm:w-full gap-1  p-8 mt-10 lg:grid-cols-2 sm:grid-cols-2 sm:gap-5 sm:p-3">
+			<section className="grid justify-between grid-cols-3 w-10/12 mr-52  gap-1 p-8 mt-10 lg:grid-cols-2 lg:gap-5 md:mr-0 sm:w-full sm:grid-cols-1 sm:gap-1 sm:p-3">
 				<TextInput
 					info={details?.name}
 					originalText={"שם"}
-					className={"!ml-5 !mt-5 w-3/5  md:w-full"}
+					className={"!ml-5 !mt-5 w-3/5 md:w-full"}
 					readOnly={true}
 				/>
 				<TextInput

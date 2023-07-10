@@ -2,14 +2,12 @@ import { useState } from "react";
 import { BsCartCheck, BsCartX } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi";
 import { TbShoppingCartOff } from "react-icons/tb";
-import { useProducts, useProductsPlaces } from "~/hooks/useProducts";
+import { useProductsPlaces } from "~/hooks/useProducts";
 import { useUsers } from "~/hooks/useUsers";
 import { useAuthStore } from "~/store/auth";
 import { Spinner } from "../ui";
-import { Notification } from "./Notification";
-import { SquareInfo } from "./SquareInfo";
-import { Columns, Pie } from "./chart";
-import { Missions } from "./missions";
+import { SquareInfo, Missions, Notification } from ".";
+import { Columns, Line, Pie } from "./chart";
 
 export const Home = () => {
 	const { name } = useAuthStore();
@@ -25,12 +23,10 @@ export const Home = () => {
 	});
 
 	const { data: productsPlaces, isLoading: isLoadingProductsPlaces } = useProductsPlaces()
-	const { data: products, isLoading: isLoadingProducts } = useProducts();
+	// const { data: products, isLoading: isLoadingProducts } = useProducts();
 	const { data: users, isLoading: isLoadingUsers } = useUsers();
 
-
-	if (isLoadingProducts || isLoadingUsers || isLoadingProductsPlaces) return <Spinner />;
-
+	if (isLoadingUsers || isLoadingProductsPlaces) return <Spinner />;
 
 	return (
 		<>
@@ -74,9 +70,10 @@ export const Home = () => {
 				<Pie product={productsPlaces} blur={open.action} />
 				<Missions setOpen={setOpen} open={open} />
 				<Columns users={users} blur={open.action} />
+				<Notification setOpen={setOpen} open={open} />
 				{/* <Line users={users} blur={open.action} /> */}
-				<Notification blur={open.action} />
 			</section>
+			<br />
 		</>
 	);
 };

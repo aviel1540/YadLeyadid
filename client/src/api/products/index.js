@@ -5,4 +5,5 @@ export {
   deleteProduct,
   updateProduct,
   askExtensionRequest,
+  waitConfirmExtensionRequest,
 } from './products';

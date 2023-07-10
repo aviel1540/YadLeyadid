@@ -1,5 +1,4 @@
-import { ModalDialog } from "~/components/ui/ModalDialog";
-import { PopUp } from "~/components/ui/PopUp";
+import { ModalDialog, PopUp } from "~/components/ui";
 import { Form } from "./Form";
 
 export const Actions = ({ setOpen, open, refetch }) => {
