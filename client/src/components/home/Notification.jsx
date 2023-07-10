@@ -34,14 +34,15 @@ export const Notification = ({ setOpen, open }) => {
                                     <b>{extensionRequest?.name}</b> {" "}
                                     ביקש הארכה למוצר {" "}
                                     <b>{replace(extensionRequest.productName)}</b>
-                                    לתאריך {formatDate(extensionRequest.requestDate)} {" "}
-                                    האם לאשר?
+                                    לתאריך: {formatDate(extensionRequest.requestDate)}{" "}
+                                    <br />
+                                    תאריך מקורי הינו: {formatDate(extensionRequest.loanReturn)}
                                 </li>
                                 <IconButton onClick={() => handlerThreeDots(index + 1)}>
                                     <BsThreeDotsVertical />
                                 </IconButton>
                                 {(threeDots.click && threeDots.index === index + 1) &&
-                                    <div className='flex justify-around bg-gray-light/40 w-32 rounded-xl'>
+                                    <div className='flex justify-around bg-gray-light/40 w-32 rounded-xl h-11'>
                                         <MdOutlineCancel color='red' size={25} className='!mt-2 !cursor-pointer' title="סירוב"
                                             onClick={() =>
                                                 setOpen({
