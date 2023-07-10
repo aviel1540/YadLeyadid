@@ -32,7 +32,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 
 				<TableCell align="right">{replace(row.productName)}</TableCell>
 
-				<TableCell align="right" className={`${row.place === ProductPlace.IN_STOCK ? "!text-green" : row.place === ProductPlace.LOANED ? "!text-red" : null}`} >{row.place}</TableCell>
+				<TableCell align="right" className={`${row.place === ProductPlace.IN_STOCK ? "!text-green" : row.place === ProductPlace.LOANED ? "!text-red" : "!text-purple"}`} >{row.place}</TableCell>
 				<TableCell align="right">{row.inCategory}</TableCell>
 				<TableCell align="center">
 					<IconButton

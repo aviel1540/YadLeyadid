@@ -9,4 +9,5 @@ export const queryKeys = {
   productsForUser: 'productsForUser',
   mainCategory: 'mainCategory',
   semiCategory: 'semiCategory',
+  waitConfirmExtensionRequest: 'waitConfirmExtensionRequest',
 };

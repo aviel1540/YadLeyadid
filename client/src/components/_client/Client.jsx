@@ -13,6 +13,7 @@ export const Client = () => {
         content: "",
         id: "",
     });
+    console.log("🚀 open:", open)
 
     return (
         <>

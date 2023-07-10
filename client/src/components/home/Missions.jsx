@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
-import { TextInput } from '../../logic'
-import { Button, IconButton } from '@mui/material'
-import { Actions } from './Actions';
-import { useMissions } from '~/hooks/useMission';
-import { Spinner } from '~/components/ui';
-import { useAuthStore } from '~/store/auth';
+import { Button, IconButton } from '@mui/material';
+import { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { MdDeleteForever, MdOutlineModeEdit } from 'react-icons/md';
+import { Spinner } from '~/components/ui';
+import { useMissions } from '~/hooks/useMission';
+import { useAuthStore } from '~/store/auth';
+import { Actions } from './Actions';
 
 export const Missions = ({ setOpen, open }) => {
     const { username } = useAuthStore();

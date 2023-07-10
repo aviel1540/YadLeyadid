@@ -263,6 +263,7 @@ exports.allProductsWaitConfirmExtensionRequest = async (req, res) => {
 					loanDate: productDetails.loanDate,
 					loanReturn: productDetails.loanReturn,
 					requestDate: productDetails.requestDate,
+					id: productDetails._id,
 					name: user.name,
 				};
 				products.push(details);
