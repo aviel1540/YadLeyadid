@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Spinner } from "~/components/ui/Spinner";
+import { Spinner } from "~/components/ui";
 import { useUsers } from "~/hooks/useUsers";
 
 import { Actions } from "./Actions";

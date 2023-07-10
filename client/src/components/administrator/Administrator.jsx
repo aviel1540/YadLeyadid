@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { TextField } from '@mui/material';
 import { useState } from 'react';
-import { Spinner } from "~/components/ui/Spinner";
+import { Spinner } from "~/components/ui";
 import { useAdministrators } from '~/hooks/useUsers';
 import { Actions } from '../users/Actions';
 import { Rows } from './Rows';

@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useState } from "react";
 import { useProducts } from "~/hooks/useProducts";
-import { Spinner } from "../ui/Spinner";
+import { Spinner } from "../ui";
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
 import { Button } from "../logic";

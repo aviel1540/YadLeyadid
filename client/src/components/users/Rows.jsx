@@ -125,7 +125,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
 								component="div"
 								className="!flex"
 							>
-								מוצרים - {row?.userProductList?.length}
+								מוצרים - {row?.userProductList?.length > 0 ? `(${row?.userProductList?.length})` : `(${0})`}
 								<IconButton
 									title="שיוך מוצר"
 									className="!text-green !text-2xl !-mt-0.5"
