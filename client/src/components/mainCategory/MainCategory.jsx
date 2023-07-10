@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useMainCategory } from '~/hooks/useMainCategory';
-import { Spinner } from '../ui/Spinner';
+import { Spinner } from '../ui';
 import { Rows } from './Rows';
 import { Button } from '../logic';
 import { TextField } from '@mui/material';

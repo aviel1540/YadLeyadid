@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useAddProduct, useUpdateProduct } from "~/hooks/useProducts";
 import { error, replace } from "~/utils";
-import { SendIcon } from "../logic";
+import { SendIcon } from "../ui";
 
 export const Form = ({ setOpen, open, refetch }) => {
     const { title, content } = open;

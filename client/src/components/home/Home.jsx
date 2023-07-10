@@ -5,7 +5,7 @@ import { TbShoppingCartOff } from "react-icons/tb";
 import { useProducts, useProductsPlaces } from "~/hooks/useProducts";
 import { useUsers } from "~/hooks/useUsers";
 import { useAuthStore } from "~/store/auth";
-import { Spinner } from "../ui/Spinner";
+import { Spinner } from "../ui";
 import { Notification } from "./Notification";
 import { SquareInfo } from "./SquareInfo";
 import { Columns, Pie } from "./chart";

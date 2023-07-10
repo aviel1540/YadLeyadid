@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { error } from '~/utils';
-import { SendIcon } from '../logic';
+import { error, replace } from '~/utils';
+import { SendIcon } from '../ui/SendIcon';
 import { useAddMainCategory, useUpdateMainCategory } from '~/hooks/useMainCategory';
+import { MultipleAutocomplete } from '../logic';
+import { useSemiCategory } from '~/hooks/useSemiCategory';
 
 export const Form = ({ setOpen, open, refetch }) => {
     const { title, content } = open;
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
+    const [selectedAssign, setSelectedAssign] = useState([])
+    //TODO: add asignMainCategoryToSemiCategoryOnChange to onSubmit
+
     const { mutate: addMutateMainCategory } = useAddMainCategory(setOpen, open, refetch);
     const { mutate: updateMutateMainCategory } = useUpdateMainCategory(setOpen, open, refetch);
+
+    const { data: semiCategory, isLoading } = useSemiCategory();
 
 
     const onSubmit = async (data) => {
@@ -30,23 +37,45 @@ export const Form = ({ setOpen, open, refetch }) => {
         }
     };
 
+    const asignMainCategoryToSemiCategoryOnChange = (_, value) => {
+        setSelectedAssign(value);
+    };
+
     return (
         <>
             <h1 className="block text-center text-2xl mb-2">{content}</h1>
             <main className="flex flex-wrap justify-center  m-4 p-4 gap-4">
-                <label htmlFor="mainCategoryName" className="form-label w-1/2">שם קטגוריה ראשית:
-                    <input
-                        type="text"
-                        id="mainCategoryName"
-                        name="mainCategoryName"
-                        defaultValue={title === "edit" ? open.info.mainCategoryName : null}
-                        className="form-input w-full"
-                        placeholder="שם קטגוריה ראשית"
-                        {...register("mainCategoryName", { required: { value: true, message: "שדה חובה." } })}
-                    />
-                    <p className="form-p_error">{errors.mainCategoryName?.message}</p>
-                </label>
-
+                {title === 'asignMainCategoryToSemiCategory' ?
+                    (
+                        !isLoading ?
+                            <MultipleAutocomplete
+                                options={semiCategory?.map(
+                                    (semi, index) => ({
+                                        label: `${index + 1}. ${replace(semi?.semiCategoryName)} `,
+                                        id: semi?._id,
+                                    })
+                                )}
+                                // onChange={asignProductToSemiCategoryOnChange}
+                                placeholder={"קטגוריות משניות"}
+                                isLoading={isLoading}
+                                label={"קטגוריות משניות"}
+                            />
+                            : title === "asignProductToSemiCategory" && <Spinner />
+                    )
+                    :
+                    <label htmlFor="mainCategoryName" className="form-label w-1/2">שם קטגוריה ראשית:
+                        <input
+                            type="text"
+                            id="mainCategoryName"
+                            name="mainCategoryName"
+                            defaultValue={title === "edit" ? open.info.mainCategoryName : null}
+                            className="form-input w-full"
+                            placeholder="שם קטגוריה ראשית"
+                            {...register("mainCategoryName", { required: { value: true, message: "שדה חובה." } })}
+                        />
+                        <p className="form-p_error">{errors.mainCategoryName?.message}</p>
+                    </label>
+                }
             </main>
             <div className="flex justify-end p-2">
                 <SendIcon onClick={handleSubmit(onSubmit)} title={title} className="text-3xl" />

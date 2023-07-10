@@ -32,7 +32,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 
 				<TableCell align="right">{replace(row.productName)}</TableCell>
 
-				<TableCell align="right" className={`${row.place === ProductPlace.IN_STOCK && "!text-green"}`} >{row.place}</TableCell>
+				<TableCell align="right" className={`${row.place === ProductPlace.IN_STOCK ? "!text-green" : row.place === ProductPlace.LOANED ? "!text-red" : null}`} >{row.place}</TableCell>
 				<TableCell align="right">{row.inCategory}</TableCell>
 				<TableCell align="center">
 					<IconButton
@@ -82,7 +82,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 								component="div"
 								className="!flex"
 							>
-								לקוחות - {row?.userDetails?.length}
+								לקוחות -	{row?.userDetails?.length > 0 ? `(${row?.userDetails?.length})` : `(${0})`}
 							</Typography>
 							<Table size="small" aria-label="purchases">
 								<TableHead>
@@ -130,9 +130,9 @@ export const Rows = ({ row, index, setOpen, open }) => {
 								</TableBody>
 							</Table>
 						</Box>
-					</Collapse>
-				</TableCell>
-			</TableRow>
-		</Fragment>
+					</Collapse >
+				</TableCell >
+			</TableRow >
+		</Fragment >
 	);
 };

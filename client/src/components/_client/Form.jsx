@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import { useRef } from 'react';
 import { useAskExtensionRequest } from '~/hooks/useProducts';
 import { error, formatDate, replace } from '~/utils';
-import { SendIcon } from '../logic';
+import { SendIcon } from '../ui/SendIcon';
 
 export const Form = ({ open, setOpen, refetch }) => {
     const { id, content, info, edit } = open;

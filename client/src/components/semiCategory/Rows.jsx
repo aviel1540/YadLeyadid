@@ -82,7 +82,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
                                 component="div"
                                 className="!flex"
                             >
-                                מוצרים - {row?.productList?.length}
+                                מוצרים - {row?.productList?.length > 0 ? `(${row?.productList?.length})` : `(${0})`}
                                 <IconButton
                                     title="שיוך מוצר"
                                     className="!text-green !text-2xl !-mt-0.5"
@@ -91,8 +91,8 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
                                             ...open,
                                             action: true,
                                             popUp: true,
-                                            title: "asignProductToUser",
-                                            content: "שיוך מוצרים ללקוח",
+                                            title: "asignProductToSemiCategory",
+                                            content: "שיוך מוצרים לקטגוריה משנית",
                                             id: row._id,
                                             info: row,
                                         })

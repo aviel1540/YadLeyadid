@@ -6,8 +6,8 @@ import { ProductPlace } from "~/constants/productPlace";
 import { useProducts } from "~/hooks/useProducts";
 import { useAddUser, useAsignProductToUser, useUpdatePassword, useUpdateUser } from "~/hooks/useUsers";
 import { error, info, replace } from "~/utils";
-import { MultipleAutocomplete, RadioButtons, SelectInput, SendIcon } from "../logic";
-import { Spinner } from "../ui/Spinner";
+import { MultipleAutocomplete, RadioButtons, SelectInput } from "../logic";
+import { Spinner, SendIcon } from "../ui";
 
 export const Form = ({ setOpen, open, refetch }) => {
     const { title, content } = open;
@@ -27,7 +27,7 @@ export const Form = ({ setOpen, open, refetch }) => {
     const { mutate: updateMutatePassword } = useUpdatePassword(setOpen, open, refetch);
     const { mutate: asignMutateProductToUser } = useAsignProductToUser(setOpen, open, refetch);
 
-    const activeProducts = products?.filter((p) => p.place !== ProductPlace.LOANED)
+    const activeProducts = products?.filter((p) => p.place !== ProductPlace.LOANED && p.place !== ProductPlace.REPAIR)
 
     const handleChange = () => setChecked(!checked)
 

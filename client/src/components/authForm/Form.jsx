@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useChangePassword, useForgotPassword, useVerificationCode } from "~/hooks/useAuth";
 import { error } from "~/utils";
-import { SendIcon } from "../logic";
+import { SendIcon } from "../ui";
 import { useState } from "react";
 
 export const Form = ({ setOpen, open }) => {

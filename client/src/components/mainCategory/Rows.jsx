@@ -1,14 +1,12 @@
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Box, Collapse, IconButton, Table, TableBody, TableHead, Typography } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { Fragment, useState } from "react";
-import { BsInfoCircle } from "react-icons/bs";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { formatDate, replace } from "~/utils";
 import { MdDeleteForever, MdOutlineModeEdit, MdRemoveCircleOutline } from "react-icons/md";
-import { RiAddFill, RiLockPasswordLine } from "react-icons/ri";
-import { PaymentTypes } from "~/constants/PaymentTypes";
+import { RiAddFill } from "react-icons/ri";
+import { replace } from "~/utils";
 
 export const Rows = ({ row, userDetails, index, setOpen, open }) => {
     const [openTable, setOpenTable] = useState(false);
@@ -81,17 +79,17 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
                                 component="div"
                                 className="!flex"
                             >
-                                קטגוריה משנית - {row?.semiCategoryList?.length}
+                                קטגוריה משנית - {row?.semiCategoryList?.length > 0 ? `(${row?.semiCategoryList?.length})` : `(${0})`}
                                 <IconButton
-                                    title="שיוך מוצר"
+                                    title="שיוך קטגוריה משנית"
                                     className="!text-green !text-2xl !-mt-0.5"
                                     onClick={() =>
                                         setOpen({
                                             ...open,
                                             action: true,
                                             popUp: true,
-                                            title: "asignProductToUser",
-                                            content: "שיוך מוצרים ללקוח",
+                                            title: "asignMainCategoryToSemiCategory",
+                                            content: "שיוך קטגוריה משנית",
                                             id: row._id,
                                             info: row,
                                         })
@@ -147,6 +145,6 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
                     </Collapse>
                 </TableCell>
             </TableRow>
-        </Fragment>
+        </Fragment >
     );
 };

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useUserByUsername } from '~/hooks/useUsers';
-import { Spinner } from '../ui/Spinner';
+import { Spinner } from '../ui';
 import { formatDate, replace } from '~/utils';
 import { Button } from '@mui/material';
 import { Actions } from './Actions';

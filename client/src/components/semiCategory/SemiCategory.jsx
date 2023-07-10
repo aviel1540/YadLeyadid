@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { TextField } from '@mui/material';
 import { useSemiCategory } from '~/hooks/useSemiCategory';
 import { Button } from '../logic';
-import { Spinner } from '../ui/Spinner';
+import { Spinner } from '../ui';
 import { Actions } from './Actions';
 import { Rows } from './Rows';
 

@@ -3,7 +3,7 @@ import { TextInput } from '../../logic'
 import { Button, IconButton } from '@mui/material'
 import { Actions } from './Actions';
 import { useMissions } from '~/hooks/useMission';
-import { Spinner } from '../../ui/Spinner';
+import { Spinner } from '~/components/ui';
 import { useAuthStore } from '~/store/auth';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { MdDeleteForever, MdOutlineModeEdit } from 'react-icons/md';
