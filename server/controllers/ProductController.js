@@ -70,29 +70,23 @@ exports.getProductById = async (req, res) => {
 	}
 };
 
-exports.updateProduct = async (req, res) => {
+exports.updateProductLocation = async (req, res) => {
 	const productId = escape(req.params.id);
-	const productName = escape(req.body.productName);
 	const productPlace = escape(req.body.productPlace);
 
 	let updateProduct;
 	let place;
 	try {
 		const checkId = validation.addSlashes(productId);
-		const checkProductName = validation.addSlashes(productName);
 		const checkProductPlace = validation.addSlashes(productPlace);
 
-		if (![checkProductName, checkProductPlace].every(Boolean))
+		if (!checkProductPlace)
 			return res
 				.status(400)
 				.json({ message: "נא למלא את כל השדות." });
 
 
 		const product = await productService.findProductById(checkId);
-		if (product.inCategory)
-			return res
-				.status(400)
-				.json({ message: "לא ניתן לשנות שם - משוייך לקטגוריה." });
 
 		if (product.place == ProductPlace.LOANED)
 			return res
@@ -108,7 +102,6 @@ exports.updateProduct = async (req, res) => {
 
 		updateProduct = await productService.updateProduct(
 			checkId,
-			checkProductName,
 			place
 		);
 
@@ -163,14 +156,14 @@ exports.updateExtensionRequest = async (req, res) => {
 	let updateProduct;
 	try {
 		const checkProductId = validation.addSlashes(productId);
-		const checkAnswer = validation.addSlashes(answer);
+		// const checkAnswer = validation.addSlashes(answer);
 
 		product = await productService.findProductById(checkProductId);
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
 		user = await userService.findUserById(product.loanBy);
 
-		if (!checkAnswer) {
+		if (!answer) {
 			mailer.sendMailFunc(
 				"updateExtensionRequest",
 				user.email,

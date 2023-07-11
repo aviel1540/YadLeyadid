@@ -9,8 +9,8 @@ exports.addProduct = async (productName) => new Product({ productName });
 exports.findProductById = async (productId) =>
 	await Product.findById(productId);
 
-exports.updateProduct = async (id, productName, productPlace) =>
-	await Product.findByIdAndUpdate(id, { productName ,place: productPlace });
+exports.updateProduct = async (id, productPlace) =>
+	await Product.findByIdAndUpdate(id, { place: productPlace });
 
 exports.deleteProduct = async (productId) =>
 	await Product.findByIdAndRemove(productId);

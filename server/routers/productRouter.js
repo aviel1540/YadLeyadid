@@ -21,7 +21,7 @@ router.get("/:id", productController.getProductById);
 
 router.delete("/delete/:id", productController.deleteProduct);
 
-router.patch("/update/:id", productController.updateProduct);
+router.patch("/update-location/:id", productController.updateProductLocation);
 
 router.patch("/:id/loan-return/:userId", productController.updateExtensionRequest);
 

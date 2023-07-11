@@ -941,7 +941,7 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"answer": { "type": "string" }
+									"answer": { "type": "boolean" }
 								}
 							}
 						}
@@ -954,7 +954,7 @@
 				}
 			}
 		},
-		"/products/update/{id}": {
+		"/products/update-location/{id}": {
 			"patch": {
 				"tags": ["Product"],
 				"summary": "Update product",
@@ -977,7 +977,6 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"productName": { "type": "string" },
 									"productPlace": { "type": "string" }
 								}
 							}
