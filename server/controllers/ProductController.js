@@ -73,30 +73,49 @@ exports.getProductById = async (req, res) => {
 exports.updateProduct = async (req, res) => {
 	const productId = escape(req.params.id);
 	const productName = escape(req.body.productName);
+	const productPlace = escape(req.body.productPlace);
 
 	let updateProduct;
+	let place;
 	try {
 		const checkId = validation.addSlashes(productId);
 		const checkProductName = validation.addSlashes(productName);
+		const checkProductPlace = validation.addSlashes(productPlace);
 
-		if (!checkProductName) {
-			return res.status(400).json({ message: "נא למלא את השדה." });
-		}
+		if (![checkProductName, checkProductPlace].every(Boolean))
+			return res
+				.status(400)
+				.json({ message: "נא למלא את כל השדות." });
+
 
 		const product = await productService.findProductById(checkId);
-		if (product.inCategory) {
+		if (product.inCategory)
 			return res
 				.status(400)
 				.json({ message: "לא ניתן לשנות שם - משוייך לקטגוריה." });
-		}
+
+		if (product.place == ProductPlace.LOANED)
+			return res
+				.status(400)
+				.json({ message: "לא ניתן לשנות מיקום למוצר מושאל" })
+
+		if (checkProductPlace == ProductPlace.IN_STOCK) place = ProductPlace.IN_STOCK;
+		else if (checkProductPlace == ProductPlace.REPAIR) place = ProductPlace.REPAIR;
+		else
+			return res
+				.status(400)
+				.json({ message: "מיקום לא תקין" })
 
 		updateProduct = await productService.updateProduct(
 			checkId,
-			checkProductName
+			checkProductName,
+			place
 		);
 
 		if (!updateProduct)
-			return res.status(401).json({ message: "מוצר לא קיים." });
+			return res
+				.status(401)
+				.json({ message: "מוצר לא קיים." });
 
 		await updateProduct.save();
 		return res.status(201).json({ message: "המוצר התעדכן בהצלחה." });

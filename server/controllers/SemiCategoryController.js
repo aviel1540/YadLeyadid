@@ -26,6 +26,7 @@ exports.getAllSemiCategories = async (req, res) => {
 					_id: semiDetails._id,
 					serialNumber: semiDetails.serialNumber,
 					semiCategoryName: semiDetails.name,
+					inMainCategory: semiDetails.inMainCategory,
 					productList: products,
 				};
 				semiCategories.push(details);
@@ -35,6 +36,7 @@ exports.getAllSemiCategories = async (req, res) => {
 					_id: semiDetails._id,
 					serialNumber: semiDetails.serialNumber,
 					semiCategoryName: semiDetails.name,
+					inMainCategory: semiDetails.inMainCategory,
 					productList: null,
 				};
 				semiCategories.push(details);
