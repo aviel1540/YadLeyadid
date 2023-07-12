@@ -31,7 +31,7 @@ exports.updateProductUnassignToUser = async (productId) => {
 		loanDate: null,
 		loanReturn: null,
 		loanBy: null,
-		extensionRequest: false,
+		extensionRequest: null,
 		requestDate: null,
 	});
 };
@@ -109,5 +109,6 @@ exports.updateAlertRequest = async (productId, checkDate) => {
 exports.unacceptExtensionRequest = async (checkProductId) => {
 	return await Product.findByIdAndUpdate(checkProductId, {
 		requestDate: null,
+		extensionRequest: false,
 	});
 };

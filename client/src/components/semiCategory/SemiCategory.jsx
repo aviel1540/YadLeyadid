@@ -25,6 +25,7 @@ export const SemiCategory = () => {
         id: "",
         info: {},
     });
+    console.log("🚀 open:", open)
 
     const { data: semiCategory, isLoading, refetch } = useSemiCategory();
 

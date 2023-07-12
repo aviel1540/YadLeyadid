@@ -1,9 +1,5 @@
 export const productPlace = [
   {
-    id: 'LOANED',
-    label: 'מושאל',
-  },
-  {
     id: 'REPAIR',
     label: 'בתיקון',
   },

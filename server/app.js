@@ -18,6 +18,9 @@ const mainCategoryRouter = require("./routers/mainCategoryRouter");
 const userRouter = require("./routers/userRouter");
 const productRouter = require("./routers/productRouter");
 const missionRouter = require("./routers/missionRouter");
+const auth = require("./middleware/auth");
+const adminOnly = require("./middleware/adminOnly");
+
 const URI = process.env.URI;
 const URL = process.env.URL;
 
