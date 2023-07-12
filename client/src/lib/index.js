@@ -1,5 +1,5 @@
-export { formatDate } from './formatDate';
+export { formatDate, replace, cn } from './utils';
 export { info, error, success } from './notification';
 export { onError } from './onError';
 export { onSuccess } from './onSuccess';
-export { replace } from './replace';
+export { menus, settings } from './menus';

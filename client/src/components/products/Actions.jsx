@@ -4,11 +4,7 @@ import { useDeleteProduct } from "~/hooks/useProducts";
 
 export const Actions = ({ setOpen, open, refetch }) => {
 
-    const { mutate: deleteMutateProduct } = useDeleteProduct(
-        setOpen,
-        open,
-        refetch
-    );
+    const { mutate: deleteProduct } = useDeleteProduct(setOpen, open, refetch);
 
     return (
         <>
@@ -16,7 +12,7 @@ export const Actions = ({ setOpen, open, refetch }) => {
                 <ModalDialog
                     open={open}
                     setOpen={setOpen}
-                    onClick={() => deleteMutateProduct(open.id)}
+                    onClick={() => deleteProduct(open.id)}
                     title={"האם את/ה בטוח ?"}
                 />
             )}

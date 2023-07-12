@@ -3,7 +3,8 @@ export {
   getProductsPlaces,
   addProduct,
   deleteProduct,
-  updateProduct,
+  updateProductLocation,
   askExtensionRequest,
   waitConfirmExtensionRequest,
+  extensionRequestAnswer,
 } from './products';

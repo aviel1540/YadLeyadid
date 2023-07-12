@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useChangePassword, useForgotPassword, useVerificationCode } from "~/hooks/useAuth";
-import { error } from "~/utils";
+import { error } from "~/lib";
 import { SendIcon } from "../ui";
 import { useState } from "react";
+import { Input } from "../logic";
 
 export const Form = ({ setOpen, open }) => {
     const { title, content } = open;
@@ -11,24 +12,24 @@ export const Form = ({ setOpen, open }) => {
 
     const [userEmail, setUserEmail] = useState("")
 
-    const { mutate: forgotMutatePassword } = useForgotPassword(setOpen, open, resetField);
-    const { mutate: verificationMutatePassword } = useVerificationCode(setOpen, open, resetField);
-    const { mutate: changeMutatePassword } = useChangePassword(setOpen, open);
+    const { mutate: forgotPassword } = useForgotPassword(setOpen, open, resetField);
+    const { mutate: verificationPassword } = useVerificationCode(setOpen, open, resetField);
+    const { mutate: changePassword } = useChangePassword(setOpen, open);
 
     const onSubmit = async (data) => {
         const { email, code, password, verifyPassword } = data;
 
         try {
             if (title === "fogotPassword") {
-                const userEmail = { email };
+                const payload = { email };
                 setUserEmail(email)
-                forgotMutatePassword(userEmail);
+                forgotPassword(payload);
             } else if (title === "verificationCode") {
-                const userCode = { code };
-                verificationMutatePassword(userCode);
+                const payload = { code };
+                verificationPassword(payload);
             } else if (title === "changePassword") {
-                const changedPassword = { email: userEmail, password, verifyPassword };
-                changeMutatePassword(changedPassword);
+                const payload = { email: userEmail, password, verifyPassword };
+                changePassword(payload);
             }
 
         } catch (err) {
@@ -42,7 +43,7 @@ export const Form = ({ setOpen, open }) => {
             <main className="form-wrapper">
                 {title === "fogotPassword" &&
                     <label htmlFor="email" className="form-label w-1/2">מייל לאימות
-                        <input
+                        <Input
                             type="email"
                             id="email"
                             name="email"
@@ -55,7 +56,7 @@ export const Form = ({ setOpen, open }) => {
                 }
                 {title === "verificationCode" &&
                     <label htmlFor="code" className="form-label w-1/2">קוד אימות
-                        <input
+                        <Input
                             type="text"
                             id="code"
                             name="code"
@@ -69,11 +70,11 @@ export const Form = ({ setOpen, open }) => {
                 {title === "changePassword" &&
                     <>
                         <label htmlFor="password" className="form-label">סיסמא חדשה:
-                            <input type="password" id="password" name="password" className="form-input" placeholder="סיסמא חדשה" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
+                            <Input type="password" id="password" name="password" className="form-input" placeholder="סיסמא חדשה" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.password?.message}</p>
                         </label>
                         <label htmlFor="verifyPassword" className="form-label">אימות סיסמא חדשה:
-                            <input type="password" id="verifyPassword" name="verifyPassword" className="form-input" placeholder="אימות סיסמא חדשה" {...register("verifyPassword", { required: { value: true, message: "שדה חובה." } })} />
+                            <Input type="password" id="verifyPassword" name="verifyPassword" className="form-input" placeholder="אימות סיסמא חדשה" {...register("verifyPassword", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.verifyPassword?.message}</p>
                         </label>
                     </>

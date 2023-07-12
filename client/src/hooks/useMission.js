@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { queryKeys } from '~/react-query/queryKeys';
 import * as mission from '~/api/mission';
-import { onSuccess, onError } from '~/utils';
+import { onSuccess, onError } from '~/lib';
 
 export const useMissions = (username) => useQuery([queryKeys.missions], () => mission.getMissions(username));
 

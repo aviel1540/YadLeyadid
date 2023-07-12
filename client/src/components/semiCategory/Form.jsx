@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useUpdateMainCategory } from '~/hooks/useMainCategory';
 import { useAddSemiCategory, useUpdateSemiCategory } from '~/hooks/useSemiCategory';
-import { error, replace } from '~/utils';
+import { error, replace } from '~/lib';
 import { SendIcon } from '../ui/SendIcon';
 import { Spinner } from '../ui';
 import { MultipleAutocomplete } from '../logic';
@@ -18,8 +18,8 @@ export const Form = ({ setOpen, open, refetch }) => {
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-    const { mutate: addMutateSemiCategory } = useAddSemiCategory(setOpen, open, refetch);
-    const { mutate: updateMutateSemiCategory } = useUpdateSemiCategory(setOpen, open, refetch);
+    const { mutate: addSemiCategory } = useAddSemiCategory(setOpen, open, refetch);
+    const { mutate: updateSemiCategory } = useUpdateSemiCategory(setOpen, open, refetch);
 
     const { data: products, isLoading } = useProducts();
     const activeProducts = products?.filter((p) => !Boolean(p.inCategory))
@@ -29,12 +29,12 @@ export const Form = ({ setOpen, open, refetch }) => {
 
         try {
             if (title === "add") {
-                const addSemiCategory = { name, serialNumber };
-                addMutateSemiCategory(addSemiCategory);
+                const payload = { name, serialNumber };
+                addSemiCategory(payload);
             }
             else if (title === "edit") {
-                const updateSemiCategory = { id: open.id, name, serialNumber };
-                updateMutateSemiCategory(updateSemiCategory);
+                const payload = { id: open.id, name, serialNumber };
+                updateSemiCategory(payload);
             }
         } catch (err) {
             error(err);

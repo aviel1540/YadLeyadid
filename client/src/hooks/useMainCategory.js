@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { queryKeys } from '~/react-query/queryKeys';
 import * as mainCategory from '~/api/mainCategory';
-import { onSuccess, onError } from '~/utils';
+import { onSuccess, onError } from '~/lib';
 
 export const useMainCategory = () => useQuery([queryKeys.mainCategory], mainCategory.getMainCategory);
 

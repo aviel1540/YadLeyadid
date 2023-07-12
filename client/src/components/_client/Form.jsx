@@ -1,8 +1,8 @@
 import { TextField } from '@mui/material';
 import { useRef } from 'react';
 import { useAskExtensionRequest } from '~/hooks/useProducts';
-import { error, formatDate, replace } from '~/utils';
-import { SendIcon } from '../ui/SendIcon';
+import { error, formatDate, replace } from '~/lib';
+import { SendIcon } from '../ui';
 
 export const Form = ({ open, setOpen, refetch }) => {
     const { content, info, edit } = open;
@@ -23,8 +23,8 @@ export const Form = ({ open, setOpen, refetch }) => {
                     info("נא לבחור תאריך הארכה.")
                     return;
                 }
-                const askExtension = { id: info.id, date };
-                askExtensionRequest(askExtension);
+                const payload = { id: info.id, date };
+                askExtensionRequest(payload);
             }
 
         } catch (err) {
@@ -37,8 +37,8 @@ export const Form = ({ open, setOpen, refetch }) => {
             <h1 className="block text-center text-2xl mb-2">
                 {content}
             </h1>
-            <div className='flex flex-wrap justify-center m-4 p-4 gap-2'>
-                <span className='text-lg'>נא לבחור תאריך הארכה למוצר <b>{replace(open.info?.productName)}</b></span>
+            <div className='flex flex-wrap justify-center m-4 p-4 gap-2 '>
+                <span className='text-lg sm:text-base'>נא לבחור תאריך הארכה למוצר <b>{replace(open.info?.productName)}</b></span>
                 <TextField
                     type='date'
                     className='!w-8/12 !mt-3 sm:!w-full'

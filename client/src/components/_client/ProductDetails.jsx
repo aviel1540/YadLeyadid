@@ -1,7 +1,7 @@
 import React from 'react'
 import { useUserByUsername } from '~/hooks/useUsers';
 import { Spinner } from '../ui';
-import { formatDate, replace } from '~/utils';
+import { formatDate, replace } from '~/lib';
 import { Button } from '@mui/material';
 import { Actions } from './Actions';
 
@@ -13,7 +13,6 @@ export const ProductDetails = ({ username, open, setOpen }) => {
     return (
         <>
             <main className={`${open.action && "blur-sm"}`}>
-
                 <div className='flex justify-start mr-11 -mb-16 mt-10'>
                     <h1 className='text-lg'>המוצרים שלי:</h1>
                 </div>
@@ -40,8 +39,8 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                                 </label>
                             </div>
                             <div>
-                                <label className="text-base">
-                                    תאריך החזרה: {" "}
+                                <label className={`text-base ${product.extensionRequest && "text-green"}`}>
+                                    {product.extensionRequest ? 'תאריך החזרה המעודכן:' : 'תאריך החזרה:'} {" "}
                                     {formatDate(product.loanReturn)}
                                 </label>
                             </div>
@@ -51,6 +50,7 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                                     {formatDate(product.requestDate)}
                                 </label>
                             </div>
+                            {(!product.requestDate && !product.extensionRequest) && <p className='text-sm text-red'>לא אושרה הארכה.</p>}
                             <div className='mt-6'>
                                 <Button className={`!w-44 !text-white ${product.requestDate ? "!bg-orange/70" : "!bg-orange"}  !border`}
                                     onClick={() => setOpen({
@@ -67,6 +67,7 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                                     {product.requestDate ? "נשלחה בקשה להארכה" : "בקשת הארכה"}
                                 </Button>
                                 {product.requestDate && <p className='text-sm mt-3'>ברגע שהבקשה תאושר הטקסט יצבע בירוק.</p>}
+
                             </div>
                         </section>
                     ))}

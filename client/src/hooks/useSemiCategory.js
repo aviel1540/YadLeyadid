@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { queryKeys } from '~/react-query/queryKeys';
 import * as semiCategory from '~/api/semiCategory';
-import { onSuccess, onError } from '~/utils';
+import { onSuccess, onError } from '~/lib';
 
 export const useSemiCategory = () => useQuery([queryKeys.semiCategory], semiCategory.getSemiCategory);
 

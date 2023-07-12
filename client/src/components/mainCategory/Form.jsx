@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { error, replace } from '~/utils';
+import { error, replace } from '~/lib';
 import { SendIcon } from '../ui/SendIcon';
 import { useAddMainCategory, useUpdateMainCategory } from '~/hooks/useMainCategory';
 import { MultipleAutocomplete } from '../logic';
@@ -14,8 +14,8 @@ export const Form = ({ setOpen, open, refetch }) => {
     const [selectedAssign, setSelectedAssign] = useState([])
     //TODO: add asignMainCategoryToSemiCategoryOnChange to onSubmit
 
-    const { mutate: addMutateMainCategory } = useAddMainCategory(setOpen, open, refetch);
-    const { mutate: updateMutateMainCategory } = useUpdateMainCategory(setOpen, open, refetch);
+    const { mutate: addMainCategory } = useAddMainCategory(setOpen, open, refetch);
+    const { mutate: updateMainCategory } = useUpdateMainCategory(setOpen, open, refetch);
 
     const { data: semiCategory, isLoading } = useSemiCategory();
 
@@ -25,12 +25,12 @@ export const Form = ({ setOpen, open, refetch }) => {
 
         try {
             if (title === "add") {
-                const addMainCategory = { mainCategoryName };
-                addMutateMainCategory(addMainCategory);
+                const payload = { mainCategoryName };
+                addMainCategory(payload);
             }
             else if (title === "edit") {
-                const updateMainCategory = { id: open.id, mainCategoryName };
-                updateMutateMainCategory(updateMainCategory);
+                const payload = { id: open.id, mainCategoryName };
+                updateMainCategory(payload);
             }
         } catch (err) {
             error(err);

@@ -81,34 +81,25 @@ exports.updateProductLocation = async (req, res) => {
 		const checkProductPlace = validation.addSlashes(productPlace);
 
 		if (!checkProductPlace)
-			return res
-				.status(400)
-				.json({ message: "נא למלא את כל השדות." });
-
+			return res.status(400).json({ message: "נא למלא את כל השדות." });
 
 		const product = await productService.findProductById(checkId);
 
-		if (product.place == ProductPlace.LOANED)
+		if (product.place === ProductPlace.LOANED)
 			return res
 				.status(400)
-				.json({ message: "לא ניתן לשנות מיקום למוצר מושאל" })
+				.json({ message: "לא ניתן לשנות מיקום למוצר מושאל." });
 
-		if (checkProductPlace == ProductPlace.IN_STOCK) place = ProductPlace.IN_STOCK;
-		else if (checkProductPlace == ProductPlace.REPAIR) place = ProductPlace.REPAIR;
-		else
-			return res
-				.status(400)
-				.json({ message: "מיקום לא תקין" })
+		if (checkProductPlace === ProductPlace.IN_STOCK)
+			place = ProductPlace.IN_STOCK;
+		else if (checkProductPlace === ProductPlace.REPAIR)
+			place = ProductPlace.REPAIR;
+		else return res.status(400).json({ message: "מיקום לא תקין." });
 
-		updateProduct = await productService.updateProduct(
-			checkId,
-			place
-		);
+		updateProduct = await productService.updateProduct(checkId, place);
 
 		if (!updateProduct)
-			return res
-				.status(401)
-				.json({ message: "מוצר לא קיים." });
+			return res.status(401).json({ message: "מוצר לא קיים." });
 
 		await updateProduct.save();
 		return res.status(201).json({ message: "המוצר התעדכן בהצלחה." });
@@ -128,8 +119,8 @@ exports.deleteProduct = async (req, res) => {
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
 		if (
-			product.place == ProductPlace.LOANED ||
-			product.place == ProductPlace.REPAIR
+			product.place === ProductPlace.LOANED ||
+			product.place === ProductPlace.REPAIR
 		) {
 			return res
 				.status(401)
@@ -151,26 +142,30 @@ exports.deleteProduct = async (req, res) => {
 exports.updateExtensionRequest = async (req, res) => {
 	const productId = escape(req.params.id);
 	const answer = escape(req.body.answer);
+
 	let product;
 	let user;
 	let updateProduct;
 	try {
 		const checkProductId = validation.addSlashes(productId);
-		// const checkAnswer = validation.addSlashes(answer);
 
 		product = await productService.findProductById(checkProductId);
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
 		user = await userService.findUserById(product.loanBy);
 
-		if (!answer) {
+		if (answer.toString() === "false") {
 			mailer.sendMailFunc(
 				"updateExtensionRequest",
 				user.email,
-				` למוצר ${product.productName} לא אושרה הארכת השאלה , יש ליצור קשר עם המוקד`
+				`למוצר ${validation.replace(
+					product.productName
+				)} לא אושרה הארכת השאלה, יש ליצור קשר עם המוקד.`
 			);
 			productService.unacceptExtensionRequest(checkProductId);
-			return res.status(200).json({ message: "ביטול הארכה בוצע בהצלחה" });
+			return res
+				.status(200)
+				.json({ message: "ביטול הארכה בוצע בהצלחה." });
 		}
 		const returnDate = product.requestDate;
 		updateProduct = await productService.updateExtensionRequest(
@@ -179,7 +174,7 @@ exports.updateExtensionRequest = async (req, res) => {
 		);
 
 		if (!updateProduct)
-			return res.status(404).json({ message: "העידכון נכשל" });
+			return res.status(404).json({ message: "העידכון נכשל." });
 
 		await updateProduct.save();
 		mailer.sendMailFunc(
@@ -187,9 +182,9 @@ exports.updateExtensionRequest = async (req, res) => {
 			user.email,
 			`המוצר ${product.productName} הוארך בהצלחה `
 		);
-		return res.status(201).json({ message: "תאריך ההחזרה הוארך בהצלחה" });
+		return res.status(200).json({ message: "תאריך ההחזרה הוארך בהצלחה." });
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -217,7 +212,6 @@ exports.askForExtensionRequest = async (req, res) => {
 
 		await productService.updateAlertRequest(checkProductId, askedDate);
 		await product.save();
-		console.log(product.requestDate);
 		return res.status(200).json({ message: "הבקשה נשלחה בהצלחה." });
 	} catch (err) {
 		return res.status(500).json({ message: err.message });

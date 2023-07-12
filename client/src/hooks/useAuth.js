@@ -2,7 +2,7 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import * as auth from '~/api/auth';
 import { useAuthStore } from '~/store/auth';
-import { onError, onSuccess, success } from '~/utils';
+import { onError, onSuccess, success } from '~/lib';
 import { decodeToken } from 'react-jwt';
 
 export const useLogin = (reset) => {

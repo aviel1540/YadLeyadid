@@ -1,12 +1,8 @@
 import { IconButton } from '@mui/material'
-import clsx from 'clsx'
-import React from 'react'
 import { BsFillSendCheckFill } from 'react-icons/bs'
-import { twMerge } from 'tailwind-merge'
+import { cn } from '~/lib'
 
 export const SendIcon = ({ onClick, title, className }) => {
-
-    const cn = (...input) => twMerge(clsx(input))
 
     return (
         <IconButton onClick={onClick} >

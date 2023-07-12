@@ -12,11 +12,11 @@ export const Actions = ({ setOpen, open, refetch }) => {
         if (open.title === "delete") {
             deleteUser(open.id);
         } else if (open.title === "delete-unassign") {
-            const unassignProductToUserObj = {
+            const payload = {
                 userId: open.info._id,
                 productId: open?.id,
             };
-            unassignProductToUser(unassignProductToUserObj);
+            unassignProductToUser(payload);
         }
     };
 

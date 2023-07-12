@@ -5,14 +5,14 @@ import { PaymentTypes, paymentTypes } from "~/constants/PaymentTypes";
 import { ProductPlace } from "~/constants/productPlace";
 import { useProducts } from "~/hooks/useProducts";
 import { useAddUser, useAsignProductToUser, useUpdatePassword, useUpdateUser } from "~/hooks/useUsers";
-import { error, info, replace } from "~/utils";
+import { error, info, replace } from "~/lib";
 import { MultipleAutocomplete, RadioButtons, SelectInput } from "../logic";
 import { Spinner, SendIcon } from "../ui";
 
 export const Form = ({ setOpen, open, refetch }) => {
     const { title, content } = open;
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [selectedPaymentType, setSelectedPaymentType] = useState("")
     const [selectedAssign, setSelectedAssign] = useState([])
@@ -22,10 +22,10 @@ export const Form = ({ setOpen, open, refetch }) => {
     const administratorLocation = location.pathname === "/administrator";
 
     const { data: products, isLoading } = useProducts();
-    const { mutate: addMutateUser } = useAddUser(setOpen, open, refetch);
-    const { mutate: updateMutateUser } = useUpdateUser(setOpen, open, refetch);
-    const { mutate: updateMutatePassword } = useUpdatePassword(setOpen, open, refetch);
-    const { mutate: asignMutateProductToUser } = useAsignProductToUser(setOpen, open, refetch);
+    const { mutate: addUser } = useAddUser(setOpen, open, refetch);
+    const { mutate: updateUser } = useUpdateUser(setOpen, open, refetch);
+    const { mutate: updatePassword } = useUpdatePassword(setOpen, open, refetch);
+    const { mutate: asignProductToUser } = useAsignProductToUser(setOpen, open, refetch);
 
     const activeProducts = products?.filter((p) => p.place !== ProductPlace.LOANED && p.place !== ProductPlace.REPAIR)
 
@@ -46,7 +46,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                     info("נא לבחור את אופן התשלום.");
                     return;
                 }
-                const addUser = {
+                const payload = {
                     entityCard, username,
                     name, password,
                     email, phoneNumber,
@@ -55,10 +55,10 @@ export const Form = ({ setOpen, open, refetch }) => {
                     admin: !administratorLocation ? false : true
                 };
 
-                addMutateUser(addUser);
+                addUser(payload);
             }
             else if (title === "edit") {
-                const updateUser = {
+                const payload = {
                     id: open.id,
                     entityCard, username,
                     name, email,
@@ -67,7 +67,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                     admin: checked
                 };
 
-                updateMutateUser(updateUser);
+                updateUser(payload);
             }
 
             else if (title === "asignProductToUser") {
@@ -75,21 +75,21 @@ export const Form = ({ setOpen, open, refetch }) => {
                     info("נא לבחור מוצרים לשיוך.");
                     return;
                 }
-                const asignProductToUser = {
+                const payload = {
                     userId: open.id,
                     ids: selectedAssign.map((s) => s.id),
                 }
-                asignMutateProductToUser(asignProductToUser)
+                asignProductToUser(payload)
             }
             else if (title === "editPassword") {
-                const updatePassword = {
+                const payload = {
                     userId: open.id,
                     currentPassword,
                     newPassword,
                     verifyNewPassword
                 }
 
-                updateMutatePassword(updatePassword)
+                updatePassword(payload)
             }
         } catch (err) {
             error(err);
@@ -161,7 +161,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                                         required={!administratorLocation}
                                         isLoading={!paymentTypes ? true : false}
                                     />
-                                    <p className="form-p_error">{errors.email?.message}</p>
+                                    {/* <p className="form-p_error">{errors.email?.message}</p> */}
                                 </label>
                             </>}
                         {title === "edit" &&

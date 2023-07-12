@@ -1,9 +1,6 @@
-import { clsx } from "clsx"
-import { twMerge } from 'tailwind-merge'
+import { cn } from "~/lib"
 
 export const Button = ({ className, disabled, title, ...props }) => {
-
-    const cn = (...input) => twMerge(clsx(input))
 
     return (
         <button

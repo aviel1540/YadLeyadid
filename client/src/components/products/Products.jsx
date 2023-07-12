@@ -27,7 +27,6 @@ export const Products = () => {
 
 	const { data: products, isLoading, refetch } = useProducts();
 
-
 	const dataResults = products?.filter(
 		(product) =>
 			product?.productName.toLowerCase()?.includes(inputSearch?.toLowerCase()) ||
