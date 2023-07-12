@@ -13,7 +13,7 @@ export const Routers = () => {
 			{isLoggedIn && isAdmin &&
 				<>
 					<Route path="/home" element={<Pages.HomePage />} exact />
-					<Route path="/settings" element={<Pages.InformationPage />} exact />
+					{/* <Route path="/settings" element={<Pages.InformationPage />} exact /> */}
 					<Route path="/users" element={<Pages.UsersPage />} exact />
 					<Route path="/products" element={<Pages.productsPage />} exact />
 					<Route path="/semi-category" element={<Pages.SemiCategoryPage />} exact />

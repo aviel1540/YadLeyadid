@@ -1,4 +1,4 @@
-import { Button, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { MdDeleteForever, MdOutlineModeEdit } from 'react-icons/md';
@@ -6,6 +6,7 @@ import { Spinner } from '~/components/ui';
 import { useMissions } from '~/hooks/useMission';
 import { useAuthStore } from '~/store/auth';
 import { Actions } from './Actions';
+import { Button } from '../logic';
 
 export const Missions = ({ setOpen, open }) => {
     const { username } = useAuthStore();
@@ -27,7 +28,7 @@ export const Missions = ({ setOpen, open }) => {
                 <div className='flex justify-between'>
                     <h1 className='text-lg h-8 mb-5 underline'>משימות</h1>
                     <Button
-                        className="!bg-green/90 !h-8 !text-white !rounded-md hover:!bg-green !w-26 !text-sm"
+                        className="bg-green/90 h-8 text-white rounded-md hover:bg-green w-44 text-sm"
                         onClick={() =>
                             setOpen({
                                 ...open,
@@ -37,9 +38,10 @@ export const Missions = ({ setOpen, open }) => {
                                 content: "הוספת משימה חדשה"
                             })
                         }
-                    >
-                        הוספת משימה חדשה
-                    </Button>
+                        title='הוספת משימה חדשה'
+                    />
+
+
                 </div>
                 <ul className="flex flex-col w-full gap-1 mt-3 sm:max-w-md m-auto">
                     {missions?.map((mission, index) => (

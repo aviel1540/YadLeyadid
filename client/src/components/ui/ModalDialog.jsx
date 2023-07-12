@@ -26,7 +26,7 @@ export const ModalDialog = ({ title, setOpen, open, onClick }) => {
                     />
 
                     <Button
-                        className="w-6/12 font-bold rounded-lg text-red hover:bg-red/70 hover:text-white"
+                        className="w-6/12 font-bold rounded-lg text-red h-8 hover:bg-red/70 hover:text-white"
                         onClick={() => {
                             onClick();
                             setOpen({ ...open, modalDialog: false });

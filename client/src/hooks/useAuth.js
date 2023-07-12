@@ -5,7 +5,7 @@ import { useAuthStore } from '~/store/auth';
 import { onError, onSuccess, success } from '~/lib';
 import { decodeToken } from 'react-jwt';
 
-export const useLogin = (reset) => {
+export const useLogin = (reset, setIsLoading) => {
   const navigate = useNavigate();
   const { loginStore } = useAuthStore();
 
@@ -14,10 +14,12 @@ export const useLogin = (reset) => {
       reset();
       const isAdmin = decodeToken(data)?.isAdmin;
       loginStore(data);
+      setIsLoading(false);
       if (isAdmin) navigate('/home');
       else navigate('/client');
     },
     onError: (data) => {
+      setIsLoading(false);
       onError(data);
     },
   });

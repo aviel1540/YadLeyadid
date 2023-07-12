@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { error, replace } from '~/lib';
-import { SendIcon } from '../ui/SendIcon';
 import { useAddMainCategory, useUpdateMainCategory } from '~/hooks/useMainCategory';
-import { MultipleAutocomplete } from '../logic';
+import { Input, MultipleAutocomplete, SendIcon } from '../logic';
 import { useSemiCategory } from '~/hooks/useSemiCategory';
 
 export const Form = ({ setOpen, open, refetch }) => {
@@ -64,7 +63,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                     )
                     :
                     <label htmlFor="mainCategoryName" className="form-label w-1/2">שם קטגוריה ראשית:
-                        <input
+                        <Input
                             type="text"
                             id="mainCategoryName"
                             name="mainCategoryName"

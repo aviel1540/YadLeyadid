@@ -2,9 +2,8 @@ import { useForm } from 'react-hook-form';
 import { useUpdateMainCategory } from '~/hooks/useMainCategory';
 import { useAddSemiCategory, useUpdateSemiCategory } from '~/hooks/useSemiCategory';
 import { error, replace } from '~/lib';
-import { SendIcon } from '../ui/SendIcon';
 import { Spinner } from '../ui';
-import { MultipleAutocomplete } from '../logic';
+import { Input, MultipleAutocomplete, SendIcon } from '../logic';
 import { useProducts } from '~/hooks/useProducts';
 import { ProductPlace } from '~/constants/productPlace';
 import { useState } from 'react';
@@ -70,7 +69,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                     (
                         <>
                             <label htmlFor="serialNumber" className="form-label">מספר סידורי
-                                <input
+                                <Input
                                     type="text"
                                     id="serialNumber"
                                     name="serialNumber"
@@ -83,7 +82,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                             </label>
 
                             <label htmlFor="name" className="form-label ml-6">שם קטגוריה משנית
-                                <input
+                                <Input
                                     type="text"
                                     id="name"
                                     name="name"

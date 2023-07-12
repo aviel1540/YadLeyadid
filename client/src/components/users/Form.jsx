@@ -6,8 +6,8 @@ import { ProductPlace } from "~/constants/productPlace";
 import { useProducts } from "~/hooks/useProducts";
 import { useAddUser, useAsignProductToUser, useUpdatePassword, useUpdateUser } from "~/hooks/useUsers";
 import { error, info, replace } from "~/lib";
-import { MultipleAutocomplete, RadioButtons, SelectInput } from "../logic";
-import { Spinner, SendIcon } from "../ui";
+import { Input, MultipleAutocomplete, RadioButtons, SelectInput, SendIcon } from "../logic";
+import { Spinner } from "../ui";
 
 export const Form = ({ setOpen, open, refetch }) => {
     const { title, content } = open;
@@ -107,39 +107,39 @@ export const Form = ({ setOpen, open, refetch }) => {
                 {(title == "add" || title === "edit") &&
                     <>
                         <label htmlFor="name" className="form-label">שם מלא:
-                            <input type="text" id="name" name="name" defaultValue={title === "edit" ? open.info.name : null} className="form-input" placeholder="שם מלא" {...register("name", { required: { value: true, message: "שדה חובה." } })} />
+                            <Input type="text" id="name" name="name" defaultValue={title === "edit" ? open.info.name : null} className="form-input" placeholder="שם מלא" {...register("name", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.name?.message}</p>
                         </label>
 
                         <label htmlFor="username" className="form-label">שם משתמש:
-                            <input type="text" id="username" name="username" defaultValue={title === "edit" ? open.info.username : null} className="form-input" placeholder="שם משתמש" {...register("username", { required: { value: true, message: "שדה חובה." } })} />
+                            <Input type="text" id="username" name="username" defaultValue={title === "edit" ? open.info.username : null} className="form-input" placeholder="שם משתמש" {...register("username", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.username?.message}</p>
                         </label>
 
                         <label htmlFor="entityCard" className="form-label">תעודת זהות:
-                            <input type="text" id="entityCard" name="entityCard" defaultValue={title === "edit" ? open.info.entityCard : null} className="form-input" placeholder="תעודת זהות" {...register("entityCard", { required: { value: true, message: "שדה חובה." } })} />
+                            <Input type="text" id="entityCard" name="entityCard" defaultValue={title === "edit" ? open.info.entityCard : null} className="form-input" placeholder="תעודת זהות" {...register("entityCard", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.entityCard?.message}</p>
                         </label>
 
                         {title === 'add' &&
-                            <label htmlFor="password" className="form-label">סיסמא:
-                                <input type="password" id="password" name="password" className="form-input" placeholder="סיסמא" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
+                            <label htmlFor="addPassword" className="form-label">סיסמא:
+                                <Input type="password" id="addPassword" name="addPassword" className="form-input" placeholder="סיסמא" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
                                 <p className="form-p_error">{errors.entityCard?.message}</p>
                             </label>
                         }
 
                         <label htmlFor="phoneNumber" className="form-label">מספר פלאפון:
-                            <input type="text" id="phoneNumber" name="phoneNumber" defaultValue={title === "edit" ? open.info.phoneNumber : null} className="form-input" placeholder="מספר פלאפון" {...register("phoneNumber", { required: { value: true, message: "שדה חובה." } })} />
+                            <Input type="text" id="phoneNumber" name="phoneNumber" defaultValue={title === "edit" ? open.info.phoneNumber : null} className="form-input" placeholder="מספר פלאפון" {...register("phoneNumber", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.phoneNumber?.message}</p>
                         </label>
 
                         <label htmlFor="email" className="form-label">מייל:
-                            <input type="email" id="email" name="email" defaultValue={title === "edit" ? open.info.email : null} className="form-input" placeholder="מייל" {...register("email", { required: { value: true, message: "שדה חובה." }, pattern: /^\S+@\S+$/i })} />
+                            <Input type="email" id="email" name="email" defaultValue={title === "edit" ? open.info.email : null} className={`form-input ${title === 'edit' ? '-mt-0' : null}`} placeholder="מייל" {...register("email", { required: { value: true, message: "שדה חובה." }, pattern: /^\S+@\S+$/i })} />
                             <p className="form-p_error">{errors.email?.message}</p>
                         </label>
 
                         <label htmlFor="address" className="form-label">כתובת:
-                            <input type="text" id="address" name="address" defaultValue={title === "edit" ? open.info.address : null} className="form-input" placeholder="כתובת" {...register("address", { required: { value: true, message: "שדה חובה." } })} />
+                            <Input type="text" id="address" name="address" defaultValue={title === "edit" ? open.info.address : null} className="form-input -mt-0" placeholder="כתובת" {...register("address", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.address?.message}</p>
                         </label>
 
@@ -149,7 +149,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                                     <SelectInput
                                         type={(title === 'add' || open.info.paymentType === PaymentTypes.NOTHING) ? 'אופן תשלום' : open.info.paymentType}
                                         selectedValue={selectedPaymentType}
-                                        className={`${title === "edit" ? " !w-[24rem] mb-3" : "w-[12.5rem]"} sm!w-full`}
+                                        className={`${title === "edit" ? " !w-[26rem] mb-3" : "w-[12.5rem]"}`}
                                         setSelectedValue={setSelectedPaymentType}
                                         data={paymentTypes?.map(
                                             ({ label, id, }) => ({
@@ -192,17 +192,17 @@ export const Form = ({ setOpen, open, refetch }) => {
                 }
                 {title === "editPassword" &&
                     <>
-                        <label htmlFor="password" className="form-label w-10/12">סיסמא נוכחית:
-                            <input type="password" id="password" name="password" className="form-input w-full" placeholder="סיסמא נוכחית" {...register("currentPassword", { required: { value: true, message: "שדה חובה." } })} />
+                        <label htmlFor="currentPassword" className="form-label w-10/12">סיסמא נוכחית:
+                            <Input type="password" id="currentPassword" name="currentPassword" className="form-input w-full" placeholder="סיסמא נוכחית" {...register("currentPassword", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.password?.message}</p>
                         </label>
 
-                        <label htmlFor="password" className="form-label">סיסמא חדשה:
-                            <input type="password" id="password" name="password" className="form-input" placeholder="סיסמא חדשה" {...register("newPassword", { required: { value: true, message: "שדה חובה." } })} />
+                        <label htmlFor="newPassword" className="form-label">סיסמא חדשה:
+                            <Input type="password" id="newPassword" name="newPassword" className="form-input" placeholder="סיסמא חדשה" {...register("newPassword", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.password?.message}</p>
                         </label>
-                        <label htmlFor="password" className="form-label">אימות סיסמא חדשה:
-                            <input type="password" id="password" name="password" className="form-input" placeholder="אימות סיסמא חדשה" {...register("verifyNewPassword", { required: { value: true, message: "שדה חובה." } })} />
+                        <label htmlFor="verifyNewPassword" className="form-label">אימות סיסמא חדשה:
+                            <Input type="password" id="verifyNewPassword" name="verifyNewPassword" className="form-input" placeholder="אימות סיסמא חדשה" {...register("verifyNewPassword", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.password?.message}</p>
                         </label>
                     </>

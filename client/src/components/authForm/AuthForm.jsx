@@ -9,6 +9,7 @@ import { Actions } from "./Actions";
 export const AuthForm = () => {
 	const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
+	const [isLoading, setIsLoading] = useState(false)
 	const [open, setOpen] = useState({
 		action: false,
 		popUp: false,
@@ -17,11 +18,11 @@ export const AuthForm = () => {
 		content: "",
 	});
 
-	const { mutate: login } = useLogin(reset);
+	const { mutate: login } = useLogin(reset, setIsLoading);
 
 	const onSubmit = (data) => {
+		setIsLoading(true)
 		const { entityCard, password } = data;
-
 		try {
 			const user = { entityCard, password };
 			login(user);
@@ -56,7 +57,12 @@ export const AuthForm = () => {
 					</span>
 				</div>
 
-				<Button className="bg-orange text-white h-9 w-full text-base mt-6 rounded-md hover:shadow hover:shadow-black/50" title="התחבר" />
+				<Button
+					className={`${isLoading ? "bg-orange/60" : "bg-orange"} text-white h-9 w-full text-base mt-6 rounded-md hover:shadow hover:shadow-black/50 `}
+					title="התחבר"
+					isLoading={isLoading}
+					disabled={isLoading}
+				/>
 			</form>
 			{
 				open.action && (

@@ -409,12 +409,19 @@ exports.addProductForUser = async (req, res) => {
 			manyProductsIds.push(escape(productsArr.ids[i]));
 		}
 		const products = manyProductsIds.map(async (productId) => {
-			const product = await productService.findProductById(productId); // "1"
-			if (!product)
-				return res.status(404).json({ message: "מוצר לא קיים." });
+			const product = await productService.findProductById(productId);
+			if (!product) {
+				throw new Error("מוצר לא קיים.");
+			}
 
 			if (product.place !== ProductPlace.IN_STOCK) {
-				return res.status(404).json({ message: "מוצר לא זמין." });
+				throw new Error("מוצר לא זמין.");
+			}
+
+			if (!product.inCategory) {
+				throw new Error(
+					"יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח."
+				);
 			}
 
 			const productExist = user.productList.find(
@@ -422,14 +429,7 @@ exports.addProductForUser = async (req, res) => {
 			);
 
 			if (productExist) {
-				return res
-					.status(400)
-					.json({ message: "מוצר קיים אצל הלקוח." });
-			}
-			if (!product.inCategory) {
-				return res.status(400).json({
-					message: "יש לשייך את המוצר לקטגוריה לפני ההשאלה ללקוח",
-				});
+				throw new Error("מוצר קיים אצל הלקוח.");
 			}
 
 			user.productList.push(productId);
@@ -457,9 +457,9 @@ exports.addProductForUser = async (req, res) => {
 			user.email,
 			"המוצרים הושאלו בהצלחה"
 		);
-		return res.status(201).json({ message: "הושאל בהצלחה.", user });
+		return res.status(200).json({ message: "הושאל בהצלחה.", user });
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -678,8 +678,6 @@ exports.changePassword = async (req, res) => {
 	const email = escape(req.body.email);
 	const password = escape(req.body.password);
 	const verifyPassword = escape(req.body.verifyPassword);
-	console.log("🚀  password:", password);
-	console.log("🚀  verifyPassword:", verifyPassword);
 
 	try {
 		if (![password, verifyPassword].every(Boolean)) {

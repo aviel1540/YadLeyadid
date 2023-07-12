@@ -32,7 +32,7 @@ exports.getProducts = async (req, res) => {
 		}
 		return res.status(200).send(products);
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -52,7 +52,7 @@ exports.addProduct = async (req, res) => {
 		await product.save();
 		return res.status(201).json({ message: "מוצר נוסף בהצלחה." });
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -66,7 +66,7 @@ exports.getProductById = async (req, res) => {
 
 		return res.status(200).json(product);
 	} catch (err) {
-		return res.status(404).json({ message: err });
+		return res.status(500).json({ message: err });
 	}
 };
 
@@ -99,10 +99,10 @@ exports.updateProductLocation = async (req, res) => {
 		updateProduct = await productService.updateProduct(checkId, place);
 
 		if (!updateProduct)
-			return res.status(401).json({ message: "מוצר לא קיים." });
+			return res.status(404).json({ message: "מוצר לא קיים." });
 
 		await updateProduct.save();
-		return res.status(201).json({ message: "המוצר התעדכן בהצלחה." });
+		return res.status(200).json({ message: "המוצר התעדכן בהצלחה." });
 	} catch (err) {
 		return res.status(400).json({ message: err });
 	}
@@ -123,12 +123,12 @@ exports.deleteProduct = async (req, res) => {
 			product.place === ProductPlace.REPAIR
 		) {
 			return res
-				.status(401)
+				.status(400)
 				.json({ message: "לא ניתן למחוק - המוצר לא זמין במלאי." });
 		}
 		if (product.inCategory) {
 			return res
-				.status(401)
+				.status(400)
 				.json({ message: "לא ניתן למחוק - משוייך לקטגוריה." });
 		}
 
@@ -174,7 +174,7 @@ exports.updateExtensionRequest = async (req, res) => {
 		);
 
 		if (!updateProduct)
-			return res.status(404).json({ message: "העידכון נכשל." });
+			return res.status(400).json({ message: "העידכון נכשל." });
 
 		await updateProduct.save();
 		mailer.sendMailFunc(
@@ -277,7 +277,7 @@ exports.allProductsWaitConfirmExtensionRequest = async (req, res) => {
 		}
 		return res.status(200).json(products);
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -303,7 +303,7 @@ exports.allProductsAcceptedExtensionRequest = async (req, res) => {
 		}
 		return res.status(200).json(products);
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
