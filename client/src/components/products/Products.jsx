@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useState } from "react";
-import { useProducts } from "~/hooks/useProducts";
+import { useAddProduct, useProducts } from "~/hooks/useProducts";
 import { Spinner } from "../ui";
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
@@ -26,6 +26,7 @@ export const Products = () => {
 	});
 
 	const { data: products, isLoading, refetch } = useProducts();
+	const { mutate: addProduct } = useAddProduct(setOpen, open, refetch);
 
 	const dataResults = products?.filter(
 		(product) =>
@@ -49,13 +50,7 @@ export const Products = () => {
 								className="button-add w-44"
 								title="הוספת מוצר חדש"
 								onClick={() =>
-									setOpen({
-										...open,
-										popUp: true,
-										action: true,
-										title: "add",
-										content: "הוספת מוצר חדש"
-									})
+									addProduct({ productName: "מוצר חדש" })
 								}
 							/>
 

@@ -7,7 +7,7 @@ import { useUsers } from "~/hooks/useUsers";
 import { useAuthStore } from "~/store/auth";
 import { Spinner } from "../ui";
 import { SquareInfo, Missions, Notification } from ".";
-import { Columns, Line, Pie } from "./chart";
+import { Columns, Line, Pie } from "./charts";
 
 export const Home = () => {
 	const { name } = useAuthStore();

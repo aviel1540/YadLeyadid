@@ -32,7 +32,7 @@ const productSchema = new Schema({
 	},
 	extensionRequest: {
 		type: Boolean,
-		default: false,
+		default: null,
 	},
 	requestDate: {
 		type: Date,

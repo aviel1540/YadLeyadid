@@ -7,6 +7,8 @@ import { Actions } from './Actions';
 
 export const ProductDetails = ({ username, open, setOpen }) => {
     const { data: details, isLoading, refetch } = useUserByUsername(username);
+    console.log("🚀 details:", details)
+
 
     if (isLoading) return <Spinner />;
 
@@ -50,7 +52,7 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                                     {formatDate(product.requestDate)}
                                 </label>
                             </div>
-                            {(!product.requestDate && !product.extensionRequest) && <p className='text-sm text-red'>לא אושרה הארכה.</p>}
+                            {(!product.requestDate && !product.extensionRequest === undefined || !product.extensionRequest) && <p className='text-sm text-red'>לא אושרה הארכה.</p>}
                             <div className='mt-6'>
                                 <Button className={`!w-44 !text-white ${product.requestDate ? "!bg-orange/70" : "!bg-orange"}  !border`}
                                     onClick={() => setOpen({
