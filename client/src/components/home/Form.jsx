@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button, RadioButtons } from '~/components/logic'
+import { Button, RadioButtons, SendIcon } from '~/components/logic'
 import { useAddMission, useUpdateMission } from '~/hooks/useMission'
 import { useAuthStore } from '~/store/auth'
 import { error } from '~/lib'
-import { SendIcon } from '~/components/ui'
 import { useExtensionRequestAnswer } from '~/hooks/useProducts'
 
 export const Form = ({ setOpen, open, refetch }) => {
@@ -76,10 +75,11 @@ export const Form = ({ setOpen, open, refetch }) => {
             ) : (
                 <div className="flex flex-col justify-center items-center mt-10">
                     <Button
-                        className='bg-green w-[40%] text-white  hover:bg-green/80 rounded-md mb-5'
-                        disabled={isLoadingExtensionRequestAnswer}
+                        className={`${isLoadingExtensionRequestAnswer ? "bg-green/60" : "bg-green"} w-[50%] h-8 text-white  rounded-md mb-5 hover:bg-green/80`}
                         title='אישור'
                         onClick={onSubmit}
+                        disabled={isLoadingExtensionRequestAnswer}
+                        isLoading={isLoadingExtensionRequestAnswer}
                     />
                 </div>
             )}

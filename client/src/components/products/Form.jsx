@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useAddProduct, useUpdateProductLocation } from "~/hooks/useProducts";
 import { error, info, replace } from "~/lib";
-import { SendIcon } from "../ui";
-import { SelectInput } from "../logic";
+import { SendIcon } from "../logic";
+import { Input, SelectInput } from "../logic";
 import { useState } from "react";
 import { productPlace } from "~/constants/productPlace";
 
@@ -14,7 +14,6 @@ export const Form = ({ setOpen, open, refetch }) => {
 
     const { mutate: addProduct } = useAddProduct(setOpen, open, refetch);
     const { mutate: updateProductLocation } = useUpdateProductLocation(setOpen, open, refetch);
-
 
     const onSubmit = async (data) => {
         const { productName } = data;
@@ -42,7 +41,7 @@ export const Form = ({ setOpen, open, refetch }) => {
             <main className="flex flex-wrap justify-center  m-4 p-4 gap-4">
                 {title === 'add' ? (
                     <label htmlFor="productName" className="form-label w-1/2">שם מוצר:
-                        <input
+                        <Input
                             type="text"
                             id="productName"
                             name="productName"

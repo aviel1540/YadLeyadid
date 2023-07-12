@@ -37,7 +37,7 @@ export const Notification = ({ setOpen, open }) => {
                                     <br />
                                     תאריך מקורי הינו: {formatDate(extensionRequest.loanReturn)}
                                 </li>
-                                <IconButton onClick={() => handlerThreeDots(index + 1)}>
+                                <IconButton onClick={() => handlerThreeDots(index + 1)} className='!mt-2.5 h-9'>
                                     <BsThreeDotsVertical />
                                 </IconButton>
                                 {(threeDots.click && threeDots.index === index + 1) &&

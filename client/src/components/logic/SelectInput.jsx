@@ -1,5 +1,5 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import clsx from "clsx";
+import { cn } from "~/lib";
 
 
 export const SelectInput = ({
@@ -18,7 +18,7 @@ export const SelectInput = ({
     };
 
     return (
-        <Box className={clsx(className)}>
+        <Box className={cn(className)}>
             <FormControl fullWidth >
                 <InputLabel
                     id="demo-simple-select-label"

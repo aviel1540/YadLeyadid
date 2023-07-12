@@ -6,6 +6,7 @@ export const Columns = ({ blur, users }) => {
     const usersName = users?.map((u) => u.name);
     const productsList = users?.map((u) => u.userProductList === undefined ? 0 : u.userProductList.length);
 
+
     const info = useRef({
         series: [
             {
@@ -25,7 +26,7 @@ export const Columns = ({ blur, users }) => {
             plotOptions: {
                 bar: {
                     horizontal: false,
-                    columnWidth: "10%",
+                    columnWidth: "5%",
                     endingShape: "rounded",
                 },
             },

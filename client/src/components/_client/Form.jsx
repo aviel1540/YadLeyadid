@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import { useRef } from 'react';
 import { useAskExtensionRequest } from '~/hooks/useProducts';
 import { error, formatDate, replace } from '~/lib';
-import { SendIcon } from '../ui';
+import { SendIcon } from '../logic';
 
 export const Form = ({ open, setOpen, refetch }) => {
     const { content, info, edit } = open;
@@ -45,7 +45,6 @@ export const Form = ({ open, setOpen, refetch }) => {
                     inputRef={dateInputRef}
                     defaultValue={formatDate(new Date(info?.loanReturn), "yyyy-MM-dd")}
                     InputProps={{ inputProps: { min: formatDate(new Date(info?.loanReturn), "yyyy-MM-dd") } }}
-
                 />
             </div>
             <div className="flex justify-end p-3">
