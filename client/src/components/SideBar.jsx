@@ -7,7 +7,7 @@ import { createElement, Fragment, useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "~/store/auth";
-import { menus, settings } from "../utils/menus";
+import { menus, settings } from "../lib";
 import logo from "~/assets/images/logo.jpeg";
 
 export const SideBar = () => {

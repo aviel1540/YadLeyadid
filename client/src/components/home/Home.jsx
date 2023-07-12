@@ -32,7 +32,7 @@ export const Home = () => {
 		<>
 			<main className={`${open.action && "blur-sm"}`}>
 				<div className="flex justify-center">
-					<h1 className="text-2xl pt-12 underline">ברוך הבא - {name} 👋</h1>
+					<h1 className="text-2xl pt-12 underline">שלום {name} 👋</h1>
 				</div>
 				<section className="flex justify-center flex-row-reverse  gap-10 m-4 mt-16 sm:flex-wrap">
 					<SquareInfo

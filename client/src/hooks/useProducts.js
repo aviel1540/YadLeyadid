@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { queryKeys } from '~/react-query/queryKeys';
 import * as products from '~/api/products';
-import { onSuccess, onError } from '~/utils';
+import { onSuccess, onError } from '~/lib';
 
 export const useProducts = () => useQuery([queryKeys.products], products.getProducts);
 
@@ -17,8 +17,8 @@ export const useAddProduct = (setOpen, open, refetch) =>
     },
   });
 
-export const useUpdateProduct = (setOpen, open, refetch) =>
-  useMutation(products.updateProduct, {
+export const useUpdateProductLocation = (setOpen, open, refetch) =>
+  useMutation(products.updateProductLocation, {
     onSuccess: (data) => {
       onSuccess(data, setOpen, open, refetch);
     },
@@ -49,3 +49,13 @@ export const useAskExtensionRequest = (setOpen, open, refetch) =>
 
 export const useWaitConfirmExtensionRequest = () =>
   useQuery([queryKeys.waitConfirmExtensionRequest], products.waitConfirmExtensionRequest);
+
+export const useExtensionRequestAnswer = (setOpen, open, refetch) =>
+  useMutation(products.extensionRequestAnswer, {
+    onSuccess: (data) => {
+      onSuccess(data, setOpen, open, refetch);
+    },
+    onError: (data) => {
+      onError(data);
+    },
+  });

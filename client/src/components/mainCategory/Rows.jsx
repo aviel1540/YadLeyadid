@@ -6,7 +6,7 @@ import TableRow from "@mui/material/TableRow";
 import { Fragment, useState } from "react";
 import { MdDeleteForever, MdOutlineModeEdit, MdRemoveCircleOutline } from "react-icons/md";
 import { RiAddFill } from "react-icons/ri";
-import { replace } from "~/utils";
+import { replace } from "~/lib";
 
 export const Rows = ({ row, userDetails, index, setOpen, open }) => {
     const [openTable, setOpenTable] = useState(false);

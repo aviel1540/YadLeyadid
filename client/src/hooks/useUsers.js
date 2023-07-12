@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import * as users from '~/api/users';
 import { queryKeys } from '~/react-query/queryKeys';
-import { onError, onSuccess, success } from '~/utils';
+import { onError, onSuccess, success } from '~/lib';
 
 export const useUsers = () => useQuery([queryKeys.users], users.getUsers);
 export const useAdministrators = () => useQuery([queryKeys.users], users.getAdministrators);
@@ -14,7 +14,7 @@ export const useUserById = (id) =>
 export const useUserByUsername = (username) =>
   useQuery([queryKeys.userByUsername], () => users.getUserByUsername(username), {
     enabled: !!username,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
 
 export const useProductsForUser = (id) =>

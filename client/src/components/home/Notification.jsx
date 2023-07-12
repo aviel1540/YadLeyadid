@@ -4,12 +4,11 @@ import { BsThreeDotsVertical } from 'react-icons/bs'
 import { GiConfirmed } from 'react-icons/gi'
 import { MdOutlineCancel } from 'react-icons/md'
 import { useWaitConfirmExtensionRequest } from '~/hooks/useProducts'
-import { formatDate, replace } from '~/utils'
+import { formatDate, replace } from '~/lib'
 import { Spinner } from '~/components/ui'
 
 export const Notification = ({ setOpen, open }) => {
     const { data, isLoading, refetch } = useWaitConfirmExtensionRequest()
-    console.log("🚀  data:", data)
 
     const [threeDots, setThreeDots] = useState({
         click: false, index: null,
@@ -42,7 +41,7 @@ export const Notification = ({ setOpen, open }) => {
                                     <BsThreeDotsVertical />
                                 </IconButton>
                                 {(threeDots.click && threeDots.index === index + 1) &&
-                                    <div className='flex justify-around bg-gray-light/40 w-32 rounded-xl h-11'>
+                                    <div className='flex justify-around bg-gray-light/40 w-32 rounded-xl h-11 mt-2'>
                                         <MdOutlineCancel color='red' size={25} className='!mt-2 !cursor-pointer' title="סירוב"
                                             onClick={() =>
                                                 setOpen({

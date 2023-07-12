@@ -18,11 +18,11 @@ export const addProduct = async (productName) => {
   return data;
 };
 
-export const updateProduct = async (request) => {
-  const { id, productName } = request;
+export const updateProductLocation = async (request) => {
+  const { id, productPlace } = request;
 
-  const { data } = await axios.patch(`/products/update/${id}`, {
-    productName,
+  const { data } = await axios.patch(`/products/update-location/${id}`, {
+    productPlace,
   });
 
   return data;
@@ -44,6 +44,14 @@ export const askExtensionRequest = async (request) => {
 
 export const waitConfirmExtensionRequest = async () => {
   const { data } = await axios.get('/products/wait-confirm-extension-request');
+
+  return data;
+};
+
+export const extensionRequestAnswer = async (request) => {
+  const { id } = request;
+
+  const { data } = await axios.post(`/products/extension-request-answer/${id}`, request);
 
   return data;
 };

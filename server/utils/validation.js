@@ -36,3 +36,5 @@ exports.phoneNumber = (phoneNumber) => {
 	if (phoneNumber.length <= 9 || phoneNumber.length >= 11) return false;
 	return true;
 };
+
+exports.replace = (text) => text.replace(/[^א-ת]+/g, " ");
