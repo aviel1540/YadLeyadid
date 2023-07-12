@@ -41,7 +41,7 @@ export const Form = ({ setOpen, open }) => {
             <h1 className="block text-center text-2xl mb-2">{content}</h1>
             <main className="form-wrapper">
                 {title === "fogotPassword" &&
-                    <label htmlFor="email" className="form-label w-1/2">מייל לאימות
+                    <label htmlFor="email" className="form-label w-1/2">מייל לאימות:
                         <Input
                             type="email"
                             id="email"
@@ -54,7 +54,7 @@ export const Form = ({ setOpen, open }) => {
                     </label>
                 }
                 {title === "verificationCode" &&
-                    <label htmlFor="code" className="form-label w-1/2">קוד אימות
+                    <label htmlFor="code" className="form-label w-1/2">קוד אימות:
                         <Input
                             type="text"
                             id="code"

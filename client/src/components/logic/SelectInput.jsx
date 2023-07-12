@@ -1,7 +1,6 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { cn } from "~/lib";
 
-
 export const SelectInput = ({
     type,
     selectedValue,

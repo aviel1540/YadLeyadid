@@ -68,7 +68,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                     :
                     (
                         <>
-                            <label htmlFor="serialNumber" className="form-label">מספר סידורי
+                            <label htmlFor="serialNumber" className="form-label">מספר סידורי:
                                 <Input
                                     type="text"
                                     id="serialNumber"
@@ -81,7 +81,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                                 <p className="form-p_error">{errors.serialNumber?.message}</p>
                             </label>
 
-                            <label htmlFor="name" className="form-label ml-6">שם קטגוריה משנית
+                            <label htmlFor="name" className="form-label ml-6">שם קטגוריה משנית:
                                 <Input
                                     type="text"
                                     id="name"
