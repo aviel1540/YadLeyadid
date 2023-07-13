@@ -5,7 +5,7 @@ export const ClientPage = () => {
 
     return (
         <>
-            <TitleTab title="איזור אישי" />
+            <TitleTab title="איזור אישי" key='client' />
             <Client />
         </>
 

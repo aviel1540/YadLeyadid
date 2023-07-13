@@ -41,7 +41,7 @@ export const Form = ({ setOpen, open }) => {
             <h1 className="block text-center text-2xl mb-2">{content}</h1>
             <main className="form-wrapper">
                 {title === "fogotPassword" &&
-                    <label htmlFor="email" className="form-label w-1/2">מייל לאימות:
+                    <label htmlFor="email" className="form-label w-1/2 sm:w-full">מייל לאימות:
                         <Input
                             type="email"
                             id="email"
@@ -54,7 +54,7 @@ export const Form = ({ setOpen, open }) => {
                     </label>
                 }
                 {title === "verificationCode" &&
-                    <label htmlFor="code" className="form-label w-1/2">קוד אימות:
+                    <label htmlFor="code" className="form-label w-1/2 sm:w-full">קוד אימות:
                         <Input
                             type="text"
                             id="code"
@@ -68,11 +68,11 @@ export const Form = ({ setOpen, open }) => {
                 }
                 {title === "changePassword" &&
                     <>
-                        <label htmlFor="password" className="form-label">סיסמא חדשה:
+                        <label htmlFor="password" className="form-label sm:w-full">סיסמא חדשה:
                             <Input type="password" id="password" name="password" className="form-input" placeholder="סיסמא חדשה" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.password?.message}</p>
                         </label>
-                        <label htmlFor="verifyPassword" className="form-label">אימות סיסמא חדשה:
+                        <label htmlFor="verifyPassword" className="form-label sm:w-full">אימות סיסמא חדשה:
                             <Input type="password" id="verifyPassword" name="verifyPassword" className="form-input" placeholder="אימות סיסמא חדשה" {...register("verifyPassword", { required: { value: true, message: "שדה חובה." } })} />
                             <p className="form-p_error">{errors.verifyPassword?.message}</p>
                         </label>

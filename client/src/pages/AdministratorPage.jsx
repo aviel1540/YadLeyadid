@@ -4,7 +4,7 @@ import { Administrator, TitleTab } from '~/components'
 export const AdministratorPage = () => {
     return (
         <>
-            <TitleTab title="מנהלי מערכת" />
+            <TitleTab title="מנהלי מערכת" key='administrator' />
             <Administrator />
         </>
     )

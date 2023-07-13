@@ -4,7 +4,7 @@ import { Products, TitleTab } from "~/components";
 export const productsPage = () => {
 	return (
 		<>
-			<TitleTab title="מוצרים" />
+			<TitleTab title="מוצרים" key='products' />
 			<Products />
 		</>
 	)
