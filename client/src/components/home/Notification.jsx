@@ -2,7 +2,7 @@ import { IconButton } from '@mui/material'
 import { useState } from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { GiConfirmed } from 'react-icons/gi'
-import { MdOutlineCancel } from 'react-icons/md'
+import { MdOutlineCancel, MdOutlineNotificationsActive } from 'react-icons/md'
 import { useWaitConfirmExtensionRequest } from '~/hooks/useProducts'
 import { formatDate, replace } from '~/lib'
 import { Spinner } from '~/components/ui'
@@ -22,8 +22,14 @@ export const Notification = ({ setOpen, open }) => {
     return (
         <>
             <main className={`${open.action && "blur-sm"} p-6 w-full ml-5  mt-10 shadow-md shadow-black/10 md:w-full`}>
-                <div className='flex justify-between'>
-                    <h1 className='text-lg h-8 mb-5 underline'>עדכונים</h1>
+                <div className='flex justify-start'>
+                    <h1 className='text-lg h-8 mb-5 underline'>
+                        עדכונים
+                    </h1>
+                    {data.length > 0 &&
+                        <span className='m-2 animate-[notification_2s_ease-in-out_infinite]'>
+                            <MdOutlineNotificationsActive color='red' size={18} />
+                        </span>}
                 </div>
                 <ul className="flex flex-col w-full gap-1 mt-3 sm:max-w-md m-auto">
                     {data?.map((extensionRequest, index) => (

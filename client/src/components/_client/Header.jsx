@@ -8,8 +8,7 @@ export const Header = () => {
     const location = useLocation();
 
     const [click, setClick] = useState({
-        home: false,
-        details: false,
+        home: false, details: false,
     })
 
 
@@ -33,7 +32,7 @@ export const Header = () => {
                         <Link to="/client" className={`${click.home && "font-bold"}`}>בית</Link>
                     </li>
                     <li>
-                        <Link to={`/details/${username}`} className={`${click.details && "font-bold"}`}>פרטים אישיים</Link>
+                        <Link to={`/details/${username}`} className={`${click.details && "font-bold"} `}>פרטים אישיים</Link>
                     </li>
                     <li className="absolute left-0 ml-10 sm:ml-4">
                         <span className="cursor-pointer" onClick={() => logoutStore()}>יציאה</span>

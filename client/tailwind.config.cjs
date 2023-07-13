@@ -8,6 +8,10 @@ module.exports = {
           from: { transform: 'rotate(-10deg)' },
           to: { transform: 'rotate(0deg)' },
         },
+        notification: {
+          '0%, 100%': { transform: 'rotate(-5deg)' },
+          '50%': { transform: 'rotate(5deg)' },
+        },
         wiggleReverse: {
           from: { transform: 'rotate(10deg)' },
           to: { transform: 'rotate(0deg)' },

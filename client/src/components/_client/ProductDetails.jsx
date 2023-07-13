@@ -7,8 +7,6 @@ import { Actions } from './Actions';
 
 export const ProductDetails = ({ username, open, setOpen }) => {
     const { data: details, isLoading, refetch } = useUserByUsername(username);
-    console.log("🚀 details:", details)
-
 
     if (isLoading) return <Spinner />;
 
@@ -28,7 +26,7 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                     {details?.userProductList?.map((product) => (
                         <section
                             className="max-w-sm p-6 m-3 w-4/5 text-center shadow-lg shadow-black/40 bg-white border rounded-lg lg:w-full"
-                            key={product._id}
+                            key={product.id}
                         >
                             <label className="text-2xl font-semibold">
                                 {replace(product.productName)}
