@@ -22,6 +22,9 @@ router.post(
 	categoryController.assignProductToSemiCategory
 );
 
-router.delete("/:id/unasign-category/:productId", categoryController.unassignProductFromSemiCategory);
+router.delete(
+	"/:id/unasign-category/:productId",
+	categoryController.unassignProductFromSemiCategory
+);
 
 module.exports = router;

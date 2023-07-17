@@ -30,7 +30,7 @@ export const MainCategory = () => {
 
     const dataResults = mainCategory?.filter((data) => data.mainCategoryName.includes(inputSearch));
 
-    if (isLoading) return <Spinner />;
+    if (isLoading) return <Spinner className='mt-32' size={150} />;
 
     return (
         <>

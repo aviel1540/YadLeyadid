@@ -210,7 +210,12 @@ export const Form = ({ setOpen, open, refetch }) => {
             </main>
 
             <div className="flex justify-end p-2">
-                <SendIcon onClick={handleSubmit(onSubmit)} title={title} className="text-3xl" />
+                <SendIcon
+                    onClick={handleSubmit(onSubmit)}
+                    title={title}
+                    className="text-3xl"
+                    isLoading={isLoading}
+                />
             </div>
         </>
     );

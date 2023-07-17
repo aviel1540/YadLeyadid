@@ -5,6 +5,7 @@ import { useAddMission, useUpdateMission } from '~/hooks/useMission'
 import { useAuthStore } from '~/store/auth'
 import { error } from '~/lib'
 import { useExtensionRequestAnswer } from '~/hooks/useProducts'
+import { RequestStatus } from '~/constants/requestStatus'
 
 export const Form = ({ setOpen, open, refetch }) => {
     const { id, content, info } = open;
@@ -34,7 +35,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                 updateMission(payload);
             }
             else if (open.title === "accept") {
-                const payload = { id, answer: true };
+                const payload = { id, answer: RequestStatus.ACCEPT };
                 extensionRequestAnswer(payload);
             }
         } catch (err) {

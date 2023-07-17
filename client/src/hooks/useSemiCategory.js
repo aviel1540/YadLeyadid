@@ -34,3 +34,23 @@ export const useDeleteSemiCategory = (setOpen, open, refetch) =>
       onError(data);
     },
   });
+
+export const useAssignProductToSemiCategory = (setOpen, open, refetch) =>
+  useMutation(semiCategory.assignProductToSemiCategory, {
+    onSuccess: (data) => {
+      onSuccess(data, setOpen, open, refetch);
+    },
+    onError: (data) => {
+      onError(data);
+    },
+  });
+
+export const useUnassignProductToSemiCategory = (setOpen, open, refetch) =>
+  useMutation((request) => semiCategory.unassignProductToSemiCategory(request), {
+    onSuccess: (data) => {
+      onSuccess(data, setOpen, open, refetch);
+    },
+    onError: (data) => {
+      onError(data);
+    },
+  });

@@ -1,1 +1,8 @@
-export { getSemiCategory, addSemiCategory, updateSemiCategory, deleteSemiCategory } from './semiCategory';
+export {
+  getSemiCategory,
+  addSemiCategory,
+  updateSemiCategory,
+  deleteSemiCategory,
+  assignProductToSemiCategory,
+  unassignProductToSemiCategory,
+} from './semiCategory';

@@ -88,7 +88,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
                                             ...open,
                                             action: true,
                                             popUp: true,
-                                            title: "asignMainCategoryToSemiCategory",
+                                            title: "assignSemiCategoryToMainCategory",
                                             content: "שיוך קטגוריה משנית",
                                             id: row._id,
                                             info: row,

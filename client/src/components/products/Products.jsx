@@ -35,7 +35,7 @@ export const Products = () => {
 			product?.place?.includes(inputSearch)
 	);
 
-	if (isLoading) return <Spinner />;
+	if (isLoading) return <Spinner className='mt-32' size={150} />;
 
 	return (
 		<>
@@ -89,7 +89,7 @@ export const Products = () => {
 										className="!font-bold"
 										align="right"
 									>
-										משוייך לקטגוריה
+										משוייך לקטגוריה ראשית
 									</TableCell>
 									<TableCell
 										className="!font-bold"

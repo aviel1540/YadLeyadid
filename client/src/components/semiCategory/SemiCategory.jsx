@@ -25,14 +25,13 @@ export const SemiCategory = () => {
         id: "",
         info: {},
     });
-    console.log("🚀 open:", open)
 
     const { data: semiCategory, isLoading, refetch } = useSemiCategory();
 
     const dataResults = semiCategory?.filter((data) => data.semiCategoryName.includes(inputSearch));
 
 
-    if (isLoading) return <Spinner />;
+    if (isLoading) return <Spinner className='mt-32' size={150} />;
 
     return (
         <>
@@ -68,7 +67,7 @@ export const SemiCategory = () => {
                             type="search"
                             className="w-50"
                             placeholder="שם..."
-                            helperText="חיפוש משנית ראשית"
+                            helperText="חיפוש קטגוריה משנית"
                             onChange={({ target }) => setInputSearch(target.value)}
                             color="warning"
                         />
@@ -91,6 +90,12 @@ export const SemiCategory = () => {
                                         align="right"
                                     >
                                         שם
+                                    </TableCell>
+                                    <TableCell
+                                        className="!font-bold"
+                                        align="right"
+                                    >
+                                        משויך לקטגוריה ראשית
                                     </TableCell>
                                     <TableCell
                                         className="!font-bold"

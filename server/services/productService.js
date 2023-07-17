@@ -1,6 +1,6 @@
 const Product = require("../models/Product");
 const { ProductPlace } = require("../constants/productPlace");
-const { RequestStatus } = require("../constants/requestStatus")
+const { RequestStatus } = require("../constants/requestStatus");
 const { request } = require("express");
 
 exports.allProducts = async () => await Product.find();
@@ -90,6 +90,7 @@ exports.showProductDetailsInSemiCategory = async (productId) => {
 		productName: product.productName,
 		place: product.place,
 		inCategory: product.inCategory,
+		id: product._id,
 	};
 };
 
