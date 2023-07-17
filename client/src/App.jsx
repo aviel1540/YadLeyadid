@@ -35,7 +35,8 @@ export const App = () => {
 					pauseOnFocusLoss
 					draggable
 					pauseOnHover
-					theme="light"
+					theme="colored"
+
 				/>
 				{hidde && <SideBar />}
 				<Routers />

@@ -38,7 +38,7 @@ export const Users = () => {
 	// 	navigate(`details/${username}`);
 	// };
 
-	if (isLoading) return <Spinner />;
+	if (isLoading) return <Spinner className='mt-32' size={150} />;
 
 	return (
 		<>

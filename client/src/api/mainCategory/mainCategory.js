@@ -27,3 +27,17 @@ export const deleteMainCategory = async (id) => {
 
   return data;
 };
+
+export const assignSemiCategoryToMainCategory = async (request) => {
+  const { id } = request;
+  const { data } = await axios.post(`/main-category/${id}/asign-semi-category`, request);
+
+  return data;
+};
+
+export const unassignSemiCategoryToMainCategory = async (request) => {
+  const { id, semi_id } = request;
+  const { data } = await axios.delete(`/main-category/${id}/unasign-category/${semi_id}`);
+
+  return data;
+};

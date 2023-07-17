@@ -193,7 +193,7 @@ exports.unassignSemiCategoryToMainCategory = async (req, res) => {
 			checkMainCategoryId
 		);
 		if (!mainCategory)
-			return res.status(400).json({ message: "קטגוריה לא קיימת" });
+			return res.status(400).json({ message: "קטגוריה לא קיימת." });
 
 		const semiCategoryExist = mainCategory.semiCategoryList.find(
 			(id) => id.toString() === checkSemiCategoryId
@@ -202,7 +202,7 @@ exports.unassignSemiCategoryToMainCategory = async (req, res) => {
 		if (!semiCategoryExist)
 			return res
 				.status(400)
-				.json({ message: "הקטגוריה המשנית לא קיימת ברשימה" });
+				.json({ message: "הקטגוריה המשנית לא קיימת ברשימה." });
 
 		mainCategory.semiCategoryList.pull(checkSemiCategoryId);
 
@@ -210,7 +210,8 @@ exports.unassignSemiCategoryToMainCategory = async (req, res) => {
 			(semi) => semi.id.toString() === checkSemiCategoryId
 		);
 
-		if (isFound) return res.status(400).json({ message: "המחיקה נכשלה" });
+		if (isFound)
+			return res.status(400).json({ message: "הסרת השיוך נכשלה." });
 
 		await semiCategoryService.updateSemiCategoryUnassignMainCategory(
 			checkSemiCategoryId
@@ -227,9 +228,9 @@ exports.unassignSemiCategoryToMainCategory = async (req, res) => {
 			}
 		}
 		await mainCategory.save();
-		return res.status(200).json({ message: "נמחק בהצלחה.", mainCategory });
+		return res.status(200).json({ message: "הוסר השיוך בהצלחה." });
 	} catch (err) {
-		return res.status(400).json({ message: err });
+		return res.status(500).json({ message: err });
 	}
 };
 
@@ -255,18 +256,21 @@ exports.asignSemiCategoryToMainCategory = async (req, res) => {
 
 		const semiCategories = manySemiCategoryIds.map(async (semiId) => {
 			const checkSemiId = validation.addSlashes(semiId);
-			const semiCategory = await semiCategoryService.findSemiCategoryById(checkSemiId);
-			if(!semiCategory) throw new Error("לא נמצאה קטגוריה משנית");
-			if(semiCategory.inMainCategory) throw new Error("קטגוריה משנית משוייכת לראשית אחרת");
+			const semiCategory = await semiCategoryService.findSemiCategoryById(
+				checkSemiId
+			);
+			if (!semiCategory) throw new Error("לא נמצאה קטגוריה משנית");
+			if (semiCategory.inMainCategory)
+				throw new Error("קטגוריה משנית משוייכת לראשית אחרת");
 
 			const semiExist = mainCategory.semiCategoryList.find(
 				(id) => id.toString() === checkSemiId
 			);
-			
+
 			if (semiExist) {
 				return res
-				.status(400)
-				.json({ message: "הקטגוריה משוייכת לקטגוריה ראשית זו." });
+					.status(400)
+					.json({ message: "הקטגוריה משוייכת לקטגוריה ראשית זו." });
 			}
 
 			mainCategory.semiCategoryList.push(checkSemiId);
@@ -275,23 +279,26 @@ exports.asignSemiCategoryToMainCategory = async (req, res) => {
 				(id) => id.toString() === checkSemiId
 			);
 
-			if(!isFound) return res.status(501).json({message: "ההשאלה נכשלה"})
-			
+			if (!isFound)
+				return res.status(501).json({ message: "ההשאלה נכשלה" });
+
 			let updatedInCategory = mainCategory.mainCategoryName;
-				await semiCategoryService.updateAssignToMainCategory({
-					checkSemiId,
-					updatedInCategory,
-				});
-				if (semiCategory.productList.length > 0) {
-					for (let i = 0; i < semiCategory.productList.length; i++) {
-						const productIdUpdate = semiCategory.productList[i]._id;
-						await productService.updateProductInCategoryAssignSemiToMain({
+			await semiCategoryService.updateAssignToMainCategory({
+				checkSemiId,
+				updatedInCategory,
+			});
+			if (semiCategory.productList.length > 0) {
+				for (let i = 0; i < semiCategory.productList.length; i++) {
+					const productIdUpdate = semiCategory.productList[i]._id;
+					await productService.updateProductInCategoryAssignSemiToMain(
+						{
 							productIdUpdate,
 							updatedInCategory,
-						});
-					}
+						}
+					);
 				}
-			});
+			}
+		});
 		await Promise.all(semiCategories);
 		await mainCategory.save();
 		res.status(201).json({ message: "השיוך בוצע בהצלחה." });

@@ -31,7 +31,7 @@ export const Administrator = () => {
 
     const dataResults = filterData(administrators, inputSearch)
 
-    if (isLoading) return <Spinner />;
+    if (isLoading) return <Spinner className='mt-32' size={150} />;
 
     return (
         <>

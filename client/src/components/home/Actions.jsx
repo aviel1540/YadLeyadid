@@ -2,6 +2,7 @@ import { ModalDialog, PopUp } from "~/components/ui";
 import { Form } from "./Form";
 import { useDeleteMission } from "~/hooks/useMission";
 import { useExtensionRequestAnswer } from "~/hooks/useProducts";
+import { RequestStatus } from "~/constants/requestStatus";
 
 export const Actions = ({ setOpen, open, refetch }) => {
     const { title, id } = open
@@ -14,7 +15,7 @@ export const Actions = ({ setOpen, open, refetch }) => {
             deleteMission(id);
         }
         else if (title === 'cancel') {
-            const payload = { id, answer: false }
+            const payload = { id, answer: RequestStatus.REJECT }
             extensionRequestAnswer(payload)
         }
     }

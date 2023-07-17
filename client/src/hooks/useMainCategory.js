@@ -34,3 +34,23 @@ export const useDeleteMainCategory = (setOpen, open, refetch) =>
       onError(data);
     },
   });
+
+export const useAssignSemiCategoryToMainCategory = (setOpen, open, refetch) =>
+  useMutation(mainCategory.assignSemiCategoryToMainCategory, {
+    onSuccess: (data) => {
+      onSuccess(data, setOpen, open, refetch);
+    },
+    onError: (data) => {
+      onError(data);
+    },
+  });
+
+export const useUnassignSemiCategoryToMainCategory = (setOpen, open, refetch) =>
+  useMutation((request) => mainCategory.unassignSemiCategoryToMainCategory(request), {
+    onSuccess: (data) => {
+      onSuccess(data, setOpen, open, refetch);
+    },
+    onError: (data) => {
+      onError(data);
+    },
+  });

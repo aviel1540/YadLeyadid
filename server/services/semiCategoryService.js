@@ -42,16 +42,16 @@ exports.updateAssignToMainCategory = async (request) => {
 	});
 };
 
-exports.updateSemiCategoryUnassignMainCategory = async(semiId) => {
+exports.updateSemiCategoryUnassignMainCategory = async (semiId) => {
 	return await SemiCategory.findByIdAndUpdate(semiId, {
-		inMainCategory: null
+		inMainCategory: null,
 	});
 };
 
-
-exports.showSemiDetailsInMain = async(semiId) => {
+exports.showSemiDetailsInMain = async (semiId) => {
 	const semiCategory = await SemiCategory.findById(semiId);
 	return {
-		semiCategoryName: semiCategory.name
-	}
-}
+		semiCategoryName: semiCategory.name,
+		id: semiCategory._id,
+	};
+};

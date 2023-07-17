@@ -1,27 +1,24 @@
-import { useForm } from 'react-hook-form';
-import { useUpdateMainCategory } from '~/hooks/useMainCategory';
-import { useAddSemiCategory, useUpdateSemiCategory } from '~/hooks/useSemiCategory';
-import { error, replace } from '~/lib';
-import { Spinner } from '../ui';
-import { Input, MultipleAutocomplete, SendIcon } from '../logic';
-import { useProducts } from '~/hooks/useProducts';
-import { ProductPlace } from '~/constants/productPlace';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useProducts } from '~/hooks/useProducts';
+import { useAddSemiCategory, useAssignProductToSemiCategory, useUpdateSemiCategory } from '~/hooks/useSemiCategory';
+import { error, replace } from '~/lib';
+import { Input, MultipleAutocomplete, SendIcon } from '../logic';
+import { Spinner } from '../ui';
 
 export const Form = ({ setOpen, open, refetch }) => {
     const { title, content } = open;
 
     const [selectedAssign, setSelectedAssign] = useState([])
-    //TODO: add asignProductToSemiCategoryOnChange to onSubmit
-
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const { mutate: addSemiCategory } = useAddSemiCategory(setOpen, open, refetch);
     const { mutate: updateSemiCategory } = useUpdateSemiCategory(setOpen, open, refetch);
+    const { mutate: assignProductToSemiCategory } = useAssignProductToSemiCategory(setOpen, open, refetch);
 
     const { data: products, isLoading } = useProducts();
-    const activeProducts = products?.filter((p) => !Boolean(p.inCategory))
+    const activeProducts = products?.filter((p) => Boolean(!p.inCategory))
 
     const onSubmit = async (data) => {
         const { name, serialNumber } = data;
@@ -34,6 +31,17 @@ export const Form = ({ setOpen, open, refetch }) => {
             else if (title === "edit") {
                 const payload = { id: open.id, name, serialNumber };
                 updateSemiCategory(payload);
+            }
+            else if (title === "asignProductToSemiCategory") {
+                if (!selectedAssign || selectedAssign.length === 0) {
+                    info("נא לבחור מוצרים לשיוך.");
+                    return;
+                }
+                const payload = {
+                    categoryId: open.id,
+                    ids: selectedAssign.map((s) => s.id),
+                }
+                assignProductToSemiCategory(payload)
             }
         } catch (err) {
             error(err);
@@ -99,7 +107,12 @@ export const Form = ({ setOpen, open, refetch }) => {
 
             </main>
             <div className="flex justify-end p-2">
-                <SendIcon onClick={handleSubmit(onSubmit)} title={title} className="text-3xl" />
+                <SendIcon
+                    onClick={handleSubmit(onSubmit)}
+                    title={title}
+                    className="text-3xl"
+                    isLoading={isLoading}
+                />
             </div>
         </>
     )

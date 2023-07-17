@@ -4,23 +4,27 @@ import { Spinner } from '../ui';
 import { formatDate, replace } from '~/lib';
 import { Button } from '@mui/material';
 import { Actions } from './Actions';
+import { RequestStatus } from '~/constants/requestStatus';
 
 export const ProductDetails = ({ username, open, setOpen }) => {
     const { data: details, isLoading, refetch } = useUserByUsername(username);
 
-    if (isLoading) return <Spinner />;
+    if (isLoading) return <Spinner className='mt-32' size={150} />;
 
     return (
         <>
             <main className={`${open.action && "blur-sm"}`}>
-                <div className='flex justify-start mr-11 -mb-16 mt-10'>
-                    <h1 className='text-lg'>המוצרים שלי:</h1>
-                </div>
-
-                {details?.length > 1 &&
-                    <div className='flex justify-center mt-20'>
-                        <span className='text-lg text-red justify-center'>לא קיימים מוצרים.</span>
-                    </div>}
+                <>
+                    {details?.userProductList?.length > 0 ?
+                        <div className='flex justify-start mr-11 -mb-16 mt-10'>
+                            <h1 className='text-lg'>המוצרים שלי:</h1>
+                        </div>
+                        :
+                        <div className='flex justify-center mt-20'>
+                            <span className='text-lg text-red justify-center'>לא קיימים מוצרים.</span>
+                        </div>
+                    }
+                </>
 
                 <div className="grid justify-between grid-cols-4 gap-2 p-8 mt-10 xl:grid-cols-3 lg:grid-cols-2 sm:ml-6 sm:grid-cols-1 sm:gap-5 sm:p-3">
                     {details?.userProductList?.map((product) => (
@@ -39,18 +43,20 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                                 </label>
                             </div>
                             <div>
-                                <label className={`text-base ${product.extensionRequest && "text-green"}`}>
-                                    {product.extensionRequest ? 'תאריך החזרה המעודכן:' : 'תאריך החזרה:'} {" "}
+                                <label className={`text-base ${product.extensionRequest === RequestStatus.ACCEPT && "text-green"}`}>
+                                    {product.extensionRequest === RequestStatus.ACCEPT ? 'תאריך החזרה המעודכן:' : 'תאריך החזרה:'} {" "}
                                     {formatDate(product.loanReturn)}
                                 </label>
                             </div>
                             <div>
-                                <label className={`text-base text-red ${!product.requestDate && "invisible"}`}>
+                                <label className={`text-base text-orange ${!product.requestDate && "invisible"}`}>
                                     תאריך הארכה: {" "}
                                     {formatDate(product.requestDate)}
                                 </label>
                             </div>
-                            {(!product.requestDate && !product.extensionRequest === undefined || !product.extensionRequest) && <p className='text-sm text-red'>לא אושרה הארכה.</p>}
+                            {product.extensionRequest === RequestStatus.REJECT &&
+                                <p className='text-sm text-red'>לא אושרה הארכה.</p>
+                            }
                             <div className='mt-6'>
                                 <Button className={`!w-44 !text-white ${product.requestDate ? "!bg-orange/70" : "!bg-orange"}  !border`}
                                     onClick={() => setOpen({

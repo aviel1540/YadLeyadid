@@ -1,11 +1,25 @@
 import { ModalDialog, PopUp } from "~/components/ui";
 import { Form } from "./Form";
-import { useDeleteMainCategory } from "~/hooks/useMainCategory";
+import { useDeleteMainCategory, useUnassignSemiCategoryToMainCategory } from "~/hooks/useMainCategory";
 
 export const Actions = ({ setOpen, open, refetch }) => {
+    console.log("🚀  open:", open)
 
-    const { mutate: deleteMutateMainCategory } = useDeleteMainCategory(setOpen, open, refetch);
+    const { mutate: deleteMainCategory } = useDeleteMainCategory(setOpen, open, refetch);
+    const { mutate: unassignSemiCategoryToMainCategory } = useUnassignSemiCategoryToMainCategory(setOpen, open, refetch);
 
+    const submitHandler = () => {
+        if (open.title === "delete") {
+            deleteMainCategory(open.id);
+        } else if (open.title === "delete-unassign") {
+            const payload = {
+                id: open.info._id,
+                semi_id: open?.id,
+            };
+            console.log("🚀 payload:", payload)
+            unassignSemiCategoryToMainCategory(payload);
+        }
+    };
     return (
         <>
             {open.modalDialog && (
@@ -13,7 +27,7 @@ export const Actions = ({ setOpen, open, refetch }) => {
                     open={open}
                     setOpen={setOpen}
                     title={"האם את/ה בטוח ?"}
-                    onClick={() => deleteMutateMainCategory(open.id)}
+                    onClick={submitHandler}
                 />
             )}
             {open.popUp && (

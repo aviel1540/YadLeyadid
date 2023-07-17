@@ -235,7 +235,8 @@ exports.unassignProductFromSemiCategory = async (req, res) => {
 			(product) => product.id.toString() === checkProductId
 		);
 
-		if (isFound) return res.status(400).json({ message: "המחיקה נכשלה." });
+		if (isFound)
+			return res.status(400).json({ message: "הסרת השיוך נכשלה." });
 		let productName = semiCategory.name;
 		await productService.updateProductUnassignToSemiCategory({
 			checkProductId,
@@ -254,7 +255,9 @@ exports.unassignProductFromSemiCategory = async (req, res) => {
 		}
 		await semiCategory.save();
 
-		return res.status(200).json({ message: "נמחק בהצלחה.", semiCategory });
+		return res
+			.status(200)
+			.json({ message: "הוסר שיוך בהצלחה.", semiCategory });
 	} catch (err) {
 		return res.status(400).json({ message: err.message });
 	}
@@ -275,17 +278,19 @@ exports.assignProductToSemiCategory = async (req, res) => {
 		if (!semiCategory)
 			return res.status(404).json({ message: " לא נמצאה קטגוריה." });
 
-
 		for (const i in productsArr.ids) {
 			manyProductsIds.push(escape(productsArr.ids[i]));
 		}
 
 		const products = manyProductsIds.map(async (productId) => {
 			const checkProductId = validation.addSlashes(productId);
-			const product = await productService.findProductById(checkProductId);
+			const product = await productService.findProductById(
+				checkProductId
+			);
 
 			if (!product) throw new Error("מוצר לא קיים");
-			if (product.inCategory) throw new Error("המוצר משויך לקטגוריה אחרת")
+			if (product.inCategory)
+				throw new Error("המוצר משויך לקטגוריה אחרת");
 
 			const productExist = semiCategory.productList.find(
 				(id) => id.toString() === checkProductId
@@ -299,7 +304,8 @@ exports.assignProductToSemiCategory = async (req, res) => {
 				(id) => id.toString() === checkProductId
 			);
 
-			if (!isFound) return res.status(501).json({ message: "ההשאלה נכשלה" });
+			if (!isFound)
+				return res.status(501).json({ message: "ההשאלה נכשלה" });
 
 			let cntQuantity = semiCategory.quantity + 1;
 			semiCategory.quantity = cntQuantity;
@@ -318,5 +324,4 @@ exports.assignProductToSemiCategory = async (req, res) => {
 	} catch (err) {
 		return res.status(401).json({ message: err.message });
 	}
-}
-
+};

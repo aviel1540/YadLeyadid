@@ -26,7 +26,7 @@ export const Home = () => {
 	// const { data: products, isLoading: isLoadingProducts } = useProducts();
 	const { data: users, isLoading: isLoadingUsers } = useUsers();
 
-	if (isLoadingUsers || isLoadingProductsPlaces) return <Spinner />;
+	if (isLoadingUsers || isLoadingProductsPlaces) return <Spinner className='mt-32' size={150} />;
 
 	return (
 		<>
