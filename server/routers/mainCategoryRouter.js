@@ -8,7 +8,7 @@ router.get("/:id", mainCategoryController.getMainCategoryById);
 router.post("/add", mainCategoryController.addMainCategory);
 
 router.post(
-	"/:id/asign-semi-category/:semiId",
+	"/:id/asign-semi-category",
 	mainCategoryController.asignSemiCategoryToMainCategory
 );
 

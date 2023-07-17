@@ -1,6 +1,7 @@
 const escape = require("escape-html");
 const validation = require("../utils/validation");
 const { ProductPlace } = require("../constants/productPlace");
+const { RequestStatus } = require("../constants/requestStatus");	
 const productService = require("../services/productService");
 const userService = require("../services/userService");
 const mailer = require("../utils/mailer");
@@ -63,7 +64,6 @@ exports.getProductById = async (req, res) => {
 		const checkProductId = validation.addSlashes(productId);
 
 		product = await productService.findProductById(checkProductId);
-
 		return res.status(200).json(product);
 	} catch (err) {
 		return res.status(500).json({ message: err });
@@ -148,13 +148,12 @@ exports.updateExtensionRequest = async (req, res) => {
 	let updateProduct;
 	try {
 		const checkProductId = validation.addSlashes(productId);
-
+		const checkAnswer = validation.addSlashes(answer);
 		product = await productService.findProductById(checkProductId);
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
 		user = await userService.findUserById(product.loanBy);
-
-		if (answer.toString() === "false") {
+		if (checkAnswer === RequestStatus.REJECT) {
 			mailer.sendMailFunc(
 				"updateExtensionRequest",
 				user.email,
@@ -201,7 +200,7 @@ exports.askForExtensionRequest = async (req, res) => {
 
 		if (!product) return res.status(404).json({ message: "מוצר לא קיים." });
 
-		if (product.extensionRequest)
+		if (product.extensionRequest === RequestStatus.ACCEPT)
 			return res.status(400).json({
 				message:
 					"לא ניתן לבקש הארכה נוספת - יש ליצור קשר עם נציג שירות.",

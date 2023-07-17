@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 const { ProductPlace } = require("../constants/productPlace");
+const { RequestStatus } = require("../constants/requestStatus")
 const { request } = require("express");
 
 exports.allProducts = async () => await Product.find();
@@ -31,7 +32,7 @@ exports.updateProductUnassignToUser = async (productId) => {
 		loanDate: null,
 		loanReturn: null,
 		loanBy: null,
-		extensionRequest: null,
+		extensionRequest: RequestStatus.NOT_ASKED_EX_REQ,
 		requestDate: null,
 	});
 };
@@ -95,7 +96,7 @@ exports.showProductDetailsInSemiCategory = async (productId) => {
 exports.updateExtensionRequest = async (checkProductId, newReturnDate) => {
 	return await Product.findByIdAndUpdate(checkProductId, {
 		loanReturn: newReturnDate,
-		extensionRequest: true,
+		extensionRequest: RequestStatus.ACCEPT,
 		requestDate: null,
 	});
 };
@@ -103,12 +104,13 @@ exports.updateExtensionRequest = async (checkProductId, newReturnDate) => {
 exports.updateAlertRequest = async (productId, checkDate) => {
 	return await Product.findByIdAndUpdate(productId, {
 		requestDate: checkDate,
+		extensionRequest: RequestStatus.WAITING,
 	});
 };
 
 exports.unacceptExtensionRequest = async (checkProductId) => {
 	return await Product.findByIdAndUpdate(checkProductId, {
 		requestDate: null,
-		extensionRequest: false,
+		extensionRequest: RequestStatus.REJECT,
 	});
 };

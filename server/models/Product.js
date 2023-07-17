@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { ProductPlace } = require("../constants/productPlace");
+const { RequestStatus } = require("../constants/requestStatus")
 
 const Schema = mongoose.Schema;
 
@@ -31,8 +32,8 @@ const productSchema = new Schema({
 		ref: "User",
 	},
 	extensionRequest: {
-		type: Boolean,
-		default: null,
+		type: String,
+		default: RequestStatus.NOT_ASKED_EX_REQ,
 	},
 	requestDate: {
 		type: Date,

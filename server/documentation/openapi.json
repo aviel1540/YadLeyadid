@@ -475,7 +475,7 @@
 				}
 			}
 		},
-		"/main-category/{id}/asign-semi-category/{semiId}": {
+		"/main-category/{id}/asign-semi-category": {
 			"post": {
 				"tags": ["Main Category"],
 				"summary": "asign main-category to semi-category",
@@ -674,7 +674,7 @@
 				}
 			}
 		},
-		"/semi-category/{id}/asign-category/{productId}": {
+		"/semi-category/{id}/asign-category": {
 			"post": {
 				"tags": ["Semi Category"],
 				"summary": "asign product to semi-category",
@@ -941,7 +941,7 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"answer": { "type": "boolean" }
+									"answer": { "type": "string" }
 								}
 							}
 						}

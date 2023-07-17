@@ -18,7 +18,7 @@ router.delete("/delete/:id", categoryController.deleteSemiCategory);
 
 //post product to category
 router.post(
-	"/:id/asign-category/:productId",
+	"/:id/asign-category",
 	categoryController.assignProductToSemiCategory
 );
 
