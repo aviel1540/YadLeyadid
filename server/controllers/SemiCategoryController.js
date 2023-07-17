@@ -158,52 +158,6 @@ exports.deleteSemiCategory = async (req, res) => {
 	}
 };
 
-// exports.assignProductToSemiCategory = async (req, res) => {
-// 	const categoryId = escape(req.params.id);
-// 	const productId = escape(req.params.productId);
-// 	try {
-// 		const checkCategoryId = validation.addSlashes(categoryId);
-// 		const checkProductId = validation.addSlashes(productId);
-
-// 		const category = await semiCategoryService.findSemiCategoryById(
-// 			checkCategoryId
-// 		);
-// 		if (!category)
-// 			return res.status(404).json({ message: " לא נמצאה קטגוריה." });
-
-// 		const product = await productService.findProductById(checkProductId);
-// 		if (!product) return res.status(404).json({ message: "לא נמצא מוצר." });
-
-// 		if (product.inCategory)
-// 			return res
-// 				.status(400)
-// 				.json({ message: "המוצר משוייך לקטגוריה אחרת." });
-
-// 		const productExist = category.productList.find(
-// 			(id) => id.toString() === checkProductId
-// 		);
-
-// 		if (productExist)
-// 			return res.status(400).json({ message: "מוצר זה קיים בקטגוריה." });
-
-// 		category.productList.push(product);
-
-// 		let cntQuantity = category.quantity + 1;
-// 		let productNewName = `${category.name} ${cntQuantity}`;
-// 		let productInCategory = category.inMainCategory;
-// 		await productService.updateProductAssignToSemiCategory({
-// 			checkProductId,
-// 			productNewName,
-// 			productInCategory,
-// 		});
-
-// 		category.quantity = cntQuantity;
-// 		await category.save();
-// 		return res.status(201).json({ message: "שוייך בהצלחה." });
-// 	} catch (err) {
-// 		return res.status(401).json({ message: err.message });
-// 	}
-// };
 
 exports.unassignProductFromSemiCategory = async (req, res) => {
 	const semiId = escape(req.params.id);

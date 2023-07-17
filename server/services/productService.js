@@ -47,7 +47,7 @@ exports.updateProductAssignToSemiCategory = async (request) => {
 exports.updateProductUnassignToSemiCategory = async (request) => {
 	const { checkProductId, productName } = request;
 	return await Product.findByIdAndUpdate(checkProductId, {
-		productName: productName,
+		productName: "מוצר חדש",
 		inCategory: null,
 	});
 };
