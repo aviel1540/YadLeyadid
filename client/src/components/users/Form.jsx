@@ -158,7 +158,6 @@ export const Form = ({ setOpen, open, refetch }) => {
                                                 name: label,
                                             })
                                         )}
-                                        required={!administratorLocation}
                                         isLoading={!paymentTypes ? true : false}
                                     />
                                     {/* <p className="form-p_error">{errors.email?.message}</p> */}

@@ -1,15 +1,8 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { cn } from "~/lib";
 
-export const SelectInput = ({
-    type,
-    selectedValue,
-    setSelectedValue,
-    data,
-    isLoading,
-    required,
-    className
-}) => {
+export const SelectInput = (props) => {
+    const { type, selectedValue, setSelectedValue, data, isLoading, className } = props;
 
     const handleChange = (e) => {
         const value = e.target.value;
@@ -33,7 +26,7 @@ export const SelectInput = ({
                     label={type}
                     onChange={handleChange}
                     disabled={isLoading}
-                    required={required}
+                    required
                 >
                     <MenuItem value={0}>
                         <em className="text-gray/70">{type}</em>

@@ -46,7 +46,6 @@ export const Form = ({ setOpen, open, refetch }) => {
                                 name: label,
                             })
                         )}
-                        required={true}
                         isLoading={!productPlace ? true : false}
                     />
                 </label>
