@@ -39,7 +39,6 @@ export const Administrator = () => {
                         {dataResults.length >= 1 ?
                             <Button
                                 className="button-add w-52"
-                                title="הוספת מנהל מערכת חדש"
                                 onClick={() =>
                                     setOpen({
                                         ...open,
@@ -49,7 +48,9 @@ export const Administrator = () => {
                                         content: "הוספת מנהל מערכת חדש"
                                     })
                                 }
-                            />
+                            >
+                                הוספת מנהל מערכת חדש
+                            </Button>
                             : <div className="visible" />}
 
                         <SearchInput

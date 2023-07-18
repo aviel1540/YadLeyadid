@@ -22,8 +22,9 @@ export const ModalDialog = ({ title, setOpen, open, onClick }) => {
                     <Button
                         className="w-6/12 font-bold text-black"
                         onClick={() => setOpen({ ...open, modalDialog: false })}
-                        title='סגור'
-                    />
+                    >
+                        סגור
+                    </Button>
 
                     <Button
                         className="w-6/12 font-bold rounded-lg text-red h-8 hover:bg-red/70 hover:text-white"
@@ -31,8 +32,9 @@ export const ModalDialog = ({ title, setOpen, open, onClick }) => {
                             onClick();
                             setOpen({ ...open, modalDialog: false });
                         }}
-                        title='כן'
-                    />
+                    >
+                        מחק
+                    </Button>
 
                 </div>
             </section>

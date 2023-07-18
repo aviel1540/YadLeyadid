@@ -37,11 +37,12 @@ export const Products = () => {
 						{dataResults.length >= 1 ?
 							<Button
 								className="button-add w-44"
-								title="הוספת מוצר חדש"
 								onClick={() =>
 									addProduct({ productName: "מוצר חדש" })
 								}
-							/>
+							>
+								הוספת מוצר חדש
+							</Button>
 							: <div className="visible" />}
 
 						<SearchInput

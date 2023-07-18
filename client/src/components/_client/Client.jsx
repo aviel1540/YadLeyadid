@@ -1,18 +1,12 @@
+import { useOpen } from '~/hooks/useOpen';
 import { useAuthStore } from '~/store/auth';
 import { Header } from './Header';
 import { ProductDetails } from './ProductDetails';
-import { useState } from 'react';
 
 export const Client = () => {
     const { name, username } = useAuthStore();
-    const [open, setOpen] = useState({
-        action: false,
-        popUp: false,
-        modalDialog: false,
-        title: "",
-        content: "",
-        id: "",
-    });
+
+    const [open, setOpen] = useOpen();
 
     return (
         <>

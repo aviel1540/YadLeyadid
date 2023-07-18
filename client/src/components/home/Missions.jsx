@@ -38,8 +38,9 @@ export const Missions = ({ setOpen, open }) => {
                                 content: "הוספת משימה חדשה"
                             })
                         }
-                        title='הוספת משימה חדשה'
-                    />
+                    >
+                        הוספת משימה חדשה
+                    </Button>
 
 
                 </div>

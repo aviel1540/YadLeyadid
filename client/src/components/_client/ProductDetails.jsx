@@ -14,17 +14,16 @@ export const ProductDetails = ({ username, open, setOpen }) => {
     return (
         <>
             <main className={`${open.action && "blur-sm"}`}>
-                <>
-                    {details?.userProductList?.length > 0 ?
-                        <div className='flex justify-start mr-11 -mb-16 mt-10'>
-                            <h1 className='text-lg'>המוצרים שלי:</h1>
-                        </div>
-                        :
-                        <div className='flex justify-center mt-20'>
-                            <span className='text-lg text-red justify-center'>לא קיימים מוצרים.</span>
-                        </div>
-                    }
-                </>
+
+                {details?.userProductList?.length > 0 ?
+                    <div className='flex justify-start mr-11 -mb-16 mt-10'>
+                        <h1 className='text-lg'>המוצרים שלי:</h1>
+                    </div>
+                    :
+                    <div className='flex justify-center mt-20'>
+                        <span className='text-lg text-red justify-center'>לא קיימים מוצרים.</span>
+                    </div>
+                }
 
                 <div className="grid justify-between grid-cols-4 gap-2 p-8 mt-10 xl:grid-cols-3 lg:grid-cols-2 sm:ml-6 sm:grid-cols-1 sm:gap-5 sm:p-3">
                     {details?.userProductList?.map((product) => (
