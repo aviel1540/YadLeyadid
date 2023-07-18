@@ -12,6 +12,7 @@ import { Button } from '../logic';
 import { Spinner } from '../ui';
 import { Actions } from './Actions';
 import { Rows } from './Rows';
+import { SearchInput } from "../logic/SearchInput";
 
 export const SemiCategory = () => {
     const [text, setText] = useState("");
