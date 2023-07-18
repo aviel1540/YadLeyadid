@@ -38,7 +38,6 @@ export const SemiCategory = () => {
                     <div className="flex justify-between flex-row-reverse items-end mb-5">
                         {dataResults.length >= 1 ?
                             <Button
-                                title="הוספת קטגוריה משנית חדשה"
                                 className="button-add w-56"
                                 onClick={() =>
                                     setOpen({
@@ -49,7 +48,9 @@ export const SemiCategory = () => {
                                         content: "הוספת קטגוריה משנית חדשה"
                                     })
                                 }
-                            />
+                            >
+                                הוספת קטגוריה משנית חדשה
+                            </Button>
                             : <div className="visible" />}
 
                         <SearchInput

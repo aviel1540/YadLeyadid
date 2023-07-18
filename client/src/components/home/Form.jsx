@@ -77,11 +77,12 @@ export const Form = ({ setOpen, open, refetch }) => {
                 <div className="flex flex-col justify-center items-center mt-10">
                     <Button
                         className={`${isLoadingExtensionRequestAnswer ? "bg-green/60" : "bg-green"} w-[50%] h-8 text-white  rounded-md mb-5 hover:bg-green/80`}
-                        title='אישור'
                         onClick={onSubmit}
                         disabled={isLoadingExtensionRequestAnswer}
                         isLoading={isLoadingExtensionRequestAnswer}
-                    />
+                    >
+                        אישור
+                    </Button>
                 </div>
             )}
 

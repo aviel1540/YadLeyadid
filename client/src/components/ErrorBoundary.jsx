@@ -28,7 +28,7 @@ export class ErrorBoundary extends React.Component {
             return (
                 <div className='h-screen flex flex-col justify-center items-center'>
                     <span className='text-xl'>משהו כנראה השתבש, בואו נחזור למקום בטוח.</span>
-                    <Button className='bg-blue/40  w-48 rounded-md mt-5 border hover:bg-blue/70' onClick={handleClick} title="אל מקום בטוח ⛵" />
+                    <Button className='bg-blue/40  w-48 rounded-md mt-5 border hover:bg-blue/70' onClick={handleClick} >אל מקום בטוח ⛵</Button>
                 </div>
             )
         }

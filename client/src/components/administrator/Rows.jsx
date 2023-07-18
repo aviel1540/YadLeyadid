@@ -5,7 +5,7 @@ import { Fragment } from "react";
 import { MdDeleteForever, MdOutlineModeEdit } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 
-export const Rows = ({ row, userDetails, index, setOpen, open }) => {
+export const Rows = ({ row, index, setOpen, open }) => {
 
     return (
         <Fragment>

@@ -8,7 +8,7 @@ import { MdDeleteForever, MdOutlineModeEdit, MdRemoveCircleOutline } from "react
 import { RiAddFill } from "react-icons/ri";
 import { replace } from "~/lib";
 
-export const Rows = ({ row, userDetails, index, setOpen, open }) => {
+export const Rows = ({ row, index, setOpen, open }) => {
     const [openTable, setOpenTable] = useState(false);
 
     return (
@@ -79,7 +79,7 @@ export const Rows = ({ row, userDetails, index, setOpen, open }) => {
                                 component="div"
                                 className="!flex"
                             >
-                                קטגוריה משנית - {row?.semiCategoryList?.length > 0 ? `(${row?.semiCategoryList?.length})` : `(${0})`}
+                                קטגוריות משניות - {row?.semiCategoryList?.length > 0 ? `(${row?.semiCategoryList?.length})` : `(${0})`}
                                 <IconButton
                                     title="שיוך קטגוריה משנית"
                                     className="!text-green !text-2xl !-mt-0.5"

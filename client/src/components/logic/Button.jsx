@@ -1,7 +1,7 @@
 import { cn } from "~/lib"
 import { FaSpinner } from 'react-icons/fa'
 
-export const Button = ({ className, disabled, title, isLoading, children, ...props }) => {
+export const Button = ({ className, children, disabled, isLoading, ...props }) => {
 
     return (
         <button
@@ -11,9 +11,9 @@ export const Button = ({ className, disabled, title, isLoading, children, ...pro
         >
             {isLoading ?
                 <div className="flex justify-center">
-                    <FaSpinner className='mr-2 h-5 w-5 animate-spin text-black/75' />
+                    <FaSpinner className='h-5 w-5 animate-spin text-black/80' />
                 </div>
-                : title}
+                : children}
         </button>
     )
 }

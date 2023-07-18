@@ -38,7 +38,6 @@ export const Users = () => {
 					<div className="flex justify-between flex-row-reverse items-end mb-5">
 						{dataResults.length >= 1 ?
 							<Button
-								title="הוספת לקוח חדש"
 								className="button-add w-44"
 								onClick={() =>
 									setOpen({
@@ -49,7 +48,9 @@ export const Users = () => {
 										content: "הוספת לקוח חדש"
 									})
 								}
-							/>
+							>
+								הוספת לקוח חדש
+							</Button>
 							: <div className="visible" />}
 
 						<SearchInput

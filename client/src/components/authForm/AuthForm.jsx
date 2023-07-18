@@ -59,10 +59,11 @@ export const AuthForm = () => {
 
 				<Button
 					className={`${isLoading ? "bg-orange/60" : "bg-orange"} text-white h-9 w-full text-base mt-6 rounded-md hover:shadow hover:shadow-black/50 `}
-					title="התחבר"
 					isLoading={isLoading}
 					disabled={isLoading}
-				/>
+				>
+					התחבר
+				</Button>
 			</form>
 			{
 				open.action && (
