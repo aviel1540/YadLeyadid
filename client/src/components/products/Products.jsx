@@ -1,4 +1,3 @@
-import { TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,33 +6,23 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useState } from "react";
+import { useOpen } from "~/hooks/useOpen";
 import { useAddProduct, useProducts } from "~/hooks/useProducts";
+import { Button } from "../logic";
+import { SearchInput } from "../logic/SearchInput";
 import { Spinner } from "../ui";
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
-import { Button } from "../logic";
+import { filterData } from "./config";
 
 export const Products = () => {
-	const [inputSearch, setInputSearch] = useState("");
-	const [open, setOpen] = useState({
-		action: false,
-		popUp: false,
-		modalDialog: false,
-		title: "",
-		content: "",
-		id: "",
-		info: {},
-	});
+	const [text, setText] = useState("");
 
+	const [open, setOpen] = useOpen();
 	const { data: products, isLoading, refetch } = useProducts();
 	const { mutate: addProduct } = useAddProduct(setOpen, open, refetch);
 
-	const dataResults = products?.filter(
-		(product) =>
-			product?.productName.toLowerCase()?.includes(inputSearch?.toLowerCase()) ||
-			product.inCategory?.includes(inputSearch) ||
-			product?.place?.includes(inputSearch)
-	);
+	const dataResults = filterData(products, text)
 
 	if (isLoading) return <Spinner className='mt-32' size={150} />;
 
@@ -53,18 +42,12 @@ export const Products = () => {
 									addProduct({ productName: "מוצר חדש" })
 								}
 							/>
-
-
 							: <div className="visible" />}
-						<TextField
-							id="outlined-search"
-							variant="standard"
-							type="search"
-							className="w-50"
+
+						<SearchInput
 							placeholder="שם, סטטוס, קטגוריה..."
 							helperText="חיפוש מוצר"
-							onChange={({ target }) => setInputSearch(target.value)}
-							color="warning"
+							setText={setText}
 						/>
 					</div>
 					{dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 750 }}>

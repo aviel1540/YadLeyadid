@@ -5,31 +5,23 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { TextField } from '@mui/material';
 import { useState } from 'react';
 import { Spinner } from "~/components/ui";
+import { useOpen } from "~/hooks/useOpen";
 import { useAdministrators } from '~/hooks/useUsers';
-import { Actions } from '../users/Actions';
-import { Rows } from './Rows';
-import { filterData } from '../users/filterData';
 import { Button } from "../logic";
+import { SearchInput } from "../logic/SearchInput";
+import { Actions } from '../users/Actions';
+import { filterData } from '../users/config';
+import { Rows } from './Rows';
 
 export const Administrator = () => {
+    const [text, setText] = useState("");
+
+    const [open, setOpen] = useOpen();
     const { data: administrators, isLoading, refetch } = useAdministrators();
 
-    const [inputSearch, setInputSearch] = useState("");
-    const [open, setOpen] = useState({
-        action: false,
-        popUp: false,
-        modalDialog: false,
-        title: "",
-        content: "",
-        id: "",
-        info: {},
-    });
-
-
-    const dataResults = filterData(administrators, inputSearch)
+    const dataResults = filterData(administrators, text)
 
     if (isLoading) return <Spinner className='mt-32' size={150} />;
 
@@ -58,19 +50,13 @@ export const Administrator = () => {
                                     })
                                 }
                             />
-
                             : <div className="visible" />}
-                        <TextField
-                            id="outlined-search"
-                            variant="standard"
-                            type="search"
-                            className="w-50"
+
+                        <SearchInput
                             placeholder="שם, תעדות זהות, פלאפון..."
                             helperText="חיפוש מנהל מערכת"
-                            onChange={({ target }) => setInputSearch(target.value)}
-                            color="warning"
+                            setText={setText}
                         />
-
                     </div>
                     {dataResults?.length >= 1 ? <TableContainer component={Paper} sx={{ height: 600 }}>
                         <Table aria-label="collapsible table">

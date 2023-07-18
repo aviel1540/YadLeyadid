@@ -1,4 +1,3 @@
-import { TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,36 +6,22 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Spinner } from "~/components/ui";
+import { useOpen } from "~/hooks/useOpen";
 import { useUsers } from "~/hooks/useUsers";
-
+import { Button } from "../logic";
+import { SearchInput } from "../logic/SearchInput";
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
-import { filterData } from "./filterData";
-import { Button } from "../logic";
+import { filterData } from "./config";
 
 export const Users = () => {
-	const [inputSearch, setInputSearch] = useState("");
+	const [text, setText] = useState("");
 
-	const [open, setOpen] = useState({
-		action: false,
-		popUp: false,
-		modalDialog: false,
-		title: "",
-		content: "",
-		id: "",
-		info: {},
-	});
-
+	const [open, setOpen] = useOpen();
 	const { data: users, isLoading, refetch } = useUsers();
 
-	const navigate = useNavigate();
-
-	const dataResults = filterData(users, inputSearch)
-	// const userDetails = (username) => {
-	// 	navigate(`details/${username}`);
-	// };
+	const dataResults = filterData(users, text)
 
 	if (isLoading) return <Spinner className='mt-32' size={150} />;
 
@@ -65,20 +50,13 @@ export const Users = () => {
 									})
 								}
 							/>
-
-
 							: <div className="visible" />}
-						<TextField
-							id="outlined-search"
-							variant="standard"
-							type="search"
-							className="w-50"
+
+						<SearchInput
 							placeholder="שם, תעדות זהות, פלאפון..."
 							helperText="חיפוש לקוח"
-							onChange={({ target }) => setInputSearch(target.value)}
-							color="warning"
+							setText={setText}
 						/>
-
 					</div>
 					{dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 750 }}>
 						<Table aria-label="collapsible table">

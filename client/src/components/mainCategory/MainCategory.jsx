@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,29 +5,22 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useState } from 'react';
 import { useMainCategory } from '~/hooks/useMainCategory';
-import { Spinner } from '../ui';
-import { Rows } from './Rows';
+import { useOpen } from '~/hooks/useOpen';
 import { Button } from '../logic';
-import { TextField } from '@mui/material';
+import { SearchInput } from '../logic/SearchInput';
+import { Spinner } from '../ui';
 import { Actions } from './Actions';
+import { Rows } from './Rows';
 
 export const MainCategory = () => {
-    const [inputSearch, setInputSearch] = useState("");
+    const [text, setText] = useState("");
 
-    const [open, setOpen] = useState({
-        action: false,
-        popUp: false,
-        modalDialog: false,
-        title: "",
-        content: "",
-        id: "",
-        info: {},
-    });
-
+    const [open, setOpen] = useOpen();
     const { data: mainCategory, isLoading, refetch } = useMainCategory();
 
-    const dataResults = mainCategory?.filter((data) => data.mainCategoryName.includes(inputSearch));
+    const dataResults = mainCategory?.filter((data) => data.mainCategoryName.includes(text));
 
     if (isLoading) return <Spinner className='mt-32' size={150} />;
 
@@ -57,20 +49,13 @@ export const MainCategory = () => {
                                     })
                                 }
                             />
-
-
                             : <div className="visible" />}
-                        <TextField
-                            id="outlined-search"
-                            variant="standard"
-                            type="search"
-                            className="w-50"
+
+                        <SearchInput
                             placeholder="שם..."
                             helperText="חיפוש קטגוריה ראשית"
-                            onChange={({ target }) => setInputSearch(target.value)}
-                            color="warning"
+                            setText={setText}
                         />
-
                     </div>
                     {dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 750 }}>
                         <Table aria-label="collapsible table">

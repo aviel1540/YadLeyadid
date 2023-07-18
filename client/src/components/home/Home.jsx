@@ -2,28 +2,37 @@ import { useState } from "react";
 import { BsCartCheck, BsCartX } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi";
 import { TbShoppingCartOff } from "react-icons/tb";
-import { useProductsPlaces } from "~/hooks/useProducts";
-import { useUsers } from "~/hooks/useUsers";
+import { useProducts, useProductsPlaces } from "~/hooks/useProducts";
+import { useAdministrators, useUsers } from "~/hooks/useUsers";
 import { useAuthStore } from "~/store/auth";
 import { Spinner } from "../ui";
 import { SquareInfo, Missions, Notification } from ".";
 import { Columns, Line, Pie } from "./charts";
+import { useMainCategory } from "~/hooks/useMainCategory";
+import { useSemiCategory } from "~/hooks/useSemiCategory";
+import { useOpen } from "~/hooks/useOpen";
 
 export const Home = () => {
 	const { name } = useAuthStore();
 
-	const [open, setOpen] = useState({
-		action: false,
-		popUp: false,
-		modalDialog: false,
-		title: "",
-		content: "",
-		id: "",
-		info: {},
-	});
+	// const [open, setOpen] = useState({
+	// 	action: false,
+	// 	popUp: false,
+	// 	modalDialog: false,
+	// 	title: "",
+	// 	content: "",
+	// 	id: "",
+	// 	info: {},
+	// });
+	const [open, setOpen] = useOpen();
+
+	// To save all the data in the cache to prevent unnecessary loadings.
+	useProducts();
+	useMainCategory();
+	useSemiCategory();
+	useAdministrators();
 
 	const { data: productsPlaces, isLoading: isLoadingProductsPlaces } = useProductsPlaces()
-	// const { data: products, isLoading: isLoadingProducts } = useProducts();
 	const { data: users, isLoading: isLoadingUsers } = useUsers();
 
 	if (isLoadingUsers || isLoadingProductsPlaces) return <Spinner className='mt-32' size={150} />;
