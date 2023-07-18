@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useState } from 'react';
-import { TextField } from '@mui/material';
+import { useOpen } from "~/hooks/useOpen";
 import { useSemiCategory } from '~/hooks/useSemiCategory';
 import { Button } from '../logic';
 import { Spinner } from '../ui';
@@ -14,21 +14,12 @@ import { Actions } from './Actions';
 import { Rows } from './Rows';
 
 export const SemiCategory = () => {
-    const [inputSearch, setInputSearch] = useState("");
+    const [text, setText] = useState("");
 
-    const [open, setOpen] = useState({
-        action: false,
-        popUp: false,
-        modalDialog: false,
-        title: "",
-        content: "",
-        id: "",
-        info: {},
-    });
-
+    const [open, setOpen] = useOpen();
     const { data: semiCategory, isLoading, refetch } = useSemiCategory();
 
-    const dataResults = semiCategory?.filter((data) => data.semiCategoryName.includes(inputSearch));
+    const dataResults = semiCategory?.filter((data) => data.semiCategoryName.includes(text));
 
 
     if (isLoading) return <Spinner className='mt-32' size={150} />;
@@ -58,20 +49,13 @@ export const SemiCategory = () => {
                                     })
                                 }
                             />
-
-
                             : <div className="visible" />}
-                        <TextField
-                            id="outlined-search"
-                            variant="standard"
-                            type="search"
-                            className="w-50"
+
+                        <SearchInput
                             placeholder="שם..."
                             helperText="חיפוש קטגוריה משנית"
-                            onChange={({ target }) => setInputSearch(target.value)}
-                            color="warning"
+                            setText={setText}
                         />
-
                     </div>
                     {dataResults.length >= 1 ? <TableContainer component={Paper} sx={{ height: 900 }}>
                         <Table aria-label="collapsible table">

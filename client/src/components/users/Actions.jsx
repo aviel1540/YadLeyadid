@@ -5,7 +5,6 @@ import { useDeleteUser, useUnassignProductToUser } from "~/hooks/useUsers";
 export const Actions = ({ setOpen, open, refetch }) => {
 
     const { mutate: deleteUser } = useDeleteUser(setOpen, open, refetch);
-
     const { mutate: unassignProductToUser } = useUnassignProductToUser(setOpen, open, refetch);
 
     const submitHandler = () => {
