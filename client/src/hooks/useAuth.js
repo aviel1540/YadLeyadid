@@ -5,21 +5,19 @@ import { useAuthStore } from '~/store/auth';
 import { onError, onSuccess, success } from '~/lib';
 import { decodeToken } from 'react-jwt';
 
-export const useLogin = (reset, setIsLoading) => {
+export const useLogin = (reset) => {
   const navigate = useNavigate();
   const { loginStore } = useAuthStore();
 
   return useMutation(auth.login, {
     onSuccess: (data) => {
-      reset();
       const isAdmin = decodeToken(data)?.isAdmin;
       loginStore(data);
-      setIsLoading(false);
+      reset();
       if (isAdmin) navigate('/home');
       else navigate('/client');
     },
     onError: (data) => {
-      setIsLoading(false);
       onError(data);
     },
   });

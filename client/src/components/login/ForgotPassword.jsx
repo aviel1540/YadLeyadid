@@ -1,15 +1,17 @@
-import { useForm } from "react-hook-form";
-import { useChangePassword, useForgotPassword, useVerificationCode } from "~/hooks/useAuth";
-import { error } from "~/lib";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { fromZodError } from 'zod-validation-error';
+import { useChangePassword, useForgotPassword, useVerificationCode } from "~/hooks/useAuth";
+import { error, warning } from "~/lib";
+import { CodeValidator, EmailValidator, PasswordValidator } from "~/lib/validators";
 import { Input, SendIcon } from "../logic";
 
-export const Form = ({ setOpen, open }) => {
+export const ForgotPassword = ({ setOpen, open }) => {
     const { title, content } = open;
+    const [userEmail, setUserEmail] = useState("")
 
     const { register, handleSubmit, resetField, formState: { errors } } = useForm();
-
-    const [userEmail, setUserEmail] = useState("")
 
     const { mutate: forgotPassword } = useForgotPassword(setOpen, open, resetField);
     const { mutate: verificationPassword } = useVerificationCode(setOpen, open, resetField);
@@ -19,20 +21,32 @@ export const Form = ({ setOpen, open }) => {
         const { email, code, password, verifyPassword } = data;
 
         try {
+
             if (title === "fogotPassword") {
+                EmailValidator.parse(email);
+
                 const payload = { email };
                 setUserEmail(email)
                 forgotPassword(payload);
             } else if (title === "verificationCode") {
+                CodeValidator.parse(code);
+
                 const payload = { code };
                 verificationPassword(payload);
             } else if (title === "changePassword") {
+                PasswordValidator.parse({ password, verifyPassword });
+
                 const payload = { email: userEmail, password, verifyPassword };
                 changePassword(payload);
             }
+            else throw new Error('')
 
         } catch (err) {
-            error(err);
+            if (err instanceof z.ZodError) {
+                const validationError = fromZodError(err);
+                return error(validationError.details[0].message);
+            }
+            error(err?.message);
         }
     };
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { Products, TitleTab } from "~/components";
 
 export const productsPage = () => {

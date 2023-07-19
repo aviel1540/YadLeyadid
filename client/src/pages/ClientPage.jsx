@@ -1,4 +1,3 @@
-import React from 'react'
 import { Client, TitleTab } from '~/components'
 
 export const ClientPage = () => {

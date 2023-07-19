@@ -1,4 +1,3 @@
-import React from 'react'
 import { Administrator, TitleTab } from '~/components'
 
 export const AdministratorPage = () => {

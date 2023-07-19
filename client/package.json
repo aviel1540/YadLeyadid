@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@hookform/resolvers": "^3.1.1",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.124",
     "@mui/material": "^5.11.14",
@@ -32,6 +33,8 @@
     "react-toastify": "^9.1.2",
     "tailwind-merge": "^1.13.1",
     "universal-cookie": "^4.0.4",
+    "zod": "^3.21.4",
+    "zod-validation-error": "^1.3.1",
     "zustand": "^4.3.6"
   },
   "devDependencies": {

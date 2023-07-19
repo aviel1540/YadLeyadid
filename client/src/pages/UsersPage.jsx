@@ -1,5 +1,4 @@
-import React from "react";
-import { Users, TitleTab } from "~/components";
+import { TitleTab, Users } from "~/components";
 
 export const UsersPage = () => {
 	return (

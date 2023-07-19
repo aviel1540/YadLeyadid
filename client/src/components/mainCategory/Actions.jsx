@@ -1,9 +1,8 @@
 import { ModalDialog, PopUp } from "~/components/ui";
-import { Form } from "./Form";
 import { useDeleteMainCategory, useUnassignSemiCategoryToMainCategory } from "~/hooks/useMainCategory";
+import { Form } from "./Form";
 
 export const Actions = ({ setOpen, open, refetch }) => {
-    console.log("🚀  open:", open)
 
     const { mutate: deleteMainCategory } = useDeleteMainCategory(setOpen, open, refetch);
     const { mutate: unassignSemiCategoryToMainCategory } = useUnassignSemiCategoryToMainCategory(setOpen, open, refetch);
@@ -16,7 +15,6 @@ export const Actions = ({ setOpen, open, refetch }) => {
                 id: open.info._id,
                 semi_id: open?.id,
             };
-            console.log("🚀 payload:", payload)
             unassignSemiCategoryToMainCategory(payload);
         }
     };

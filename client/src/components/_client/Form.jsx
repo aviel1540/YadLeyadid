@@ -26,9 +26,10 @@ export const Form = ({ open, setOpen, refetch }) => {
                 const payload = { id: info.id, date };
                 askExtensionRequest(payload);
             }
+            else throw new Error('')
 
         } catch (err) {
-            error(err);
+            error(err?.message);
         }
     };
 

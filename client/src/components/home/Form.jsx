@@ -38,8 +38,9 @@ export const Form = ({ setOpen, open, refetch }) => {
                 const payload = { id, answer: RequestStatus.ACCEPT };
                 extensionRequestAnswer(payload);
             }
+            else throw new Error('')
         } catch (err) {
-            error(err);
+            error(err?.message);
         }
     };
 

@@ -1,4 +1,4 @@
-export { AuthForm } from './authForm';
+export { Login } from './login';
 export { Products } from './products';
 export { Home } from './home';
 export { Users } from './users';
