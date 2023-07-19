@@ -1,5 +1,10 @@
-import { Login } from "~/components";
+import { Login, TitleTab } from "~/components";
 
 export const LoginPage = () => {
-	return <Login />;
+	return (
+		<>
+			<TitleTab title="כניסה" key='login' />
+			<Login />;
+		</>
+	)
 };
