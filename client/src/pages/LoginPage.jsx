@@ -1,6 +1,5 @@
-import React from "react";
-import { AuthForm } from "~/components";
+import { Login } from "~/components";
 
 export const LoginPage = () => {
-	return <AuthForm />;
+	return <Login />;
 };

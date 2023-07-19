@@ -15,20 +15,11 @@ import { useOpen } from "~/hooks/useOpen";
 export const Home = () => {
 	const { name } = useAuthStore();
 
-	// const [open, setOpen] = useState({
-	// 	action: false,
-	// 	popUp: false,
-	// 	modalDialog: false,
-	// 	title: "",
-	// 	content: "",
-	// 	id: "",
-	// 	info: {},
-	// });
 	const [open, setOpen] = useOpen();
 
 	// To save all the data in the cache to prevent unnecessary loadings.
-	useProducts();
 	useMainCategory();
+	useProducts();
 	useSemiCategory();
 	useAdministrators();
 

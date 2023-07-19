@@ -1,10 +1,9 @@
-import React from 'react'
-import { useUserByUsername } from '~/hooks/useUsers';
-import { Spinner } from '../ui';
-import { formatDate, replace } from '~/lib';
 import { Button } from '@mui/material';
-import { Actions } from './Actions';
 import { RequestStatus } from '~/constants/requestStatus';
+import { useUserByUsername } from '~/hooks/useUsers';
+import { formatDate, replace } from '~/lib';
+import { PopUp, Spinner } from '../ui';
+import { Form } from './Form';
 
 export const ProductDetails = ({ username, open, setOpen }) => {
     const { data: details, isLoading, refetch } = useUserByUsername(username);
@@ -79,11 +78,13 @@ export const ProductDetails = ({ username, open, setOpen }) => {
                 </div>
             </main>
             {open.action &&
-                <Actions
-                    open={open}
-                    setOpen={setOpen}
-                    refetch={refetch}
-                />
+                <PopUp setOpen={setOpen} open={open}>
+                    <Form
+                        refetch={refetch}
+                        setOpen={setOpen}
+                        open={open}
+                    />
+                </PopUp>
             }
         </>
     )

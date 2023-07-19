@@ -43,8 +43,9 @@ export const Form = ({ setOpen, open, refetch }) => {
                 }
                 assignProductToSemiCategory(payload)
             }
+            else throw new Error('')
         } catch (err) {
-            error(err);
+            error(err?.message);
         }
     };
 

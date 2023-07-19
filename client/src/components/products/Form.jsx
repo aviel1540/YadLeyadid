@@ -23,8 +23,9 @@ export const Form = ({ setOpen, open, refetch }) => {
                 const payload = { id: open.id, productPlace: selectedPaymentType };
                 updateProductLocation(payload);
             }
+            else throw new Error('')
         } catch (err) {
-            error(err);
+            error(err?.message);
         }
     };
 

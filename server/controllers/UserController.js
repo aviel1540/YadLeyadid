@@ -687,7 +687,6 @@ exports.changePassword = async (req, res) => {
 		const checkPassword = validation.addSlashes(password);
 
 		const userExists = await userService.findByEmail(checkEmail);
-		console.log("🚀 userExists:", userExists);
 
 		if (userExists.passwordResetToken || userExists.passwordResetExpires) {
 			return res

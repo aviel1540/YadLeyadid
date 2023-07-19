@@ -91,8 +91,9 @@ export const Form = ({ setOpen, open, refetch }) => {
 
                 updatePassword(payload)
             }
+            else throw new Error('')
         } catch (err) {
-            error(err);
+            error(err?.message);
         }
     };
 
