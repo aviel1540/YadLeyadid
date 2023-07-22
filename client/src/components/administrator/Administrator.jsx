@@ -12,7 +12,7 @@ import { useAdministrators } from '~/hooks/useUsers';
 import { Button } from "../logic";
 import { SearchInput } from "../logic/SearchInput";
 import { Actions } from '../users/Actions';
-import { filterData } from '../users/config';
+import { filterData } from '../users/util';
 import { Rows } from './Rows';
 
 export const Administrator = () => {

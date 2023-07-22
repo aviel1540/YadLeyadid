@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { productPlace } from "~/constants/productPlace";
 import { useUpdateProductLocation } from "~/hooks/useProducts";
 import { error, info } from "~/lib";
@@ -9,11 +8,11 @@ export const Form = ({ setOpen, open, refetch }) => {
     const { title, content } = open;
 
     const [selectedPaymentType, setSelectedPaymentType] = useState("")
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const { mutate: updateProductLocation } = useUpdateProductLocation(setOpen, open, refetch);
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (e) => {
+        e.preventDefault();
 
         try {
             if (title === "edit") {
@@ -36,7 +35,6 @@ export const Form = ({ setOpen, open, refetch }) => {
                 <label className="form-label">מיקום המוצר:
                     <SelectInput
                         type={open.info.place}
-
                         selectedValue={selectedPaymentType}
                         className={`!w-[24rem] mb-3`}
                         setSelectedValue={setSelectedPaymentType}
@@ -52,7 +50,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                 </label>
             </main>
             <div className="flex justify-end p-2">
-                <SendIcon onClick={handleSubmit(onSubmit)} title={title} className="text-3xl" />
+                <SendIcon onClick={onSubmit} title={title} className="text-3xl" />
             </div>
         </>
     );

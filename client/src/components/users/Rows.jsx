@@ -40,7 +40,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 						href={`https://api.whatsapp.com/send/?phone=972${row.phoneNumber}&text=שלום ${row.name},&type=phone_number&app_absent=0`}
 						target="_blank"
 					>
-						{row.phoneNumber.slice(0, 3)}-{row.phoneNumber.slice(3, 6)}-{row.phoneNumber.slice(6, 10)}
+						{row.phoneNumber}
 					</a>
 				</TableCell>
 

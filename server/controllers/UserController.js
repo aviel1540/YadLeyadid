@@ -688,7 +688,10 @@ exports.changePassword = async (req, res) => {
 
 		const userExists = await userService.findByEmail(checkEmail);
 
-		if (userExists.passwordResetToken || userExists.passwordResetExpires) {
+		if (
+			userExists?.passwordResetToken ||
+			userExists?.passwordResetExpires
+		) {
 			return res
 				.status(400)
 				.json({ message: "האימות נכשל, נא לנסות שוב." });
@@ -703,11 +706,11 @@ exports.changePassword = async (req, res) => {
 			return res.status(400).json({ message: "הסיסמאות אינן תאומות." });
 		}
 
-		const user = await userService.findByEmail(checkEmail);
+		// const user = await userService.findByEmail(checkEmail);
 
 		const passwordHash = await auth.hashPassword(checkPassword);
 
-		await User.findByIdAndUpdate(user._id, {
+		await User.findByIdAndUpdate(userExists._id, {
 			password: passwordHash,
 		});
 

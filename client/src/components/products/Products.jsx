@@ -13,7 +13,7 @@ import { SearchInput } from "../logic/SearchInput";
 import { Spinner } from "../ui";
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
-import { filterData } from "./config";
+import { filterData } from "./util";
 
 export const Products = () => {
 	const [text, setText] = useState("");
