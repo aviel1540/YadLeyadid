@@ -97,7 +97,7 @@ exports.updateMission = async (req, res) => {
 		await mission.save();
 		res.status(200).json({ message: "המשימה עודכנה בהצלחה." });
 	} catch (err) {
-		res.status(400).json({ message: err });
+		res.status(500).json({ message: err });
 	}
 };
 

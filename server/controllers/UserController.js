@@ -119,7 +119,7 @@ exports.register = async (req, res) => {
 		await user.save();
 		if (!user) {
 			return res
-				.status(500)
+				.status(400)
 				.json({ message: "לא נוסף הלקוח, נא לנסות שוב." });
 		}
 		return res.status(201).json({
@@ -322,7 +322,7 @@ exports.getUserByUsername = async (req, res) => {
 		}
 		return res.status(200).json(details);
 	} catch (err) {
-		return res.status(400).json({ message: err });
+		return res.status(500).json({ message: err });
 	}
 };
 
@@ -340,7 +340,7 @@ exports.getUserById = async (req, res) => {
 		}
 		return res.status(200).json(user);
 	} catch (err) {
-		return res.status(404).json({ message: err });
+		return res.status(500).json({ message: err });
 	}
 };
 
@@ -493,7 +493,7 @@ exports.unassignProductUser = async (req, res) => {
 		await user.save();
 		return res.status(200).json({ message: "השיוך הוסר בהצלחה." });
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -599,7 +599,7 @@ exports.updateDetails = async (req, res) => {
 
 		if (!updateUser)
 			return res
-				.status(400)
+				.status(501)
 				.json({ message: "העידכון נכשל, נא לנסות שוב." });
 		await updateUser.save();
 
@@ -660,7 +660,7 @@ exports.verificationCode = async (req, res) => {
 
 		if (!user) {
 			return res
-				.status(400)
+				.status(501)
 				.json({ message: "האימות נכשל, נא לנסות שוב." });
 		}
 
@@ -705,8 +705,6 @@ exports.changePassword = async (req, res) => {
 		if (password !== verifyPassword) {
 			return res.status(400).json({ message: "הסיסמאות אינן תאומות." });
 		}
-
-		// const user = await userService.findByEmail(checkEmail);
 
 		const passwordHash = await auth.hashPassword(checkPassword);
 

@@ -99,7 +99,7 @@ exports.addNewSemiCategory = async (req, res) => {
 		await category.save();
 		return res.status(201).json({ message: "קטגוריה נוספה בהצלחה." });
 	} catch (err) {
-		return res.status(400).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -148,13 +148,13 @@ exports.deleteSemiCategory = async (req, res) => {
 		}
 		if (categoryResult.inMainCategory) {
 			return res
-				.status(401)
+				.status(501)
 				.json({ message: "משוייך לקטגוריה ראשית - יש לבטל שיוך." });
 		}
 		await semiCategoryService.deleteSemiCategory(checkId);
 		res.status(200).json({ message: "נמחק בהצלחה." });
 	} catch (err) {
-		res.status(400).json({ message: err.message });
+		res.status(500).json({ message: err.message });
 	}
 };
 
@@ -190,7 +190,7 @@ exports.unassignProductFromSemiCategory = async (req, res) => {
 		);
 
 		if (isFound)
-			return res.status(400).json({ message: "הסרת השיוך נכשלה." });
+			return res.status(501).json({ message: "הסרת השיוך נכשלה." });
 		let productName = semiCategory.name;
 		await productService.updateProductUnassignToSemiCategory({
 			checkProductId,
@@ -213,7 +213,7 @@ exports.unassignProductFromSemiCategory = async (req, res) => {
 			.status(200)
 			.json({ message: "הוסר שיוך בהצלחה.", semiCategory });
 	} catch (err) {
-		return res.status(400).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };
 
@@ -276,6 +276,6 @@ exports.assignProductToSemiCategory = async (req, res) => {
 		await semiCategory.save();
 		return res.status(201).json({ message: "שוייך בהצלחה.", semiCategory });
 	} catch (err) {
-		return res.status(401).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
 	}
 };

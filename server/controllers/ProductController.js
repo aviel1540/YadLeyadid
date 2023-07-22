@@ -106,7 +106,7 @@ exports.updateProductLocation = async (req, res) => {
 		await updateProduct.save();
 		return res.status(200).json({ message: "המוצר התעדכן בהצלחה." });
 	} catch (err) {
-		return res.status(400).json({ message: err });
+		return res.status(500).json({ message: err });
 	}
 };
 
@@ -137,7 +137,7 @@ exports.deleteProduct = async (req, res) => {
 		await productService.deleteProduct(checkProductId);
 		return res.status(200).json({ message: "המוצר נמחק בהצלחה." });
 	} catch (err) {
-		return res.status(404).json({ message: err });
+		return res.status(500).json({ message: err });
 	}
 };
 
