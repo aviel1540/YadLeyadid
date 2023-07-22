@@ -25,7 +25,7 @@ export const Notification = ({ setOpen, open }) => {
                     <h1 className='text-lg h-8 mb-5 underline'>
                         עדכונים
                     </h1>
-                    {data.length > 0 &&
+                    {data?.length &&
                         <span className='m-2 animate-[notification_2s_ease-in-out_infinite]'>
                             <MdOutlineNotificationsActive color='red' size={18} />
                         </span>}

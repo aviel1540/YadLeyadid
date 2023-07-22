@@ -79,7 +79,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
                                 component="div"
                                 className="!flex"
                             >
-                                מוצרים - {row?.productList?.length > 0 ? `(${row?.productList?.length})` : `(${0})`}
+                                מוצרים - {row?.productList?.length ? `(${row?.productList?.length})` : `(${0})`}
                                 <IconButton
                                     title="שיוך מוצר"
                                     className="!text-green !text-2xl !-mt-0.5"

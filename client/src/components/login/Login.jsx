@@ -30,6 +30,10 @@ export const Login = () => {
 			error(err?.message);
 		}
 	};
+
+	const changeModePassword = ()=>{
+		setShowPassword((prev => !prev))
+	}
 	return (
 		<>
 			<form onSubmit={handleSubmit(onSubmit)} className={`${open.action && "blur-sm"} w-1/4 block mt-44 ml-auto mr-auto xl:mt-10 xl:w-2/6 sm:w-11/12`}>
@@ -42,8 +46,8 @@ export const Login = () => {
 				<label htmlFor="password" className="block text-sm font-semibold mt-3">סיסמא: </label>
 
 				<div className='float-left'>
-					{showPassword ? <VscEye size={20} className='!-mb-20 mt-5 ml-2 cursor-pointer' onClick={() => setShowPassword(!showPassword)} /> :
-						<VscEyeClosed size={20} className='!-mb-20 mt-5 ml-2 cursor-pointer' onClick={() => setShowPassword(!showPassword)} />}
+					{showPassword ? <VscEye size={20} className='icon-show_password' onClick={changeModePassword} /> :
+						<VscEyeClosed size={20} className='icon-show_password' onClick={changeModePassword} />}
 				</div>
 
 				<Input type={`${showPassword ? "text" : "password"}`} id="password" className='w-full' placeholder="סיסמא" {...register("password", { required: { value: true, message: "שדה חובה." } })} />

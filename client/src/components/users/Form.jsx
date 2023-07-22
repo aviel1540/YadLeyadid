@@ -26,8 +26,8 @@ export const Form = ({ setOpen, open, refetch }) => {
     const { mutate: updateUser } = useUpdateUser(setOpen, open, refetch);
     const { mutate: updatePassword } = useUpdatePassword(setOpen, open, refetch);
     const { mutate: asignProductToUser } = useAsignProductToUser(setOpen, open, refetch);
-
-    const activeProducts = products?.filter((p) => p.place !== ProductPlace.LOANED && p.place !== ProductPlace.REPAIR)
+    
+    const activeProducts = products?.filter((p) => p.place !== ProductPlace.LOANED && p.place !== ProductPlace.REPAIR && Boolean(p.inCategory))
 
     const handleChange = () => setChecked(!checked)
 
@@ -62,7 +62,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                     entityCard, username,
                     name, email,
                     phoneNumber,
-                    address, paymentType: selectedPaymentType.length > 0 ? selectedPaymentType : open.info.paymentType,
+                    address, paymentType: selectedPaymentType.length  ? selectedPaymentType : open.info.paymentType,
                     admin: checked
                 };
 
@@ -70,7 +70,7 @@ export const Form = ({ setOpen, open, refetch }) => {
             }
 
             else if (title === "asignProductToUser") {
-                if (!selectedAssign || selectedAssign.length === 0) {
+                if (!selectedAssign || !selectedAssign.length) {
                     return info("נא לבחור מוצרים לשיוך.");
                 }
                 const payload = {

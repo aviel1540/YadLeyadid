@@ -33,7 +33,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                 const payload = { id: open.id, mainCategoryName };
                 updateMainCategory(payload);
             } else if (title === "assignSemiCategoryToMainCategory") {
-                if (!selectedAssign || selectedAssign.length === 0) {
+                if (!selectedAssign || !selectedAssign.length) {
                     info("נא לבחור מוצרים לשיוך.");
                     return;
                 }

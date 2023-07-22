@@ -1,29 +1,30 @@
 const router = require("express").Router();
 const productController = require("../controllers/ProductController");
+const {adminOnly} = require('../middleware/adminOnly')
 
-router.get("/", productController.getProducts);
+router.get("/", adminOnly,productController.getProducts);
 
-router.get("/loan-return-close", productController.allProductsWithLoanDateClose);
+router.get("/loan-return-close", adminOnly,productController.allProductsWithLoanDateClose);
 
-router.get("/wait-confirm-extension-request", productController.allProductsWaitConfirmExtensionRequest);
+router.get("/wait-confirm-extension-request", adminOnly,productController.allProductsWaitConfirmExtensionRequest);
 
-router.get("/accepted-extension-request", productController.allProductsAcceptedExtensionRequest);
+router.get("/accepted-extension-request",adminOnly, productController.allProductsAcceptedExtensionRequest);
 
-router.get("/product-place-counters", productController.productsCounters);
+router.get("/product-place-counters", adminOnly,productController.productsCounters);
 
-router.post("/add-product", productController.addProduct);
+router.post("/add-product",adminOnly, productController.addProduct);
 
-router.post("/extension-request-answer/:id", productController.updateExtensionRequest);
+router.post("/extension-request-answer/:id", adminOnly,productController.updateExtensionRequest);
 
 router.post("/ask-extension-request/:id", productController.askForExtensionRequest);
 
-router.get("/:id", productController.getProductById);
+router.get("/:id",adminOnly, productController.getProductById);
 
-router.delete("/delete/:id", productController.deleteProduct);
+router.delete("/delete/:id", adminOnly,productController.deleteProduct);
 
-router.patch("/update-location/:id", productController.updateProductLocation);
+router.patch("/update-location/:id", adminOnly,productController.updateProductLocation);
 
-router.patch("/:id/loan-return/:userId", productController.updateExtensionRequest);
+// router.patch("/:id/loan-return/:userId", adminOnly,productController.updateExtensionRequest);
 
 
 

@@ -1,7 +1,7 @@
 const escape = require("escape-html");
 const validation = require("../utils/validation");
 const { ProductPlace } = require("../constants/productPlace");
-const { RequestStatus } = require("../constants/requestStatus");	
+const { RequestStatus } = require("../constants/requestStatus");
 const productService = require("../services/productService");
 const userService = require("../services/userService");
 const mailer = require("../utils/mailer");
@@ -31,7 +31,9 @@ exports.getProducts = async (req, res) => {
 				products.push(productDetails);
 			}
 		}
-		return res.status(200).send(products);
+	const sortedProducts =	products.sort((a, b) => b.place.localeCompare(a.place))
+
+		return res.status(200).send(sortedProducts);
 	} catch (err) {
 		return res.status(500).json({ message: err.message });
 	}

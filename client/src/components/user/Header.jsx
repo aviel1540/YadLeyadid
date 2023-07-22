@@ -15,7 +15,7 @@ export const Header = () => {
     useEffect(() => {
         const path = location.pathname;
 
-        if (path === "/client") {
+        if (path === "/user") {
             setClick({ ...click, home: true });
         }
         else if (path === `/details/${username}`) {
@@ -29,7 +29,7 @@ export const Header = () => {
             <nav className="pt-3  pr-5 text-lg sm:text-base sm:pr-0">
                 <ul className="flex justify-start max-w-screen-xl p-5 ml-5  gap-x-6 sm:gap-x-4 sm:p-2 sm:mr-2">
                     <li>
-                        <Link to="/client" className={`${click.home && "font-bold"}`}>בית</Link>
+                        <Link to="/user" className={`${click.home && "font-bold"}`}>בית</Link>
                     </li>
                     <li>
                         <Link to={`/details/${username}`} className={`${click.details && "font-bold"} `}>פרטים אישיים</Link>

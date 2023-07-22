@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from 'react-query';
 import * as users from '~/api/users';
+import { onError, onSuccess } from '~/lib';
 import { queryKeys } from '~/react-query/queryKeys';
-import { onError, onSuccess, success } from '~/lib';
 
 export const useUsers = () => useQuery([queryKeys.users], users.getUsers);
-export const useAdministrators = () => useQuery([queryKeys.users], users.getAdministrators);
+
+export const useAdministrators = () => useQuery([queryKeys.administrators], users.getAdministrators);
 
 export const useUserById = (id) =>
   useQuery([queryKeys.userById], () => users.getUserById(id), {

@@ -16,7 +16,7 @@ export const NotFound = () => {
                     navigate("/home");
                 }
                 else if (isLoggedIn && !isAdmin) {
-                    navigate("/client");
+                    navigate("/user");
                 }
                 else navigate("/");
             }

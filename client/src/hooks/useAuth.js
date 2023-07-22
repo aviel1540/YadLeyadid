@@ -1,12 +1,10 @@
-import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import * as auth from '~/api/auth';
-import { useAuthStore } from '~/store/auth';
-import { onError, onSuccess, success } from '~/lib';
 import { decodeToken } from 'react-jwt';
+import { useMutation } from 'react-query';
+import * as auth from '~/api/auth';
+import { onError, onSuccess, success } from '~/lib';
+import { useAuthStore } from '~/store/auth';
 
 export const useLogin = (reset) => {
-  const navigate = useNavigate();
   const { loginStore } = useAuthStore();
 
   return useMutation(auth.login, {
@@ -15,7 +13,7 @@ export const useLogin = (reset) => {
       loginStore(data);
       reset();
       if (isAdmin) window.location.href = '/home';
-      else window.location.href = '/client';
+      else window.location.href = '/user';
     },
     onError: (data) => {
       onError(data);

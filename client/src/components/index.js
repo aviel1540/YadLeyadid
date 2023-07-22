@@ -2,7 +2,7 @@ export { Login } from './login';
 export { Products } from './products';
 export { Home } from './home';
 export { Users } from './users';
-export { Client, UserDetails } from './_client';
+export { User, UserDetails } from './user';
 export { Administrator } from './administrator';
 export { MainCategory } from './mainCategory';
 export { TitleTab } from './TitleTab';

@@ -23,7 +23,7 @@ export const Administrator = () => {
 
     const dataResults = filterData(administrators, text)
 
-    if (isLoading) return <Spinner className='mt-32' size={150} />;
+    if (isLoading) return <Spinner className='mt-32' />;
 
     return (
         <>
@@ -36,7 +36,7 @@ export const Administrator = () => {
 
                 <section className="table-style xl:w-full xl:relative xl:bottom-4 md:w-full">
                     <div className="flex justify-between flex-row-reverse items-end mb-5">
-                        {dataResults.length >= 1 ?
+                        {dataResults?.length ?
                             <Button
                                 className="button-add w-52"
                                 onClick={() =>
@@ -59,7 +59,7 @@ export const Administrator = () => {
                             setText={setText}
                         />
                     </div>
-                    {dataResults?.length >= 1 ? <TableContainer component={Paper} sx={{ height: 600 }}>
+                    {dataResults?.length  ? <TableContainer component={Paper} sx={{ height: 600 }}>
                         <Table aria-label="collapsible table">
                             <TableHead>
                                 <TableRow className='table-row'>

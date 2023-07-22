@@ -79,7 +79,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
                                 component="div"
                                 className="!flex"
                             >
-                                קטגוריות משניות - {row?.semiCategoryList?.length > 0 ? `(${row?.semiCategoryList?.length})` : `(${0})`}
+                                קטגוריות משניות - {row?.semiCategoryList?.length  ? `(${row?.semiCategoryList?.length})` : `(${0})`}
                                 <IconButton
                                     title="שיוך קטגוריה משנית"
                                     className="!text-green !text-2xl !-mt-0.5"

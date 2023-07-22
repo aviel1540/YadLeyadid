@@ -39,6 +39,9 @@
   @apply text-red text-sm font-normal;
 }
 
+.icon-show_password{
+@apply !-mb-20 mt-5 ml-2 cursor-pointer
+}
 .not-drag {
   -webkit-user-drag: none;
   user-select: none;

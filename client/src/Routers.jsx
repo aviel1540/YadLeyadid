@@ -13,11 +13,10 @@ export const Routers = () => {
 			{isLoggedIn && isAdmin &&
 				<>
 					<Route path="/home" element={<Pages.HomePage />} exact />
-					{/* <Route path="/settings" element={<Pages.InformationPage />} exact /> */}
 					<Route path="/users" element={<Pages.UsersPage />} exact />
-					<Route path="/products" element={<Pages.productsPage />} exact />
+					<Route path="/products" element={<Pages.ProductsPage />} exact />
 					<Route path="/semi-category" element={<Pages.SemiCategoryPage />} exact />
-					<Route path="/main-category" element={<Pages.mainCategoryPage />} exact />
+					<Route path="/main-category" element={<Pages.MainCategoryPage />} exact />
 					<Route path="/administrator" element={<Pages.AdministratorPage />} exact />
 
 				</>
@@ -29,7 +28,7 @@ export const Routers = () => {
 						element={<Pages.UserDetailsPage />}
 						exact
 					/>
-					<Route path="/client" element={<Pages.ClientPage />} exact />
+					<Route path="/user" element={<Pages.UserPage />} exact />
 				</>
 			}
 		</Routes>

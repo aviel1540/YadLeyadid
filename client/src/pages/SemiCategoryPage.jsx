@@ -1,5 +1,10 @@
-import { SemiCategory } from '~/components'
+import { SemiCategory, TitleTab } from '~/components';
 
 export const SemiCategoryPage = () => {
-    return <SemiCategory />
-}
+  return (
+    <>
+      <TitleTab title="קטגוריה משנית" key="semiCategory" />
+      <SemiCategory />
+    </>
+  );
+};

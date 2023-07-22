@@ -1,6 +1,6 @@
 import { Products, TitleTab } from "~/components";
 
-export const productsPage = () => {
+export const ProductsPage = () => {
 	return (
 		<>
 			<TitleTab title="מוצרים" key='products' />

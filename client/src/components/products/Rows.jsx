@@ -16,7 +16,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 			<TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
 
 				<TableCell>
-					{row?.userDetails?.length > 0 && <IconButton
+					{row?.userDetails?.length  && <IconButton
 						aria-label="expand row"
 						size="small"
 						onClick={() => setOpenTable(!openTable)}
@@ -82,7 +82,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
 								component="div"
 								className="!flex"
 							>
-								לקוחות -	{row?.userDetails?.length > 0 ? `(${row?.userDetails?.length})` : `(${0})`}
+								לקוחות -	{row?.userDetails?.length  ? `(${row?.userDetails?.length})` : `(${0})`}
 							</Typography>
 							<Table size="small" aria-label="purchases">
 								<TableHead>

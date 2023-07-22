@@ -19,10 +19,10 @@ export class ErrorBoundary extends React.Component {
         if (this.state.hasError) {
 
             const handleClick = () => {
-                if (window.location.pathname !== '/client') {
+                if (window.location.pathname !== '/user') {
                     window.location.href = "/home"
                 } else {
-                    window.location.href = "/client"
+                    window.location.href = "/user"
                 }
             }
             return (

@@ -49,7 +49,7 @@ app.use(
 app.use("/api/main-category/", auth, adminOnly, mainCategoryRouter);
 app.use("/api/semi-category/", auth, adminOnly, semiCategoryRouter);
 app.use("/api/users/", userRouter);
-app.use("/api/products/", auth, adminOnly, productRouter);
+app.use("/api/products/", auth, productRouter);
 app.use("/api/missions/", auth, adminOnly, missionRouter);
 
 const PORT = process.env.PORT || 5000;

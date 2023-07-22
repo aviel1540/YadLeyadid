@@ -1,5 +1,12 @@
-import { MainCategory } from '~/components'
+import { MainCategory, TitleTab } from '~/components'
 
-export const mainCategoryPage = () => {
-    return <MainCategory />
+export const MainCategoryPage = () => {
+    return (
+        <>        
+        <TitleTab title='קטגוריה ראשית' key='mainCategory'/>
+        <MainCategory />
+        </>
+
+        )
+
 }

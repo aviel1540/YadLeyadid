@@ -3,7 +3,7 @@ import { useAuthStore } from '~/store/auth';
 import { Header } from './Header';
 import { ProductDetails } from './ProductDetails';
 
-export const Client = () => {
+export const User = () => {
     const { name, username } = useAuthStore();
 
     const [open, setOpen] = useOpen();

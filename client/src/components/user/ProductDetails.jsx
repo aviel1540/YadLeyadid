@@ -8,13 +8,13 @@ import { Form } from './Form';
 export const ProductDetails = ({ username, open, setOpen }) => {
     const { data: details, isLoading, refetch } = useUserByUsername(username);
 
-    if (isLoading) return <Spinner className='mt-32' size={150} />;
+    if (isLoading) return <Spinner className='mt-32' />;
 
     return (
         <>
             <main className={`${open.action && "blur-sm"}`}>
 
-                {details?.userProductList?.length > 0 ?
+                {details?.userProductList?.length  ?
                     <div className='flex justify-start mr-11 -mb-16 mt-10'>
                         <h1 className='text-lg'>המוצרים שלי:</h1>
                     </div>

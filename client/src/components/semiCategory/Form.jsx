@@ -33,7 +33,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                 updateSemiCategory(payload);
             }
             else if (title === "asignProductToSemiCategory") {
-                if (!selectedAssign || selectedAssign.length === 0) {
+                if (!selectedAssign || !selectedAssign.length) {
                     info("נא לבחור מוצרים לשיוך.");
                     return;
                 }
