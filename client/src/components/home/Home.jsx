@@ -1,16 +1,15 @@
-import { useState } from "react";
 import { BsCartCheck, BsCartX } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi";
 import { TbShoppingCartOff } from "react-icons/tb";
+import { useMainCategory } from "~/hooks/useMainCategory";
+import { useOpen } from "~/hooks/useOpen";
 import { useProducts, useProductsPlaces } from "~/hooks/useProducts";
+import { useSemiCategory } from "~/hooks/useSemiCategory";
 import { useAdministrators, useUsers } from "~/hooks/useUsers";
 import { useAuthStore } from "~/store/auth";
+import { Missions, Notification, SquareInfo } from ".";
 import { Spinner } from "../ui";
-import { SquareInfo, Missions, Notification } from ".";
-import { Columns, Line, Pie } from "./charts";
-import { useMainCategory } from "~/hooks/useMainCategory";
-import { useSemiCategory } from "~/hooks/useSemiCategory";
-import { useOpen } from "~/hooks/useOpen";
+import { Columns, Pie } from "./charts";
 
 export const Home = () => {
 	const { name } = useAuthStore();

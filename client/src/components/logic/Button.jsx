@@ -2,7 +2,6 @@ import { FaSpinner } from 'react-icons/fa'
 import { cn } from "~/lib"
 
 export const Button = ({ className, children, disabled, isLoading, ...props }) => {
-
     return (
         <button
             {...props}

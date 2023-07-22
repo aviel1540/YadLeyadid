@@ -14,8 +14,8 @@ export const useLogin = (reset) => {
       const isAdmin = decodeToken(data)?.isAdmin;
       loginStore(data);
       reset();
-      if (isAdmin) document.location.href = '/home';
-      else document.location.href = '/client';
+      if (isAdmin) window.location.href = '/home';
+      else window.location.href = '/client';
     },
     onError: (data) => {
       onError(data);

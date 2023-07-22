@@ -43,8 +43,7 @@ export const Form = ({ setOpen, open, refetch }) => {
         try {
             if (title === "add") {
                 if (!administratorLocation && (!selectedPaymentType || selectedPaymentType == "")) {
-                    info("נא לבחור את אופן התשלום.");
-                    return;
+                    return info("נא לבחור את אופן התשלום.");
                 }
                 const payload = {
                     entityCard, username,
@@ -72,8 +71,7 @@ export const Form = ({ setOpen, open, refetch }) => {
 
             else if (title === "asignProductToUser") {
                 if (!selectedAssign || selectedAssign.length === 0) {
-                    info("נא לבחור מוצרים לשיוך.");
-                    return;
+                    return info("נא לבחור מוצרים לשיוך.");
                 }
                 const payload = {
                     userId: open.id,

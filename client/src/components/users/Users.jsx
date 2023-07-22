@@ -13,7 +13,7 @@ import { Button } from "../logic";
 import { SearchInput } from "../logic/SearchInput";
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
-import { filterData } from "./config";
+import { filterData } from "./util";
 
 export const Users = () => {
 	const [text, setText] = useState("");

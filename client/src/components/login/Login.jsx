@@ -1,5 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from "react-hook-form";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import logo from "~/assets/images/logo.jpeg";
 import { useLogin } from "~/hooks/useAuth";
 import { useOpen } from "~/hooks/useOpen";
@@ -10,6 +12,7 @@ import { PopUp } from "../ui";
 import { ForgotPassword } from "./ForgotPassword";
 
 export const Login = () => {
+	const [showPassword, setShowPassword] = useState(false)
 
 	const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: zodResolver(LoginValidator) });
 
@@ -36,8 +39,14 @@ export const Login = () => {
 				<Input type="text" id="entityCard" className='w-full' placeholder="תעודת זהות" {...register("entityCard", { required: { value: true, message: "שדה חובה." } })} />
 				<p className="text-red text-sm">{errors.entityCard?.message}</p>
 
-				<label htmlFor="password" className="block text-sm font-semibold mt-3">סיסמא:</label>
-				<Input type="password" id="password" className='w-full' placeholder="סיסמא" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
+				<label htmlFor="password" className="block text-sm font-semibold mt-3">סיסמא: </label>
+
+				<div className='float-left'>
+					{showPassword ? <VscEye size={20} className='!-mb-20 mt-5 ml-2 cursor-pointer' onClick={() => setShowPassword(!showPassword)} /> :
+						<VscEyeClosed size={20} className='!-mb-20 mt-5 ml-2 cursor-pointer' onClick={() => setShowPassword(!showPassword)} />}
+				</div>
+
+				<Input type={`${showPassword ? "text" : "password"}`} id="password" className='w-full' placeholder="סיסמא" {...register("password", { required: { value: true, message: "שדה חובה." } })} />
 				<p className="text-red text-sm">{errors.password?.message}</p>
 
 				<div className="flex justify-end mt-2 mr-0.5">

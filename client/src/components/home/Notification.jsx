@@ -14,7 +14,6 @@ export const Notification = ({ setOpen, open }) => {
         click: false, index: null,
     })
 
-
     const handlerThreeDots = (index) => setThreeDots({ ...threeDots, click: !threeDots.click, index })
 
     if (isLoading) return <Spinner />

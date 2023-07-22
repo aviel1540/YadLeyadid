@@ -6,7 +6,7 @@ export const success = (message) => {
 };
 
 export const error = (message) => {
-  return toast.error(message ?? 'משהו השתבש, נא לנסות שוב.');
+  return toast.error(message || 'משהו השתבש, נא לנסות שוב.');
 };
 
 export const info = (message) => {
