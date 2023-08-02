@@ -20,7 +20,7 @@ export const Products = () => {
 
 	const [open, setOpen] = useOpen();
 	const { data: products, isLoading, refetch } = useProducts();
-	
+
 	const { mutate: addProduct } = useAddProduct(setOpen, open, refetch);
 
 	const dataResults = filterData(products, text)
@@ -35,24 +35,22 @@ export const Products = () => {
 				</div>
 				<section className="table-style xl:w-full xl:relative xl:bottom-4 md:w-full">
 					<div className="flex justify-between flex-row-reverse items-end mb-5">
-						{dataResults?.length  ?
-							<Button
-								className="button-add w-44"
-								onClick={() =>
-									addProduct({ productName: "מוצר חדש" })
-								}
-							>
-								הוספת מוצר חדש
-							</Button>
-							: <div className="visible" />}
-
-						<SearchInput
+						<Button
+							className="button-add w-44"
+							onClick={() =>
+								addProduct({ productName: "מוצר חדש" })
+							}
+						>
+							הוספת מוצר חדש
+						</Button>
+						<div className="visible" />
+						{dataResults?.length ? <SearchInput
 							placeholder="שם, סטטוס, קטגוריה..."
 							helperText="חיפוש מוצר"
 							setText={setText}
-						/>
+						/> : null}
 					</div>
-					{dataResults?.length  ? <TableContainer component={Paper} sx={{ height: 750 }}>
+					{dataResults?.length ? <TableContainer component={Paper} sx={{ height: 750 }}>
 						<Table aria-label="collapsible table">
 							<TableHead>
 								<TableRow className="table-row">

@@ -52,6 +52,7 @@ exports.showSemiDetailsInMain = async (semiId) => {
 	const semiCategory = await SemiCategory.findById(semiId);
 	return {
 		semiCategoryName: semiCategory.name,
+		serialNumber: semiCategory.serialNumber,
 		id: semiCategory._id,
 	};
 };

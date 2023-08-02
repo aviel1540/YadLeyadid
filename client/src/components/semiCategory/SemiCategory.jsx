@@ -36,30 +36,30 @@ export const SemiCategory = () => {
 
                 <section className="table-style xl:w-full xl:relative xl:bottom-4 md:w-full">
                     <div className="flex justify-between flex-row-reverse items-end mb-5">
-                        {dataResults?.length  ?
-                            <Button
-                                className="button-add w-56"
-                                onClick={() =>
-                                    setOpen({
-                                        ...open,
-                                        popUp: true,
-                                        action: true,
-                                        title: "add",
-                                        content: "הוספת קטגוריה משנית חדשה"
-                                    })
-                                }
-                            >
-                                הוספת קטגוריה משנית חדשה
-                            </Button>
-                            : <div className="visible" />}
 
-                        <SearchInput
+                        <Button
+                            className="button-add w-56"
+                            onClick={() =>
+                                setOpen({
+                                    ...open,
+                                    popUp: true,
+                                    action: true,
+                                    title: "add",
+                                    content: "הוספת קטגוריה משנית חדשה"
+                                })
+                            }
+                        >
+                            הוספת קטגוריה משנית חדשה
+                        </Button>
+                        <div className="visible" />
+
+                        {dataResults?.length ? <SearchInput
                             placeholder="שם..."
                             helperText="חיפוש קטגוריה משנית"
                             setText={setText}
-                        />
+                        /> : null}
                     </div>
-                    {dataResults?.length  ? <TableContainer component={Paper} sx={{ height: 900 }}>
+                    {dataResults?.length ? <TableContainer component={Paper} sx={{ height: 900 }}>
                         <Table aria-label="collapsible table">
                             <TableHead>
                                 <TableRow className="table-row">

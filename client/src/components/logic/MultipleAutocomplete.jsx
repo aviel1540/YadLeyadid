@@ -14,8 +14,8 @@ export const MultipleAutocomplete = ({ options, placeholder, label, isLoading, o
             id="checkboxes-tags-demo"
             options={options}
             disableCloseOnSelect
-            isOptionEqualToValue={(option, value) => option.id === value.id}
-            getOptionLabel={(option) => option.label}
+            isOptionEqualToValue={(option, value) => option?.id === value?.id}
+            getOptionLabel={(option) => option?.label}
             onChange={onChange}
             renderOption={(props, option, { selected }) => (
                 <li {...props}>
@@ -25,7 +25,7 @@ export const MultipleAutocomplete = ({ options, placeholder, label, isLoading, o
                         style={{ marginRight: 8 }}
                         checked={selected}
                     />
-                    {option.label}
+                    {option?.label}
                 </li>
             )}
             disabled={isLoading}

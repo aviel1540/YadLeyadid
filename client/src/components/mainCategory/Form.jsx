@@ -34,8 +34,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                 updateMainCategory(payload);
             } else if (title === "assignSemiCategoryToMainCategory") {
                 if (!selectedAssign || !selectedAssign.length) {
-                    info("נא לבחור מוצרים לשיוך.");
-                    return;
+                    return info("נא לבחור מוצרים לשיוך.");
                 }
                 const payload = {
                     id: open.id,

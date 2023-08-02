@@ -23,7 +23,7 @@ export const Users = () => {
 
 	const dataResults = filterData(users, text)
 
-	if (isLoading) return <Spinner className='mt-32'  />;
+	if (isLoading) return <Spinner className='mt-32' />;
 
 	return (
 		<>
@@ -36,30 +36,29 @@ export const Users = () => {
 
 				<section className="table-style xl:w-full xl:relative xl:bottom-4 md:w-full">
 					<div className="flex justify-between flex-row-reverse items-end mb-5">
-						{dataResults?.length  ?
-							<Button
-								className="button-add w-44"
-								onClick={() =>
-									setOpen({
-										...open,
-										popUp: true,
-										action: true,
-										title: "add",
-										content: "הוספת לקוח חדש"
-									})
-								}
-							>
-								הוספת לקוח חדש
-							</Button>
-							: <div className="visible" />}
 
-						<SearchInput
+						<Button
+							className="button-add w-44"
+							onClick={() =>
+								setOpen({
+									...open,
+									popUp: true,
+									action: true,
+									title: "add",
+									content: "הוספת לקוח חדש"
+								})
+							}
+						>
+							הוספת לקוח חדש
+						</Button>
+
+						{dataResults?.length ? <SearchInput
 							placeholder="שם, תעדות זהות, פלאפון..."
 							helperText="חיפוש לקוח"
 							setText={setText}
-						/>
+						/> : null}
 					</div>
-					{dataResults?.length  ? <TableContainer component={Paper} sx={{ height: 750 }}>
+					{dataResults?.length ? <TableContainer component={Paper} sx={{ height: 750 }}>
 						<Table aria-label="collapsible table">
 							<TableHead>
 								<TableRow className="table-row">

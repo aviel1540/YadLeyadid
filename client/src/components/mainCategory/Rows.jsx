@@ -79,7 +79,7 @@ export const Rows = ({ row, index, setOpen, open }) => {
                                 component="div"
                                 className="!flex"
                             >
-                                קטגוריות משניות - {row?.semiCategoryList?.length  ? `(${row?.semiCategoryList?.length})` : `(${0})`}
+                                קטגוריות משניות - {row?.semiCategoryList?.length ? `(${row?.semiCategoryList?.length})` : `(${0})`}
                                 <IconButton
                                     title="שיוך קטגוריה משנית"
                                     className="!text-green !text-2xl !-mt-0.5"
@@ -102,6 +102,9 @@ export const Rows = ({ row, index, setOpen, open }) => {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell className="!font-bold" align="right" />
+                                        <TableCell className="!font-bold" align="right" >
+                                            מספר סידורי
+                                        </TableCell>
 
                                         <TableCell className="!font-bold" align="right">
                                             שם קטגוריה משנית
@@ -116,6 +119,9 @@ export const Rows = ({ row, index, setOpen, open }) => {
                                         <TableRow key={index}>
                                             <TableCell align="right">
                                                 {index + 1}.
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {details.serialNumber}
                                             </TableCell>
                                             <TableCell align="right">
                                                 {replace(details.semiCategoryName)}

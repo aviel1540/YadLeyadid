@@ -5,7 +5,7 @@ import { cn } from "~/lib";
 export const Spinner = ({ className }) => {
 	return (
 		<div className={cn('flex justify-center items-center ', className)}>
-			<SyncLoader  color="#ff7849"  size={20} />
+			<SyncLoader color="#ff7849" size={15} />
 		</div>
 	);
 };

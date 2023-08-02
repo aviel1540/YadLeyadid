@@ -36,30 +36,28 @@ export const Administrator = () => {
 
                 <section className="table-style xl:w-full xl:relative xl:bottom-4 md:w-full">
                     <div className="flex justify-between flex-row-reverse items-end mb-5">
-                        {dataResults?.length ?
-                            <Button
-                                className="button-add w-52"
-                                onClick={() =>
-                                    setOpen({
-                                        ...open,
-                                        popUp: true,
-                                        action: true,
-                                        title: "add",
-                                        content: "הוספת מנהל מערכת חדש"
-                                    })
-                                }
-                            >
-                                הוספת מנהל מערכת חדש
-                            </Button>
-                            : <div className="visible" />}
-
-                        <SearchInput
+                        <Button
+                            className="button-add w-52"
+                            onClick={() =>
+                                setOpen({
+                                    ...open,
+                                    popUp: true,
+                                    action: true,
+                                    title: "add",
+                                    content: "הוספת מנהל מערכת חדש"
+                                })
+                            }
+                        >
+                            הוספת מנהל מערכת חדש
+                        </Button>
+                        <div className="visible" />
+                        {dataResults?.length ? <SearchInput
                             placeholder="שם, תעדות זהות, פלאפון..."
                             helperText="חיפוש מנהל מערכת"
                             setText={setText}
-                        />
+                        /> : null}
                     </div>
-                    {dataResults?.length  ? <TableContainer component={Paper} sx={{ height: 600 }}>
+                    {dataResults?.length ? <TableContainer component={Paper} sx={{ height: 600 }}>
                         <Table aria-label="collapsible table">
                             <TableHead>
                                 <TableRow className='table-row'>

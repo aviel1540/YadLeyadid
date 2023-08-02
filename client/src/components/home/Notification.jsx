@@ -25,10 +25,10 @@ export const Notification = ({ setOpen, open }) => {
                     <h1 className='text-lg h-8 mb-5 underline'>
                         עדכונים
                     </h1>
-                    {data?.length &&
+                    {data?.length ?
                         <span className='m-2 animate-[notification_2s_ease-in-out_infinite]'>
                             <MdOutlineNotificationsActive color='red' size={18} />
-                        </span>}
+                        </span> : null}
                 </div>
                 <ul className="flex flex-col w-full gap-1 mt-3 sm:max-w-md m-auto">
                     {data?.map((extensionRequest, index) => (

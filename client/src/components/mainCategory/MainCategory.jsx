@@ -22,7 +22,7 @@ export const MainCategory = () => {
 
     const dataResults = mainCategory?.filter((data) => data.mainCategoryName.includes(text));
 
-    if (isLoading) return <Spinner className='mt-32'  />;
+    if (isLoading) return <Spinner className='mt-32' />;
 
     return (
         <>
@@ -35,28 +35,28 @@ export const MainCategory = () => {
 
                 <section className="table-style xl:w-full xl:relative xl:bottom-4 md:w-full">
                     <div className="flex justify-between flex-row-reverse items-end mb-5">
-                        {dataResults?.length  ?
-                            <Button
-                                className="button-add w-56"
-                                onClick={() =>
-                                    setOpen({
-                                        ...open,
-                                        popUp: true,
-                                        action: true,
-                                        title: "add",
-                                        content: "הוספת קטגוריה ראשית חדשה"
-                                    })
-                                }
-                            >
-                                הוספת קטגוריה ראשית חדשה
-                            </Button>
-                            : <div className="visible" />}
 
-                        <SearchInput
+                        <Button
+                            className="button-add w-56"
+                            onClick={() =>
+                                setOpen({
+                                    ...open,
+                                    popUp: true,
+                                    action: true,
+                                    title: "add",
+                                    content: "הוספת קטגוריה ראשית חדשה"
+                                })
+                            }
+                        >
+                            הוספת קטגוריה ראשית חדשה
+                        </Button>
+                        <div className="visible" />
+
+                        {dataResults?.length ? <SearchInput
                             placeholder="שם..."
                             helperText="חיפוש קטגוריה ראשית"
                             setText={setText}
-                        />
+                        /> : null}
                     </div>
                     {dataResults?.length ? <TableContainer component={Paper} sx={{ height: 750 }}>
                         <Table aria-label="collapsible table">
