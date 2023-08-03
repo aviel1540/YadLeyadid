@@ -44,46 +44,54 @@ export const Missions = ({ setOpen, open }) => {
 
 
                 </div>
-                <ul className="flex flex-col w-full gap-1 mt-3 sm:max-w-md m-auto">
-                    {missions?.map((mission, index) => (
-                        <div key={mission._id}>
-                            <div className='flex justify-around'>
-                                <li className={`w-full p-2 ${mission.completed && "line-through"} `}>{index + 1}. {mission.title}</li>
-                                <IconButton onClick={() => handlerThreeDots(index + 1)}>
-                                    <BsThreeDotsVertical />
-                                </IconButton>
-                                {(threeDots.click && threeDots.index === index + 1) &&
-                                    <div className='flex justify-around bg-gray-light/40 w-32 rounded-xl'>
-                                        <MdDeleteForever color="#E21818" size={25} className='!mt-2 !cursor-pointer' title="מחיקה"
-                                            onClick={() =>
-                                                setOpen({
-                                                    ...open,
-                                                    action: true,
-                                                    modalDialog: true,
-                                                    title: "delete",
-                                                    id: mission._id
-                                                })
-                                            }
-                                        />
-                                        <MdOutlineModeEdit color="#1fb6ff" size={25} className='!mt-2 !cursor-pointer' title="עריכה"
-                                            onClick={() =>
-                                                setOpen({
-                                                    ...open,
-                                                    action: true,
-                                                    popUp: true,
-                                                    title: "edit",
-                                                    content: "עריכת נתונים",
-                                                    id: mission._id,
-                                                    info: mission,
-                                                })
-                                            } />
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    ))}
 
-                </ul>
+                {missions?.length ? (
+
+                    <ul className="flex flex-col w-full gap-1 mt-3 sm:max-w-md m-auto">
+                        {missions?.map((mission, index) => (
+                            <div key={mission._id}>
+                                <div className='flex justify-around'>
+                                    <li className={`w-full p-2 ${mission.completed && "line-through"} `}>{index + 1}. {mission.title}</li>
+                                    <IconButton onClick={() => handlerThreeDots(index + 1)}>
+                                        <BsThreeDotsVertical />
+                                    </IconButton>
+                                    {(threeDots.click && threeDots.index === index + 1) &&
+                                        <div className='flex justify-around bg-gray-light/40 w-32 rounded-xl'>
+                                            <MdDeleteForever color="#E21818" size={25} className='!mt-2 !cursor-pointer' title="מחיקה"
+                                                onClick={() =>
+                                                    setOpen({
+                                                        ...open,
+                                                        action: true,
+                                                        modalDialog: true,
+                                                        title: "delete",
+                                                        id: mission._id
+                                                    })
+                                                }
+                                            />
+                                            <MdOutlineModeEdit color="#1fb6ff" size={25} className='!mt-2 !cursor-pointer' title="עריכה"
+                                                onClick={() =>
+                                                    setOpen({
+                                                        ...open,
+                                                        action: true,
+                                                        popUp: true,
+                                                        title: "edit",
+                                                        content: "עריכת נתונים",
+                                                        id: mission._id,
+                                                        info: mission,
+                                                    })
+                                                } />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        ))}
+
+                    </ul>
+                ) : (
+                    <div className='flex justify-center items-center mt-16'>
+                        <span className='text-red'>לא קיימות משימות.</span>
+                    </div>
+                )}
             </main>
             {open.action && (
                 <Actions

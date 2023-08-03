@@ -13,7 +13,7 @@ import { SearchInput } from "../logic/SearchInput";
 import { Spinner } from "../ui";
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
-import { filterData } from "./util";
+import { filterData } from "./utils";
 
 export const Products = () => {
 	const [text, setText] = useState("");
@@ -44,11 +44,11 @@ export const Products = () => {
 							הוספת מוצר חדש
 						</Button>
 						<div className="visible" />
-						{dataResults?.length ? <SearchInput
+						<SearchInput
 							placeholder="שם, סטטוס, קטגוריה..."
 							helperText="חיפוש מוצר"
 							setText={setText}
-						/> : null}
+						/>
 					</div>
 					{dataResults?.length ? <TableContainer component={Paper} sx={{ height: 750 }}>
 						<Table aria-label="collapsible table">

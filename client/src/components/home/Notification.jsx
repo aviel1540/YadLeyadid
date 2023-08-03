@@ -30,7 +30,7 @@ export const Notification = ({ setOpen, open }) => {
                             <MdOutlineNotificationsActive color='red' size={18} />
                         </span> : null}
                 </div>
-                <ul className="flex flex-col w-full gap-1 mt-3 sm:max-w-md m-auto">
+                {data?.length ? (<ul className="flex flex-col w-full gap-1 mt-3 sm:max-w-md m-auto">
                     {data?.map((extensionRequest, index) => (
                         <div key={extensionRequest.id}>
                             <div className='flex justify-around'>
@@ -75,7 +75,11 @@ export const Notification = ({ setOpen, open }) => {
                             </div>
                         </div>
                     ))}
-                </ul>
+                </ul>) : (
+                    <div className='flex justify-center items-center mt-16'>
+                        <span className='text-red'>לא קיימים עדכונים.</span>
+                    </div>
+                )}
             </main>
         </>
     )

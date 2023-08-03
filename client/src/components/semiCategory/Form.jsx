@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useProducts } from '~/hooks/useProducts';
 import { useAddSemiCategory, useAssignProductToSemiCategory, useUpdateSemiCategory } from '~/hooks/useSemiCategory';
-import { error, replace } from '~/lib';
+import { error, info, replace } from '~/lib';
 import { Input, MultipleAutocomplete, SendIcon } from '../logic';
 import { Spinner } from '../ui';
 
@@ -34,8 +34,7 @@ export const Form = ({ setOpen, open, refetch }) => {
             }
             else if (title === "asignProductToSemiCategory") {
                 if (!selectedAssign || !selectedAssign.length) {
-                    info("נא לבחור מוצרים לשיוך.");
-                    return;
+                    return info("נא לבחור מוצרים לשיוך.");
                 }
                 const payload = {
                     categoryId: open.id,

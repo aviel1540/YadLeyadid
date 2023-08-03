@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { error, replace } from '~/lib';
+import { error, info, replace } from '~/lib';
 import { useAddMainCategory, useAssignSemiCategoryToMainCategory, useUpdateMainCategory } from '~/hooks/useMainCategory';
 import { Input, MultipleAutocomplete, SendIcon } from '../logic';
 import { useSemiCategory } from '~/hooks/useSemiCategory';
@@ -34,7 +34,7 @@ export const Form = ({ setOpen, open, refetch }) => {
                 updateMainCategory(payload);
             } else if (title === "assignSemiCategoryToMainCategory") {
                 if (!selectedAssign || !selectedAssign.length) {
-                    return info("נא לבחור מוצרים לשיוך.");
+                    return info("נא לבחור קטגוריות משניות לשיוך.");
                 }
                 const payload = {
                     id: open.id,

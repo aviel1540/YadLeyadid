@@ -52,11 +52,11 @@ export const MainCategory = () => {
                         </Button>
                         <div className="visible" />
 
-                        {dataResults?.length ? <SearchInput
+                        <SearchInput
                             placeholder="שם..."
                             helperText="חיפוש קטגוריה ראשית"
                             setText={setText}
-                        /> : null}
+                        />
                     </div>
                     {dataResults?.length ? <TableContainer component={Paper} sx={{ height: 750 }}>
                         <Table aria-label="collapsible table">

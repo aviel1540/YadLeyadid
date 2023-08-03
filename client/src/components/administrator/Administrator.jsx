@@ -12,7 +12,7 @@ import { useAdministrators } from '~/hooks/useUsers';
 import { Button } from "../logic";
 import { SearchInput } from "../logic/SearchInput";
 import { Actions } from '../users/Actions';
-import { filterData } from '../users/util';
+import { filterData } from '../users/utils';
 import { Rows } from './Rows';
 
 export const Administrator = () => {
@@ -51,11 +51,11 @@ export const Administrator = () => {
                             הוספת מנהל מערכת חדש
                         </Button>
                         <div className="visible" />
-                        {dataResults?.length ? <SearchInput
+                        <SearchInput
                             placeholder="שם, תעדות זהות, פלאפון..."
                             helperText="חיפוש מנהל מערכת"
                             setText={setText}
-                        /> : null}
+                        />
                     </div>
                     {dataResults?.length ? <TableContainer component={Paper} sx={{ height: 600 }}>
                         <Table aria-label="collapsible table">

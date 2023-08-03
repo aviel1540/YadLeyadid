@@ -13,7 +13,7 @@ import { Button } from "../logic";
 import { SearchInput } from "../logic/SearchInput";
 import { Actions } from "./Actions";
 import { Rows } from "./Rows";
-import { filterData } from "./util";
+import { filterData } from "./utils";
 
 export const Users = () => {
 	const [text, setText] = useState("");
@@ -52,11 +52,11 @@ export const Users = () => {
 							הוספת לקוח חדש
 						</Button>
 
-						{dataResults?.length ? <SearchInput
+						<SearchInput
 							placeholder="שם, תעדות זהות, פלאפון..."
 							helperText="חיפוש לקוח"
 							setText={setText}
-						/> : null}
+						/>
 					</div>
 					{dataResults?.length ? <TableContainer component={Paper} sx={{ height: 750 }}>
 						<Table aria-label="collapsible table">

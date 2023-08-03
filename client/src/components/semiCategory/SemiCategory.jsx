@@ -53,11 +53,11 @@ export const SemiCategory = () => {
                         </Button>
                         <div className="visible" />
 
-                        {dataResults?.length ? <SearchInput
+                        <SearchInput
                             placeholder="שם..."
                             helperText="חיפוש קטגוריה משנית"
                             setText={setText}
-                        /> : null}
+                        />
                     </div>
                     {dataResults?.length ? <TableContainer component={Paper} sx={{ height: 900 }}>
                         <Table aria-label="collapsible table">
